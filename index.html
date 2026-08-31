@@ -8,6 +8,10 @@
 
 <style>
 
+/* =========================
+   BASE
+========================= */
+
 *{
     box-sizing:border-box;
 }
@@ -18,7 +22,7 @@ html{
 
 body{
     margin:0;
-    background:#f6f6f6;
+    background:#f5f5f5;
     color:#111;
     font-family:
         -apple-system,
@@ -35,52 +39,61 @@ body{
 ========================= */
 
 header{
-    background:#fff;
-    padding:30px 22px 26px;
-    border-bottom:1px solid #e8e8e8;
+    background:#111;
+    color:#fff;
+    min-height:420px;
+
+    display:flex;
+    align-items:center;
+
+    padding:45px 24px;
 }
 
-.logo{
-    font-size:24px;
-    font-weight:700;
-    letter-spacing:2px;
-}
-
-.catch{
-    margin-top:8px;
-    color:#777;
-    font-size:13px;
-    letter-spacing:1px;
-}
-
-
-/* =========================
-   MAIN
-========================= */
-
-main{
+.hero{
     width:100%;
-    max-width:680px;
-    margin:0 auto;
-    padding:24px 18px 70px;
+    max-width:700px;
+    margin:auto;
 }
 
+.hero-small{
+    font-size:11px;
+    letter-spacing:3px;
+    opacity:.55;
+    margin-bottom:25px;
+}
 
-/* =========================
-   SEARCH
-========================= */
+.hero-title{
+    font-size:48px;
+    font-weight:600;
+    line-height:1.2;
+    letter-spacing:3px;
+    margin:0;
+}
 
-.search{
+.hero-copy{
+    margin-top:22px;
+    font-size:15px;
+    line-height:2;
+    color:#bbb;
+}
+
+.hero-search{
+    margin-top:35px;
+
     width:100%;
-    height:54px;
+    max-width:580px;
+
+    height:60px;
+
     display:flex;
     align-items:center;
 
     background:#fff;
-    border:1px solid #ddd;
-    border-radius:5px;
+    color:#111;
 
-    padding:0 16px;
+    padding:0 20px;
+
+    border-radius:3px;
 }
 
 .search-icon{
@@ -88,11 +101,12 @@ main{
     height:17px;
 
     border:1.5px solid #111;
+
     border-radius:50%;
 
     position:relative;
-    margin-right:12px;
-    flex-shrink:0;
+
+    margin-right:13px;
 }
 
 .search-icon:after{
@@ -111,42 +125,61 @@ main{
     transform:rotate(45deg);
 }
 
-.search input{
+.hero-search input{
+    width:100%;
+
     border:0;
     outline:0;
 
-    width:100%;
+    font-size:15px;
 
     background:transparent;
-
-    font-size:15px;
-    color:#111;
-}
-
-.search input::placeholder{
-    color:#999;
 }
 
 
 /* =========================
-   SECTION TITLE
+   MAIN
 ========================= */
 
-.section-title{
-    margin-top:38px;
-    margin-bottom:18px;
+main{
+    width:100%;
+    max-width:900px;
+
+    margin:auto;
+
+    padding:55px 20px 80px;
 }
 
-.section-title h2{
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+    margin-bottom:65px;
+}
+
+.section-head{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:end;
+
+    margin-bottom:25px;
+}
+
+.section-title{
     margin:0;
 
-    font-size:19px;
+    font-size:24px;
+
     font-weight:600;
 
     letter-spacing:1px;
 }
 
-.section-title p{
+.section-sub{
     margin:6px 0 0;
 
     color:#999;
@@ -164,50 +197,51 @@ main{
 
     grid-template-columns:repeat(4,1fr);
 
-    gap:1px;
-
-    background:#ddd;
-
-    border:1px solid #ddd;
+    gap:10px;
 }
 
 .category{
-    min-height:96px;
-
-    display:flex;
-    flex-direction:column;
-
-    align-items:center;
-    justify-content:center;
-
-    gap:10px;
+    min-height:110px;
 
     background:#fff;
 
-    font-size:12px;
-    font-weight:500;
+    border:1px solid #e4e4e4;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
 
     cursor:pointer;
 
-    transition:background .2s;
+    transition:.2s;
 }
 
 .category:hover{
-    background:#f1f1f1;
+    transform:translateY(-3px);
+
+    border-color:#111;
 }
 
-.category:active{
-    background:#e8e8e8;
+.category-name{
+    font-size:12px;
+
+    letter-spacing:1px;
 }
 
 
 /* =========================
-   SVG ICON
+   SVG
 ========================= */
 
-.svg-icon{
-    width:28px;
-    height:28px;
+.icon{
+    width:30px;
+    height:30px;
 
     fill:none;
 
@@ -216,6 +250,7 @@ main{
     stroke-width:1.5;
 
     stroke-linecap:round;
+
     stroke-linejoin:round;
 }
 
@@ -224,243 +259,253 @@ main{
    MAP
 ========================= */
 
-.map{
-    height:280px;
-
+.map-wrap{
     position:relative;
 
+    width:100%;
+
+    height:430px;
+
+    background:#ddd;
+
     overflow:hidden;
-
-    background:#e9e9e9;
-
-    border:1px solid #ddd;
 }
 
-
-/* map roads */
-
-.map-line{
+.map{
     position:absolute;
 
-    background:#d2d2d2;
+    inset:0;
+
+    background:#e8e8e8;
 }
 
-.map-line.one{
-    width:150%;
-    height:1px;
 
-    left:-25%;
-    top:43%;
+/* roads */
 
-    transform:rotate(-12deg);
+.road{
+    position:absolute;
+
+    background:#cfcfcf;
 }
 
-.map-line.two{
-    width:1px;
-    height:150%;
-
-    left:56%;
-    top:-25%;
-
-    transform:rotate(20deg);
-}
-
-.map-line.three{
+.road.one{
     width:130%;
-    height:1px;
+    height:2px;
 
     left:-15%;
-    top:70%;
+    top:30%;
 
-    transform:rotate(7deg);
+    transform:rotate(13deg);
 }
 
-.map-line.four{
-    width:1px;
+.road.two{
+    width:130%;
+    height:2px;
+
+    left:-15%;
+    top:65%;
+
+    transform:rotate(-9deg);
+}
+
+.road.three{
+    width:2px;
     height:130%;
 
-    left:25%;
+    left:30%;
     top:-15%;
 
-    transform:rotate(-12deg);
+    transform:rotate(12deg);
+}
+
+.road.four{
+    width:2px;
+    height:130%;
+
+    left:72%;
+    top:-15%;
+
+    transform:rotate(-15deg);
 }
 
 
-/* map pin */
+/* map locations */
 
-.map-pin{
+.map-point{
     position:absolute;
 
-    width:19px;
-    height:19px;
-
-    border:2px solid #111;
-
-    border-radius:50% 50% 50% 0;
-
-    transform:rotate(-45deg);
-
-    left:50%;
-    top:50%;
-}
-
-.map-pin:after{
-    content:"";
-
-    position:absolute;
-
-    width:5px;
-    height:5px;
+    width:17px;
+    height:17px;
 
     background:#111;
 
+    border:4px solid #fff;
+
     border-radius:50%;
 
-    left:5px;
-    top:5px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+.point1{
+    left:25%;
+    top:35%;
+}
+
+.point2{
+    left:61%;
+    top:25%;
+}
+
+.point3{
+    left:70%;
+    top:68%;
+}
+
+.point4{
+    left:38%;
+    top:72%;
+}
+
+
+/* current */
+
+.current{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:24px;
+    height:24px;
+
+    background:#111;
+
+    border:5px solid #fff;
+
+    border-radius:50%;
+
+    box-shadow:0 0 0 10px rgba(0,0,0,.08);
 }
 
 
 /* map label */
 
-.map-text{
+.map-label{
     position:absolute;
 
-    left:50%;
-    bottom:17px;
-
-    transform:translateX(-50%);
+    left:20px;
+    top:20px;
 
     background:#fff;
 
-    padding:9px 15px;
+    padding:12px 16px;
 
-    font-size:11px;
+    font-size:12px;
 
     letter-spacing:1px;
-
-    white-space:nowrap;
-
-    z-index:3;
 }
 
 
 /* =========================
-   LOCATION BUTTON
+   PLACE
 ========================= */
 
-.location{
-    width:100%;
-    height:50px;
+.places{
+    display:grid;
 
-    margin-top:10px;
+    grid-template-columns:repeat(2,1fr);
 
-    border:0;
-
-    background:#111;
-
-    color:#fff;
-
-    font-size:14px;
-
-    letter-spacing:1px;
-
-    cursor:pointer;
-
-    transition:.2s;
+    gap:15px;
 }
-
-.location:hover{
-    background:#333;
-}
-
-.location:active{
-    background:#000;
-}
-
-
-/* =========================
-   PLACE CARD
-========================= */
 
 .place{
     background:#fff;
 
-    border:1px solid #e1e1e1;
+    border:1px solid #e2e2e2;
 
-    margin-top:12px;
-
-    padding:20px;
+    padding:25px;
 
     transition:.2s;
 }
 
 .place:hover{
-    border-color:#bbb;
+    transform:translateY(-3px);
+
+    border-color:#111;
 }
 
+.place-number{
+    color:#aaa;
 
-.place-top{
-    display:flex;
+    font-size:10px;
 
-    justify-content:space-between;
+    letter-spacing:2px;
 
-    align-items:flex-start;
+    margin-bottom:18px;
 }
-
 
 .place-name{
-    font-size:17px;
+    font-size:19px;
 
     font-weight:600;
 }
 
+.place-info{
+    margin-top:18px;
 
-.score{
-    font-size:21px;
+    display:flex;
 
-    font-weight:700;
+    justify-content:space-between;
 
-    text-align:right;
+    align-items:end;
 }
 
+.score{
+    font-size:28px;
 
-.score span{
-    display:block;
+    font-weight:600;
+}
 
-    margin-top:2px;
-
+.score-label{
     color:#999;
 
     font-size:10px;
 
-    font-weight:400;
+    margin-top:3px;
 }
 
+.easy{
+    padding:7px 10px;
 
-.status{
-    margin-top:15px;
+    background:#111;
 
-    padding:10px;
+    color:#fff;
 
-    background:#f3f3f3;
+    font-size:10px;
 
-    font-size:12px;
+    letter-spacing:1px;
 }
 
+.tags{
+    margin-top:18px;
 
-.details{
     display:flex;
 
     flex-wrap:wrap;
 
-    gap:15px;
+    gap:7px;
+}
 
-    margin-top:15px;
+.tag{
+    border:1px solid #ddd;
+
+    padding:6px 8px;
 
     color:#666;
 
-    font-size:11px;
+    font-size:10px;
 }
 
 
@@ -469,19 +514,27 @@ main{
 ========================= */
 
 footer{
-    padding:32px 20px;
+    background:#111;
 
-    background:#fff;
+    color:#fff;
 
-    border-top:1px solid #e8e8e8;
+    padding:45px 20px;
 
     text-align:center;
+}
 
-    color:#aaa;
+.footer-logo{
+    font-size:18px;
+
+    letter-spacing:3px;
+}
+
+.footer-copy{
+    margin-top:10px;
+
+    color:#777;
 
     font-size:10px;
-
-    letter-spacing:2px;
 }
 
 
@@ -489,37 +542,59 @@ footer{
    MOBILE
 ========================= */
 
-@media(max-width:420px){
-
-    main{
-        padding-left:14px;
-        padding-right:14px;
-    }
+@media(max-width:600px){
 
     header{
-        padding-left:18px;
-        padding-right:18px;
+        min-height:480px;
+
+        padding:40px 20px;
     }
 
-    .logo{
-        font-size:22px;
+    .hero-title{
+        font-size:38px;
+    }
+
+    .hero-copy{
+        font-size:13px;
+    }
+
+    main{
+        padding:40px 15px 60px;
+    }
+
+    .section{
+        margin-bottom:50px;
+    }
+
+    .section-title{
+        font-size:20px;
     }
 
     .categories{
         grid-template-columns:repeat(4,1fr);
+
+        gap:6px;
     }
 
     .category{
-        min-height:88px;
+        min-height:90px;
     }
 
-    .svg-icon{
-        width:25px;
-        height:25px;
+    .icon{
+        width:24px;
+        height:24px;
     }
 
-    .map{
-        height:250px;
+    .category-name{
+        font-size:10px;
+    }
+
+    .map-wrap{
+        height:330px;
+    }
+
+    .places{
+        grid-template-columns:1fr;
     }
 
 }
@@ -532,18 +607,40 @@ footer{
 
 
 <!-- =========================
-     HEADER
+     HERO
 ========================= -->
 
 <header>
 
-    <div class="logo">
-        ひとりマップ
+<div class="hero">
+
+    <div class="hero-small">
+        HITORI MAP
     </div>
 
-    <div class="catch">
-        一人の時間を、もっと自由に。
+    <h1 class="hero-title">
+        ひとりの時間を、<br>
+        もっと自由に。
+    </h1>
+
+    <div class="hero-copy">
+        一人で行きたい。<br>
+        でも、どこに行けばいいかわからない。<br>
+        そんなときのための場所探し。
     </div>
+
+    <div class="hero-search">
+
+        <div class="search-icon"></div>
+
+        <input
+            type="text"
+            placeholder="行きたい場所を探す"
+        >
+
+    </div>
+
+</div>
 
 </header>
 
@@ -556,430 +653,372 @@ footer{
 <main>
 
 
-    <!-- SEARCH -->
+<!-- CATEGORY -->
 
-    <div class="search">
+<section class="section">
 
-        <div class="search-icon"></div>
+<div class="section-head">
 
-        <input
-            type="text"
-            placeholder="行きたい場所を検索"
-        >
+<div>
 
-    </div>
+<h2 class="section-title">
+何をする？
+</h2>
 
+<p class="section-sub">
+目的から探す
+</p>
 
+</div>
 
-    <!-- CATEGORY -->
+</div>
 
-    <div class="section-title">
 
-        <h2>
-            一人で、何する？
-        </h2>
+<div class="categories">
 
-        <p>
-            目的から探す
-        </p>
 
-    </div>
+<!-- 食事 -->
 
+<div class="category">
 
+<svg class="icon" viewBox="0 0 32 32">
 
-    <div class="categories">
+<path d="M8 4v24"/>
+<path d="M12 4v24"/>
+<path d="M8 4v7"/>
+<path d="M12 4v7"/>
 
+<path d="M20 4v24"/>
+<path d="M20 4c5 3 5 8 5 12"/>
 
-        <!-- 食事 -->
+</svg>
 
-        <div class="category">
+<div class="category-name">
+食事
+</div>
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
+</div>
 
-                <path d="M8 4v24"/>
 
-                <path d="M12 4v24"/>
 
-                <path d="M8 4v7"/>
+<!-- カフェ -->
 
-                <path d="M12 4v7"/>
+<div class="category">
 
-                <path d="M20 4v24"/>
+<svg class="icon" viewBox="0 0 32 32">
 
-                <path d="M20 4c5 3 5 8 5 12"/>
+<path d="M6 12h17v9H6z"/>
+<path d="M23 14h3a3 3 0 0 1 0 6h-3"/>
+<path d="M9 8c0-2 2-2 2-4"/>
+<path d="M14 8c0-2 2-2 2-4"/>
 
-            </svg>
+</svg>
 
-            <span>
-                食事
-            </span>
+<div class="category-name">
+カフェ
+</div>
 
-        </div>
+</div>
 
 
 
-        <!-- カフェ -->
+<!-- 映画 -->
 
-        <div class="category">
+<div class="category">
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
+<svg class="icon" viewBox="0 0 32 32">
 
-                <path d="M6 12h17v9H6z"/>
+<rect x="4" y="7" width="24" height="18" rx="2"/>
+<path d="M4 12h24"/>
+<path d="M9 7v5"/>
+<path d="M15 7v5"/>
+<path d="M21 7v5"/>
 
-                <path d="M23 14h3a3 3 0 0 1 0 6h-3"/>
+</svg>
 
-                <path d="M9 8c0-2 2-2 2-4"/>
+<div class="category-name">
+映画
+</div>
 
-                <path d="M14 8c0-2 2-2 2-4"/>
+</div>
 
-            </svg>
 
-            <span>
-                カフェ
-            </span>
 
-        </div>
+<!-- 温泉 -->
 
+<div class="category">
 
+<svg class="icon" viewBox="0 0 32 32">
 
-        <!-- 映画 -->
+<path d="M8 25c2-3 2-6 0-9"/>
+<path d="M16 25c2-3 2-6 0-9"/>
+<path d="M24 25c2-3 2-6 0-9"/>
+<path d="M5 28h22"/>
 
-        <div class="category">
+</svg>
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
+<div class="category-name">
+温泉
+</div>
 
-                <rect
-                    x="4"
-                    y="7"
-                    width="24"
-                    height="18"
-                    rx="2"
-                />
+</div>
 
-                <path d="M4 12h24"/>
 
-                <path d="M9 7v5"/>
 
-                <path d="M15 7v5"/>
+<!-- カラオケ -->
 
-                <path d="M21 7v5"/>
+<div class="category">
 
-            </svg>
+<svg class="icon" viewBox="0 0 32 32">
 
-            <span>
-                映画
-            </span>
+<rect x="8" y="4" width="16" height="20" rx="8"/>
+<path d="M16 24v4"/>
+<path d="M11 28h10"/>
 
-        </div>
+</svg>
 
+<div class="category-name">
+カラオケ
+</div>
 
+</div>
 
-        <!-- 温泉 -->
 
-        <div class="category">
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
+<!-- 遊ぶ -->
 
-                <path d="M8 25c2-3 2-6 0-9"/>
+<div class="category">
 
-                <path d="M16 25c2-3 2-6 0-9"/>
+<svg class="icon" viewBox="0 0 32 32">
 
-                <path d="M24 25c2-3 2-6 0-9"/>
+<circle cx="16" cy="16" r="12"/>
+<path d="M13 11l8 5-8 5z"/>
 
-                <path d="M5 28h22"/>
+</svg>
 
-            </svg>
+<div class="category-name">
+遊ぶ
+</div>
 
-            <span>
-                温泉
-            </span>
+</div>
 
-        </div>
 
 
+<!-- ドライブ -->
 
-        <!-- カラオケ -->
+<div class="category">
 
-        <div class="category">
+<svg class="icon" viewBox="0 0 32 32">
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
+<path d="M5 20l3-7h16l3 7v6H5z"/>
+<path d="M9 13l2-5h10l2 5"/>
+<circle cx="10" cy="25" r="2"/>
+<circle cx="22" cy="25" r="2"/>
 
-                <rect
-                    x="8"
-                    y="4"
-                    width="16"
-                    height="20"
-                    rx="8"
-                />
+</svg>
 
-                <path d="M16 24v4"/>
+<div class="category-name">
+ドライブ
+</div>
 
-                <path d="M11 28h10"/>
+</div>
 
-            </svg>
 
-            <span>
-                カラオケ
-            </span>
 
-        </div>
+<!-- お出かけ -->
 
+<div class="category">
 
+<svg class="icon" viewBox="0 0 32 32">
 
-        <!-- 遊ぶ -->
+<circle cx="16" cy="16" r="12"/>
+<path d="M16 6v20"/>
+<path d="M6 16h20"/>
+<path d="M20 12l-3 7-7 3 3-7z"/>
 
-        <div class="category">
+</svg>
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
+<div class="category-name">
+お出かけ
+</div>
 
-                <circle
-                    cx="16"
-                    cy="16"
-                    r="12"
-                />
+</div>
 
-                <path d="M13 11l8 5-8 5z"/>
 
-            </svg>
+</div>
 
-            <span>
-                遊ぶ
-            </span>
+</section>
 
-        </div>
 
 
+<!-- MAP -->
 
-        <!-- ドライブ -->
+<section class="section">
 
-        <div class="category">
+<div class="section-head">
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
+<div>
 
-                <path d="M5 20l3-7h16l3 7v6H5z"/>
+<h2 class="section-title">
+近くから探す
+</h2>
 
-                <path d="M9 13l2-5h10l2 5"/>
+<p class="section-sub">
+現在地周辺のひとりスポット
+</p>
 
-                <circle
-                    cx="10"
-                    cy="25"
-                    r="2"
-                />
+</div>
 
-                <circle
-                    cx="22"
-                    cy="25"
-                    r="2"
-                />
+</div>
 
-            </svg>
 
-            <span>
-                ドライブ
-            </span>
+<div class="map-wrap">
 
-        </div>
+<div class="map">
 
+<div class="road one"></div>
+<div class="road two"></div>
+<div class="road three"></div>
+<div class="road four"></div>
 
+<div class="map-point point1"></div>
+<div class="map-point point2"></div>
+<div class="map-point point3"></div>
+<div class="map-point point4"></div>
 
-        <!-- お出かけ -->
+<div class="current"></div>
 
-        <div class="category">
+</div>
 
-            <svg
-                viewBox="0 0 32 32"
-                class="svg-icon"
-            >
 
-                <circle
-                    cx="16"
-                    cy="16"
-                    r="12"
-                />
+<div class="map-label">
+現在地周辺
+</div>
 
-                <path d="M16 6v20"/>
+</div>
 
-                <path d="M6 16h20"/>
+</section>
 
-                <path d="M20 12l-3 7-7 3 3-7z"/>
 
-            </svg>
 
-            <span>
-                お出かけ
-            </span>
+<!-- POPULAR -->
 
-        </div>
+<section class="section">
 
+<div class="section-head">
 
-    </div>
+<div>
 
+<h2 class="section-title">
+一人で行きやすい場所
+</h2>
 
+<p class="section-sub">
+みんなの評価から探す
+</p>
 
-    <!-- MAP -->
+</div>
 
-    <div class="section-title">
+</div>
 
-        <h2>
-            近くから探す
-        </h2>
 
-        <p>
-            現在地周辺のスポット
-        </p>
+<div class="places">
 
-    </div>
 
+<div class="place">
 
+<div class="place-number">
+01
+</div>
 
-    <div class="map">
+<div class="place-name">
+○○ラーメン
+</div>
 
-        <div class="map-line one"></div>
+<div class="place-info">
 
-        <div class="map-line two"></div>
+<div>
 
-        <div class="map-line three"></div>
+<div class="score">
+4.8
+</div>
 
-        <div class="map-line four"></div>
+<div class="score-label">
+一人利用スコア
+</div>
 
-        <div class="map-pin"></div>
+</div>
 
-        <div class="map-text">
-            地図を表示
-        </div>
+<div class="easy">
+一人向き
+</div>
 
-    </div>
+</div>
 
+<div class="tags">
 
+<div class="tag">
+一人客 多い
+</div>
 
-    <button class="location">
-        現在地から探す
-    </button>
+<div class="tag">
+カウンターあり
+</div>
 
+</div>
 
+</div>
 
-    <!-- POPULAR -->
 
-    <div class="section-title">
 
-        <h2>
-            一人で人気の場所
-        </h2>
+<div class="place">
 
-        <p>
-            一人で行きやすいスポット
-        </p>
+<div class="place-number">
+02
+</div>
 
-    </div>
+<div class="place-name">
+○○カフェ
+</div>
 
+<div class="place-info">
 
+<div>
 
-    <!-- PLACE 1 -->
+<div class="score">
+4.7
+</div>
 
-    <div class="place">
+<div class="score-label">
+一人利用スコア
+</div>
 
-        <div class="place-top">
+</div>
 
-            <div class="place-name">
-                ○○ラーメン
-            </div>
+<div class="easy">
+一人向き
+</div>
 
-            <div class="score">
+</div>
 
-                4.8
+<div class="tags">
 
-                <span>
-                    一人利用スコア
-                </span>
+<div class="tag">
+静か
+</div>
 
-            </div>
+<div class="tag">
+Wi-Fiあり
+</div>
 
-        </div>
+</div>
 
+</div>
 
-        <div class="status">
-            一人でかなり行きやすい
-        </div>
 
+</div>
 
-        <div class="details">
-
-            <span>
-                一人客：多い
-            </span>
-
-            <span>
-                カウンター：あり
-            </span>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- PLACE 2 -->
-
-    <div class="place">
-
-        <div class="place-top">
-
-            <div class="place-name">
-                ○○カフェ
-            </div>
-
-            <div class="score">
-
-                4.7
-
-                <span>
-                    一人利用スコア
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="status">
-            静かに過ごしやすい
-        </div>
-
-
-        <div class="details">
-
-            <span>
-                一人客：多い
-            </span>
-
-            <span>
-                Wi-Fi：あり
-            </span>
-
-        </div>
-
-    </div>
+</section>
 
 
 </main>
@@ -990,7 +1029,13 @@ footer{
 
 <footer>
 
-    ひとりマップ
+<div class="footer-logo">
+ひとりマップ
+</div>
+
+<div class="footer-copy">
+一人の時間を、もっと自由に。
+</div>
 
 </footer>
 
