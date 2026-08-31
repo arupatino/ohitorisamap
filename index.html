@@ -14,279 +14,651 @@
 
 body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-    background:#f5f6f8;
-    color:#222;
+    background:#f7f7f7;
+    color:#111;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
 }
 
-.header{
-    background:#ffffff;
-    padding:28px 20px 22px;
-    border-bottom:1px solid #eee;
+/* ヘッダー */
+
+header{
+    background:#fff;
+    padding:28px 22px 24px;
+    border-bottom:1px solid #e8e8e8;
 }
 
 .logo{
-    font-size:27px;
-    font-weight:800;
-    letter-spacing:-1px;
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:2px;
 }
 
-.subtitle{
-    margin-top:5px;
+.catch{
+    margin-top:8px;
+    font-size:13px;
     color:#777;
-    font-size:14px;
+    letter-spacing:1px;
 }
 
-.container{
-    padding:18px;
-    max-width:600px;
+
+/* メイン */
+
+main{
+    max-width:650px;
     margin:auto;
+    padding:24px 18px 60px;
 }
+
+
+/* 検索 */
 
 .search{
-    width:100%;
-    height:52px;
-    border:0;
-    background:white;
-    border-radius:15px;
-    padding:0 18px;
-    font-size:16px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.06);
-    outline:none;
+    background:#fff;
+    border:1px solid #ddd;
+    height:54px;
+    border-radius:4px;
+    display:flex;
+    align-items:center;
+    padding:0 16px;
 }
 
-.title{
-    font-size:20px;
-    font-weight:800;
-    margin:28px 0 14px;
+.search-icon{
+    width:18px;
+    height:18px;
+    border:1.5px solid #222;
+    border-radius:50%;
+    position:relative;
+    margin-right:12px;
 }
+
+.search-icon:after{
+    content:"";
+    width:7px;
+    height:1.5px;
+    background:#222;
+    position:absolute;
+    right:-5px;
+    bottom:0;
+    transform:rotate(45deg);
+}
+
+.search input{
+    border:0;
+    outline:0;
+    width:100%;
+    font-size:15px;
+    background:transparent;
+}
+
+
+/* セクション */
+
+.section-title{
+    margin-top:38px;
+    margin-bottom:18px;
+}
+
+.section-title h2{
+    margin:0;
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.section-title p{
+    margin:6px 0 0;
+    font-size:12px;
+    color:#888;
+}
+
+
+/* カテゴリー */
 
 .categories{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:10px;
+    gap:1px;
+    background:#ddd;
+    border:1px solid #ddd;
 }
 
 .category{
-    background:white;
-    border-radius:16px;
-    padding:15px 5px;
-    text-align:center;
-    font-size:13px;
-    font-weight:600;
-    box-shadow:0 2px 8px rgba(0,0,0,0.04);
-}
-
-.icon{
-    display:block;
-    font-size:27px;
-    margin-bottom:7px;
-}
-
-.map{
-    height:250px;
-    background:#dfe5df;
-    border-radius:20px;
-    margin-top:18px;
+    background:#fff;
+    min-height:95px;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
-    color:#666;
-    font-size:15px;
+    gap:10px;
+    font-size:12px;
+    transition:.2s;
 }
 
+.category:active{
+    background:#eee;
+}
+
+
+/* 線画アイコン */
+
+.icon{
+    width:28px;
+    height:28px;
+    position:relative;
+}
+
+
+/* 食事 */
+
+.food:before{
+    content:"";
+    position:absolute;
+    left:5px;
+    top:3px;
+    width:3px;
+    height:22px;
+    border-left:2px solid #111;
+    border-radius:50%;
+}
+
+.food:after{
+    content:"";
+    position:absolute;
+    right:5px;
+    top:3px;
+    width:10px;
+    height:20px;
+    border:2px solid #111;
+    border-radius:50%;
+}
+
+
+/* カフェ */
+
+.cafe{
+    border:2px solid #111;
+    border-top:0;
+    width:20px;
+    height:16px;
+    margin-top:5px;
+}
+
+.cafe:after{
+    content:"";
+    position:absolute;
+    right:-9px;
+    top:2px;
+    width:8px;
+    height:8px;
+    border:2px solid #111;
+    border-left:0;
+    border-radius:0 8px 8px 0;
+}
+
+
+/* 映画 */
+
+.movie{
+    border:2px solid #111;
+    width:27px;
+    height:20px;
+}
+
+.movie:before,
+.movie:after{
+    content:"";
+    position:absolute;
+    width:4px;
+    height:4px;
+    border:1px solid #111;
+    border-radius:50%;
+}
+
+.movie:before{
+    left:4px;
+    top:6px;
+}
+
+.movie:after{
+    right:4px;
+    top:6px;
+}
+
+
+/* 温泉 */
+
+.spa:before{
+    content:"〰〰";
+    position:absolute;
+    font-size:18px;
+    top:3px;
+    left:0;
+}
+
+
+/* カラオケ */
+
+.karaoke{
+    border:2px solid #111;
+    border-radius:50%;
+    width:20px;
+    height:26px;
+    margin-left:3px;
+}
+
+.karaoke:after{
+    content:"";
+    position:absolute;
+    width:2px;
+    height:9px;
+    background:#111;
+    bottom:-7px;
+    left:7px;
+}
+
+
+/* 遊ぶ */
+
+.play{
+    border:2px solid #111;
+    border-radius:50%;
+}
+
+.play:before{
+    content:"";
+    position:absolute;
+    left:9px;
+    top:6px;
+    border-left:8px solid #111;
+    border-top:5px solid transparent;
+    border-bottom:5px solid transparent;
+}
+
+
+/* ドライブ */
+
+.car{
+    width:28px;
+    height:13px;
+    border:2px solid #111;
+    border-radius:4px;
+    top:8px;
+}
+
+.car:before,
+.car:after{
+    content:"";
+    position:absolute;
+    width:5px;
+    height:5px;
+    border:2px solid #111;
+    border-radius:50%;
+    bottom:-6px;
+    background:#fff;
+}
+
+.car:before{
+    left:2px;
+}
+
+.car:after{
+    right:2px;
+}
+
+
+/* お出かけ */
+
+.outdoor{
+    border:2px solid #111;
+    border-radius:50%;
+}
+
+.outdoor:before{
+    content:"";
+    position:absolute;
+    left:8px;
+    top:5px;
+    width:7px;
+    height:12px;
+    border-left:2px solid #111;
+    transform:rotate(25deg);
+}
+
+
+/* 地図 */
+
+.map{
+    height:280px;
+    background:#e8e8e8;
+    border:1px solid #ddd;
+    position:relative;
+    overflow:hidden;
+}
+
+.map:before{
+    content:"";
+    position:absolute;
+    width:180%;
+    height:1px;
+    background:#cfcfcf;
+    top:45%;
+    left:-30%;
+    transform:rotate(-12deg);
+    box-shadow:
+        0 45px #d3d3d3,
+        0 -50px #d3d3d3;
+}
+
+.map:after{
+    content:"";
+    position:absolute;
+    width:1px;
+    height:180%;
+    background:#d2d2d2;
+    left:55%;
+    top:-30%;
+    transform:rotate(20deg);
+}
+
+.map-text{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    background:#fff;
+    padding:12px 18px;
+    font-size:12px;
+    letter-spacing:1px;
+    z-index:2;
+}
+
+
+/* 現在地 */
+
 .location{
-    margin-top:12px;
     width:100%;
-    height:48px;
+    height:50px;
+    margin-top:10px;
+    background:#111;
+    color:#fff;
     border:0;
-    border-radius:14px;
-    background:#222;
-    color:white;
-    font-size:15px;
+    font-size:14px;
+    letter-spacing:1px;
+}
+
+
+/* 店舗カード */
+
+.place{
+    background:#fff;
+    border:1px solid #e2e2e2;
+    margin-top:12px;
+    padding:20px;
+}
+
+.place-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.place-name{
+    font-size:17px;
+    font-weight:600;
+}
+
+.score{
+    font-size:20px;
     font-weight:700;
 }
 
-.card{
-    background:white;
-    border-radius:18px;
-    padding:18px;
-    margin-top:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+.score span{
+    display:block;
+    font-size:10px;
+    color:#999;
+    font-weight:400;
+    margin-top:2px;
 }
 
-.card-title{
-    font-size:17px;
-    font-weight:800;
-}
-
-.rating{
-    margin-top:8px;
-    font-size:15px;
-}
-
-.info{
-    margin-top:12px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:7px;
-}
-
-.tag{
-    background:#f1f2f4;
-    padding:7px 10px;
-    border-radius:9px;
+.status{
+    margin-top:15px;
+    padding:10px;
+    background:#f3f3f3;
     font-size:12px;
 }
 
-.bottom{
-    height:80px;
+.details{
+    display:flex;
+    gap:15px;
+    margin-top:15px;
+    font-size:11px;
+    color:#666;
+}
+
+
+/* フッター */
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#aaa;
+    font-size:10px;
+    letter-spacing:1px;
 }
 
 </style>
 </head>
 
+
 <body>
 
-<div class="header">
 
-    <div class="logo">🗺️ ひとりマップ</div>
+<header>
 
-    <div class="subtitle">
-        一人で、どこ行く？
+    <div class="logo">
+        ひとりマップ
     </div>
 
-</div>
+    <div class="catch">
+        一人の時間を、もっと自由に。
+    </div>
+
+</header>
 
 
-<div class="container">
-
-    <input
-        class="search"
-        type="text"
-        placeholder="一人で行きたい場所を検索"
-    >
+<main>
 
 
-    <div class="title">
-        一人で何する？
+    <!-- 検索 -->
+
+    <div class="search">
+
+        <div class="search-icon"></div>
+
+        <input
+            type="text"
+            placeholder="行きたい場所を検索"
+        >
+
+    </div>
+
+
+
+    <!-- カテゴリー -->
+
+    <div class="section-title">
+
+        <h2>一人で、何する？</h2>
+
+        <p>目的から探す</p>
+
     </div>
 
 
     <div class="categories">
 
-        <div class="category">
-            <span class="icon">🍜</span>
-            ご飯
-        </div>
 
         <div class="category">
-            <span class="icon">☕</span>
+            <div class="icon food"></div>
+            食事
+        </div>
+
+
+        <div class="category">
+            <div class="icon cafe"></div>
             カフェ
         </div>
 
+
         <div class="category">
-            <span class="icon">🎬</span>
+            <div class="icon movie"></div>
             映画
         </div>
 
+
         <div class="category">
-            <span class="icon">♨️</span>
+            <div class="icon spa"></div>
             温泉
         </div>
 
+
         <div class="category">
-            <span class="icon">🎤</span>
+            <div class="icon karaoke"></div>
             カラオケ
         </div>
 
+
         <div class="category">
-            <span class="icon">🎮</span>
+            <div class="icon play"></div>
             遊ぶ
         </div>
 
+
         <div class="category">
-            <span class="icon">🚗</span>
+            <div class="icon car"></div>
             ドライブ
         </div>
 
+
         <div class="category">
-            <span class="icon">🌳</span>
+            <div class="icon outdoor"></div>
             お出かけ
         </div>
+
 
     </div>
 
 
-    <div class="title">
-        📍 近くのひとりスポット
+
+    <!-- 地図 -->
+
+    <div class="section-title">
+
+        <h2>近くから探す</h2>
+
+        <p>現在地周辺のスポット</p>
+
     </div>
 
 
     <div class="map">
-        地図を表示する場所
+
+        <div class="map-text">
+            地図を表示
+        </div>
+
     </div>
 
 
     <button class="location">
-        📍 現在地から探す
+        現在地から探す
     </button>
 
 
-    <div class="title">
-        ⭐ 一人で人気
-    </div>
 
+    <!-- 人気 -->
 
-    <div class="card">
+    <div class="section-title">
 
-        <div class="card-title">
-            ○○ラーメン
-        </div>
+        <h2>一人で人気の場所</h2>
 
-        <div class="rating">
-            ⭐ 4.6　 一人利用しやすさ
-        </div>
-
-        <div class="info">
-
-            <span class="tag">👤 一人客 多い</span>
-
-            <span class="tag">🪑 カウンターあり</span>
-
-            <span class="tag">💰 ¥1,000〜</span>
-
-        </div>
+        <p>一人で行きやすいスポット</p>
 
     </div>
 
 
-    <div class="card">
+    <div class="place">
 
-        <div class="card-title">
-            ○○カフェ
+        <div class="place-top">
+
+            <div class="place-name">
+                ○○ラーメン
+            </div>
+
+            <div class="score">
+                4.8
+                <span>一人利用スコア</span>
+            </div>
+
         </div>
 
-        <div class="rating">
-            ⭐ 4.8　 一人利用しやすさ
+
+        <div class="status">
+            一人でかなり行きやすい
         </div>
 
-        <div class="info">
 
-            <span class="tag">👤 一人客 多い</span>
-
-            <span class="tag">☕ 静か</span>
-
-            <span class="tag">📶 Wi-Fiあり</span>
-
+        <div class="details">
+            <span>一人客：多い</span>
+            <span>カウンター：あり</span>
         </div>
 
     </div>
 
 
-    <div class="bottom"></div>
 
-</div>
+    <div class="place">
+
+        <div class="place-top">
+
+            <div class="place-name">
+                ○○カフェ
+            </div>
+
+            <div class="score">
+                4.7
+                <span>一人利用スコア</span>
+            </div>
+
+        </div>
+
+
+        <div class="status">
+            静かに過ごしやすい
+        </div>
+
+
+        <div class="details">
+            <span>一人客：多い</span>
+            <span>Wi-Fi：あり</span>
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+    HITORI MAP
+</footer>
+
 
 </body>
 </html>
