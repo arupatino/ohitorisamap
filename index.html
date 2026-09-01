@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ひとりマップ</title>
+<title>HITORI SYSTEM</title>
 
 <style>
 
-/* =========================
-   BASE
-========================= */
+/* ========================================
+   SYSTEM BASE
+======================================== */
 
 *{
     box-sizing:border-box;
@@ -22,8 +22,8 @@ html{
 
 body{
     margin:0;
-    background:#f5f5f5;
-    color:#111;
+    background:#05080c;
+    color:#d9f7ff;
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -31,339 +31,713 @@ body{
         "Hiragino Kaku Gothic ProN",
         "Yu Gothic",
         sans-serif;
+
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(rgba(80,220,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(80,220,255,.025) 1px,transparent 1px);
+
+    background-size:40px 40px;
+
+    z-index:999;
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/* ========================================
+   GLOW
+======================================== */
+
+.glow{
+    text-shadow:
+        0 0 5px rgba(70,220,255,.8),
+        0 0 18px rgba(70,220,255,.35);
+}
+
+
+/* ========================================
+   HEADER / SYSTEM
+======================================== */
 
 header{
-    background:#111;
-    color:#fff;
-    min-height:420px;
-
-    display:flex;
-    align-items:center;
-
-    padding:45px 24px;
-}
-
-.hero{
-    width:100%;
-    max-width:700px;
-    margin:auto;
-}
-
-.hero-small{
-    font-size:11px;
-    letter-spacing:3px;
-    opacity:.55;
-    margin-bottom:25px;
-}
-
-.hero-title{
-    font-size:48px;
-    font-weight:600;
-    line-height:1.2;
-    letter-spacing:3px;
-    margin:0;
-}
-
-.hero-copy{
-    margin-top:22px;
-    font-size:15px;
-    line-height:2;
-    color:#bbb;
-}
-
-.hero-search{
-    margin-top:35px;
-
-    width:100%;
-    max-width:580px;
-
-    height:60px;
-
-    display:flex;
-    align-items:center;
-
-    background:#fff;
-    color:#111;
-
-    padding:0 20px;
-
-    border-radius:3px;
-}
-
-.search-icon{
-    width:17px;
-    height:17px;
-
-    border:1.5px solid #111;
-
-    border-radius:50%;
+    min-height:100vh;
 
     position:relative;
 
-    margin-right:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:40px 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,170,255,.08),
+            transparent 45%
+        ),
+        #05080c;
+
+    overflow:hidden;
 }
 
-.search-icon:after{
+
+/* scanning line */
+
+header::after{
     content:"";
 
     position:absolute;
 
-    width:7px;
-    height:1.5px;
-
-    background:#111;
-
-    right:-5px;
-    bottom:-2px;
-
-    transform:rotate(45deg);
-}
-
-.hero-search input{
+    left:0;
     width:100%;
+    height:1px;
 
-    border:0;
-    outline:0;
+    background:rgba(60,220,255,.25);
 
-    font-size:15px;
+    animation:scan 5s linear infinite;
+}
 
-    background:transparent;
+@keyframes scan{
+    0%{
+        top:0;
+    }
+
+    100%{
+        top:100%;
+    }
 }
 
 
-/* =========================
-   MAIN
-========================= */
+/* ========================================
+   HUD CORNERS
+======================================== */
 
-main{
+.corner{
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    border-color:rgba(80,220,255,.45);
+    border-style:solid;
+}
+
+.corner.tl{
+    top:25px;
+    left:25px;
+
+    border-width:1px 0 0 1px;
+}
+
+.corner.tr{
+    top:25px;
+    right:25px;
+
+    border-width:1px 1px 0 0;
+}
+
+.corner.bl{
+    bottom:25px;
+    left:25px;
+
+    border-width:0 0 1px 1px;
+}
+
+.corner.br{
+    bottom:25px;
+    right:25px;
+
+    border-width:0 1px 1px 0;
+}
+
+
+/* ========================================
+   HERO
+======================================== */
+
+.hero{
     width:100%;
-    max-width:900px;
+    max-width:1000px;
 
-    margin:auto;
+    position:relative;
 
-    padding:55px 20px 80px;
+    z-index:2;
 }
 
 
-/* =========================
-   SECTION
-========================= */
+/* system status */
 
-.section{
-    margin-bottom:65px;
-}
-
-.section-head{
+.system-status{
     display:flex;
+    align-items:center;
 
-    justify-content:space-between;
+    gap:10px;
 
-    align-items:end;
+    font-size:10px;
+
+    letter-spacing:3px;
+
+    color:#65ddff;
 
     margin-bottom:25px;
 }
 
-.section-title{
+.status-light{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#65ddff;
+
+    box-shadow:
+        0 0 8px #65ddff,
+        0 0 20px rgba(101,221,255,.6);
+
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.3;
+    }
+}
+
+
+/* title */
+
+.hero-title{
     margin:0;
 
-    font-size:24px;
+    font-size:clamp(42px,8vw,88px);
+
+    line-height:1;
+
+    letter-spacing:8px;
 
     font-weight:600;
+
+    color:#eaffff;
+
+    text-shadow:
+        0 0 8px rgba(100,230,255,.8),
+        0 0 30px rgba(0,180,255,.3);
+}
+
+.hero-title span{
+    color:#65ddff;
+}
+
+
+/* subtitle */
+
+.hero-sub{
+    margin-top:20px;
+
+    color:#78909c;
+
+    font-size:11px;
+
+    letter-spacing:4px;
+}
+
+
+/* ========================================
+   SEARCH SYSTEM
+======================================== */
+
+.search-panel{
+    margin-top:50px;
+
+    width:100%;
+    max-width:700px;
+
+    position:relative;
+}
+
+.search-label{
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    color:#4c8799;
+
+    margin-bottom:9px;
+}
+
+.search-box{
+    height:65px;
+
+    display:flex;
+    align-items:center;
+
+    border:1px solid rgba(80,220,255,.45);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(30,150,200,.08),
+            rgba(0,0,0,.2)
+        );
+
+    box-shadow:
+        0 0 25px rgba(0,180,255,.06),
+        inset 0 0 20px rgba(0,180,255,.03);
+
+    transition:.25s;
+}
+
+.search-box:focus-within{
+    border-color:#65ddff;
+
+    box-shadow:
+        0 0 25px rgba(0,200,255,.15),
+        inset 0 0 20px rgba(0,200,255,.05);
+}
+
+.search-symbol{
+    width:18px;
+    height:18px;
+
+    border:1px solid #65ddff;
+
+    border-radius:50%;
+
+    margin:0 18px;
+
+    position:relative;
+
+    box-shadow:0 0 8px rgba(80,220,255,.5);
+}
+
+.search-symbol::after{
+    content:"";
+
+    position:absolute;
+
+    width:8px;
+    height:1px;
+
+    background:#65ddff;
+
+    right:-6px;
+    bottom:-3px;
+
+    transform:rotate(45deg);
+}
+
+.search-box input{
+    flex:1;
+
+    height:100%;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+
+    color:#dffaff;
+
+    font-size:14px;
 
     letter-spacing:1px;
 }
 
-.section-sub{
-    margin:6px 0 0;
-
-    color:#999;
-
-    font-size:12px;
+.search-box input::placeholder{
+    color:#45606b;
 }
 
 
-/* =========================
+/* ========================================
+   MAIN
+======================================== */
+
+main{
+    width:100%;
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:80px 25px;
+}
+
+
+/* ========================================
+   SECTION
+======================================== */
+
+.section{
+    margin-bottom:100px;
+}
+
+.section-head{
+    margin-bottom:30px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+}
+
+.section-code{
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    color:#3e7f91;
+}
+
+.section-title{
+    margin:5px 0 0;
+
+    font-size:25px;
+
+    font-weight:500;
+
+    letter-spacing:3px;
+}
+
+.section-sub{
+    margin:8px 0 0;
+
+    font-size:10px;
+
+    color:#59717b;
+
+    letter-spacing:1px;
+}
+
+
+/* ========================================
    CATEGORY
-========================= */
+======================================== */
 
 .categories{
     display:grid;
 
     grid-template-columns:repeat(4,1fr);
 
-    gap:10px;
+    gap:12px;
 }
 
 .category{
-    min-height:110px;
+    min-height:140px;
 
-    background:#fff;
-
-    border:1px solid #e4e4e4;
+    position:relative;
 
     display:flex;
-
     flex-direction:column;
-
+    align-items:center;
     justify-content:center;
 
-    align-items:center;
+    gap:16px;
 
-    gap:12px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30,100,120,.08),
+            rgba(0,0,0,.25)
+        );
+
+    border:1px solid rgba(70,180,210,.2);
 
     cursor:pointer;
 
-    transition:.2s;
-}
-
-.category:hover{
-    transform:translateY(-3px);
-
-    border-color:#111;
-}
-
-.category-name{
-    font-size:12px;
-
-    letter-spacing:1px;
-}
-
-
-/* =========================
-   SVG
-========================= */
-
-.icon{
-    width:30px;
-    height:30px;
-
-    fill:none;
-
-    stroke:#111;
-
-    stroke-width:1.5;
-
-    stroke-linecap:round;
-
-    stroke-linejoin:round;
-}
-
-
-/* =========================
-   MAP
-========================= */
-
-.map-wrap{
-    position:relative;
-
-    width:100%;
-
-    height:430px;
-
-    background:#ddd;
+    transition:.25s;
 
     overflow:hidden;
 }
 
-.map{
+.category::before{
+    content:"";
+
     position:absolute;
 
+    top:0;
+    left:0;
+
+    width:30px;
+    height:30px;
+
+    border-top:1px solid #65ddff;
+    border-left:1px solid #65ddff;
+}
+
+.category::after{
+    content:"";
+
+    position:absolute;
+
+    right:0;
+    bottom:0;
+
+    width:30px;
+    height:30px;
+
+    border-right:1px solid rgba(101,221,255,.4);
+    border-bottom:1px solid rgba(101,221,255,.4);
+}
+
+.category:hover{
+    transform:translateY(-5px);
+
+    border-color:#65ddff;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,150,190,.16),
+            rgba(0,0,0,.3)
+        );
+
+    box-shadow:
+        0 0 25px rgba(50,210,255,.1);
+}
+
+.icon{
+    width:34px;
+    height:34px;
+
+    fill:none;
+
+    stroke:#65ddff;
+
+    stroke-width:1.3;
+
+    stroke-linecap:round;
+    stroke-linejoin:round;
+
+    filter:
+        drop-shadow(0 0 4px rgba(70,220,255,.5));
+}
+
+.category-name{
+    font-size:11px;
+
+    letter-spacing:3px;
+
+    color:#c7eaf2;
+}
+
+
+/* ========================================
+   MAP / RADAR
+======================================== */
+
+.map-wrap{
+    position:relative;
+
+    height:500px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(70,180,210,.25);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,180,220,.07),
+            transparent 50%
+        ),
+        #050a0e;
+}
+
+
+/* grid */
+
+.map-wrap::before{
+    content:"";
+
+    position:absolute;
     inset:0;
 
-    background:#e8e8e8;
+    background:
+        linear-gradient(
+            rgba(70,200,230,.08) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(70,200,230,.08) 1px,
+            transparent 1px
+        );
+
+    background-size:50px 50px;
 }
 
 
-/* roads */
+/* radar */
 
-.road{
+.radar{
     position:absolute;
 
-    background:#cfcfcf;
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:320px;
+    height:320px;
+
+    border:1px solid rgba(70,220,255,.3);
+
+    border-radius:50%;
 }
 
-.road.one{
-    width:130%;
-    height:2px;
+.radar::before,
+.radar::after{
+    content:"";
 
-    left:-15%;
-    top:30%;
+    position:absolute;
 
-    transform:rotate(13deg);
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    border:1px solid rgba(70,220,255,.18);
+
+    border-radius:50%;
 }
 
-.road.two{
-    width:130%;
-    height:2px;
-
-    left:-15%;
-    top:65%;
-
-    transform:rotate(-9deg);
+.radar::before{
+    width:210px;
+    height:210px;
 }
 
-.road.three{
-    width:2px;
-    height:130%;
-
-    left:30%;
-    top:-15%;
-
-    transform:rotate(12deg);
-}
-
-.road.four{
-    width:2px;
-    height:130%;
-
-    left:72%;
-    top:-15%;
-
-    transform:rotate(-15deg);
+.radar::after{
+    width:100px;
+    height:100px;
 }
 
 
-/* map locations */
+/* radar cross */
+
+.radar-line{
+    position:absolute;
+
+    background:rgba(70,220,255,.15);
+}
+
+.radar-line.h{
+    left:0;
+    top:50%;
+
+    width:100%;
+    height:1px;
+}
+
+.radar-line.v{
+    top:0;
+    left:50%;
+
+    height:100%;
+    width:1px;
+}
+
+
+/* radar sweep */
+
+.sweep{
+    position:absolute;
+
+    width:50%;
+    height:50%;
+
+    left:50%;
+    top:50%;
+
+    transform-origin:0 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(70,220,255,.25),
+            transparent
+        );
+
+    clip-path:polygon(0 0,100% 0,100% 4%);
+
+    animation:rotate 4s linear infinite;
+}
+
+@keyframes rotate{
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* points */
 
 .map-point{
     position:absolute;
 
-    width:17px;
-    height:17px;
-
-    background:#111;
-
-    border:4px solid #fff;
+    width:12px;
+    height:12px;
 
     border-radius:50%;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.2);
+    background:#65ddff;
+
+    border:2px solid #dfffff;
+
+    box-shadow:
+        0 0 8px #65ddff,
+        0 0 20px rgba(70,220,255,.7);
+
+    animation:pointpulse 2s infinite;
+}
+
+@keyframes pointpulse{
+    0%,100%{
+        box-shadow:
+            0 0 8px #65ddff,
+            0 0 20px rgba(70,220,255,.7);
+    }
+
+    50%{
+        box-shadow:
+            0 0 3px #65ddff,
+            0 0 8px rgba(70,220,255,.3);
+    }
 }
 
 .point1{
-    left:25%;
-    top:35%;
+    left:30%;
+    top:30%;
 }
 
 .point2{
-    left:61%;
-    top:25%;
+    left:68%;
+    top:27%;
 }
 
 .point3{
-    left:70%;
-    top:68%;
+    left:72%;
+    top:70%;
 }
 
 .point4{
-    left:38%;
-    top:72%;
+    left:27%;
+    top:67%;
 }
 
 
@@ -377,40 +751,67 @@ main{
 
     transform:translate(-50%,-50%);
 
-    width:24px;
-    height:24px;
+    width:18px;
+    height:18px;
 
-    background:#111;
-
-    border:5px solid #fff;
+    border:1px solid #fff;
 
     border-radius:50%;
 
-    box-shadow:0 0 0 10px rgba(0,0,0,.08);
+    box-shadow:
+        0 0 10px #65ddff,
+        0 0 30px rgba(70,220,255,.8);
 }
 
+.current::before{
+    content:"";
 
-/* map label */
-
-.map-label{
     position:absolute;
 
-    left:20px;
-    top:20px;
+    inset:5px;
 
-    background:#fff;
+    background:#65ddff;
 
-    padding:12px 16px;
-
-    font-size:12px;
-
-    letter-spacing:1px;
+    border-radius:50%;
 }
 
 
-/* =========================
-   PLACE
-========================= */
+/* map HUD */
+
+.map-info{
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    color:#65ddff;
+
+    line-height:2;
+}
+
+.map-status{
+    position:absolute;
+
+    right:20px;
+    bottom:20px;
+
+    text-align:right;
+
+    font-size:9px;
+
+    color:#527783;
+
+    line-height:2;
+}
+
+
+/* ========================================
+   PLACES
+======================================== */
 
 .places{
     display:grid;
@@ -421,27 +822,37 @@ main{
 }
 
 .place{
-    background:#fff;
+    position:relative;
 
-    border:1px solid #e2e2e2;
+    padding:28px;
 
-    padding:25px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20,80,100,.08),
+            rgba(0,0,0,.3)
+        );
 
-    transition:.2s;
+    border:1px solid rgba(70,180,210,.2);
+
+    transition:.25s;
 }
 
 .place:hover{
-    transform:translateY(-3px);
+    border-color:#65ddff;
 
-    border-color:#111;
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 0 25px rgba(50,210,255,.08);
 }
 
 .place-number{
-    color:#aaa;
+    font-size:9px;
 
-    font-size:10px;
+    letter-spacing:3px;
 
-    letter-spacing:2px;
+    color:#397184;
 
     margin-bottom:18px;
 }
@@ -449,11 +860,13 @@ main{
 .place-name{
     font-size:19px;
 
-    font-weight:600;
+    letter-spacing:2px;
+
+    color:#e2f9ff;
 }
 
 .place-info{
-    margin-top:18px;
+    margin-top:25px;
 
     display:flex;
 
@@ -463,33 +876,38 @@ main{
 }
 
 .score{
-    font-size:28px;
+    font-size:35px;
 
-    font-weight:600;
+    color:#65ddff;
+
+    text-shadow:
+        0 0 10px rgba(70,220,255,.4);
 }
 
 .score-label{
-    color:#999;
+    font-size:8px;
 
-    font-size:10px;
+    letter-spacing:2px;
 
-    margin-top:3px;
+    color:#527783;
+
+    margin-top:4px;
 }
 
 .easy{
-    padding:7px 10px;
+    padding:8px 12px;
 
-    background:#111;
+    border:1px solid rgba(70,220,255,.4);
 
-    color:#fff;
+    color:#65ddff;
 
-    font-size:10px;
+    font-size:9px;
 
-    letter-spacing:1px;
+    letter-spacing:2px;
 }
 
 .tags{
-    margin-top:18px;
+    margin-top:22px;
 
     display:flex;
 
@@ -499,71 +917,86 @@ main{
 }
 
 .tag{
-    border:1px solid #ddd;
+    padding:6px 9px;
 
-    padding:6px 8px;
+    border:1px solid rgba(100,160,175,.2);
 
-    color:#666;
+    color:#66848e;
 
-    font-size:10px;
+    font-size:9px;
+
+    letter-spacing:1px;
 }
 
 
-/* =========================
+/* ========================================
    FOOTER
-========================= */
+======================================== */
 
 footer{
-    background:#111;
+    position:relative;
 
-    color:#fff;
-
-    padding:45px 20px;
+    padding:55px 20px;
 
     text-align:center;
+
+    border-top:1px solid rgba(70,180,210,.15);
+
+    background:#030609;
 }
 
 .footer-logo{
     font-size:18px;
 
-    letter-spacing:3px;
+    letter-spacing:5px;
+
+    color:#65ddff;
+
+    text-shadow:
+        0 0 10px rgba(70,220,255,.5);
 }
 
 .footer-copy{
-    margin-top:10px;
+    margin-top:12px;
 
-    color:#777;
+    font-size:8px;
 
-    font-size:10px;
+    letter-spacing:3px;
+
+    color:#3d5963;
 }
 
 
-/* =========================
+/* ========================================
    MOBILE
-========================= */
+======================================== */
 
 @media(max-width:600px){
 
     header{
-        min-height:480px;
+        min-height:100vh;
 
-        padding:40px 20px;
+        padding:30px 18px;
     }
 
     .hero-title{
-        font-size:38px;
+        font-size:42px;
+
+        letter-spacing:5px;
     }
 
-    .hero-copy{
-        font-size:13px;
+    .hero-sub{
+        font-size:8px;
+
+        letter-spacing:3px;
     }
 
     main{
-        padding:40px 15px 60px;
+        padding:60px 15px;
     }
 
     .section{
-        margin-bottom:50px;
+        margin-bottom:75px;
     }
 
     .section-title{
@@ -571,30 +1004,31 @@ footer{
     }
 
     .categories{
-        grid-template-columns:repeat(4,1fr);
+        grid-template-columns:repeat(2,1fr);
 
-        gap:6px;
+        gap:8px;
     }
 
     .category{
-        min-height:90px;
-    }
-
-    .icon{
-        width:24px;
-        height:24px;
-    }
-
-    .category-name{
-        font-size:10px;
+        min-height:120px;
     }
 
     .map-wrap{
-        height:330px;
+        height:360px;
+    }
+
+    .radar{
+        width:260px;
+        height:260px;
     }
 
     .places{
         grid-template-columns:1fr;
+    }
+
+    .corner{
+        width:45px;
+        height:45px;
     }
 
 }
@@ -606,37 +1040,64 @@ footer{
 <body>
 
 
-<!-- =========================
+<!-- ========================================
      HERO
-========================= -->
+======================================== -->
 
 <header>
 
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+
 <div class="hero">
 
-    <div class="hero-small">
-        HITORI MAP
+    <div class="system-status">
+
+        <div class="status-light"></div>
+
+        SYSTEM ONLINE
+
     </div>
+
 
     <h1 class="hero-title">
-        ひとりの時間を、<br>
-        もっと自由に。
+
+        HITORI<br>
+
+        <span>MAP</span>
+
     </h1>
 
-    <div class="hero-copy">
-        一人で行きたい。<br>
-        でも、どこに行けばいいかわからない。<br>
-        そんなときのための場所探し。
+
+    <div class="hero-sub">
+
+        PERSONAL LOCATION DISCOVERY SYSTEM
+
     </div>
 
-    <div class="hero-search">
 
-        <div class="search-icon"></div>
+    <div class="search-panel">
 
-        <input
-            type="text"
-            placeholder="行きたい場所を探す"
-        >
+        <div class="search-label">
+
+            SEARCH LOCATION
+
+        </div>
+
+
+        <div class="search-box">
+
+            <div class="search-symbol"></div>
+
+            <input
+                type="text"
+                placeholder="行きたい場所を入力してください"
+            >
+
+        </div>
 
     </div>
 
@@ -646,14 +1107,16 @@ footer{
 
 
 
-<!-- =========================
+<!-- ========================================
      MAIN
-========================= -->
+======================================== -->
 
 <main>
 
 
-<!-- CATEGORY -->
+<!-- ========================================
+     CATEGORY
+======================================== -->
 
 <section class="section">
 
@@ -661,12 +1124,16 @@ footer{
 
 <div>
 
+<div class="section-code">
+MODULE 01 / ACTIVITY
+</div>
+
 <h2 class="section-title">
 何をする？
 </h2>
 
 <p class="section-sub">
-目的から探す
+目的を選択してください
 </p>
 
 </div>
@@ -677,8 +1144,6 @@ footer{
 <div class="categories">
 
 
-<!-- 食事 -->
-
 <div class="category">
 
 <svg class="icon" viewBox="0 0 32 32">
@@ -687,7 +1152,6 @@ footer{
 <path d="M12 4v24"/>
 <path d="M8 4v7"/>
 <path d="M12 4v7"/>
-
 <path d="M20 4v24"/>
 <path d="M20 4c5 3 5 8 5 12"/>
 
@@ -700,8 +1164,6 @@ footer{
 </div>
 
 
-
-<!-- カフェ -->
 
 <div class="category">
 
@@ -721,8 +1183,6 @@ footer{
 </div>
 
 
-
-<!-- 映画 -->
 
 <div class="category">
 
@@ -744,8 +1204,6 @@ footer{
 
 
 
-<!-- 温泉 -->
-
 <div class="category">
 
 <svg class="icon" viewBox="0 0 32 32">
@@ -765,8 +1223,6 @@ footer{
 
 
 
-<!-- カラオケ -->
-
 <div class="category">
 
 <svg class="icon" viewBox="0 0 32 32">
@@ -785,8 +1241,6 @@ footer{
 
 
 
-<!-- 遊ぶ -->
-
 <div class="category">
 
 <svg class="icon" viewBox="0 0 32 32">
@@ -803,8 +1257,6 @@ footer{
 </div>
 
 
-
-<!-- ドライブ -->
 
 <div class="category">
 
@@ -824,8 +1276,6 @@ footer{
 </div>
 
 
-
-<!-- お出かけ -->
 
 <div class="category">
 
@@ -851,7 +1301,9 @@ footer{
 
 
 
-<!-- MAP -->
+<!-- ========================================
+     RADAR
+======================================== -->
 
 <section class="section">
 
@@ -859,12 +1311,16 @@ footer{
 
 <div>
 
+<div class="section-code">
+MODULE 02 / SCANNER
+</div>
+
 <h2 class="section-title">
 近くから探す
 </h2>
 
 <p class="section-sub">
-現在地周辺のひとりスポット
+現在地周辺をスキャンしています
 </p>
 
 </div>
@@ -874,25 +1330,43 @@ footer{
 
 <div class="map-wrap">
 
-<div class="map">
 
-<div class="road one"></div>
-<div class="road two"></div>
-<div class="road three"></div>
-<div class="road four"></div>
+<div class="radar">
+
+<div class="radar-line h"></div>
+<div class="radar-line v"></div>
+
+<div class="sweep"></div>
+
+</div>
+
 
 <div class="map-point point1"></div>
 <div class="map-point point2"></div>
 <div class="map-point point3"></div>
 <div class="map-point point4"></div>
 
+
 <div class="current"></div>
+
+
+<div class="map-info">
+
+LOCATION SCANNER<br>
+STATUS : ACTIVE<br>
+SIGNAL : SEARCHING<br>
+RANGE : 5 KM
 
 </div>
 
 
-<div class="map-label">
-現在地周辺
+<div class="map-status">
+
+◉ CURRENT POSITION<br>
+◎ SPOT DETECTED<br>
+◎ SPOT DETECTED<br>
+◎ SPOT DETECTED
+
 </div>
 
 </div>
@@ -901,7 +1375,9 @@ footer{
 
 
 
-<!-- POPULAR -->
+<!-- ========================================
+     RECOMMEND
+======================================== -->
 
 <section class="section">
 
@@ -909,12 +1385,16 @@ footer{
 
 <div>
 
+<div class="section-code">
+MODULE 03 / ANALYSIS
+</div>
+
 <h2 class="section-title">
 一人で行きやすい場所
 </h2>
 
 <p class="section-sub">
-みんなの評価から探す
+利用データからおすすめを解析
 </p>
 
 </div>
@@ -928,7 +1408,7 @@ footer{
 <div class="place">
 
 <div class="place-number">
-01
+TARGET 001
 </div>
 
 <div class="place-name">
@@ -944,13 +1424,13 @@ footer{
 </div>
 
 <div class="score-label">
-一人利用スコア
+SOLO SCORE
 </div>
 
 </div>
 
 <div class="easy">
-一人向き
+SOLO FRIENDLY
 </div>
 
 </div>
@@ -958,11 +1438,11 @@ footer{
 <div class="tags">
 
 <div class="tag">
-一人客 多い
+一人客 多
 </div>
 
 <div class="tag">
-カウンターあり
+COUNTER
 </div>
 
 </div>
@@ -974,7 +1454,7 @@ footer{
 <div class="place">
 
 <div class="place-number">
-02
+TARGET 002
 </div>
 
 <div class="place-name">
@@ -990,13 +1470,13 @@ footer{
 </div>
 
 <div class="score-label">
-一人利用スコア
+SOLO SCORE
 </div>
 
 </div>
 
 <div class="easy">
-一人向き
+SOLO FRIENDLY
 </div>
 
 </div>
@@ -1004,11 +1484,11 @@ footer{
 <div class="tags">
 
 <div class="tag">
-静か
+静音
 </div>
 
 <div class="tag">
-Wi-Fiあり
+WI-FI
 </div>
 
 </div>
@@ -1025,16 +1505,18 @@ Wi-Fiあり
 
 
 
-<!-- FOOTER -->
+<!-- ========================================
+     FOOTER
+======================================== -->
 
 <footer>
 
 <div class="footer-logo">
-ひとりマップ
+HITORI SYSTEM
 </div>
 
 <div class="footer-copy">
-一人の時間を、もっと自由に。
+PERSONAL LOCATION DISCOVERY SYSTEM
 </div>
 
 </footer>
