@@ -2463,4 +2463,2311 @@ body::before{
 
 <div class="category" onclick="categorySearch('お出かけ')">
 
-<svg class="category-svg" viewBox="0 0 32 
+<svg class="category-svg" viewBox="0 0 32 32">
+
+<circle cx="16" cy="16" r="12"/>
+<path d="M16 4v24"/>
+<path d="M4 16h24"/>
+<path d="M21 11l-4 9-9 4 4-9z"/>
+
+</svg>
+
+<div class="category-name">
+お出かけ
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- RADAR -->
+
+<div class="module">
+
+<div class="module-head">
+
+<div class="module-code">
+    MODULE 02 / SCANNER
+</div>
+
+<div class="module-title">
+    近くから探す
+</div>
+
+<div class="module-sub">
+    現在地周辺をスキャン
+</div>
+
+</div>
+
+
+<div class="radar-wrap">
+
+<div class="radar">
+
+<div class="radar-line-h"></div>
+
+<div class="radar-line-v"></div>
+
+<div class="sweep"></div>
+
+</div>
+
+
+<div class="radar-point rp1"></div>
+<div class="radar-point rp2"></div>
+<div class="radar-point rp3"></div>
+<div class="radar-point rp4"></div>
+
+<div class="radar-current"></div>
+
+
+<div class="radar-info">
+
+LOCATION SCANNER<br>
+STATUS : ACTIVE<br>
+RANGE : 5 KM
+
+</div>
+
+
+<div class="radar-info-right">
+
+現在地<br>
+周辺を検索<br>
+SCAN READY
+
+</div>
+
+</div>
+
+<div
+    class="action"
+    style="margin-top:12px;"
+    onclick="go('map');initMap();locateUser();"
+>
+    ◎ 現在地周辺をスキャン
+</div>
+
+</div>
+
+
+
+<!-- POPULAR -->
+
+<div class="module">
+
+<div class="module-head">
+
+<div class="module-code">
+    MODULE 03 / ANALYSIS
+</div>
+
+<div class="module-title">
+    一人で行きやすい場所
+</div>
+
+<div class="module-sub">
+    みんなの評価から探す
+</div>
+
+</div>
+
+
+<div
+    class="places"
+    id="homePlaces"
+></div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     SEARCH
+================================================== -->
+
+<section class="page" id="search">
+
+<header class="topbar">
+
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
+
+<div class="top-status">
+
+<div class="status-dot"></div>
+
+SEARCH SYSTEM
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="page-code">
+    MODULE 04 / SEARCH
+</div>
+
+<h2 class="page-title">
+    場所を探す
+</h2>
+
+<p class="page-sub">
+    あなたが一人で行きたい場所を検索
+</p>
+
+
+<div class="search-large">
+
+<input
+    id="searchInput"
+    type="text"
+    placeholder="例：ラーメン、映画、温泉、カフェ..."
+    oninput="performSearch()"
+>
+
+</div>
+
+
+<div class="search-results">
+
+<div
+    class="result-count"
+    id="resultCount"
+>
+    検索結果
+</div>
+
+<div id="searchResults"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     MAP
+================================================== -->
+
+<section class="page" id="map">
+
+<header class="topbar">
+
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
+
+<div class="top-status">
+
+<div class="status-dot"></div>
+
+LOCATION SYSTEM
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="page-code">
+    MODULE 05 / MAP
+</div>
+
+<h2 class="page-title">
+    近くから探す
+</h2>
+
+<p class="page-sub">
+    現在地周辺のひとりスポット
+</p>
+
+
+<div class="real-map">
+
+<div id="mapCanvas"></div>
+
+<div class="map-overlay" id="mapStatus">
+
+LOCATION SYSTEM<br>
+STATUS : STANDBY<br>
+RANGE : 5 KM
+
+</div>
+
+<button
+    class="location-button"
+    onclick="locateUser()"
+>
+    ◎ 現在地を取得
+</button>
+
+</div>
+
+
+<div
+    class="module"
+    id="nearbyPlaces"
+></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     PLACE
+================================================== -->
+
+<section class="page" id="place">
+
+<header class="topbar">
+
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
+
+<div class="top-status">
+
+<div class="status-dot"></div>
+
+PLACE ANALYSIS
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="detail-hero">
+
+<div
+    class="page-code"
+    id="detailId"
+>
+    TARGET 001
+</div>
+
+<h2
+    class="detail-name"
+    id="detailName"
+>
+    ○○ラーメン
+</h2>
+
+<div
+    class="detail-location"
+    id="detailLocation"
+>
+    場所情報を確認しています
+</div>
+
+
+<div class="detail-score-box">
+
+<div>
+
+<div
+    class="big-score"
+    id="detailScore"
+>
+    4.8
+</div>
+
+<div class="detail-score-label">
+    一人利用スコア
+</div>
+
+</div>
+
+
+<div class="easy">
+    一人向き
+</div>
+
+</div>
+
+
+<div class="detail-actions">
+
+<div
+    class="action"
+    id="favoriteAction"
+    onclick="toggleFavorite()"
+>
+    ♡ お気に入り
+</div>
+
+<div
+    class="action"
+    onclick="openRating()"
+>
+    ★ 評価する
+</div>
+
+<div
+    class="action"
+    onclick="markVisited()"
+>
+    ✓ 行った
+</div>
+
+<div
+    class="action"
+    onclick="openRoute()"
+>
+    ⌖ ルート
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="detail-section">
+
+<div class="detail-section-title">
+    一人利用データ
+</div>
+
+
+<div class="rating-row">
+
+<div class="rating-name">
+    一人で入りやすい
+</div>
+
+<div class="rating">
+    ★★★★★
+</div>
+
+</div>
+
+
+<div class="rating-row">
+
+<div class="rating-name">
+    静かさ
+</div>
+
+<div class="rating">
+    ★★★★☆
+</div>
+
+</div>
+
+
+<div class="rating-row">
+
+<div class="rating-name">
+    一人客の多さ
+</div>
+
+<div class="rating">
+    ★★★★★
+</div>
+
+</div>
+
+
+<div class="rating-row">
+
+<div class="rating-name">
+    過ごしやすさ
+</div>
+
+<div class="rating">
+    ★★★★☆
+</div>
+
+</div>
+
+</div>
+
+
+<div
+    class="rating-panel"
+    id="ratingPanel"
+    style="display:none;"
+>
+
+<div class="form-title">
+    YOUR RATING
+</div>
+
+<div class="rating-stars">
+
+<span class="star" onclick="selectStar(1)">★</span>
+<span class="star" onclick="selectStar(2)">★</span>
+<span class="star" onclick="selectStar(3)">★</span>
+<span class="star" onclick="selectStar(4)">★</span>
+<span class="star" onclick="selectStar(5)">★</span>
+
+</div>
+
+<button
+    class="save-button"
+    onclick="saveRating()"
+>
+    評価を保存
+</button>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     MY
+================================================== -->
+
+<section class="page" id="my">
+
+<header class="topbar">
+
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
+
+<div class="top-status">
+
+<div class="status-dot"></div>
+
+PERSONAL SYSTEM
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<div class="page-code">
+    MODULE 06 / PERSONAL
+</div>
+
+<h2 class="page-title">
+    MY
+</h2>
+
+<p class="page-sub">
+    あなたの「ひとり」を記録
+</p>
+
+
+<div class="profile">
+
+<div class="profile-label">
+    ユーザー情報
+</div>
+
+<div
+    class="profile-name"
+    id="profileName"
+>
+    ゲストユーザー
+</div>
+
+<div
+    class="profile-edit"
+    onclick="openAccount()"
+>
+    アカウント設定
+</div>
+
+</div>
+
+
+<div class="my-grid">
+
+
+<div class="my-card">
+
+<div
+    class="my-card-number"
+    id="countSearch"
+>
+    0
+</div>
+
+<div class="my-card-label">
+    検索した場所
+</div>
+
+</div>
+
+
+<div
+    class="my-card"
+    onclick="showFavorites()"
+>
+
+<div
+    class="my-card-number"
+    id="countFavorite"
+>
+    0
+</div>
+
+<div class="my-card-label">
+    お気に入り
+</div>
+
+</div>
+
+
+<div class="my-card">
+
+<div
+    class="my-card-number"
+    id="countRating"
+>
+    0
+</div>
+
+<div class="my-card-label">
+    評価した場所
+</div>
+
+</div>
+
+
+<div class="my-card">
+
+<div
+    class="my-card-number"
+    id="countVisited"
+>
+    0
+</div>
+
+<div class="my-card-label">
+    行った場所
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="module">
+
+<div class="module-head">
+
+<div class="module-code">
+    RECENT ACTIVITY
+</div>
+
+<div class="module-title">
+    最近見た場所
+</div>
+
+</div>
+
+
+<div
+    class="history"
+    id="historyList"
+></div>
+
+</div>
+
+
+<div
+    class="module"
+    id="favoriteList"
+></div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     NAV
+================================================== -->
+
+<nav class="navigation">
+
+<div
+    class="nav-button active"
+    data-page="home"
+    onclick="go('home')"
+>
+
+<div class="nav-icon">
+    ⌂
+</div>
+
+HOME
+
+</div>
+
+
+<div
+    class="nav-button"
+    data-page="search"
+    onclick="go('search')"
+>
+
+<div class="nav-icon">
+    ⌕
+</div>
+
+SEARCH
+
+</div>
+
+
+<div
+    class="nav-button"
+    data-page="map"
+    onclick="go('map');initMap();"
+>
+
+<div class="nav-icon">
+    ◎
+</div>
+
+MAP
+
+</div>
+
+
+<div
+    class="nav-button"
+    data-page="my"
+    onclick="go('my');updateMyPage();"
+>
+
+<div class="nav-icon">
+    ♡
+</div>
+
+MY
+
+</div>
+
+</nav>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     ACCOUNT MODAL
+================================================== -->
+
+<div
+    class="modal"
+    id="accountModal"
+>
+
+<div class="modal-box">
+
+<div class="modal-close" onclick="closeAccount()">
+    ×
+</div>
+
+<div class="modal-title">
+    PERSONAL ACCOUNT
+</div>
+
+
+<div id="accountContent"></div>
+
+</div>
+
+</div>
+
+
+
+<!-- ==================================================
+     TOAST
+================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    SYSTEM MESSAGE
+</div>
+
+
+
+<!-- Leaflet -->
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+<script>
+
+/* ==================================================
+   DATA
+================================================== */
+
+const places = [
+
+    {
+        id:"001",
+        name:"○○ラーメン",
+        category:"食事",
+        score:4.8,
+        info:"一人客 多い　｜　カウンターあり",
+        lat:33.5597,
+        lng:133.5311
+    },
+
+    {
+        id:"002",
+        name:"○○カフェ",
+        category:"カフェ",
+        score:4.7,
+        info:"静か　｜　Wi-Fiあり",
+        lat:33.5615,
+        lng:133.5350
+    },
+
+    {
+        id:"003",
+        name:"○○温泉",
+        category:"温泉",
+        score:4.6,
+        info:"一人利用 多　｜　休憩スペース",
+        lat:33.5550,
+        lng:133.5400
+    },
+
+    {
+        id:"004",
+        name:"○○映画館",
+        category:"映画",
+        score:4.5,
+        info:"一人客 多い　｜　座席指定",
+        lat:33.5630,
+        lng:133.5270
+    },
+
+    {
+        id:"005",
+        name:"○○カラオケ",
+        category:"カラオケ",
+        score:4.4,
+        info:"一人利用OK　｜　個室",
+        lat:33.5570,
+        lng:133.5250
+    },
+
+    {
+        id:"006",
+        name:"○○ドライブスポット",
+        category:"ドライブ",
+        score:4.7,
+        info:"景色　｜　駐車場あり",
+        lat:33.5700,
+        lng:133.5500
+    }
+
+];
+
+
+/* ==================================================
+   STORAGE
+================================================== */
+
+let userData =
+    JSON.parse(
+        localStorage.getItem("ohitorisamap_user")
+    ) || {
+
+        name:"ゲストユーザー",
+
+        searches:[],
+
+        history:[],
+
+        favorites:[],
+
+        ratings:{},
+
+        visited:[]
+
+    };
+
+
+function saveData(){
+
+    localStorage.setItem(
+        "ohitorisamap_user",
+        JSON.stringify(userData)
+    );
+
+}
+
+
+/* ==================================================
+   BOOT
+================================================== */
+
+const boot =
+    document.getElementById("boot");
+
+const bootStatus =
+    document.getElementById("bootStatus");
+
+const access =
+    document.getElementById("access");
+
+const app =
+    document.getElementById("app");
+
+
+const sequence = [
+
+    [
+        0,
+        "SYSTEM LOCKED",
+        "システムを確認しています"
+    ],
+
+    [
+        800,
+        "AUTHENTICATING",
+        "接続を確認しています"
+    ],
+
+    [
+        1600,
+        "ACCESS CHECK",
+        "アクセスを確認しています"
+    ],
+
+    [
+        2200,
+        "ACCESS GRANTED",
+        "アクセスを許可しました"
+    ]
+
+];
+
+
+sequence.forEach(item => {
+
+    setTimeout(() => {
+
+        bootStatus.innerHTML =
+
+            item[1] +
+
+            '<span class="boot-jp">' +
+
+            item[2] +
+
+            '</span>';
+
+    },item[0]);
+
+});
+
+
+setTimeout(() => {
+
+    access.classList.add("show");
+
+},2500);
+
+
+setTimeout(() => {
+
+    app.classList.add("show");
+
+},3300);
+
+
+setTimeout(() => {
+
+    boot.classList.add("hide");
+
+},3900);
+
+
+/* ==================================================
+   NAVIGATION
+================================================== */
+
+function go(pageName){
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const target =
+        document.getElementById(pageName);
+
+    if(target){
+
+        target.classList.add("active");
+
+    }
+
+
+    const buttons =
+        document.querySelectorAll(".nav-button");
+
+    buttons.forEach(button => {
+
+        button.classList.remove("active");
+
+        if(
+            button.dataset.page === pageName
+        ){
+
+            button.classList.add("active");
+
+        }
+
+    });
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    if(pageName === "my"){
+        updateMyPage();
+    }
+
+    if(pageName === "search"){
+        performSearch();
+    }
+
+}
+
+
+/* ==================================================
+   HOME SEARCH
+================================================== */
+
+function homeSearchKey(event){
+
+    if(event.key === "Enter"){
+
+        const value =
+            document.getElementById("homeSearch").value.trim();
+
+        if(value){
+
+            document.getElementById("searchInput").value =
+                value;
+
+            addSearchHistory(value);
+
+            go("search");
+
+            performSearch();
+
+        }
+
+    }
+
+}
+
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+function performSearch(){
+
+    const input =
+        document.getElementById("searchInput");
+
+    if(!input) return;
+
+    const keyword =
+        input.value.trim().toLowerCase();
+
+
+    let results = places;
+
+
+    if(keyword){
+
+        results =
+            places.filter(place =>
+
+                (
+                    place.name +
+                    place.category +
+                    place.info
+                )
+                .toLowerCase()
+                .includes(keyword)
+
+            );
+
+    }
+
+
+    document.getElementById("resultCount").textContent =
+        "検索結果 / " + results.length;
+
+
+    const container =
+        document.getElementById("searchResults");
+
+
+    if(results.length === 0){
+
+        container.innerHTML = `
+
+            <div class="result">
+
+                <div>
+
+                    <div class="result-name">
+                        該当する場所がありません
+                    </div>
+
+                    <div class="result-info">
+                        別のキーワードで検索してください
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        results.map(place => `
+
+            <div
+                class="result"
+                onclick="openPlace('${place.id}')"
+            >
+
+                <div>
+
+                    <div class="result-name">
+                        ${place.name}
+                    </div>
+
+                    <div class="result-info">
+                        ${place.category}
+                       　｜　
+                        ${place.info}
+                    </div>
+
+                </div>
+
+                <div class="result-score">
+                    ${place.score}
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* ==================================================
+   CATEGORY
+================================================== */
+
+function categorySearch(category){
+
+    document.getElementById("searchInput").value =
+        category;
+
+    go("search");
+
+    addSearchHistory(category);
+
+    performSearch();
+
+}
+
+
+/* ==================================================
+   HISTORY
+================================================== */
+
+function addSearchHistory(keyword){
+
+    if(!keyword) return;
+
+    userData.searches.unshift({
+
+        keyword:keyword,
+
+        date:new Date().toLocaleDateString(
+            "ja-JP"
+        )
+
+    });
+
+
+    userData.searches =
+        userData.searches.slice(0,50);
+
+    saveData();
+
+}
+
+
+/* ==================================================
+   HOME PLACES
+================================================== */
+
+function renderHomePlaces(){
+
+    const container =
+        document.getElementById("homePlaces");
+
+    container.innerHTML =
+        places.slice(0,4).map((place,index) => `
+
+            <div
+                class="place"
+                onclick="openPlace('${place.id}')"
+            >
+
+                <div class="place-id">
+                    TARGET ${String(index+1).padStart(3,"0")}
+                </div>
+
+                <div class="place-name">
+                    ${place.name}
+                </div>
+
+                <div class="place-score">
+
+                    <div>
+
+                        <div class="score">
+                            ${place.score}
+                        </div>
+
+                        <div class="score-label">
+                            一人利用スコア
+                        </div>
+
+                    </div>
+
+                    <div class="easy">
+                        一人向き
+                    </div>
+
+                </div>
+
+                <div class="tags">
+
+                    <div class="tag">
+                        ${place.category}
+                    </div>
+
+                    <div class="tag">
+                        一人客 多
+                    </div>
+
+                </div>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* ==================================================
+   PLACE DETAIL
+================================================== */
+
+let currentPlace = null;
+
+let selectedRating = 0;
+
+
+function openPlace(id){
+
+    const place =
+        places.find(
+            item => item.id === id
+        );
+
+    if(!place) return;
+
+    currentPlace = place;
+
+    userData.history =
+        userData.history.filter(
+            item => item.id !== id
+        );
+
+    userData.history.unshift({
+
+        id:place.id,
+
+        date:new Date().toLocaleDateString(
+            "ja-JP"
+        )
+
+    });
+
+    userData.history =
+        userData.history.slice(0,30);
+
+    saveData();
+
+
+    document.getElementById("detailId").textContent =
+        "TARGET " + place.id;
+
+    document.getElementById("detailName").textContent =
+        place.name;
+
+    document.getElementById("detailScore").textContent =
+        place.score;
+
+    document.getElementById("detailLocation").textContent =
+        place.category +
+        "　｜　現在地から周辺検索";
+
+
+    updateFavoriteButton();
+
+    go("place");
+
+}
+
+
+/* ==================================================
+   FAVORITE
+================================================== */
+
+function toggleFavorite(){
+
+    if(!currentPlace) return;
+
+
+    const exists =
+        userData.favorites.includes(
+            currentPlace.id
+        );
+
+
+    if(exists){
+
+        userData.favorites =
+            userData.favorites.filter(
+                id => id !== currentPlace.id
+            );
+
+        showToast("お気に入りから削除しました");
+
+    }else{
+
+        userData.favorites.push(
+            currentPlace.id
+        );
+
+        showToast("お気に入りに登録しました");
+
+    }
+
+
+    saveData();
+
+    updateFavoriteButton();
+
+}
+
+
+function updateFavoriteButton(){
+
+    const button =
+        document.getElementById(
+            "favoriteAction"
+        );
+
+    if(!button || !currentPlace) return;
+
+
+    const exists =
+        userData.favorites.includes(
+            currentPlace.id
+        );
+
+
+    if(exists){
+
+        button.textContent =
+            "♥ お気に入り済";
+
+        button.classList.add("active");
+
+    }else{
+
+        button.textContent =
+            "♡ お気に入り";
+
+        button.classList.remove("active");
+
+    }
+
+}
+
+
+/* ==================================================
+   VISITED
+================================================== */
+
+function markVisited(){
+
+    if(!currentPlace) return;
+
+
+    if(
+        !userData.visited.includes(
+            currentPlace.id
+        )
+    ){
+
+        userData.visited.push(
+            currentPlace.id
+        );
+
+        saveData();
+
+        showToast(
+            "行った場所として記録しました"
+        );
+
+    }else{
+
+        showToast(
+            "すでに記録されています"
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   RATING
+================================================== */
+
+function openRating(){
+
+    const panel =
+        document.getElementById(
+            "ratingPanel"
+        );
+
+    panel.style.display =
+        panel.style.display === "none"
+            ? "block"
+            : "none";
+
+}
+
+
+function selectStar(number){
+
+    selectedRating = number;
+
+
+    document
+        .querySelectorAll(".star")
+        .forEach((star,index) => {
+
+            star.classList.toggle(
+                "selected",
+                index < number
+            );
+
+        });
+
+}
+
+
+function saveRating(){
+
+    if(!currentPlace){
+
+        showToast("場所を選択してください");
+
+        return;
+
+    }
+
+
+    if(selectedRating === 0){
+
+        showToast("評価を選択してください");
+
+        return;
+
+    }
+
+
+    userData.ratings[
+        currentPlace.id
+    ] = selectedRating;
+
+
+    saveData();
+
+
+    document.getElementById(
+        "ratingPanel"
+    ).style.display = "none";
+
+
+    showToast(
+        selectedRating +
+        " / 5 で評価を保存しました"
+    );
+
+}
+
+
+/* ==================================================
+   ROUTE
+================================================== */
+
+function openRoute(){
+
+    if(!currentPlace){
+
+        showToast("場所を選択してください");
+
+        return;
+
+    }
+
+
+    const url =
+        "https://www.google.com/maps/dir/?api=1&destination=" +
+        currentPlace.lat +
+        "," +
+        currentPlace.lng;
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* ==================================================
+   MAP
+================================================== */
+
+let mapInstance = null;
+
+let userMarker = null;
+
+let accuracyCircle = null;
+
+
+function initMap(){
+
+    if(mapInstance){
+
+        setTimeout(() => {
+
+            mapInstance.invalidateSize();
+
+        },200);
+
+        return;
+
+    }
+
+
+    mapInstance =
+        L.map("mapCanvas")
+        .setView(
+            [33.5597,133.5311],
+            13
+        );
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom:19,
+            attribution:
+                '&copy; OpenStreetMap contributors'
+        }
+    ).addTo(mapInstance);
+
+
+    renderMapPlaces();
+
+}
+
+
+function renderMapPlaces(){
+
+    if(!mapInstance) return;
+
+
+    places.forEach(place => {
+
+        const marker =
+            L.circleMarker(
+                [
+                    place.lat,
+                    place.lng
+                ],
+                {
+                    radius:7,
+
+                    color:"#6de3ff",
+
+                    fillColor:"#6de3ff",
+
+                    fillOpacity:.8
+                }
+            )
+            .addTo(mapInstance);
+
+
+        marker.bindPopup(`
+
+            <strong>
+                ${place.name}
+            </strong>
+
+            <br>
+
+            ${place.category}
+
+            <br>
+
+            一人利用スコア :
+            ${place.score}
+
+            <br><br>
+
+            <button
+                onclick="openPlace('${place.id}')"
+            >
+                詳細を見る
+            </button>
+
+        `);
+
+    });
+
+
+    renderNearbyList();
+
+}
+
+
+function locateUser(){
+
+    const status =
+        document.getElementById(
+            "mapStatus"
+        );
+
+
+    if(!navigator.geolocation){
+
+        status.innerHTML =
+            "LOCATION ERROR<br>GPS NOT SUPPORTED";
+
+        showToast(
+            "この端末では位置情報を取得できません"
+        );
+
+        return;
+
+    }
+
+
+    status.innerHTML =
+        "LOCATION SYSTEM<br>SCANNING...<br>GPS SEARCH";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        position => {
+
+            const lat =
+                position.coords.latitude;
+
+            const lng =
+                position.coords.longitude;
+
+            if(!mapInstance){
+
+                initMap();
+
+            }
+
+
+            setTimeout(() => {
+
+                mapInstance.setView(
+                    [lat,lng],
+                    14
+                );
+
+
+                if(userMarker){
+
+                    mapInstance.removeLayer(
+                        userMarker
+                    );
+
+                }
+
+                if(accuracyCircle){
+
+                    mapInstance.removeLayer(
+                        accuracyCircle
+                    );
+
+                }
+
+
+                userMarker =
+                    L.circleMarker(
+                        [lat,lng],
+                        {
+                            radius:9,
+
+                            color:"#ffffff",
+
+                            fillColor:"#6de3ff",
+
+                            fillOpacity:1,
+
+                            weight:3
+                        }
+                    )
+                    .addTo(mapInstance);
+
+
+                userMarker.bindPopup(
+                    "現在地"
+                );
+
+
+                accuracyCircle =
+                    L.circle(
+                        [lat,lng],
+                        {
+                            radius:
+                                position.coords.accuracy,
+
+                            color:"#6de3ff",
+
+                            fillColor:"#6de3ff",
+
+                            fillOpacity:.08
+                        }
+                    )
+                    .addTo(mapInstance);
+
+
+                status.innerHTML =
+                    "LOCATION ACQUIRED<br>" +
+                    "STATUS : ACTIVE<br>" +
+                    "GPS : CONNECTED";
+
+
+                renderNearbyList(
+                    lat,
+                    lng
+                );
+
+
+                showToast(
+                    "現在地を取得しました"
+                );
+
+            },600);
+
+        },
+
+        error => {
+
+            status.innerHTML =
+                "LOCATION ERROR<br>" +
+                "GPS : UNAVAILABLE<br>" +
+                "MAP : STANDBY";
+
+
+            showToast(
+                "位置情報を取得できませんでした"
+            );
+
+        },
+
+        {
+            enableHighAccuracy:true,
+
+            timeout:10000,
+
+            maximumAge:60000
+        }
+
+    );
+
+}
+
+
+/* ==================================================
+   DISTANCE
+================================================== */
+
+function distanceKm(
+    lat1,
+    lon1,
+    lat2,
+    lon2
+){
+
+    const R = 6371;
+
+    const dLat =
+        (lat2-lat1)
+        * Math.PI / 180;
+
+    const dLon =
+        (lon2-lon1)
+        * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat/2) *
+        Math.sin(dLat/2)
+
+        +
+
+        Math.cos(
+            lat1 * Math.PI / 180
+        ) *
+
+        Math.cos(
+            lat2 * Math.PI / 180
+        ) *
+
+        Math.sin(dLon/2) *
+        Math.sin(dLon/2);
+
+
+    const c =
+        2 *
+        Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1-a)
+        );
+
+
+    return R*c;
+
+}
+
+
+/* ==================================================
+   NEARBY
+================================================== */
+
+function renderNearbyList(
+    userLat = 33.5597,
+    userLng = 133.5311
+){
+
+    const container =
+        document.getElementById(
+            "nearbyPlaces"
+        );
+
+
+    const sorted =
+        places
+            .map(place => ({
+
+                ...place,
+
+                distance:
+                    distanceKm(
+                        userLat,
+                        userLng,
+                        place.lat,
+                        place.lng
+                    )
+
+            }))
+            .sort(
+                (a,b) =>
+                    a.distance -
+                    b.distance
+            );
+
+
+    container.innerHTML = `
+
+        <div class="module-head">
+
+            <div class="module-code">
+                NEARBY ANALYSIS
+            </div>
+
+            <div class="module-title">
+                周辺スポット
+            </div>
+
+            <div class="module-sub">
+                現在地から近い順
+            </div>
+
+        </div>
+
+        <div class="places">
+
+            ${sorted.map(place => `
+
+                <div
+                    class="place"
+                    onclick="openPlace('${place.id}')"
+                >
+
+                    <div class="place-id">
+                        ${place.distance.toFixed(1)} KM
+                    </div>
+
+                    <div class="place-name">
+                        ${place.name}
+                    </div>
+
+                    <div class="place-score">
+
+                        <div>
+
+                            <div class="score">
+                                ${place.score}
+                            </div>
+
+                            <div class="score-label">
+                                一人利用スコア
+                            </div>
+
+                        </div>
+
+                        <div class="easy">
+                            ${place.category}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+   MY PAGE
+================================================== */
+
+function updateMyPage(){
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        userData.name;
+
+
+    document.getElementById(
+        "countSearch"
+    ).textContent =
+        userData.searches.length;
+
+
+    document.getElementById(
+        "countFavorite"
+    ).textContent =
+        userData.favorites.length;
+
+
+    document.getElementById(
+        "countRating"
+    ).textContent =
+        Object.keys(
+            userData.ratings
+        ).length;
+
+
+    document.getElementById(
+        "countVisited"
+    ).textContent =
+        userData.visited.length;
+
+
+    renderHistory();
+
+    renderFavorites();
+
+}
+
+
+/* ==================================================
+   HISTORY
+================================================== */
+
+function renderHistory(){
+
+    const container =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    if(userData.history.length === 0){
+
+        container.innerHTML = `
+
+            <div class="history-item">
+
+                <div class="history-name">
+                    まだ閲覧履歴がありません
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        userData.history.map(item => {
+
+            const place =
+                places.find(
+                    p => p.id === item.id
+                );
+
+            if(!place) return "";
+
+
+            return `
+
+                <div
+                    class="history-item"
+                    onclick="openPlace('${place.id}')"
+                >
+
+                    <div class="history-name">
+                        ${place.name}
+                    </div>
+
+                    <div class="history-date">
+                        ${item.date}
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* ==================================================
+   FAVORITES
+================================================== */
+
+function renderFavorites(){
+
+    const container =
+        document.getElementById(
+            "favoriteList"
+        );
+
+
+    if(userData.favorites.length === 0){
+
+        container.innerHTML = "";
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <div class="module-head">
+
+            <div class="module-code">
+                PERSONAL DATABASE
+            </div>
+
+            <div class="module-title">
+                お気に入り
+            </div>
+
+        </div>
+
+        <div class="places">
+
+            ${userData.favorites.map(id => {
+
+                const place =
+                    places.find(
+                        p => p.id === id
+                    );
+
+                if(!place) return "";
+
+
+                return `
+
+                    <div
+                        class="place"
+                        onclick="openPlace('${place.id}')"
+                    >
+
+                        <div class="place-id">
+                            FAVORITE
+                        </div>
+
+                        <div class="place-name">
+                            ${place.name}
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+function showFavorites(){
+
+    go("my");
+
+    updateMyPage();
+
+}
+
+
+/* ==================================================
+   ACCOUNT
+================================================== */
+
+function openAccount(){
+
+    const modal =
+        document.getElementById(
+            "accountModal"
+        );
+
+    const content =
+        document.getElementById(
+            "accountContent"
+        );
+
+
+    content.innerHTML = `
+
+        <input
+            class="form-input"
+            id="accountName"
+            placeholder="表示名"
+            value="${userData.name}"
+        >
+
+        <button
+            class="form-button"
+            onclick="saveAccount()"
+        >
+            プロフィールを保存
+        </button>
+
+        <button
+            class="form-button"
+            onclick="resetData()"
+        >
+            保存データをリセット
+        </button>
+
+    `;
+
+
+    modal.classList.add("show");
+
+}
+
+
+function closeAccount(){
+
+    document
+        .getElementById("accountModal")
+        .classList.remove("show");
+
+}
+
+
+function saveAccount(){
+
+    const name =
+        document.getElementById(
+            "accountName"
+        ).value.trim();
+
+
+    if(name){
+
+        userData.name = name;
+
+        saveData();
+
+        updateMyPage();
+
+        closeAccount();
+
+        showToast(
+            "プロフィールを更新しました"
+        );
+
+    }
+
+}
+
+
+function resetData(){
+
+    if(
+        confirm(
+            "保存した履歴・お気に入り・評価をすべて削除しますか？"
+        )
+    ){
+
+        localStorage.removeItem(
+            "ohitorisamap_user"
+        );
+
+
+        location.reload();
+
+    }
+
+}
+
+
+/* ==================================================
+   TOAST
+================================================== */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    },2500);
+
+}
+
+
+/* ==================================================
+   START
+================================================== */
+
+renderHomePlaces();
+
+updateMyPage();
+
+performSearch();
+
+</script>
+
+
+</body>
+</html>
