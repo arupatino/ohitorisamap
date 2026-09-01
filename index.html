@@ -12,7 +12,7 @@ content="width=device-width, initial-scale=1.0">
 
 
 <!-- =========================
-     LEAFLET
+     LEAFLET MAP
 ========================= -->
 
 <link
@@ -23,9 +23,9 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 
 <style>
 
-/* =========================
+/* ==================================================
    BASE
-========================= */
+================================================== */
 
 *{
     box-sizing:border-box;
@@ -39,9 +39,9 @@ body{
 
     margin:0;
 
-    background:#f5f5f5;
+    background:#050607;
 
-    color:#111;
+    color:#f5f5f5;
 
     font-family:
     -apple-system,
@@ -51,12 +51,44 @@ body{
     "Yu Gothic",
     sans-serif;
 
+    overflow-x:hidden;
+
 }
 
 
-/* =========================
-   START MOTION
-========================= */
+/* ==================================================
+   GLOBAL FUTURISTIC EFFECT
+================================================== */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:9990;
+
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.018) 0px,
+        rgba(255,255,255,.018) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+
+    opacity:.35;
+
+}
+
+
+/* ==================================================
+   STARTUP SCREEN
+================================================== */
 
 #intro{
 
@@ -66,9 +98,7 @@ body{
 
     z-index:99999;
 
-    background:#111;
-
-    color:#fff;
+    background:#030405;
 
     display:flex;
 
@@ -76,210 +106,496 @@ body{
 
     justify-content:center;
 
-    text-align:center;
+    overflow:hidden;
 
-    animation:introOut 1s ease 2.8s forwards;
-
-}
-
-.intro-inner{
-
-    animation:introIn 1.2s ease;
-
-}
-
-.intro-small{
-
-    font-size:10px;
-
-    letter-spacing:5px;
-
-    opacity:.45;
-
-    margin-bottom:18px;
-
-}
-
-.intro-title{
-
-    font-size:38px;
-
-    letter-spacing:5px;
-
-    font-weight:500;
-
-    margin:0;
-
-}
-
-.intro-sub{
-
-    margin-top:15px;
-
-    font-size:12px;
-
-    letter-spacing:3px;
-
-    color:#aaa;
-
-}
-
-.intro-line{
-
-    width:0;
-
-    height:1px;
-
-    background:#fff;
-
-    margin:25px auto 0;
-
-    animation:lineGrow 1.2s ease .5s forwards;
-
-}
-
-@keyframes introIn{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(15px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-
-@keyframes lineGrow{
-
-    from{
-
-        width:0;
-
-    }
-
-    to{
-
-        width:180px;
-
-    }
-
-}
-
-@keyframes introOut{
-
-    to{
-
-        opacity:0;
-
-        visibility:hidden;
-
-        pointer-events:none;
-
-    }
+    animation:
+    introFade 1s ease 3.6s forwards;
 
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/* scan line */
 
-header{
+#intro::after{
 
-    background:#111;
+    content:"";
 
-    color:#fff;
+    position:absolute;
 
-    min-height:420px;
-
-    display:flex;
-
-    align-items:center;
-
-    padding:45px 24px;
-
-}
-
-.hero{
+    left:0;
 
     width:100%;
 
-    max-width:700px;
+    height:2px;
 
-    margin:auto;
+    background:rgba(255,255,255,.35);
 
-}
+    box-shadow:
+    0 0 15px rgba(255,255,255,.5);
 
-.hero-small{
-
-    font-size:11px;
-
-    letter-spacing:4px;
-
-    opacity:.5;
-
-    margin-bottom:25px;
+    animation:scan 2.5s linear infinite;
 
 }
 
-.hero-title{
 
-    font-size:48px;
+.intro-grid{
 
-    font-weight:600;
+    position:absolute;
 
-    line-height:1.2;
+    inset:0;
+
+    background:
+    linear-gradient(
+        rgba(255,255,255,.035) 1px,
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg,
+        rgba(255,255,255,.035) 1px,
+        transparent 1px
+    );
+
+    background-size:45px 45px;
+
+    transform:perspective(500px)
+    rotateX(55deg)
+    scale(1.8);
+
+    transform-origin:center bottom;
+
+    opacity:.4;
+
+}
+
+
+.intro-content{
+
+    position:relative;
+
+    z-index:2;
+
+    width:90%;
+
+    max-width:650px;
+
+}
+
+
+.boot-status{
+
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:10px;
 
     letter-spacing:3px;
 
+    color:#777;
+
+    margin-bottom:22px;
+
+}
+
+
+.boot-title{
+
+    font-size:clamp(32px,8vw,64px);
+
+    font-weight:500;
+
+    letter-spacing:7px;
+
     margin:0;
 
-}
-
-.hero-copy{
-
-    margin-top:22px;
-
-    font-size:15px;
-
-    line-height:2;
-
-    color:#bbb;
+    line-height:1.2;
 
 }
 
-.hero-search{
+
+.boot-sub{
+
+    margin-top:12px;
+
+    color:#888;
+
+    font-size:12px;
+
+    letter-spacing:5px;
+
+}
+
+
+.boot-line{
 
     margin-top:35px;
 
     width:100%;
 
-    max-width:580px;
+    height:1px;
 
-    height:60px;
+    background:#222;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+.boot-line::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    height:100%;
+
+    width:0;
+
+    background:#fff;
+
+    animation:
+    bootProgress 2.5s ease forwards;
+
+}
+
+
+.boot-bottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:12px;
+
+    color:#555;
+
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+}
+
+
+@keyframes scan{
+
+    0%{
+        top:-5%;
+    }
+
+    100%{
+        top:105%;
+    }
+
+}
+
+
+@keyframes bootProgress{
+
+    0%{
+        width:0;
+    }
+
+    100%{
+        width:100%;
+    }
+
+}
+
+
+@keyframes introFade{
+
+    0%{
+        opacity:1;
+        visibility:visible;
+    }
+
+    100%{
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+    }
+
+}
+
+
+/* ==================================================
+   HEADER / MAIN HUD
+================================================== */
+
+header{
+
+    min-height:620px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+    radial-gradient(
+        circle at 75% 40%,
+        #202326 0%,
+        #0c0e10 30%,
+        #050607 70%
+    );
+
+    border-bottom:1px solid #292c2f;
+
+}
+
+
+/* background grid */
+
+header::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        rgba(255,255,255,.025) 1px,
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg,
+        rgba(255,255,255,.025) 1px,
+        transparent 1px
+    );
+
+    background-size:60px 60px;
+
+    mask-image:
+    linear-gradient(
+        to right,
+        transparent,
+        black 20%,
+        black 80%,
+        transparent
+    );
+
+}
+
+
+/* decorative HUD circle */
+
+header::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:480px;
+
+    height:480px;
+
+    right:-150px;
+
+    top:70px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:50%;
+
+    box-shadow:
+    0 0 0 35px rgba(255,255,255,.015),
+    0 0 0 90px rgba(255,255,255,.01);
+
+}
+
+
+.hero{
+
+    width:100%;
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:
+    100px 30px 80px;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+/* top status */
+
+.system-status{
 
     display:flex;
 
     align-items:center;
 
+    gap:10px;
+
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+
+    color:#888;
+
+    margin-bottom:30px;
+
+}
+
+
+.status-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
     background:#fff;
+
+    box-shadow:
+    0 0 10px rgba(255,255,255,.8);
+
+    animation:pulse 2s infinite;
+
+}
+
+
+@keyframes pulse{
+
+    0%,100%{
+        opacity:.35;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+}
+
+
+/* logo */
+
+.hero-small{
+
+    font-size:11px;
+
+    letter-spacing:5px;
+
+    color:#777;
+
+    margin-bottom:25px;
+
+}
+
+
+.hero-title{
+
+    font-size:
+    clamp(40px,7vw,70px);
+
+    font-weight:500;
+
+    line-height:1.25;
+
+    letter-spacing:4px;
+
+    margin:0;
+
+}
+
+
+.hero-title span{
+
+    color:#777;
+
+}
+
+
+.hero-copy{
+
+    margin-top:28px;
+
+    font-size:14px;
+
+    line-height:2.1;
+
+    color:#999;
+
+}
+
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+.hero-search{
+
+    margin-top:40px;
+
+    width:100%;
+
+    max-width:650px;
+
+    height:64px;
+
+    display:flex;
+
+    align-items:center;
+
+    background:rgba(255,255,255,.96);
 
     color:#111;
 
     padding:0 20px;
 
-    border-radius:3px;
+    position:relative;
+
+    border:1px solid #fff;
+
+    box-shadow:
+    0 15px 50px rgba(0,0,0,.35);
 
 }
+
+
+.hero-search::before{
+
+    content:"SEARCH";
+
+    position:absolute;
+
+    top:-18px;
+
+    left:0;
+
+    color:#555;
+
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+}
+
 
 .search-icon{
 
@@ -293,13 +609,14 @@ header{
 
     position:relative;
 
-    margin-right:13px;
+    margin-right:14px;
 
     flex-shrink:0;
 
 }
 
-.search-icon:after{
+
+.search-icon::after{
 
     content:"";
 
@@ -319,6 +636,7 @@ header{
 
 }
 
+
 .hero-search input{
 
     width:100%;
@@ -327,39 +645,124 @@ header{
 
     outline:0;
 
-    font-size:15px;
+    font-size:14px;
 
     background:transparent;
 
 }
 
 
-/* =========================
+/* ==================================================
+   CORNER HUD
+================================================== */
+
+.hud-corner{
+
+    position:absolute;
+
+    width:18px;
+
+    height:18px;
+
+}
+
+
+.hud-corner::before,
+.hud-corner::after{
+
+    content:"";
+
+    position:absolute;
+
+    background:#777;
+
+}
+
+
+.hud-corner::before{
+
+    width:18px;
+
+    height:1px;
+
+}
+
+
+.hud-corner::after{
+
+    width:1px;
+
+    height:18px;
+
+}
+
+
+.hud-tl{
+
+    left:25px;
+    top:25px;
+
+}
+
+
+.hud-tr{
+
+    right:25px;
+    top:25px;
+
+    transform:rotate(90deg);
+
+}
+
+
+.hud-bl{
+
+    left:25px;
+    bottom:25px;
+
+    transform:rotate(-90deg);
+
+}
+
+
+.hud-br{
+
+    right:25px;
+    bottom:25px;
+
+    transform:rotate(180deg);
+
+}
+
+
+/* ==================================================
    MAIN
-========================= */
+================================================== */
 
 main{
 
     width:100%;
 
-    max-width:900px;
+    max-width:1100px;
 
     margin:auto;
 
-    padding:55px 20px 80px;
+    padding:
+    80px 25px 100px;
 
 }
 
 
-/* =========================
+/* ==================================================
    SECTION
-========================= */
+================================================== */
 
 .section{
 
-    margin-bottom:65px;
+    margin-bottom:85px;
 
 }
+
 
 .section-head{
 
@@ -367,11 +770,16 @@ main{
 
     justify-content:space-between;
 
-    align-items:end;
+    align-items:flex-end;
 
-    margin-bottom:25px;
+    margin-bottom:28px;
+
+    border-left:2px solid #777;
+
+    padding-left:15px;
 
 }
+
 
 .section-title{
 
@@ -379,44 +787,55 @@ main{
 
     font-size:24px;
 
-    font-weight:600;
+    font-weight:500;
 
-    letter-spacing:1px;
+    letter-spacing:2px;
 
 }
+
 
 .section-sub{
 
-    margin:6px 0 0;
+    margin:7px 0 0;
 
-    color:#999;
+    color:#666;
 
-    font-size:12px;
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:9px;
+
+    letter-spacing:2px;
 
 }
 
 
-/* =========================
+/* ==================================================
    CATEGORY
-========================= */
+================================================== */
 
 .categories{
 
     display:grid;
 
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:
+    repeat(4,1fr);
 
-    gap:10px;
+    gap:12px;
 
 }
 
+
 .category{
 
-    min-height:110px;
+    min-height:125px;
 
-    background:#fff;
+    position:relative;
 
-    border:1px solid #e4e4e4;
+    background:#0b0d0f;
+
+    border:1px solid #25282b;
 
     display:flex;
 
@@ -426,46 +845,119 @@ main{
 
     align-items:center;
 
-    gap:12px;
+    gap:14px;
 
     cursor:pointer;
 
-    transition:.2s;
+    overflow:hidden;
+
+    transition:.25s;
 
 }
+
+
+.category::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,.05),
+        transparent 50%
+    );
+
+}
+
+
+.category::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:0;
+
+    width:0;
+
+    height:2px;
+
+    background:#fff;
+
+    transition:.25s;
+
+}
+
 
 .category:hover{
 
-    transform:translateY(-3px);
+    transform:translateY(-4px);
 
-    border-color:#111;
+    border-color:#777;
+
+    background:#111416;
 
 }
 
-.category-name{
 
-    font-size:12px;
+.category:hover::after{
+
+    width:100%;
+
+}
+
+
+.category-code{
+
+    position:absolute;
+
+    top:10px;
+
+    left:12px;
+
+    font-family:
+    "Courier New",
+    monospace;
+
+    color:#444;
+
+    font-size:8px;
 
     letter-spacing:1px;
 
 }
 
 
-/* =========================
+.category-name{
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+}
+
+
+/* ==================================================
    ICON
-========================= */
+================================================== */
 
 .icon{
 
-    width:30px;
+    width:32px;
 
-    height:30px;
+    height:32px;
 
     fill:none;
 
-    stroke:#111;
+    stroke:#ddd;
 
-    stroke-width:1.5;
+    stroke-width:1.25;
 
     stroke-linecap:round;
 
@@ -474,9 +966,9 @@ main{
 }
 
 
-/* =========================
+/* ==================================================
    MAP
-========================= */
+================================================== */
 
 .map-wrap{
 
@@ -484,13 +976,16 @@ main{
 
     width:100%;
 
-    height:430px;
+    height:500px;
 
-    background:#ddd;
+    background:#090b0c;
 
     overflow:hidden;
 
+    border:1px solid #292c2f;
+
 }
+
 
 #realMap{
 
@@ -501,7 +996,25 @@ main{
 }
 
 
-/* MAP LABEL */
+/* dark overlay */
+
+.map-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:500;
+
+    box-shadow:
+    inset 0 0 100px rgba(0,0,0,.45);
+
+}
+
+
+/* map title */
 
 .map-label{
 
@@ -513,20 +1026,73 @@ main{
 
     z-index:1000;
 
-    background:#fff;
+    background:rgba(5,6,7,.88);
 
-    padding:12px 16px;
+    border:1px solid #3b3e41;
 
-    font-size:12px;
+    padding:13px 17px;
 
-    letter-spacing:1px;
+    font-family:
+    "Courier New",
+    monospace;
 
-    box-shadow:0 2px 8px rgba(0,0,0,.12);
+    font-size:9px;
+
+    letter-spacing:2px;
 
 }
 
 
-/* CURRENT LOCATION BUTTON */
+.map-label strong{
+
+    display:block;
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+    font-size:12px;
+
+    font-weight:500;
+
+    letter-spacing:1px;
+
+    margin-bottom:5px;
+
+}
+
+
+/* map system data */
+
+.map-data{
+
+    position:absolute;
+
+    right:20px;
+
+    top:20px;
+
+    z-index:1000;
+
+    text-align:right;
+
+    color:#777;
+
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:8px;
+
+    line-height:1.8;
+
+    letter-spacing:1px;
+
+}
+
+
+/* location button */
 
 .location-btn{
 
@@ -538,23 +1104,37 @@ main{
 
     z-index:1000;
 
-    border:0;
+    border:1px solid #555;
 
-    background:#111;
+    background:rgba(5,6,7,.94);
 
     color:#fff;
 
-    padding:13px 18px;
+    padding:14px 20px;
 
-    font-size:11px;
+    font-family:
+    "Courier New",
+    monospace;
 
-    letter-spacing:1px;
+    font-size:9px;
+
+    letter-spacing:2px;
 
     cursor:pointer;
 
-    box-shadow:0 4px 15px rgba(0,0,0,.25);
+    transition:.2s;
 
 }
+
+
+.location-btn:hover{
+
+    background:#fff;
+
+    color:#111;
+
+}
+
 
 .location-btn:active{
 
@@ -563,107 +1143,183 @@ main{
 }
 
 
-/* =========================
+/* ==================================================
+   LEAFLET DARK STYLE
+================================================== */
+
+.leaflet-container{
+
+    background:#17191b;
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+}
+
+
+.leaflet-control-zoom{
+
+    border:1px solid #333 !important;
+
+}
+
+
+.leaflet-control-zoom a{
+
+    background:#090b0c !important;
+
+    color:#fff !important;
+
+    border-color:#333 !important;
+
+}
+
+
+.leaflet-control-attribution{
+
+    background:rgba(0,0,0,.65) !important;
+
+    color:#777 !important;
+
+}
+
+
+.leaflet-control-attribution a{
+
+    color:#aaa !important;
+
+}
+
+
+/* ==================================================
    PLACES
-========================= */
+================================================== */
 
 .places{
 
     display:grid;
 
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:
+    repeat(2,1fr);
 
     gap:15px;
 
 }
 
+
 .place{
 
-    background:#fff;
+    background:#0b0d0f;
 
-    border:1px solid #e2e2e2;
+    border:1px solid #25282b;
 
-    padding:25px;
+    padding:28px;
 
-    transition:.2s;
+    position:relative;
+
+    transition:.25s;
 
 }
+
 
 .place:hover{
 
-    transform:translateY(-3px);
+    transform:translateY(-4px);
 
-    border-color:#111;
+    border-color:#777;
 
 }
+
 
 .place-number{
 
-    color:#aaa;
+    color:#555;
 
-    font-size:10px;
+    font-family:
+    "Courier New",
+    monospace;
 
-    letter-spacing:2px;
+    font-size:9px;
 
-    margin-bottom:18px;
+    letter-spacing:3px;
+
+    margin-bottom:20px;
 
 }
+
 
 .place-name{
 
     font-size:19px;
 
-    font-weight:600;
+    font-weight:500;
 
 }
 
+
 .place-info{
 
-    margin-top:18px;
+    margin-top:22px;
 
     display:flex;
 
     justify-content:space-between;
 
-    align-items:end;
+    align-items:flex-end;
 
 }
+
 
 .score{
 
-    font-size:28px;
+    font-size:30px;
 
-    font-weight:600;
+    font-weight:500;
 
 }
+
 
 .score-label{
 
-    color:#999;
+    color:#666;
 
-    font-size:10px;
+    font-family:
+    "Courier New",
+    monospace;
 
-    margin-top:3px;
-
-}
-
-.easy{
-
-    padding:7px 10px;
-
-    background:#111;
-
-    color:#fff;
-
-    font-size:10px;
+    font-size:8px;
 
     letter-spacing:1px;
 
+    margin-top:4px;
+
 }
+
+
+.easy{
+
+    padding:8px 12px;
+
+    border:1px solid #555;
+
+    color:#ddd;
+
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+}
+
 
 .tags{
 
-    margin-top:18px;
+    margin-top:20px;
 
     display:flex;
 
@@ -673,73 +1329,94 @@ main{
 
 }
 
+
 .tag{
 
-    border:1px solid #ddd;
+    border:1px solid #292c2f;
 
-    padding:6px 8px;
+    padding:6px 9px;
 
-    color:#666;
+    color:#777;
 
-    font-size:10px;
+    font-size:9px;
 
 }
 
 
-/* =========================
+/* ==================================================
    FOOTER
-========================= */
+================================================== */
 
 footer{
 
-    background:#111;
+    background:#030405;
+
+    border-top:1px solid #202326;
 
     color:#fff;
 
-    padding:45px 20px;
+    padding:50px 20px;
 
     text-align:center;
 
 }
 
+
 .footer-logo{
 
     font-size:18px;
 
-    letter-spacing:3px;
+    letter-spacing:5px;
 
 }
+
 
 .footer-copy{
 
-    margin-top:10px;
+    margin-top:12px;
 
-    color:#777;
+    color:#555;
 
-    font-size:10px;
+    font-family:
+    "Courier New",
+    monospace;
+
+    font-size:9px;
+
+    letter-spacing:2px;
 
 }
 
 
-/* =========================
+/* ==================================================
    MOBILE
-========================= */
+================================================== */
 
-@media(max-width:600px){
+@media(max-width:700px){
 
     header{
 
-        min-height:480px;
-
-        padding:40px 20px;
+        min-height:620px;
 
     }
+
+
+    .hero{
+
+        padding:
+        100px 22px 70px;
+
+    }
+
 
     .hero-title{
 
         font-size:38px;
 
+        letter-spacing:3px;
+
     }
+
 
     .hero-copy{
 
@@ -747,17 +1424,21 @@ footer{
 
     }
 
+
     main{
 
-        padding:40px 15px 60px;
+        padding:
+        60px 15px 80px;
 
     }
+
 
     .section{
 
-        margin-bottom:50px;
+        margin-bottom:65px;
 
     }
+
 
     .section-title{
 
@@ -765,39 +1446,66 @@ footer{
 
     }
 
+
     .categories{
 
-        grid-template-columns:repeat(4,1fr);
+        grid-template-columns:
+        repeat(4,1fr);
 
         gap:6px;
 
     }
 
+
     .category{
 
-        min-height:90px;
+        min-height:95px;
 
     }
+
 
     .icon{
 
-        width:24px;
+        width:23px;
 
-        height:24px;
+        height:23px;
 
     }
+
 
     .category-name{
 
-        font-size:10px;
+        font-size:9px;
+
+        letter-spacing:1px;
 
     }
+
+
+    .category-code{
+
+        font-size:6px;
+
+        top:7px;
+
+        left:7px;
+
+    }
+
 
     .map-wrap{
 
-        height:330px;
+        height:350px;
 
     }
+
+
+    .map-data{
+
+        display:none;
+
+    }
+
 
     .places{
 
@@ -805,9 +1513,17 @@ footer{
 
     }
 
-    .intro-title{
 
-        font-size:30px;
+    .intro-content{
+
+        width:85%;
+
+    }
+
+
+    .boot-title{
+
+        letter-spacing:4px;
 
     }
 
@@ -821,90 +1537,134 @@ footer{
 <body>
 
 
-<!-- =========================
-     INTRO
-========================= -->
+<!-- ==================================================
+     STARTUP
+================================================== -->
 
 <div id="intro">
 
-    <div class="intro-inner">
+    <div class="intro-grid"></div>
 
-        <div class="intro-small">
-            PERSONAL DISCOVERY SYSTEM
+    <div class="intro-content">
+
+        <div class="boot-status">
+            SYSTEM INITIALIZING...
         </div>
 
-        <h1 class="intro-title">
-            ohitorisamap
+        <h1 class="boot-title">
+            OHITORISAMAP
         </h1>
 
-        <div class="intro-sub">
+        <div class="boot-sub">
             おひとりさまっぷ
         </div>
 
-        <div class="intro-line"></div>
+        <div class="boot-line"></div>
+
+        <div class="boot-bottom">
+
+            <span>
+                PERSONAL DISCOVERY SYSTEM
+            </span>
+
+            <span>
+                ONLINE
+            </span>
+
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- =========================
-     HERO
-========================= -->
+
+<!-- ==================================================
+     HEADER
+================================================== -->
 
 <header>
 
-<div class="hero">
+    <div class="hud-corner hud-tl"></div>
+    <div class="hud-corner hud-tr"></div>
+    <div class="hud-corner hud-bl"></div>
+    <div class="hud-corner hud-br"></div>
 
-    <div class="hero-small">
-        OHITORISAMAP
+
+    <div class="hero">
+
+
+        <div class="system-status">
+
+            <span class="status-dot"></span>
+
+            SYSTEM ONLINE
+
+            <span>
+                / PERSONAL DISCOVERY
+            </span>
+
+        </div>
+
+
+        <div class="hero-small">
+            OHITORISAMAP
+        </div>
+
+
+        <h1 class="hero-title">
+
+            ひとりの時間を、<br>
+
+            <span>もっと自由に。</span>
+
+        </h1>
+
+
+        <div class="hero-copy">
+
+            一人で行きたい。<br>
+
+            でも、どこに行けばいいかわからない。<br>
+
+            <span>
+                そんなときのための場所探し。
+            </span>
+
+        </div>
+
+
+        <div class="hero-search">
+
+            <div class="search-icon"></div>
+
+            <input
+                type="text"
+                placeholder="行きたい場所を探す"
+            >
+
+        </div>
+
+
     </div>
-
-    <h1 class="hero-title">
-        ひとりの時間を、<br>
-        もっと自由に。
-    </h1>
-
-    <div class="hero-copy">
-
-        一人で行きたい。<br>
-
-        でも、どこに行けばいいかわからない。<br>
-
-        そんなときのための場所探し。
-
-    </div>
-
-
-    <div class="hero-search">
-
-        <div class="search-icon"></div>
-
-        <input
-            type="text"
-            placeholder="行きたい場所を探す"
-        >
-
-    </div>
-
-</div>
 
 </header>
 
 
 
-<!-- =========================
+<!-- ==================================================
      MAIN
-========================= -->
+================================================== -->
 
 <main>
 
 
-<!-- =========================
+<!-- ==================================================
      CATEGORY
-========================= -->
+================================================== -->
 
 <section class="section">
+
 
 <div class="section-head">
 
@@ -915,7 +1675,7 @@ footer{
 </h2>
 
 <p class="section-sub">
-目的から探す
+SELECT YOUR DESTINATION
 </p>
 
 </div>
@@ -930,7 +1690,13 @@ footer{
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+01
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <path d="M8 4v24"/>
 <path d="M12 4v24"/>
@@ -948,12 +1714,17 @@ footer{
 </div>
 
 
-
 <!-- カフェ -->
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+02
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <path d="M6 12h17v9H6z"/>
 <path d="M23 14h3a3 3 0 0 1 0 6h-3"/>
@@ -969,12 +1740,17 @@ footer{
 </div>
 
 
-
 <!-- 映画 -->
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+03
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <rect
 x="4"
@@ -998,12 +1774,17 @@ rx="2"
 </div>
 
 
-
 <!-- 温泉 -->
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+04
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <path d="M8 25c2-3 2-6 0-9"/>
 <path d="M16 25c2-3 2-6 0-9"/>
@@ -1019,12 +1800,17 @@ rx="2"
 </div>
 
 
-
 <!-- カラオケ -->
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+05
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <rect
 x="8"
@@ -1046,12 +1832,17 @@ rx="8"
 </div>
 
 
-
 <!-- 遊ぶ -->
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+06
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <circle
 cx="16"
@@ -1070,12 +1861,17 @@ r="12"
 </div>
 
 
-
 <!-- ドライブ -->
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+07
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <path d="M5 20l3-7h16l3 7v6H5z"/>
 <path d="M9 13l2-5h10l2 5"/>
@@ -1091,12 +1887,17 @@ r="12"
 </div>
 
 
-
 <!-- お出かけ -->
 
 <div class="category">
 
-<svg class="icon" viewBox="0 0 32 32">
+<div class="category-code">
+08
+</div>
+
+<svg
+class="icon"
+viewBox="0 0 32 32">
 
 <circle
 cx="16"
@@ -1123,11 +1924,12 @@ r="12"
 
 
 
-<!-- =========================
+<!-- ==================================================
      MAP
-========================= -->
+================================================== -->
 
 <section class="section">
+
 
 <div class="section-head">
 
@@ -1138,7 +1940,7 @@ r="12"
 </h2>
 
 <p class="section-sub">
-現在地周辺のひとりスポット
+LOCAL DISCOVERY SYSTEM
 </p>
 
 </div>
@@ -1148,18 +1950,42 @@ r="12"
 
 <div class="map-wrap">
 
-    <div id="realMap"></div>
 
-    <div class="map-label">
-        現在地周辺
-    </div>
+<div id="realMap"></div>
 
-    <button
-        id="locationBtn"
-        class="location-btn"
-    >
-        現在地を取得
-    </button>
+
+<div class="map-overlay"></div>
+
+
+<div class="map-label">
+
+<strong>
+現在地周辺
+</strong>
+
+LOCATION SCAN
+
+</div>
+
+
+<div class="map-data">
+
+LAT : --<br>
+LNG : --<br>
+RANGE : --<br>
+STATUS : STANDBY
+
+</div>
+
+
+<button
+id="locationBtn"
+class="location-btn">
+
+現在地を取得
+
+</button>
+
 
 </div>
 
@@ -1167,11 +1993,12 @@ r="12"
 
 
 
-<!-- =========================
+<!-- ==================================================
      POPULAR
-========================= -->
+================================================== -->
 
 <section class="section">
+
 
 <div class="section-head">
 
@@ -1182,7 +2009,7 @@ r="12"
 </h2>
 
 <p class="section-sub">
-みんなの評価から探す
+PERSONAL RANKING
 </p>
 
 </div>
@@ -1196,7 +2023,7 @@ r="12"
 <div class="place">
 
 <div class="place-number">
-01
+SPOT / 01
 </div>
 
 <div class="place-name">
@@ -1242,7 +2069,7 @@ r="12"
 <div class="place">
 
 <div class="place-number">
-02
+SPOT / 02
 </div>
 
 <div class="place-name">
@@ -1293,9 +2120,9 @@ Wi-Fiあり
 
 
 
-<!-- =========================
+<!-- ==================================================
      FOOTER
-========================= -->
+================================================== -->
 
 <footer>
 
@@ -1311,9 +2138,9 @@ ohitorisamap
 
 
 
-<!-- =========================
+<!-- ==================================================
      LEAFLET
-========================= -->
+================================================== -->
 
 <script
 src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
@@ -1321,26 +2148,26 @@ src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 
 
 
-<!-- =========================
-     MAP / LOCATION
-========================= -->
-
 <script>
 
+/* ==================================================
+   MAP INITIALIZE
+================================================== */
 
-// ---------------------------------
-// MAP
-// ---------------------------------
-
-const map = L.map('realMap').setView(
+const map = L.map(
+    'realMap',
+    {
+        zoomControl:true
+    }
+).setView(
     [33.5597,133.5311],
     13
 );
 
 
-// ---------------------------------
-// OPEN STREET MAP
-// ---------------------------------
+/* ==================================================
+   OPEN STREET MAP
+================================================== */
 
 L.tileLayer(
 
@@ -1358,9 +2185,10 @@ L.tileLayer(
 ).addTo(map);
 
 
-// ---------------------------------
-// CURRENT LOCATION
-// ---------------------------------
+
+/* ==================================================
+   CURRENT LOCATION
+================================================== */
 
 let currentMarker = null;
 
@@ -1381,6 +2209,16 @@ function getCurrentLocation(){
     }
 
 
+    const button =
+    document.getElementById(
+        'locationBtn'
+    );
+
+
+    button.textContent =
+    'LOCATION SCANNING...';
+
+
     navigator.geolocation.getCurrentPosition(
 
         function(position){
@@ -1398,18 +2236,15 @@ function getCurrentLocation(){
             position.coords.accuracy;
 
 
-            // MAP移動
+            /* MAP */
 
             map.setView(
-
                 [lat,lng],
-
                 16
-
             );
 
 
-            // 古いマーカー削除
+            /* OLD MARKER */
 
             if(currentMarker){
 
@@ -1420,7 +2255,7 @@ function getCurrentLocation(){
             }
 
 
-            // 古い円削除
+            /* OLD CIRCLE */
 
             if(currentCircle){
 
@@ -1431,40 +2266,95 @@ function getCurrentLocation(){
             }
 
 
-            // 現在地
+            /* CURRENT LOCATION */
 
             currentMarker =
+            L.circleMarker(
 
-                L.marker(
-                    [lat,lng]
-                )
+                [lat,lng],
 
-                .addTo(map)
+                {
 
-                .bindPopup(
-                    '現在地'
-                )
+                    radius:7,
 
-                .openPopup();
+                    color:'#111',
+
+                    weight:4,
+
+                    fillColor:'#fff',
+
+                    fillOpacity:1
+
+                }
+
+            )
+
+            .addTo(map)
+
+            .bindPopup(
+                '現在地'
+            )
+
+            .openPopup();
 
 
-            // 現在地の精度
+            /* ACCURACY */
 
             currentCircle =
+            L.circle(
 
-                L.circle(
+                [lat,lng],
 
-                    [lat,lng],
+                {
 
-                    {
+                    radius:accuracy,
 
-                        radius:accuracy
+                    color:'#777',
 
-                    }
+                    weight:1,
 
-                )
+                    fillColor:'#fff',
 
-                .addTo(map);
+                    fillOpacity:.04
+
+                }
+
+            )
+
+            .addTo(map);
+
+
+            /* DATA */
+
+            const mapData =
+            document.querySelector(
+                '.map-data'
+            );
+
+
+            mapData.innerHTML =
+
+                'LAT : ' +
+                lat.toFixed(5) +
+
+                '<br>' +
+
+                'LNG : ' +
+                lng.toFixed(5) +
+
+                '<br>' +
+
+                'RANGE : ' +
+                Math.round(accuracy) +
+                'm' +
+
+                '<br>' +
+
+                'STATUS : ONLINE';
+
+
+            button.textContent =
+            '現在地を更新';
 
 
         },
@@ -1472,11 +2362,15 @@ function getCurrentLocation(){
 
         function(error){
 
+
+            button.textContent =
+            '現在地を取得';
+
+
             alert(
-
                 '現在地を取得できませんでした。'
-
             );
+
 
         },
 
@@ -1496,13 +2390,15 @@ function getCurrentLocation(){
 }
 
 
-// ---------------------------------
-// BUTTON
-// ---------------------------------
+/* ==================================================
+   LOCATION BUTTON
+================================================== */
 
 document
 
-.getElementById('locationBtn')
+.getElementById(
+    'locationBtn'
+)
 
 .addEventListener(
 
@@ -1511,7 +2407,6 @@ document
     getCurrentLocation
 
 );
-
 
 </script>
 
