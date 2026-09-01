@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ohitorisamap｜おひとりさまっぷ</title>
 
-<!-- 実際の地図表示用 -->
+<!-- 無料の地図ライブラリ -->
 <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+ rel="stylesheet"
+ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 />
 
 <style>
@@ -45,11 +40,6 @@ body{
     overflow-x:hidden;
 }
 
-
-/* ==================================================
-   FUTURE GRID
-================================================== */
-
 body::before{
     content:"";
     position:fixed;
@@ -70,7 +60,6 @@ body::before{
 
     background-size:40px 40px;
 }
-
 
 /* ==================================================
    BOOT
@@ -107,15 +96,11 @@ body::before{
     height:120px;
     position:relative;
 
-    border:
-        1px solid
-        rgba(90,225,255,.5);
-
+    border:1px solid rgba(90,225,255,.5);
     border-radius:50%;
 
     box-shadow:
-        0 0 30px
-        rgba(70,220,255,.1);
+        0 0 30px rgba(70,220,255,.1);
 
     animation:pulse 2s infinite;
 }
@@ -125,25 +110,21 @@ body::before{
     position:absolute;
     inset:12px;
 
-    border:
-        1px solid
-        rgba(90,225,255,.25);
-
+    border:1px solid rgba(90,225,255,.25);
     border-radius:50%;
 }
 
 .boot-core::after{
     content:"";
-
     position:absolute;
+
     left:50%;
     top:50%;
 
     width:24px;
     height:24px;
 
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     border-radius:50%;
 
@@ -151,8 +132,7 @@ body::before{
 
     box-shadow:
         0 0 12px #6de3ff,
-        0 0 35px
-        rgba(70,220,255,.7);
+        0 0 35px rgba(70,220,255,.7);
 }
 
 .boot-ring{
@@ -161,21 +141,12 @@ body::before{
 
     border-radius:50%;
 
-    border-top:
-        1px solid #6de3ff;
+    border-top:1px solid #6de3ff;
+    border-right:1px solid transparent;
+    border-bottom:1px solid rgba(100,225,255,.2);
+    border-left:1px solid transparent;
 
-    border-right:
-        1px solid transparent;
-
-    border-bottom:
-        1px solid
-        rgba(100,225,255,.2);
-
-    border-left:
-        1px solid transparent;
-
-    animation:
-        rotate 1.5s linear infinite;
+    animation:rotate 1.5s linear infinite;
 }
 
 .boot-status{
@@ -213,8 +184,7 @@ body::before{
 }
 
 .access.show{
-    animation:
-        access .8s forwards;
+    animation:access .8s forwards;
 }
 
 .access-title{
@@ -224,8 +194,7 @@ body::before{
     color:#6de3ff;
 
     text-shadow:
-        0 0 15px
-        rgba(70,220,255,.8);
+        0 0 15px rgba(70,220,255,.8);
 }
 
 .access-name{
@@ -244,7 +213,6 @@ body::before{
     color:#78949d;
 }
 
-
 /* ==================================================
    ANIMATION
 ================================================== */
@@ -258,8 +226,7 @@ body::before{
 @keyframes pulse{
     50%{
         box-shadow:
-            0 0 50px
-            rgba(70,220,255,.2);
+            0 0 50px rgba(70,220,255,.2);
     }
 }
 
@@ -281,44 +248,33 @@ body::before{
     }
 }
 
-
 /* ==================================================
    APP
 ================================================== */
 
 .app{
     min-height:100vh;
-
     opacity:0;
 
-    transition:
-        opacity 1s ease;
+    transition:opacity 1s ease;
 }
 
 .app.show{
     opacity:1;
 }
 
-
-/* ==================================================
-   PAGE
-================================================== */
-
 .page{
     display:none;
 
     min-height:100vh;
-
     padding-bottom:100px;
 
-    animation:
-        pageIn .4s ease;
+    animation:pageIn .4s ease;
 }
 
 .page.active{
     display:block;
 }
-
 
 /* ==================================================
    TOP BAR
@@ -327,7 +283,6 @@ body::before{
 .topbar{
     position:sticky;
     top:0;
-
     z-index:100;
 
     height:65px;
@@ -338,21 +293,17 @@ body::before{
 
     padding:0 20px;
 
-    background:
-        rgba(3,7,10,.9);
+    background:rgba(3,7,10,.9);
 
-    backdrop-filter:
-        blur(12px);
+    backdrop-filter:blur(12px);
 
     border-bottom:
-        1px solid
-        rgba(80,220,255,.12);
+        1px solid rgba(80,220,255,.12);
 }
 
 .logo{
     font-size:14px;
     letter-spacing:3px;
-    color:#eaffff;
 }
 
 .logo span{
@@ -378,10 +329,8 @@ body::before{
 
     background:#6de3ff;
 
-    box-shadow:
-        0 0 8px #6de3ff;
+    box-shadow:0 0 8px #6de3ff;
 }
-
 
 /* ==================================================
    CONTAINER
@@ -399,6 +348,7 @@ body::before{
 .page-code{
     font-size:8px;
     letter-spacing:3px;
+
     color:#3c8295;
 }
 
@@ -417,20 +367,17 @@ body::before{
     color:#58717a;
 }
 
-
 /* ==================================================
-   HOME
+   HERO
 ================================================== */
 
 .home-hero{
-    min-height:
-        calc(100vh - 65px);
+    min-height:calc(100vh - 65px);
 
     display:flex;
     align-items:center;
 
     position:relative;
-
     overflow:hidden;
 }
 
@@ -445,8 +392,7 @@ body::before{
     left:50%;
     top:50%;
 
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     border-radius:50%;
 
@@ -480,11 +426,9 @@ body::before{
 .hero-title{
     margin:0;
 
-    font-size:
-        clamp(42px,9vw,90px);
+    font-size:clamp(42px,9vw,90px);
 
     font-weight:500;
-
     line-height:1;
 
     letter-spacing:6px;
@@ -492,11 +436,8 @@ body::before{
     color:#eaffff;
 
     text-shadow:
-        0 0 10px
-        rgba(100,230,255,.6),
-
-        0 0 30px
-        rgba(0,180,255,.2);
+        0 0 10px rgba(100,230,255,.6),
+        0 0 30px rgba(0,180,255,.2);
 }
 
 .hero-jp{
@@ -517,36 +458,42 @@ body::before{
     color:#5e7882;
 }
 
-
 /* ==================================================
-   SEARCH BOX
+   SEARCH
 ================================================== */
+
+.search-box,
+.search-large{
+    display:flex;
+    align-items:center;
+
+    border:1px solid rgba(80,220,255,.4);
+
+    background:rgba(20,100,120,.05);
+
+    transition:.25s;
+}
 
 .search-box{
     margin-top:40px;
 
     max-width:720px;
     height:62px;
-
-    display:flex;
-    align-items:center;
-
-    border:
-        1px solid
-        rgba(80,220,255,.4);
-
-    background:
-        rgba(20,100,120,.05);
-
-    transition:.25s;
 }
 
-.search-box:focus-within{
+.search-large{
+    margin-top:35px;
+
+    width:100%;
+    height:60px;
+}
+
+.search-box:focus-within,
+.search-large:focus-within{
     border-color:#6de3ff;
 
     box-shadow:
-        0 0 25px
-        rgba(50,210,255,.12);
+        0 0 25px rgba(50,210,255,.12);
 }
 
 .search-icon{
@@ -555,9 +502,7 @@ body::before{
 
     margin:0 18px;
 
-    border:
-        1px solid
-        #6de3ff;
+    border:1px solid #6de3ff;
 
     border-radius:50%;
 
@@ -577,11 +522,11 @@ body::before{
 
     background:#6de3ff;
 
-    transform:
-        rotate(45deg);
+    transform:rotate(45deg);
 }
 
-.search-box input{
+.search-box input,
+.search-large input{
     flex:1;
 
     height:100%;
@@ -596,10 +541,17 @@ body::before{
     font-size:13px;
 }
 
-.search-box input::placeholder{
-    color:#42606b;
+.search-box input{
+    padding-right:15px;
 }
 
+.search-large input{
+    padding:0 18px;
+}
+
+input::placeholder{
+    color:#42606b;
+}
 
 /* ==================================================
    MODULE
@@ -616,6 +568,7 @@ body::before{
 .module-code{
     font-size:8px;
     letter-spacing:3px;
+
     color:#397487;
 }
 
@@ -624,6 +577,7 @@ body::before{
 
     font-size:21px;
     font-weight:500;
+
     letter-spacing:2px;
 }
 
@@ -631,9 +585,9 @@ body::before{
     margin:7px 0 0;
 
     font-size:9px;
+
     color:#58717a;
 }
-
 
 /* ==================================================
    CATEGORY
@@ -642,8 +596,7 @@ body::before{
 .categories{
     display:grid;
 
-    grid-template-columns:
-        repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
 
     gap:10px;
 }
@@ -654,7 +607,6 @@ body::before{
     display:flex;
     align-items:center;
     justify-content:center;
-
     flex-direction:column;
 
     gap:15px;
@@ -668,9 +620,7 @@ body::before{
             rgba(0,0,0,.25)
         );
 
-    border:
-        1px solid
-        rgba(70,180,210,.2);
+    border:1px solid rgba(70,180,210,.2);
 
     cursor:pointer;
 
@@ -678,14 +628,12 @@ body::before{
 }
 
 .category:hover{
-    transform:
-        translateY(-4px);
+    transform:translateY(-4px);
 
     border-color:#6de3ff;
 
     box-shadow:
-        0 0 20px
-        rgba(70,220,255,.08);
+        0 0 20px rgba(70,220,255,.08);
 }
 
 .category-svg{
@@ -703,21 +651,18 @@ body::before{
 
     filter:
         drop-shadow(
-            0 0 6px
-            rgba(70,220,255,.45)
+            0 0 6px rgba(70,220,255,.45)
         );
 
     transition:.25s;
 }
 
 .category:hover .category-svg{
-    transform:
-        scale(1.12);
+    transform:scale(1.12);
 
     filter:
         drop-shadow(
-            0 0 10px
-            rgba(70,220,255,.8)
+            0 0 10px rgba(70,220,255,.8)
         );
 }
 
@@ -726,54 +671,67 @@ body::before{
     letter-spacing:3px;
 }
 
-
 /* ==================================================
    MAP
 ================================================== */
 
-.map-panel{
+.map-box{
     position:relative;
 
-    overflow:hidden;
+    width:100%;
+    height:420px;
 
-    border:
-        1px solid
-        rgba(70,180,210,.25);
+    margin-top:35px;
+
+    border:1px solid rgba(70,180,210,.25);
+
+    overflow:hidden;
 
     background:#050b0f;
 }
 
-.map-box{
+#homeMap,
+#mainMap{
     width:100%;
-    height:420px;
+    height:100%;
+}
 
-    filter:
-        saturate(.55)
-        brightness(.7);
+.leaflet-container{
+    background:#050b0f;
+    font-family:inherit;
+}
+
+.leaflet-control-zoom a{
+    background:#03070a !important;
+    color:#6de3ff !important;
+
+    border-color:rgba(80,220,255,.3) !important;
+}
+
+.leaflet-control-attribution{
+    background:rgba(3,7,10,.75) !important;
+    color:#527783 !important;
+}
+
+.leaflet-control-attribution a{
+    color:#6de3ff !important;
 }
 
 .map-overlay{
     position:absolute;
-    inset:0;
 
-    pointer-events:none;
-
-    border:
-        1px solid
-        rgba(70,220,255,.15);
-
-    box-shadow:
-        inset 0 0 80px
-        rgba(0,20,30,.5);
-}
-
-.map-info{
-    position:absolute;
+    z-index:500;
 
     top:18px;
     left:18px;
 
-    z-index:5;
+    padding:10px 14px;
+
+    background:rgba(3,8,11,.82);
+
+    border:1px solid rgba(80,220,255,.25);
+
+    color:#6de3ff;
 
     font-size:8px;
 
@@ -781,67 +739,8 @@ body::before{
 
     letter-spacing:2px;
 
-    color:#6de3ff;
-
-    background:
-        rgba(3,8,11,.78);
-
-    padding:10px 13px;
-
-    border:
-        1px solid
-        rgba(70,220,255,.2);
+    pointer-events:none;
 }
-
-.map-button{
-    position:absolute;
-
-    right:18px;
-    bottom:18px;
-
-    z-index:5;
-
-    padding:11px 15px;
-
-    background:
-        rgba(3,8,11,.9);
-
-    border:
-        1px solid
-        rgba(70,220,255,.45);
-
-    color:#6de3ff;
-
-    font-size:9px;
-
-    letter-spacing:2px;
-
-    cursor:pointer;
-}
-
-.map-button:hover{
-    border-color:#6de3ff;
-
-    box-shadow:
-        0 0 15px
-        rgba(70,220,255,.15);
-}
-
-.leaflet-control-zoom a{
-    background:#071116 !important;
-    color:#6de3ff !important;
-    border-color:rgba(70,220,255,.2) !important;
-}
-
-.leaflet-control-attribution{
-    background:rgba(3,8,11,.7) !important;
-    color:#54737d !important;
-}
-
-.leaflet-control-attribution a{
-    color:#6daebe !important;
-}
-
 
 /* ==================================================
    PLACE CARDS
@@ -850,8 +749,7 @@ body::before{
 .places{
     display:grid;
 
-    grid-template-columns:
-        repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
 
     gap:12px;
 }
@@ -859,9 +757,7 @@ body::before{
 .place{
     padding:25px;
 
-    border:
-        1px solid
-        rgba(70,180,210,.2);
+    border:1px solid rgba(70,180,210,.2);
 
     background:
         linear-gradient(
@@ -877,9 +773,7 @@ body::before{
 
 .place:hover{
     border-color:#6de3ff;
-
-    transform:
-        translateY(-4px);
+    transform:translateY(-4px);
 }
 
 .place-id{
@@ -899,9 +793,7 @@ body::before{
     margin-top:22px;
 
     display:flex;
-
     justify-content:space-between;
-
     align-items:end;
 }
 
@@ -911,24 +803,19 @@ body::before{
     color:#6de3ff;
 
     text-shadow:
-        0 0 10px
-        rgba(70,220,255,.4);
+        0 0 10px rgba(70,220,255,.4);
 }
 
 .score-label{
     font-size:8px;
-
     color:#527783;
-
     letter-spacing:2px;
 }
 
 .easy{
     padding:7px 10px;
 
-    border:
-        1px solid
-        rgba(70,220,255,.4);
+    border:1px solid rgba(70,220,255,.4);
 
     color:#6de3ff;
 
@@ -941,62 +828,23 @@ body::before{
     margin-top:18px;
 
     display:flex;
-
     flex-wrap:wrap;
-
     gap:6px;
 }
 
 .tag{
     padding:5px 8px;
 
-    border:
-        1px solid
-        rgba(100,160,175,.2);
+    border:1px solid rgba(100,160,175,.2);
 
     color:#66838c;
 
     font-size:8px;
 }
 
-
 /* ==================================================
-   SEARCH
+   RESULT
 ================================================== */
-
-.search-large{
-    margin-top:35px;
-
-    width:100%;
-    height:60px;
-
-    display:flex;
-    align-items:center;
-
-    border:
-        1px solid
-        rgba(80,220,255,.35);
-
-    background:
-        rgba(20,100,120,.05);
-}
-
-.search-large input{
-    flex:1;
-
-    height:100%;
-
-    border:0;
-    outline:0;
-
-    background:transparent;
-
-    color:white;
-
-    padding:0 18px;
-
-    font-size:13px;
-}
 
 .search-results{
     margin-top:35px;
@@ -1015,14 +863,11 @@ body::before{
 
     padding:20px;
 
-    border:
-        1px solid
-        rgba(70,180,210,.18);
+    border:1px solid rgba(70,180,210,.18);
 
     display:flex;
 
     justify-content:space-between;
-
     align-items:center;
 
     cursor:pointer;
@@ -1043,16 +888,13 @@ body::before{
     margin-top:6px;
 
     font-size:8px;
-
     color:#58717a;
 }
 
 .result-score{
     color:#6de3ff;
-
     font-size:20px;
 }
-
 
 /* ==================================================
    DETAIL
@@ -1062,15 +904,13 @@ body::before{
     padding:45px 0;
 
     border-bottom:
-        1px solid
-        rgba(70,180,210,.15);
+        1px solid rgba(70,180,210,.15);
 }
 
 .detail-name{
     margin:10px 0 0;
 
     font-size:34px;
-
     letter-spacing:3px;
 }
 
@@ -1100,6 +940,7 @@ body::before{
 
 .detail-score-label{
     font-size:9px;
+
     color:#58717a;
 }
 
@@ -1108,8 +949,7 @@ body::before{
 
     display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
 
     gap:8px;
 }
@@ -1119,9 +959,7 @@ body::before{
 
     text-align:center;
 
-    border:
-        1px solid
-        rgba(70,180,210,.25);
+    border:1px solid rgba(70,180,210,.25);
 
     color:#6de3ff;
 
@@ -1130,13 +968,14 @@ body::before{
     letter-spacing:2px;
 
     cursor:pointer;
+
+    transition:.2s;
 }
 
 .action:hover{
     border-color:#6de3ff;
 
-    background:
-        rgba(70,220,255,.05);
+    background:rgba(70,220,255,.05);
 }
 
 .detail-section{
@@ -1154,8 +993,7 @@ body::before{
     padding:15px 0;
 
     border-bottom:
-        1px solid
-        rgba(70,180,210,.1);
+        1px solid rgba(70,180,210,.1);
 
     display:flex;
 
@@ -1172,6 +1010,137 @@ body::before{
     letter-spacing:3px;
 }
 
+/* ==================================================
+   JARVIS RATING PANEL
+================================================== */
+
+.rating-panel{
+    margin-top:35px;
+
+    padding:25px;
+
+    border:1px solid rgba(70,220,255,.3);
+
+    background:
+        linear-gradient(
+            140deg,
+            rgba(20,100,120,.07),
+            rgba(0,0,0,.35)
+        );
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.rating-panel::before{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:1px;
+
+    background:#6de3ff;
+
+    box-shadow:
+        0 0 12px #6de3ff;
+}
+
+.rating-system{
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    color:#397487;
+}
+
+.rating-question{
+    margin-top:20px;
+
+    font-size:12px;
+
+    color:#8da8b0;
+}
+
+.star-buttons{
+    margin-top:12px;
+
+    display:flex;
+
+    gap:8px;
+}
+
+.star-btn{
+    width:38px;
+    height:38px;
+
+    border:1px solid rgba(70,180,210,.25);
+
+    background:transparent;
+
+    color:#36525b;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.2s;
+}
+
+.star-btn:hover,
+.star-btn.selected{
+    color:#6de3ff;
+
+    border-color:#6de3ff;
+
+    text-shadow:
+        0 0 10px rgba(70,220,255,.8);
+
+    background:
+        rgba(70,220,255,.05);
+}
+
+.rating-save{
+    margin-top:25px;
+
+    width:100%;
+
+    padding:16px;
+
+    border:1px solid rgba(70,220,255,.4);
+
+    background:rgba(70,220,255,.04);
+
+    color:#6de3ff;
+
+    letter-spacing:3px;
+
+    font-size:9px;
+
+    cursor:pointer;
+}
+
+.rating-save:hover{
+    background:rgba(70,220,255,.1);
+
+    border-color:#6de3ff;
+}
+
+.save-status{
+    margin-top:12px;
+
+    min-height:18px;
+
+    color:#6de3ff;
+
+    font-size:8px;
+
+    letter-spacing:2px;
+}
 
 /* ==================================================
    MY
@@ -1182,12 +1151,19 @@ body::before{
 
     padding:25px;
 
-    border:
-        1px solid
-        rgba(70,180,210,.2);
+    border:1px solid rgba(70,180,210,.2);
 
-    background:
-        rgba(20,100,120,.04);
+    background:rgba(20,100,120,.04);
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.profile:hover{
+    border-color:#6de3ff;
+    box-shadow:
+        0 0 20px rgba(70,220,255,.06);
 }
 
 .profile-label{
@@ -1206,13 +1182,20 @@ body::before{
     letter-spacing:2px;
 }
 
+.profile-hint{
+    margin-top:10px;
+
+    font-size:8px;
+
+    color:#527783;
+}
+
 .my-grid{
     margin-top:30px;
 
     display:grid;
 
-    grid-template-columns:
-        repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
 
     gap:10px;
 }
@@ -1220,9 +1203,7 @@ body::before{
 .my-card{
     padding:22px;
 
-    border:
-        1px solid
-        rgba(70,180,210,.18);
+    border:1px solid rgba(70,180,210,.18);
 
     cursor:pointer;
 
@@ -1231,9 +1212,6 @@ body::before{
 
 .my-card:hover{
     border-color:#6de3ff;
-
-    transform:
-        translateY(-2px);
 }
 
 .my-card-number{
@@ -1252,116 +1230,78 @@ body::before{
     letter-spacing:2px;
 }
 
-
 /* ==================================================
-   MY LIST
+   USER / LIST
 ================================================== */
 
-.my-list-panel{
+.user-panel{
+    margin-top:30px;
+}
+
+.user-option{
+    padding:20px;
+
+    margin-top:8px;
+
+    border:1px solid rgba(70,180,210,.18);
+
+    background:rgba(20,100,120,.03);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    cursor:pointer;
+}
+
+.user-option:hover{
+    border-color:#6de3ff;
+}
+
+.user-option-name{
+    font-size:11px;
+}
+
+.user-option-arrow{
+    color:#6de3ff;
+}
+
+.list-back{
     margin-top:30px;
 
-    display:none;
+    padding:15px;
 
-    border:
-        1px solid
-        rgba(70,180,210,.2);
+    border:1px solid rgba(70,180,210,.2);
 
-    background:
-        rgba(5,15,20,.7);
-}
-
-.my-list-panel.show{
-    display:block;
-
-    animation:
-        pageIn .35s ease;
-}
-
-.my-list-head{
-    padding:18px 20px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    border-bottom:
-        1px solid
-        rgba(70,180,210,.15);
-}
-
-.my-list-title{
-    font-size:13px;
-
-    letter-spacing:2px;
-}
-
-.my-list-close{
     color:#6de3ff;
-
-    font-size:10px;
-
-    cursor:pointer;
-
-    letter-spacing:2px;
-}
-
-.my-list{
-    padding:0 20px;
-}
-
-.my-list-item{
-    padding:18px 0;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    border-bottom:
-        1px solid
-        rgba(70,180,210,.1);
-
-    cursor:pointer;
-}
-
-.my-list-item:last-child{
-    border-bottom:0;
-}
-
-.my-list-item-name{
-    font-size:12px;
-}
-
-.my-list-item-info{
-    margin-top:6px;
-
-    font-size:8px;
-
-    color:#58717a;
-}
-
-.my-list-item-score{
-    color:#6de3ff;
-
-    font-size:16px;
-}
-
-.empty-list{
-    padding:35px 0;
 
     text-align:center;
 
+    cursor:pointer;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+}
+
+.empty{
+    margin-top:20px;
+
+    padding:30px;
+
+    border:1px solid rgba(70,180,210,.12);
+
     color:#527783;
+
+    text-align:center;
 
     font-size:10px;
 }
 
-
 /* ==================================================
-   NAVIGATION
+   NAV
 ================================================== */
 
 .navigation{
@@ -1372,32 +1312,24 @@ body::before{
     left:50%;
     bottom:15px;
 
-    transform:
-        translateX(-50%);
+    transform:translateX(-50%);
 
-    width:
-        min(94%,500px);
+    width:min(94%,500px);
 
     height:65px;
 
     display:grid;
 
-    grid-template-columns:
-        repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
 
-    border:
-        1px solid
-        rgba(80,220,255,.3);
+    border:1px solid rgba(80,220,255,.3);
 
-    background:
-        rgba(3,8,11,.9);
+    background:rgba(3,8,11,.9);
 
-    backdrop-filter:
-        blur(15px);
+    backdrop-filter:blur(15px);
 
     box-shadow:
-        0 10px 40px
-        rgba(0,0,0,.5);
+        0 10px 40px rgba(0,0,0,.5);
 }
 
 .nav-button{
@@ -1406,7 +1338,6 @@ body::before{
     flex-direction:column;
 
     align-items:center;
-
     justify-content:center;
 
     gap:5px;
@@ -1430,10 +1361,50 @@ body::before{
     color:#6de3ff;
 
     text-shadow:
-        0 0 10px
-        rgba(70,220,255,.5);
+        0 0 10px rgba(70,220,255,.5);
 }
 
+/* ==================================================
+   TOAST
+================================================== */
+
+.toast{
+    position:fixed;
+
+    z-index:9000;
+
+    left:50%;
+
+    bottom:95px;
+
+    transform:
+        translate(-50%,20px);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    padding:13px 20px;
+
+    background:rgba(3,10,13,.95);
+
+    border:1px solid rgba(70,220,255,.4);
+
+    color:#6de3ff;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    transition:.3s;
+}
+
+.toast.show{
+    opacity:1;
+
+    transform:
+        translate(-50%,0);
+}
 
 /* ==================================================
    MOBILE
@@ -1451,16 +1422,11 @@ body::before{
     }
 
     .categories{
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
     .category{
         min-height:115px;
-    }
-
-    .map-box{
-        height:350px;
     }
 
     .places{
@@ -1479,15 +1445,21 @@ body::before{
         font-size:25px;
     }
 
+    .map-box{
+        height:360px;
+    }
+
+    .star-btn{
+        width:34px;
+        height:34px;
+    }
+
 }
 
 </style>
-
 </head>
 
-
 <body>
-
 
 <!-- ==================================================
      BOOT
@@ -1502,17 +1474,14 @@ body::before{
         </div>
 
         <div class="boot-status" id="bootStatus">
-
-            システムを起動しています
+            SYSTEM LOCKED
 
             <span class="boot-jp">
                 システムを確認しています
             </span>
-
         </div>
 
     </div>
-
 
     <div class="access" id="access">
 
@@ -1533,20 +1502,17 @@ body::before{
 </div>
 
 
-
 <!-- ==================================================
      APP
 ================================================== -->
 
 <div class="app" id="app">
 
-
 <!-- ==================================================
-     HOME
+ HOME
 ================================================== -->
 
 <section class="page active" id="home">
-
 
 <header class="topbar">
 
@@ -1556,51 +1522,39 @@ body::before{
 
     <div class="top-status">
         <div class="status-dot"></div>
-        システム稼働中
+        SYSTEM ONLINE
     </div>
 
 </header>
 
 
-
 <div class="home-hero">
-
 
 <div class="container">
 
-
 <div class="hero-content">
-
 
 <div class="system">
 
     <div class="status-dot"></div>
 
-    あなたの場所探しシステム
+    パーソナル検索システム
 
 </div>
-
 
 <h1 class="hero-title">
     ohitorisamap
 </h1>
 
-
 <div class="hero-jp">
     おひとりさまっぷ
 </div>
 
-
 <div class="hero-copy">
-
     一人で行きたい。<br>
-
     でも、どこに行けばいいかわからない。<br>
-
     そんなときのための場所探し。
-
 </div>
-
 
 
 <div class="search-box">
@@ -1608,25 +1562,22 @@ body::before{
     <div class="search-icon"></div>
 
     <input
+        id="homeSearch"
         type="text"
         placeholder="行きたい場所を探す"
-        onclick="go('search')"
     >
 
 </div>
 
 
-
-<!-- ==================================================
-     CATEGORY
-================================================== -->
+<!-- CATEGORY -->
 
 <div class="module">
 
 <div class="module-head">
 
     <div class="module-code">
-        MODULE 01 / 目的から探す
+        MODULE 01 / 目的
     </div>
 
     <div class="module-title">
@@ -1634,259 +1585,146 @@ body::before{
     </div>
 
     <div class="module-sub">
-        やりたいことから探す
+        目的から探す
     </div>
 
 </div>
 
 
-
 <div class="categories">
-
-
-<!-- 食事 -->
 
 <div class="category" onclick="categorySearch('食事')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <path d="M9 5v22"/>
-    <path d="M13 5v22"/>
-    <path d="M9 5v7"/>
-    <path d="M13 5v7"/>
-
-    <path d="M21 5v22"/>
-    <path d="M21 5c4 2 5 6 5 10"/>
-
+<path d="M9 5v22"/>
+<path d="M13 5v22"/>
+<path d="M9 5v7"/>
+<path d="M13 5v7"/>
+<path d="M21 5v22"/>
+<path d="M21 5c4 2 5 6 5 10"/>
 </svg>
 
-<div class="category-name">
-    食事
-</div>
+<div class="category-name">食事</div>
 
 </div>
 
-
-
-<!-- カフェ -->
 
 <div class="category" onclick="categorySearch('カフェ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <path d="M6 12h18v10H6z"/>
-    <path d="M24 14h2a4 4 0 0 1 0 8h-2"/>
-
-    <path d="M10 8c0-2 2-2 2-4"/>
-    <path d="M16 8c0-2 2-2 2-4"/>
-
-    <path d="M8 26h16"/>
-
+<path d="M6 12h18v10H6z"/>
+<path d="M24 14h2a4 4 0 0 1 0 8h-2"/>
+<path d="M10 8c0-2 2-2 2-4"/>
+<path d="M16 8c0-2 2-2 2-4"/>
+<path d="M8 26h16"/>
 </svg>
 
-<div class="category-name">
-    カフェ
-</div>
+<div class="category-name">カフェ</div>
 
 </div>
 
-
-
-<!-- 映画 -->
 
 <div class="category" onclick="categorySearch('映画')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <rect
-        x="5"
-        y="7"
-        width="22"
-        height="18"
-        rx="2"
-    />
-
-    <path d="M5 12h22"/>
-
-    <path d="M10 7v5"/>
-    <path d="M16 7v5"/>
-    <path d="M22 7v5"/>
-
-    <path d="M11 18l7 4v-8z"/>
-
+<rect x="5" y="7" width="22" height="18" rx="2"/>
+<path d="M5 12h22"/>
+<path d="M10 7v5"/>
+<path d="M16 7v5"/>
+<path d="M22 7v5"/>
+<path d="M11 18l7 4v-8z"/>
 </svg>
 
-<div class="category-name">
-    映画
-</div>
+<div class="category-name">映画</div>
 
 </div>
 
-
-
-<!-- 温泉 -->
 
 <div class="category" onclick="categorySearch('温泉')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <path d="M8 25c3-3 3-7 0-10"/>
-    <path d="M16 25c3-3 3-7 0-10"/>
-    <path d="M24 25c3-3 3-7 0-10"/>
-
-    <path d="M5 28h22"/>
-
-    <path d="M11 8c0-2 2-2 2-4"/>
-    <path d="M19 8c0-2 2-2 2-4"/>
-
+<path d="M8 25c3-3 3-7 0-10"/>
+<path d="M16 25c3-3 3-7 0-10"/>
+<path d="M24 25c3-3 3-7 0-10"/>
+<path d="M5 28h22"/>
+<path d="M11 8c0-2 2-2 2-4"/>
+<path d="M19 8c0-2 2-2 2-4"/>
 </svg>
 
-<div class="category-name">
-    温泉
-</div>
+<div class="category-name">温泉</div>
 
 </div>
 
-
-
-<!-- カラオケ -->
 
 <div class="category" onclick="categorySearch('カラオケ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <rect
-        x="10"
-        y="4"
-        width="12"
-        height="18"
-        rx="6"
-    />
-
-    <path d="M7 15v2a9 9 0 0 0 18 0v-2"/>
-
-    <path d="M16 26v3"/>
-    <path d="M11 29h10"/>
-
+<rect x="10" y="4" width="12" height="18" rx="6"/>
+<path d="M7 15v2a9 9 0 0 0 18 0v-2"/>
+<path d="M16 26v3"/>
+<path d="M11 29h10"/>
 </svg>
 
-<div class="category-name">
-    カラオケ
-</div>
+<div class="category-name">カラオケ</div>
 
 </div>
 
-
-
-<!-- 遊ぶ -->
 
 <div class="category" onclick="categorySearch('遊ぶ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <path
-        d="
-            M9 12h14
-            c3 0 5 3 4 6
-            l-2 7
-            c-.5 2-3 2-4 0
-            l-2-4h-6l-2 4
-            c-1 2-3 2-4 0
-            l-2-7
-            c-1-3 1-6 4-6z
-        "
-    />
-
-    <path d="M10 16v5"/>
-    <path d="M8 18h4"/>
-
-    <circle cx="21" cy="17" r="1"/>
-    <circle cx="24" cy="20" r="1"/>
-
+<path d="M9 12h14c3 0 5 3 4 6l-2 7c-.5 2-3 2-4 0l-2-4h-6l-2 4c-1 2-3 2-4 0l-2-7c-1-3 1-6 4-6z"/>
+<path d="M10 16v5"/>
+<path d="M8 18h4"/>
+<circle cx="21" cy="17" r="1"/>
+<circle cx="24" cy="20" r="1"/>
 </svg>
 
-<div class="category-name">
-    遊ぶ
-</div>
+<div class="category-name">遊ぶ</div>
 
 </div>
 
-
-
-<!-- ドライブ -->
 
 <div class="category" onclick="categorySearch('ドライブ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <path d="M5 20l3-8h16l3 8v7H5z"/>
-
-    <path d="M9 12l2-5h10l2 5"/>
-
-    <path d="M5 20h22"/>
-
-    <circle cx="10" cy="26" r="2"/>
-    <circle cx="22" cy="26" r="2"/>
-
+<path d="M5 20l3-8h16l3 8v7H5z"/>
+<path d="M9 12l2-5h10l2 5"/>
+<path d="M5 20h22"/>
+<circle cx="10" cy="26" r="2"/>
+<circle cx="22" cy="26" r="2"/>
 </svg>
 
-<div class="category-name">
-    ドライブ
-</div>
+<div class="category-name">ドライブ</div>
 
 </div>
 
-
-
-<!-- お出かけ -->
 
 <div class="category" onclick="categorySearch('お出かけ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
-
-    <circle
-        cx="16"
-        cy="16"
-        r="12"
-    />
-
-    <path d="M16 4v24"/>
-    <path d="M4 16h24"/>
-
-    <path
-        d="
-            M21 11
-            l-4 9
-            -9 4
-            4-9z
-        "
-    />
-
+<circle cx="16" cy="16" r="12"/>
+<path d="M16 4v24"/>
+<path d="M4 16h24"/>
+<path d="M21 11l-4 9-9 4 4-9z"/>
 </svg>
 
-<div class="category-name">
-    お出かけ
-</div>
-
-</div>
-
+<div class="category-name">お出かけ</div>
 
 </div>
 
 </div>
+</div>
 
 
-
-<!-- ==================================================
-     HOME MAP
-================================================== -->
+<!-- HOME MAP -->
 
 <div class="module">
 
 <div class="module-head">
 
     <div class="module-code">
-        MODULE 02 / LOCATION
+        MODULE 02 / MAP
     </div>
 
     <div class="module-title">
@@ -1894,35 +1732,19 @@ body::before{
     </div>
 
     <div class="module-sub">
-        現在地周辺のひとりスポット
+        現在地周辺を表示
     </div>
 
 </div>
 
 
-<div class="map-panel">
+<div class="map-box">
 
-    <div
-        id="homeMap"
-        class="map-box"
-    ></div>
+    <div id="homeMap"></div>
 
-    <div class="map-overlay"></div>
-
-    <div class="map-info">
-
+    <div class="map-overlay">
         現在地<br>
-        <span id="homeLocationStatus">
-            位置情報を確認しています
-        </span>
-
-    </div>
-
-    <div
-        class="map-button"
-        onclick="go('map')"
-    >
-        地図を大きく見る
+        周辺スポットを検索中
     </div>
 
 </div>
@@ -1930,18 +1752,14 @@ body::before{
 </div>
 
 
-
-<!-- ==================================================
-     POPULAR
-================================================== -->
+<!-- POPULAR -->
 
 <div class="module">
-
 
 <div class="module-head">
 
     <div class="module-code">
-        MODULE 03 / 人気スポット
+        MODULE 03 / ANALYSIS
     </div>
 
     <div class="module-title">
@@ -1954,153 +1772,38 @@ body::before{
 
 </div>
 
-
-
-<div class="places">
-
-
-<div
-    class="place"
-    onclick="openPlace('○○ラーメン')"
->
-
-    <div class="place-id">
-        場所 001
-    </div>
-
-    <div class="place-name">
-        ○○ラーメン
-    </div>
-
-
-    <div class="place-score">
-
-        <div>
-
-            <div class="score">
-                4.8
-            </div>
-
-            <div class="score-label">
-                一人利用スコア
-            </div>
-
-        </div>
-
-
-        <div class="easy">
-            一人向き
-        </div>
-
-    </div>
-
-
-    <div class="tags">
-
-        <div class="tag">
-            一人客 多
-        </div>
-
-        <div class="tag">
-            カウンターあり
-        </div>
-
-    </div>
-
-
-</div>
-
-
-
-<div
-    class="place"
-    onclick="openPlace('○○カフェ')"
->
-
-    <div class="place-id">
-        場所 002
-    </div>
-
-    <div class="place-name">
-        ○○カフェ
-    </div>
-
-
-    <div class="place-score">
-
-        <div>
-
-            <div class="score">
-                4.7
-            </div>
-
-            <div class="score-label">
-                一人利用スコア
-            </div>
-
-        </div>
-
-
-        <div class="easy">
-            一人向き
-        </div>
-
-    </div>
-
-
-    <div class="tags">
-
-        <div class="tag">
-            静か
-        </div>
-
-        <div class="tag">
-            Wi-Fiあり
-        </div>
-
-    </div>
-
+<div class="places" id="homePlaces"></div>
 
 </div>
 
 
 </div>
-
-</div>
-
-
-</div>
-
 </div>
 
 </section>
 
 
-
 <!-- ==================================================
-     SEARCH
+ SEARCH
 ================================================== -->
 
 <section class="page" id="search">
 
-
 <header class="topbar">
 
-    <div class="logo">
-        <span>o</span>hitorisamap
-    </div>
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
 
-    <div class="top-status">
-        <div class="status-dot"></div>
-        場所を検索中
-    </div>
+<div class="top-status">
+    <div class="status-dot"></div>
+    検索システム
+</div>
 
 </header>
 
 
-
 <div class="container">
-
 
 <div class="page-code">
     MODULE 04 / SEARCH
@@ -2111,9 +1814,8 @@ body::before{
 </h2>
 
 <p class="page-sub">
-    あなたが一人で行きたい場所を検索
+    一人で行きたい場所を検索
 </p>
-
 
 
 <div class="search-large">
@@ -2122,11 +1824,9 @@ body::before{
     id="searchInput"
     type="text"
     placeholder="例：ラーメン、映画、温泉、カフェ..."
-    oninput="filterSearch()"
 >
 
 </div>
-
 
 
 <div class="search-results">
@@ -2135,86 +1835,10 @@ body::before{
     class="result-count"
     id="resultCount"
 >
-    検索結果 / 04
+検索結果 / 00
 </div>
 
-
-<div
-    class="result"
-    data-keywords="ラーメン 食事"
-    onclick="openPlace('○○ラーメン')"
->
-
-<div>
-
-    <div class="result-name">
-        ○○ラーメン
-    </div>
-
-    <div class="result-info">
-        一人客 多い　｜　カウンターあり
-    </div>
-
-</div>
-
-<div class="result-score">
-    4.8
-</div>
-
-</div>
-
-
-
-<div
-    class="result"
-    data-keywords="カフェ"
-    onclick="openPlace('○○カフェ')"
->
-
-<div>
-
-    <div class="result-name">
-        ○○カフェ
-    </div>
-
-    <div class="result-info">
-        静か　｜　Wi-Fiあり
-    </div>
-
-</div>
-
-<div class="result-score">
-    4.7
-</div>
-
-</div>
-
-
-
-<div
-    class="result"
-    data-keywords="温泉"
-    onclick="openPlace('○○温泉')"
->
-
-<div>
-
-    <div class="result-name">
-        ○○温泉
-    </div>
-
-    <div class="result-info">
-        一人利用 多　｜　休憩スペース
-    </div>
-
-</div>
-
-<div class="result-score">
-    4.6
-</div>
-
-</div>
-
+<div id="searchResults"></div>
 
 </div>
 
@@ -2223,31 +1847,27 @@ body::before{
 </section>
 
 
-
 <!-- ==================================================
-     MAP PAGE
+ MAP
 ================================================== -->
 
 <section class="page" id="map">
 
-
 <header class="topbar">
 
-    <div class="logo">
-        <span>o</span>hitorisamap
-    </div>
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
 
-    <div class="top-status">
-        <div class="status-dot"></div>
-        地図システム
-    </div>
+<div class="top-status">
+    <div class="status-dot"></div>
+    MAP SYSTEM
+</div>
 
 </header>
 
 
-
 <div class="container">
-
 
 <div class="page-code">
     MODULE 05 / MAP
@@ -2262,338 +1882,400 @@ body::before{
 </p>
 
 
+<div class="map-box">
 
-<div
-    class="map-panel"
-    style="margin-top:35px;"
->
+<div id="mainMap"></div>
 
-    <div
-        id="mainMap"
-        class="map-box"
-    ></div>
-
-    <div class="map-overlay"></div>
-
-    <div class="map-info">
-
-        現在地<br>
-
-        <span id="mainLocationStatus">
-            位置情報を確認しています
-        </span>
-
-    </div>
+<div class="map-overlay">
+    LOCATION SYSTEM<br>
+    現在地を確認しています
+</div>
 
 </div>
 
 
-
-<div
-    class="places"
-    style="margin-top:15px;"
->
-
-
-<div
-    class="place"
-    onclick="openPlace('○○ラーメン')"
->
-
-    <div class="place-id">
-        近くの場所
-    </div>
-
-    <div class="place-name">
-        ○○ラーメン
-    </div>
-
-    <div class="place-id" style="margin-top:10px;">
-        1.2 km
-    </div>
-
-</div>
-
-
-
-<div
-    class="place"
-    onclick="openPlace('○○カフェ')"
->
-
-    <div class="place-id">
-        近くの場所
-    </div>
-
-    <div class="place-name">
-        ○○カフェ
-    </div>
-
-    <div class="place-id" style="margin-top:10px;">
-        2.4 km
-    </div>
-
-</div>
-
-
-</div>
-
+<div class="places" id="mapPlaces"
+style="margin-top:15px;"></div>
 
 </div>
 
 </section>
 
 
-
 <!-- ==================================================
-     PLACE
+ PLACE
 ================================================== -->
 
 <section class="page" id="place">
 
-
 <header class="topbar">
 
-    <div class="logo">
-        <span>o</span>hitorisamap
-    </div>
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
 
-    <div class="top-status">
-        <div class="status-dot"></div>
-        場所情報
-    </div>
+<div class="top-status">
+    <div class="status-dot"></div>
+    場所分析
+</div>
 
 </header>
 
 
-
 <div class="container">
-
 
 <div class="detail-hero">
 
-
-<div class="page-code">
-    場所 001
+<div class="page-code" id="detailId">
+    TARGET 001
 </div>
 
-
-<h2
-    class="detail-name"
-    id="detailName"
->
+<h2 class="detail-name" id="detailName">
     ○○ラーメン
 </h2>
 
-
-<div class="detail-location">
-    現在地から 1.2 km
+<div class="detail-location" id="detailLocation">
+    現在地から確認中
 </div>
-
 
 
 <div class="detail-score-box">
 
-
 <div>
 
-    <div class="big-score">
-        4.8
-    </div>
-
-    <div class="detail-score-label">
-        一人利用スコア
-    </div>
-
+<div class="big-score" id="detailScore">
+    4.8
 </div>
 
+<div class="detail-score-label">
+    一人利用スコア
+</div>
+
+</div>
 
 <div class="easy">
     一人向き
 </div>
 
-
 </div>
-
 
 
 <div class="detail-actions">
 
-
 <div
     class="action"
-    id="favoriteButton"
+    id="favoriteBtn"
     onclick="toggleFavorite()"
 >
     ♡ お気に入り
 </div>
 
-
 <div
     class="action"
-    onclick="ratePlace()"
+    onclick="openRating()"
 >
     ★ 評価する
 </div>
 
-
 <div
     class="action"
-    onclick="openRoute()"
+    onclick="markVisited()"
 >
-    ⌖ ルート
+    ◎ 行った場所に追加
+</div>
+
 </div>
 
 
+<!-- 評価画面 -->
+<div
+    class="rating-panel"
+    id="ratingPanel"
+    style="display:none;"
+>
+
+<div class="rating-system">
+    PERSONAL RATING SYSTEM
 </div>
 
 
+<div class="rating-question">
+    一人で入りやすさ
 </div>
 
+<div class="star-buttons"
+data-rating="entry">
+
+<button class="star-btn" onclick="selectRating('entry',1)">★</button>
+<button class="star-btn" onclick="selectRating('entry',2)">★</button>
+<button class="star-btn" onclick="selectRating('entry',3)">★</button>
+<button class="star-btn" onclick="selectRating('entry',4)">★</button>
+<button class="star-btn" onclick="selectRating('entry',5)">★</button>
+
+</div>
+
+
+<div class="rating-question">
+    静かさ
+</div>
+
+<div class="star-buttons"
+data-rating="quiet">
+
+<button class="star-btn" onclick="selectRating('quiet',1)">★</button>
+<button class="star-btn" onclick="selectRating('quiet',2)">★</button>
+<button class="star-btn" onclick="selectRating('quiet',3)">★</button>
+<button class="star-btn" onclick="selectRating('quiet',4)">★</button>
+<button class="star-btn" onclick="selectRating('quiet',5)">★</button>
+
+</div>
+
+
+<div class="rating-question">
+    一人客の多さ
+</div>
+
+<div class="star-buttons"
+data-rating="solo">
+
+<button class="star-btn" onclick="selectRating('solo',1)">★</button>
+<button class="star-btn" onclick="selectRating('solo',2)">★</button>
+<button class="star-btn" onclick="selectRating('solo',3)">★</button>
+<button class="star-btn" onclick="selectRating('solo',4)">★</button>
+<button class="star-btn" onclick="selectRating('solo',5)">★</button>
+
+</div>
+
+
+<div class="rating-question">
+    過ごしやすさ
+</div>
+
+<div class="star-buttons"
+data-rating="comfort">
+
+<button class="star-btn" onclick="selectRating('comfort',1)">★</button>
+<button class="star-btn" onclick="selectRating('comfort',2)">★</button>
+<button class="star-btn" onclick="selectRating('comfort',3)">★</button>
+<button class="star-btn" onclick="selectRating('comfort',4)">★</button>
+<button class="star-btn" onclick="selectRating('comfort',5)">★</button>
+
+</div>
+
+
+<button
+    class="rating-save"
+    onclick="saveRating()"
+>
+    評価を保存する
+</button>
+
+<div
+    class="save-status"
+    id="saveStatus"
+></div>
+
+</div>
+
+</div>
 
 
 <div class="detail-section">
-
 
 <div class="detail-section-title">
     一人利用データ
 </div>
 
-
-
 <div class="rating-row">
-
 <div class="rating-name">
     一人で入りやすい
 </div>
-
-<div class="rating">
+<div class="rating" id="entryDisplay">
     ★★★★★
 </div>
-
 </div>
 
-
-
 <div class="rating-row">
-
 <div class="rating-name">
     静かさ
 </div>
-
-<div class="rating">
+<div class="rating" id="quietDisplay">
     ★★★★☆
 </div>
-
 </div>
 
-
-
 <div class="rating-row">
-
 <div class="rating-name">
     一人客の多さ
 </div>
-
-<div class="rating">
+<div class="rating" id="soloDisplay">
     ★★★★★
 </div>
-
 </div>
 
-
-
 <div class="rating-row">
-
 <div class="rating-name">
     過ごしやすさ
 </div>
-
-<div class="rating">
+<div class="rating" id="comfortDisplay">
     ★★★★☆
 </div>
-
 </div>
 
-
 </div>
-
 
 </div>
 
 </section>
 
 
-
 <!-- ==================================================
-     MY
+ MY
 ================================================== -->
 
 <section class="page" id="my">
 
-
 <header class="topbar">
 
-    <div class="logo">
-        <span>o</span>hitorisamap
-    </div>
+<div class="logo">
+    <span>o</span>hitorisamap
+</div>
 
-    <div class="top-status">
-        <div class="status-dot"></div>
-        マイページ
-    </div>
+<div class="top-status">
+    <div class="status-dot"></div>
+    マイページ
+</div>
 
 </header>
 
 
-
 <div class="container">
-
 
 <div class="page-code">
     MODULE 06 / PERSONAL
 </div>
 
-
 <h2 class="page-title">
     マイページ
 </h2>
-
 
 <p class="page-sub">
     あなたの「ひとり」を記録
 </p>
 
 
+<!-- USER -->
 
-<div class="profile">
-
+<div
+    class="profile"
+    onclick="openUserPanel()"
+>
 
 <div class="profile-label">
     ユーザー情報
 </div>
 
-
-<div class="profile-name">
+<div
+    class="profile-name"
+    id="profileName"
+>
     ゲストユーザー
 </div>
 
+<div class="profile-hint">
+    タップしてユーザー情報を開く
+</div>
 
 </div>
 
 
+<!-- USER PANEL -->
+
+<div
+    class="user-panel"
+    id="userPanel"
+    style="display:none;"
+>
+
+<div class="module-code">
+    USER INFORMATION
+</div>
+
+<div
+    class="user-option"
+    onclick="showMyList('history')"
+>
+
+<div class="user-option-name">
+    検索した場所
+</div>
+
+<div class="user-option-arrow">
+    →
+</div>
+
+</div>
+
+<div
+    class="user-option"
+    onclick="showMyList('favorite')"
+>
+
+<div class="user-option-name">
+    お気に入り
+</div>
+
+<div class="user-option-arrow">
+    →
+</div>
+
+</div>
+
+<div
+    class="user-option"
+    onclick="showMyList('rating')"
+>
+
+<div class="user-option-name">
+    評価した場所
+</div>
+
+<div class="user-option-arrow">
+    →
+</div>
+
+</div>
+
+<div
+    class="user-option"
+    onclick="showMyList('visited')"
+>
+
+<div class="user-option-name">
+    行った場所
+</div>
+
+<div class="user-option-arrow">
+    →
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MY CARDS -->
 
 <div class="my-grid">
 
-
 <div
     class="my-card"
-    onclick="showMyList('search')"
+    onclick="showMyList('history')"
 >
 
 <div
     class="my-card-number"
-    id="searchCount"
+    id="historyCount"
 >
     0
 </div>
@@ -2603,7 +2285,6 @@ body::before{
 </div>
 
 </div>
-
 
 
 <div
@@ -2625,7 +2306,6 @@ body::before{
 </div>
 
 
-
 <div
     class="my-card"
     onclick="showMyList('rating')"
@@ -2643,7 +2323,6 @@ body::before{
 </div>
 
 </div>
-
 
 
 <div
@@ -2664,45 +2343,50 @@ body::before{
 
 </div>
 
-
 </div>
 
 
-
-<!-- ==================================================
-     MY LIST
-================================================== -->
+<!-- LIST -->
 
 <div
-    class="my-list-panel"
-    id="myListPanel"
+    id="myList"
+    style="display:none;"
 >
 
+<div class="module">
 
-<div class="my-list-head">
+<div class="module-head">
 
-    <div
-        class="my-list-title"
-        id="myListTitle"
-    >
-        一覧
-    </div>
+<div
+    class="module-code"
+    id="listCode"
+>
+    PERSONAL DATA
+</div>
 
-    <div
-        class="my-list-close"
-        onclick="closeMyList()"
-    >
-        閉じる
-    </div>
+<div
+    class="module-title"
+    id="listTitle"
+>
+    記録
+</div>
+
+<div class="module-sub">
+    あなたの記録
+</div>
 
 </div>
 
+<div id="listContent"></div>
 
 <div
-    class="my-list"
-    id="myList"
-></div>
+    class="list-back"
+    onclick="closeMyList()"
+>
+    ← マイページに戻る
+</div>
 
+</div>
 
 </div>
 
@@ -2712,13 +2396,11 @@ body::before{
 </section>
 
 
-
 <!-- ==================================================
-     NAVIGATION
+ NAV
 ================================================== -->
 
 <nav class="navigation">
-
 
 <div
     class="nav-button active"
@@ -2733,7 +2415,6 @@ body::before{
 ホーム
 
 </div>
-
 
 
 <div
@@ -2751,7 +2432,6 @@ body::before{
 </div>
 
 
-
 <div
     class="nav-button"
     data-page="map"
@@ -2762,10 +2442,9 @@ body::before{
     ◎
 </div>
 
-地図
+マップ
 
 </div>
-
 
 
 <div
@@ -2782,80 +2461,160 @@ body::before{
 
 </div>
 
-
 </nav>
-
 
 </div>
 
 
-<!-- Leaflet -->
-<script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
+<div
+    class="toast"
+    id="toast"
+>
+    SYSTEM
+</div>
+
+
+<!-- ==================================================
+ LEAFLET
+================================================== -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
 <script>
 
 /* ==================================================
-   データ
+ DATA
 ================================================== */
 
-const places = {
+const places = [
 
-    "○○ラーメン":{
-        score:"4.8",
-        info:"一人客 多い　｜　カウンターあり"
-    },
+{
+    id:"001",
+    name:"○○ラーメン",
+    category:"食事",
+    score:4.8,
+    lat:33.5597,
+    lng:133.5311,
+    tags:["一人客 多","カウンターあり"]
+},
 
-    "○○カフェ":{
-        score:"4.7",
-        info:"静か　｜　Wi-Fiあり"
-    },
+{
+    id:"002",
+    name:"○○カフェ",
+    category:"カフェ",
+    score:4.7,
+    lat:33.5615,
+    lng:133.5350,
+    tags:["静か","Wi-Fiあり"]
+},
 
-    "○○温泉":{
-        score:"4.6",
-        info:"一人利用 多　｜　休憩スペース"
-    }
+{
+    id:"003",
+    name:"○○温泉",
+    category:"温泉",
+    score:4.6,
+    lat:33.5550,
+    lng:133.5250,
+    tags:["一人利用 多","休憩スペース"]
+},
 
-};
+{
+    id:"004",
+    name:"○○映画館",
+    category:"映画",
+    score:4.5,
+    lat:33.5600,
+    lng:133.5300,
+    tags:["一人客 多","一人鑑賞向き"]
+}
+
+];
 
 
 /* ==================================================
-   保存データ
+ STORAGE
 ================================================== */
+
+let historyData =
+    JSON.parse(
+        localStorage.getItem("ohitori_history") || "[]"
+    );
 
 let favorites =
     JSON.parse(
-        localStorage.getItem("ohitorisamap_favorites")
-        || "[]"
+        localStorage.getItem("ohitori_favorites") || "[]"
     );
 
 let ratings =
     JSON.parse(
-        localStorage.getItem("ohitorisamap_ratings")
-        || "[]"
+        localStorage.getItem("ohitori_ratings") || "{}"
     );
 
 let visited =
     JSON.parse(
-        localStorage.getItem("ohitorisamap_visited")
-        || "[]"
-    );
-
-let searches =
-    JSON.parse(
-        localStorage.getItem("ohitorisamap_searches")
-        || "[]"
+        localStorage.getItem("ohitori_visited") || "[]"
     );
 
 
-let currentPlace =
-    "○○ラーメン";
+function saveData(){
+
+    localStorage.setItem(
+        "ohitori_history",
+        JSON.stringify(historyData)
+    );
+
+    localStorage.setItem(
+        "ohitori_favorites",
+        JSON.stringify(favorites)
+    );
+
+    localStorage.setItem(
+        "ohitori_ratings",
+        JSON.stringify(ratings)
+    );
+
+    localStorage.setItem(
+        "ohitori_visited",
+        JSON.stringify(visited)
+    );
+
+}
 
 
 /* ==================================================
-   BOOT
+ HELPERS
+================================================== */
+
+function getPlace(id){
+
+    return places.find(
+        p => p.id === id
+    );
+
+}
+
+
+function showToast(text){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = text;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    },1800);
+
+}
+
+
+/* ==================================================
+ BOOT
 ================================================== */
 
 const bootStatus =
@@ -2873,29 +2632,29 @@ const app =
 
 const sequence = [
 
-    [
-        0,
-        "SYSTEM LOCKED",
-        "システムを確認しています"
-    ],
+[
+0,
+"SYSTEM LOCKED",
+"システムを確認しています"
+],
 
-    [
-        800,
-        "AUTHENTICATING",
-        "接続を確認しています"
-    ],
+[
+800,
+"AUTHENTICATING",
+"接続を確認しています"
+],
 
-    [
-        1600,
-        "ACCESS CHECK",
-        "アクセスを確認しています"
-    ],
+[
+1600,
+"ACCESS CHECK",
+"アクセスを確認しています"
+],
 
-    [
-        2200,
-        "ACCESS GRANTED",
-        "アクセスを許可しました"
-    ]
+[
+2200,
+"ACCESS GRANTED",
+"アクセスを許可しました"
+]
 
 ];
 
@@ -2905,13 +2664,9 @@ sequence.forEach(item => {
     setTimeout(() => {
 
         bootStatus.innerHTML =
-
             item[1] +
-
             '<span class="boot-jp">' +
-
             item[2] +
-
             '</span>';
 
     },item[0]);
@@ -2937,30 +2692,22 @@ setTimeout(() => {
 
     boot.classList.add("hide");
 
-    setTimeout(() => {
-
-        initializeMaps();
-
-    },500);
-
 },3900);
 
 
 /* ==================================================
-   ページ移動
+ NAVIGATION
 ================================================== */
 
 function go(pageName){
 
-    const pages =
-        document.querySelectorAll(".page");
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
 
+            page.classList.remove("active");
 
-    pages.forEach(page => {
-
-        page.classList.remove("active");
-
-    });
+        });
 
 
     const target =
@@ -2974,32 +2721,26 @@ function go(pageName){
     }
 
 
-    const buttons =
-        document.querySelectorAll(".nav-button");
+    document
+        .querySelectorAll(".nav-button")
+        .forEach(button => {
 
+            button.classList.remove("active");
 
-    buttons.forEach(button => {
+            if(
+                button.dataset.page === pageName
+            ){
 
-        button.classList.remove("active");
+                button.classList.add("active");
 
+            }
 
-        if(
-            button.dataset.page === pageName
-        ){
-
-            button.classList.add("active");
-
-        }
-
-    });
+        });
 
 
     window.scrollTo({
-
         top:0,
-
         behavior:"smooth"
-
     });
 
 
@@ -3021,99 +2762,183 @@ function go(pageName){
 
 
 /* ==================================================
-   カテゴリー検索
+ CATEGORY
 ================================================== */
 
-function categorySearch(keyword){
+function categorySearch(category){
 
     go("search");
 
-    setTimeout(() => {
+    document.getElementById("searchInput").value =
+        category;
 
-        const input =
-            document.getElementById("searchInput");
-
-        input.value = keyword;
-
-        filterSearch();
-
-    },200);
+    performSearch(category);
 
 }
 
 
 /* ==================================================
-   検索
+ SEARCH
 ================================================== */
 
-function filterSearch(){
+const searchInput =
+    document.getElementById("searchInput");
 
-    const input =
-        document.getElementById("searchInput");
+const homeSearch =
+    document.getElementById("homeSearch");
 
-    const word =
-        input.value.trim().toLowerCase();
+
+function performSearch(keyword){
+
+    keyword =
+        keyword.trim();
+
+    if(!keyword){
+
+        renderSearchResults(places);
+
+        return;
+
+    }
 
 
     const results =
-        document.querySelectorAll(".result");
+        places.filter(place =>
+
+            place.name.includes(keyword) ||
+            place.category.includes(keyword) ||
+            place.tags.some(tag =>
+                tag.includes(keyword)
+            )
+
+        );
 
 
-    let count = 0;
+    if(results.length){
+
+        results.forEach(place => {
+
+            addHistory(place.id);
+
+        });
+
+    }
 
 
-    results.forEach(result => {
+    renderSearchResults(results);
 
-        const keywords =
-            result.dataset.keywords
-            .toLowerCase();
-
-        const name =
-            result
-            .querySelector(".result-name")
-            .textContent
-            .toLowerCase();
+}
 
 
-        if(
-            word === "" ||
-            keywords.includes(word) ||
-            name.includes(word)
-        ){
+function renderSearchResults(results){
 
-            result.style.display="flex";
+    document.getElementById("resultCount").textContent =
+        "検索結果 / " +
+        String(results.length).padStart(2,"0");
 
-            count++;
 
-        }else{
+    const box =
+        document.getElementById("searchResults");
 
-            result.style.display="none";
+    box.innerHTML = "";
 
-        }
+
+    if(!results.length){
+
+        box.innerHTML =
+            '<div class="empty">' +
+            '該当する場所がありません' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    results.forEach(place => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "result";
+
+        item.onclick = () => {
+
+            openPlace(place.id);
+
+        };
+
+
+        item.innerHTML =
+
+            '<div>' +
+
+            '<div class="result-name">' +
+            place.name +
+            '</div>' +
+
+            '<div class="result-info">' +
+            place.tags.join("　｜　") +
+            '</div>' +
+
+            '</div>' +
+
+            '<div class="result-score">' +
+            place.score +
+            '</div>';
+
+
+        box.appendChild(item);
 
     });
 
-
-    document.getElementById("resultCount")
-        .textContent =
-        "検索結果 / " + count;
+}
 
 
-    if(word){
+searchInput.addEventListener(
+    "input",
+    e => performSearch(e.target.value)
+);
 
-        if(!searches.includes(word)){
 
-            searches.unshift(word);
+homeSearch.addEventListener(
+    "keydown",
+    e => {
 
-            searches =
-                searches.slice(0,30);
+        if(e.key === "Enter"){
 
-            saveData();
+            go("search");
+
+            searchInput.value =
+                homeSearch.value;
+
+            performSearch(
+                homeSearch.value
+            );
 
         }
 
     }
+);
 
+
+/* ==================================================
+ HISTORY
+================================================== */
+
+function addHistory(id){
+
+    historyData =
+        historyData.filter(
+            item => item !== id
+        );
+
+    historyData.unshift(id);
+
+    historyData =
+        historyData.slice(0,30);
+
+    saveData();
 
     updateMyCounts();
 
@@ -3121,88 +2946,171 @@ function filterSearch(){
 
 
 /* ==================================================
-   場所を開く
+ HOME PLACES
 ================================================== */
 
-function openPlace(name){
+function renderHomePlaces(){
 
-    currentPlace = name;
+    const box =
+        document.getElementById("homePlaces");
+
+    box.innerHTML = "";
+
+    places
+        .slice(0,2)
+        .forEach(place => {
+
+            box.appendChild(
+                createPlaceCard(place)
+            );
+
+        });
+
+}
 
 
-    if(!visited.includes(name)){
+function renderMapPlaces(){
 
-        visited.unshift(name);
+    const box =
+        document.getElementById("mapPlaces");
 
-        visited =
-            visited.slice(0,50);
+    box.innerHTML = "";
 
-    }
+    places.forEach(place => {
+
+        box.appendChild(
+            createPlaceCard(place)
+        );
+
+    });
+
+}
 
 
-    document.getElementById("detailName")
-        .textContent = name;
+function createPlaceCard(place){
+
+    const div =
+        document.createElement("div");
+
+    div.className = "place";
+
+    div.onclick = () =>
+        openPlace(place.id);
 
 
-    updateFavoriteButton();
+    div.innerHTML =
 
-    saveData();
+        '<div class="place-id">' +
+        'TARGET ' +
+        place.id +
+        '</div>' +
 
-    updateMyCounts();
+        '<div class="place-name">' +
+        place.name +
+        '</div>' +
+
+        '<div class="place-score">' +
+
+        '<div>' +
+
+        '<div class="score">' +
+        place.score +
+        '</div>' +
+
+        '<div class="score-label">' +
+        '一人利用スコア' +
+        '</div>' +
+
+        '</div>' +
+
+        '<div class="easy">' +
+        '一人向き' +
+        '</div>' +
+
+        '</div>' +
+
+        '<div class="tags">' +
+
+        place.tags
+            .map(tag =>
+                '<div class="tag">' +
+                tag +
+                '</div>'
+            )
+            .join("") +
+
+        '</div>';
+
+
+    return div;
+
+}
+
+
+/* ==================================================
+ PLACE DETAIL
+================================================== */
+
+let currentPlaceId = "001";
+
+let currentRatings = {
+
+    entry:0,
+    quiet:0,
+    solo:0,
+    comfort:0
+
+};
+
+
+function openPlace(id){
+
+    const place =
+        getPlace(id);
+
+    if(!place) return;
+
+    currentPlaceId = id;
+
+    addHistory(id);
 
     go("place");
 
-}
+    document.getElementById("detailId").textContent =
+        "TARGET " + place.id;
 
+    document.getElementById("detailName").textContent =
+        place.name;
 
-/* ==================================================
-   お気に入り
-================================================== */
+    document.getElementById("detailScore").textContent =
+        place.score;
 
-function toggleFavorite(){
+    document.getElementById("detailLocation").textContent =
+        "周辺スポット";
 
-    const index =
-        favorites.indexOf(currentPlace);
-
-
-    if(index >= 0){
-
-        favorites.splice(index,1);
-
-    }else{
-
-        favorites.unshift(currentPlace);
-
-    }
-
-
-    saveData();
 
     updateFavoriteButton();
 
-    updateMyCounts();
+    loadExistingRating();
 
 }
 
 
 function updateFavoriteButton(){
 
-    const button =
-        document.getElementById("favoriteButton");
-
-
-    if(!button)return;
-
+    const btn =
+        document.getElementById("favoriteBtn");
 
     if(
-        favorites.includes(currentPlace)
+        favorites.includes(currentPlaceId)
     ){
 
-        button.textContent =
+        btn.textContent =
             "♥ お気に入り済み";
 
     }else{
 
-        button.textContent =
+        btn.textContent =
             "♡ お気に入り";
 
     }
@@ -3211,79 +3119,349 @@ function updateFavoriteButton(){
 
 
 /* ==================================================
-   評価
+ FAVORITE
 ================================================== */
 
-function ratePlace(){
+function toggleFavorite(){
 
-    if(!ratings.includes(currentPlace)){
+    if(
+        favorites.includes(currentPlaceId)
+    ){
 
-        ratings.unshift(currentPlace);
+        favorites =
+            favorites.filter(
+                id => id !== currentPlaceId
+            );
+
+        showToast(
+            "お気に入りから削除しました"
+        );
+
+    }else{
+
+        favorites.push(currentPlaceId);
+
+        showToast(
+            "お気に入りに追加しました"
+        );
 
     }
+
+
+    saveData();
+
+    updateFavoriteButton();
+
+    updateMyCounts();
+
+}
+
+
+/* ==================================================
+ VISITED
+================================================== */
+
+function markVisited(){
+
+    if(
+        !visited.includes(currentPlaceId)
+    ){
+
+        visited.unshift(currentPlaceId);
+
+        saveData();
+
+        updateMyCounts();
+
+        showToast(
+            "行った場所に記録しました"
+        );
+
+    }else{
+
+        showToast(
+            "すでに記録されています"
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+ RATING
+================================================== */
+
+function openRating(){
+
+    const panel =
+        document.getElementById("ratingPanel");
+
+    panel.style.display = "block";
+
+    panel.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+    loadExistingRating();
+
+}
+
+
+function selectRating(type,value){
+
+    currentRatings[type] =
+        value;
+
+
+    const group =
+        document.querySelector(
+            '[data-rating="' +
+            type +
+            '"]'
+        );
+
+
+    group
+        .querySelectorAll(".star-btn")
+        .forEach((button,index) => {
+
+            button.classList.toggle(
+                "selected",
+                index < value
+            );
+
+        });
+
+}
+
+
+function loadExistingRating(){
+
+    const saved =
+        ratings[currentPlaceId];
+
+
+    currentRatings = saved
+        ? {...saved}
+        : {
+            entry:0,
+            quiet:0,
+            solo:0,
+            comfort:0
+        };
+
+
+    ["entry","quiet","solo","comfort"]
+        .forEach(type => {
+
+            const value =
+                currentRatings[type] || 0;
+
+            const group =
+                document.querySelector(
+                    '[data-rating="' +
+                    type +
+                    '"]'
+                );
+
+
+            if(group){
+
+                group
+                    .querySelectorAll(".star-btn")
+                    .forEach(
+                        (button,index) => {
+
+                            button.classList.toggle(
+                                "selected",
+                                index < value
+                            );
+
+                        }
+                    );
+
+            }
+
+        });
+
+
+    updateRatingDisplays();
+
+}
+
+
+function updateRatingDisplays(){
+
+    const types =
+        [
+            "entry",
+            "quiet",
+            "solo",
+            "comfort"
+        ];
+
+
+    types.forEach(type => {
+
+        const value =
+            currentRatings[type];
+
+
+        const element =
+            document.getElementById(
+                type + "Display"
+            );
+
+
+        if(!element) return;
+
+
+        if(!value){
+
+            element.textContent =
+                "未評価";
+
+            return;
+
+        }
+
+
+        element.textContent =
+            "★".repeat(value) +
+            "☆".repeat(5-value);
+
+    });
+
+}
+
+
+function saveRating(){
+
+    const values =
+        Object.values(currentRatings);
+
+
+    if(
+        values.some(value => !value)
+    ){
+
+        document.getElementById(
+            "saveStatus"
+        ).textContent =
+            "SYSTEM : すべての項目を評価してください";
+
+        return;
+
+    }
+
+
+    ratings[currentPlaceId] =
+        {...currentRatings};
+
 
     saveData();
 
     updateMyCounts();
 
-    alert(
-        currentPlace +
-        "を評価した場所として記録しました。"
+    updateRatingDisplays();
+
+
+    document.getElementById(
+        "saveStatus"
+    ).textContent =
+        "DATA SAVED / 評価を保存しました";
+
+
+    showToast(
+        "評価データを保存しました"
     );
 
 }
 
 
 /* ==================================================
-   ルート
+ MY PAGE
 ================================================== */
 
-function openRoute(){
+function updateMyCounts(){
 
-    const url =
-        "https://www.google.com/maps/search/?api=1&query="
-        +
-        encodeURIComponent(currentPlace);
+    document.getElementById(
+        "historyCount"
+    ).textContent =
+        historyData.length;
 
 
-    window.open(
-        url,
-        "_blank"
-    );
+    document.getElementById(
+        "favoriteCount"
+    ).textContent =
+        favorites.length;
+
+
+    document.getElementById(
+        "ratingCount"
+    ).textContent =
+        Object.keys(ratings).length;
+
+
+    document.getElementById(
+        "visitedCount"
+    ).textContent =
+        visited.length;
 
 }
 
 
-/* ==================================================
-   MY一覧
-================================================== */
+function openUserPanel(){
+
+    const panel =
+        document.getElementById("userPanel");
+
+
+    if(
+        panel.style.display === "none"
+    ){
+
+        panel.style.display =
+            "block";
+
+    }else{
+
+        panel.style.display =
+            "none";
+
+    }
+
+}
+
 
 function showMyList(type){
 
     const panel =
-        document.getElementById("myListPanel");
-
-    const title =
-        document.getElementById("myListTitle");
-
-    const list =
         document.getElementById("myList");
 
+    const content =
+        document.getElementById("listContent");
 
-    let data = [];
+    const title =
+        document.getElementById("listTitle");
 
 
-    if(type === "search"){
+    panel.style.display =
+        "block";
+
+
+    let ids = [];
+
+
+    if(type === "history"){
 
         title.textContent =
             "検索した場所";
 
-
-        data =
-            searches.map(item => ({
-                name:item,
-                info:"検索履歴"
-            }));
+        ids =
+            historyData;
 
     }
 
@@ -3293,12 +3471,8 @@ function showMyList(type){
         title.textContent =
             "お気に入り";
 
-
-        data =
-            favorites.map(item => ({
-                name:item,
-                info:"お気に入り登録済み"
-            }));
+        ids =
+            favorites;
 
     }
 
@@ -3308,12 +3482,8 @@ function showMyList(type){
         title.textContent =
             "評価した場所";
 
-
-        data =
-            ratings.map(item => ({
-                name:item,
-                info:"評価済み"
-            }));
+        ids =
+            Object.keys(ratings);
 
     }
 
@@ -3323,269 +3493,234 @@ function showMyList(type){
         title.textContent =
             "行った場所";
 
-
-        data =
-            visited.map(item => ({
-                name:item,
-                info:"訪問履歴"
-            }));
+        ids =
+            visited;
 
     }
 
 
-    list.innerHTML = "";
+    content.innerHTML = "";
 
 
-    if(data.length === 0){
+    if(!ids.length){
 
-        list.innerHTML =
-            '<div class="empty-list">' +
+        content.innerHTML =
+            '<div class="empty">' +
             'まだ記録がありません' +
             '</div>';
 
-    }else{
-
-        data.forEach(item => {
-
-            const div =
-                document.createElement("div");
-
-            div.className =
-                "my-list-item";
-
-
-            div.innerHTML =
-
-                '<div>' +
-
-                '<div class="my-list-item-name">' +
-
-                escapeHTML(item.name) +
-
-                '</div>' +
-
-                '<div class="my-list-item-info">' +
-
-                escapeHTML(item.info) +
-
-                '</div>' +
-
-                '</div>' +
-
-                '<div class="my-list-item-score">' +
-
-                "›" +
-
-                '</div>';
-
-
-            div.onclick = () => {
-
-                openPlace(item.name);
-
-            };
-
-
-            list.appendChild(div);
-
+        panel.scrollIntoView({
+            behavior:"smooth"
         });
+
+        return;
 
     }
 
 
-    panel.classList.add("show");
+    ids.forEach(id => {
+
+        const place =
+            getPlace(id);
+
+        if(!place) return;
 
 
-    setTimeout(() => {
+        const item =
+            document.createElement("div");
 
-        panel.scrollIntoView({
+        item.className = "result";
 
-            behavior:"smooth",
+        item.onclick = () =>
+            openPlace(place.id);
 
-            block:"start"
 
-        });
+        let rightText =
+            place.score;
 
-    },100);
+
+        if(
+            type === "rating" &&
+            ratings[id]
+        ){
+
+            const r =
+                ratings[id];
+
+            const average =
+                (
+                    r.entry +
+                    r.quiet +
+                    r.solo +
+                    r.comfort
+                ) / 4;
+
+            rightText =
+                average.toFixed(1);
+
+        }
+
+
+        item.innerHTML =
+
+            '<div>' +
+
+            '<div class="result-name">' +
+            place.name +
+            '</div>' +
+
+            '<div class="result-info">' +
+            place.category +
+            '　｜　' +
+            place.tags.join("　｜　") +
+            '</div>' +
+
+            '</div>' +
+
+            '<div class="result-score">' +
+            rightText +
+            '</div>';
+
+
+        content.appendChild(item);
+
+    });
+
+
+    panel.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
 
 }
 
 
 function closeMyList(){
 
-    document
-        .getElementById("myListPanel")
-        .classList.remove("show");
+    document.getElementById(
+        "myList"
+    ).style.display = "none";
 
 }
 
 
 /* ==================================================
-   HTML安全化
-================================================== */
-
-function escapeHTML(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* ==================================================
-   データ保存
-================================================== */
-
-function saveData(){
-
-    localStorage.setItem(
-        "ohitorisamap_favorites",
-        JSON.stringify(favorites)
-    );
-
-    localStorage.setItem(
-        "ohitorisamap_ratings",
-        JSON.stringify(ratings)
-    );
-
-    localStorage.setItem(
-        "ohitorisamap_visited",
-        JSON.stringify(visited)
-    );
-
-    localStorage.setItem(
-        "ohitorisamap_searches",
-        JSON.stringify(searches)
-    );
-
-}
-
-
-function updateMyCounts(){
-
-    document.getElementById("favoriteCount")
-        .textContent =
-        favorites.length;
-
-
-    document.getElementById("ratingCount")
-        .textContent =
-        ratings.length;
-
-
-    document.getElementById("visitedCount")
-        .textContent =
-        visited.length;
-
-
-    document.getElementById("searchCount")
-        .textContent =
-        searches.length;
-
-}
-
-
-/* ==================================================
-   実際の地図
+ MAP
 ================================================== */
 
 let homeMap = null;
 let mainMap = null;
 
-let userLat = null;
-let userLng = null;
+let userLat = 33.5597;
+let userLng = 133.5311;
 
 
-/* 初期位置
-   ※現在地が取れたら自動的に変更 */
-const defaultLocation = [
-    33.5597,
-    133.5311
-];
-
-
-function createMap(
-    elementId,
-    zoom = 14
-){
-
-    const element =
-        document.getElementById(elementId);
-
-
-    if(!element)return null;
-
-
-    const map =
-        L.map(elementId,{
-            zoomControl:true
-        })
-        .setView(
-            defaultLocation,
-            zoom
-        );
-
-
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            maxZoom:19,
-            attribution:
-                '&copy; OpenStreetMap contributors'
-        }
-    ).addTo(map);
-
-
-    return map;
-
-}
-
-
-function initializeMaps(){
+function createMaps(){
 
     homeMap =
-        createMap(
-            "homeMap",
+        L.map("homeMap",{
+            zoomControl:true
+        }).setView(
+            [userLat,userLng],
             14
         );
 
 
     mainMap =
-        createMap(
-            "mainMap",
+        L.map("mainMap",{
+            zoomControl:true
+        }).setView(
+            [userLat,userLng],
             14
         );
 
 
-    if(
-        homeMap ||
-        mainMap
-    ){
+    const tile =
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
-        requestLocation();
 
-    }
+    L.tileLayer(tile,{
+
+        maxZoom:19,
+
+        attribution:
+            '&copy; OpenStreetMap contributors'
+
+    }).addTo(homeMap);
+
+
+    L.tileLayer(tile,{
+
+        maxZoom:19,
+
+        attribution:
+            '&copy; OpenStreetMap contributors'
+
+    }).addTo(mainMap);
+
+
+    addMarkers(homeMap);
+
+    addMarkers(mainMap);
+
+
+    getLocation();
+
+}
+
+
+function addMarkers(map){
+
+    places.forEach(place => {
+
+        const marker =
+            L.marker([
+                place.lat,
+                place.lng
+            ]).addTo(map);
+
+
+        marker.bindPopup(
+
+            "<b>" +
+            place.name +
+            "</b><br>" +
+
+            "一人利用スコア : " +
+            place.score +
+
+            "<br><br>" +
+
+            "<span style='color:#0088aa;cursor:pointer'>" +
+            "タップして詳細を見る" +
+            "</span>"
+
+        );
+
+
+        marker.on(
+            "click",
+            () => {
+
+                addHistory(place.id);
+
+            }
+        );
+
+    });
 
 }
 
 
 /* ==================================================
-   現在地取得
+ LOCATION
 ================================================== */
 
-function requestLocation(){
+function getLocation(){
 
     if(
         !navigator.geolocation
     ){
-
-        setLocationStatus(
-            "現在地を取得できません"
-        );
 
         return;
 
@@ -3603,22 +3738,11 @@ function requestLocation(){
                 position.coords.longitude;
 
 
-            const location = [
-                userLat,
-                userLng
-            ];
-
-
             if(homeMap){
 
                 homeMap.setView(
-                    location,
-                    15
-                );
-
-                addUserMarker(
-                    homeMap,
-                    location
+                    [userLat,userLng],
+                    14
                 );
 
             }
@@ -3627,36 +3751,47 @@ function requestLocation(){
             if(mainMap){
 
                 mainMap.setView(
-                    location,
-                    15
-                );
-
-                addUserMarker(
-                    mainMap,
-                    location
+                    [userLat,userLng],
+                    14
                 );
 
             }
 
 
-            setLocationStatus(
-                "現在地を取得しました"
+            const userMarker =
+                L.circleMarker(
+                    [userLat,userLng],
+                    {
+                        radius:7,
+                        color:"#ffffff",
+                        fillColor:"#6de3ff",
+                        fillOpacity:.9
+                    }
+                );
+
+
+            userMarker.bindPopup(
+                "現在地"
             );
+
+
+            userMarker.addTo(homeMap);
+
+            userMarker.addTo(mainMap);
 
         },
 
         error => {
 
-            setLocationStatus(
-                "現在地を取得できません"
+            showToast(
+                "現在地を取得できませんでした"
             );
 
         },
 
         {
             enableHighAccuracy:true,
-            timeout:10000,
-            maximumAge:60000
+            timeout:10000
         }
 
     );
@@ -3665,95 +3800,20 @@ function requestLocation(){
 
 
 /* ==================================================
-   現在地マーカー
+ INIT
 ================================================== */
 
-function addUserMarker(
-    map,
-    location
-){
+renderHomePlaces();
 
-    const icon =
-        L.divIcon({
+renderMapPlaces();
 
-            className:"",
-
-            html:
-                '<div style="' +
-
-                'width:16px;' +
-                'height:16px;' +
-                'border-radius:50%;' +
-                'background:#6de3ff;' +
-                'border:2px solid white;' +
-                'box-shadow:0 0 10px #6de3ff,0 0 25px rgba(70,220,255,.8);' +
-
-                '"></div>',
-
-            iconSize:[16,16],
-
-            iconAnchor:[8,8]
-
-        });
-
-
-    L.marker(
-        location,
-        {
-            icon:icon
-        }
-    )
-    .addTo(map)
-    .bindPopup(
-        "現在地"
-    );
-
-}
-
-
-/* ==================================================
-   位置情報表示
-================================================== */
-
-function setLocationStatus(text){
-
-    const home =
-        document.getElementById(
-            "homeLocationStatus"
-        );
-
-    const main =
-        document.getElementById(
-            "mainLocationStatus"
-        );
-
-
-    if(home){
-
-        home.textContent =
-            text;
-
-    }
-
-
-    if(main){
-
-        main.textContent =
-            text;
-
-    }
-
-}
-
-
-/* ==================================================
-   起動時
-================================================== */
+renderSearchResults(places);
 
 updateMyCounts();
 
-</script>
+createMaps();
 
+</script>
 
 </body>
 </html>
