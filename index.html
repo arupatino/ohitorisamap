@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>ohitorisamap｜おひとりさまっぷ</title>
 
 
+<!-- =========================
+     LEAFLET
+========================= -->
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+
 <style>
 
-/* ==================================================
+/* =========================
    BASE
-================================================== */
+========================= */
 
 *{
     box-sizing:border-box;
@@ -30,343 +39,112 @@ body{
 
     margin:0;
 
-    background:#03070a;
+    background:#f5f5f5;
 
-    color:#e9fbff;
+    color:#111;
 
     font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Helvetica Neue",
-        "Hiragino Kaku Gothic ProN",
-        "Yu Gothic",
-        sans-serif;
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
 
-    overflow-x:hidden;
 }
 
 
-/* ==================================================
-   FUTURE GRID
-================================================== */
+/* =========================
+   START MOTION
+========================= */
 
-body::before{
-
-    content:"";
+#intro{
 
     position:fixed;
 
     inset:0;
 
-    pointer-events:none;
+    z-index:99999;
 
-    z-index:9999;
+    background:#111;
 
-    background:
-
-        linear-gradient(
-            rgba(80,220,255,.018) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(80,220,255,.018) 1px,
-            transparent 1px
-        );
-
-    background-size:40px 40px;
-}
-
-
-/* ==================================================
-   BOOT SCREEN
-================================================== */
-
-.boot{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:10000;
+    color:#fff;
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
 
-    background:#020506;
-
-    transition:
-
-        opacity .8s ease,
-
-        visibility .8s ease;
-}
-
-.boot.hide{
-
-    opacity:0;
-
-    visibility:hidden;
-
-    pointer-events:none;
-}
-
-
-.boot-content{
+    justify-content:center;
 
     text-align:center;
+
+    animation:introOut 1s ease 2.8s forwards;
+
 }
 
+.intro-inner{
 
-.boot-core{
+    animation:introIn 1.2s ease;
 
-    width:120px;
-
-    height:120px;
-
-    position:relative;
-
-    border:
-
-        1px solid
-        rgba(90,225,255,.5);
-
-    border-radius:50%;
-
-    box-shadow:
-
-        0 0 30px
-        rgba(70,220,255,.1);
-
-    animation:pulse 2s infinite;
 }
 
-
-.boot-core::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:12px;
-
-    border:
-
-        1px solid
-        rgba(90,225,255,.25);
-
-    border-radius:50%;
-}
-
-
-.boot-core::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:50%;
-
-    top:50%;
-
-    width:24px;
-
-    height:24px;
-
-    transform:
-        translate(-50%,-50%);
-
-    border-radius:50%;
-
-    background:#6de3ff;
-
-    box-shadow:
-
-        0 0 12px #6de3ff,
-
-        0 0 35px
-        rgba(70,220,255,.7);
-}
-
-
-.boot-ring{
-
-    position:absolute;
-
-    inset:-10px;
-
-    border-radius:50%;
-
-    border-top:
-
-        1px solid #6de3ff;
-
-    border-right:
-
-        1px solid transparent;
-
-    border-bottom:
-
-        1px solid
-        rgba(100,225,255,.2);
-
-    border-left:
-
-        1px solid transparent;
-
-    animation:
-
-        rotate 1.5s linear infinite;
-}
-
-
-.boot-status{
-
-    margin-top:35px;
+.intro-small{
 
     font-size:10px;
-
-    letter-spacing:4px;
-
-    color:#6de3ff;
-}
-
-
-.boot-jp{
-
-    display:block;
-
-    margin-top:8px;
-
-    font-size:9px;
-
-    letter-spacing:1px;
-
-    color:#58727c;
-}
-
-
-/* ACCESS */
-
-.access{
-
-    position:absolute;
-
-    inset:0;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:#020506;
-
-    opacity:0;
-
-    pointer-events:none;
-}
-
-.access.show{
-
-    animation:
-
-        access .8s forwards;
-}
-
-
-.access-title{
-
-    font-size:11px;
 
     letter-spacing:5px;
 
-    color:#6de3ff;
+    opacity:.45;
 
-    text-shadow:
-
-        0 0 15px
-        rgba(70,220,255,.8);
-}
-
-
-.access-name{
-
-    margin-top:18px;
-
-    font-size:32px;
-
-    letter-spacing:6px;
-}
-
-
-.access-jp{
-
-    margin-top:10px;
-
-    font-size:10px;
-
-    letter-spacing:4px;
-
-    color:#78949d;
-}
-
-
-/* ==================================================
-   ANIMATION
-================================================== */
-
-@keyframes rotate{
-
-    to{
-
-        transform:
-            rotate(360deg);
-
-    }
+    margin-bottom:18px;
 
 }
 
+.intro-title{
 
-@keyframes pulse{
+    font-size:38px;
 
-    50%{
+    letter-spacing:5px;
 
-        box-shadow:
+    font-weight:500;
 
-            0 0 50px
-            rgba(70,220,255,.2);
-
-    }
+    margin:0;
 
 }
 
+.intro-sub{
 
-@keyframes access{
+    margin-top:15px;
 
-    to{
+    font-size:12px;
 
-        opacity:1;
+    letter-spacing:3px;
 
-    }
+    color:#aaa;
 
 }
 
+.intro-line{
 
-@keyframes pageIn{
+    width:0;
+
+    height:1px;
+
+    background:#fff;
+
+    margin:25px auto 0;
+
+    animation:lineGrow 1.2s ease .5s forwards;
+
+}
+
+@keyframes introIn{
 
     from{
 
         opacity:0;
 
-        transform:
-            translateY(8px);
+        transform:translateY(15px);
 
     }
 
@@ -374,349 +152,134 @@ body::before{
 
         opacity:1;
 
-        transform:none;
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes lineGrow{
+
+    from{
+
+        width:0;
+
+    }
+
+    to{
+
+        width:180px;
+
+    }
+
+}
+
+@keyframes introOut{
+
+    to{
+
+        opacity:0;
+
+        visibility:hidden;
+
+        pointer-events:none;
 
     }
 
 }
 
 
-/* ==================================================
-   APP
-================================================== */
+/* =========================
+   HEADER
+========================= */
 
-.app{
+header{
 
-    min-height:100vh;
+    background:#111;
 
-    opacity:0;
+    color:#fff;
 
-    transition:
-        opacity 1s ease;
-}
-
-
-.app.show{
-
-    opacity:1;
-}
-
-
-/* ==================================================
-   PAGE
-================================================== */
-
-.page{
-
-    display:none;
-
-    min-height:100vh;
-
-    padding-bottom:100px;
-
-    animation:
-        pageIn .4s ease;
-}
-
-
-.page.active{
-
-    display:block;
-}
-
-
-/* ==================================================
-   TOP BAR
-================================================== */
-
-.topbar{
-
-    position:sticky;
-
-    top:0;
-
-    z-index:100;
-
-    height:65px;
+    min-height:420px;
 
     display:flex;
 
     align-items:center;
 
-    justify-content:space-between;
+    padding:45px 24px;
 
-    padding:0 20px;
-
-    background:
-        rgba(3,7,10,.9);
-
-    backdrop-filter:
-        blur(12px);
-
-    border-bottom:
-
-        1px solid
-        rgba(80,220,255,.12);
 }
 
-
-.logo{
-
-    font-size:14px;
-
-    letter-spacing:3px;
-
-    color:#eaffff;
-}
-
-
-.logo span{
-
-    color:#6de3ff;
-}
-
-
-.top-status{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    font-size:8px;
-
-    letter-spacing:2px;
-
-    color:#5d8793;
-}
-
-
-.status-dot{
-
-    width:6px;
-
-    height:6px;
-
-    border-radius:50%;
-
-    background:#6de3ff;
-
-    box-shadow:
-        0 0 8px #6de3ff;
-}
-
-
-/* ==================================================
-   CONTAINER
-================================================== */
-
-.container{
+.hero{
 
     width:100%;
 
-    max-width:1050px;
+    max-width:700px;
 
     margin:auto;
 
-    padding:60px 20px;
 }
 
+.hero-small{
 
-.page-code{
+    font-size:11px;
 
-    font-size:8px;
+    letter-spacing:4px;
 
-    letter-spacing:3px;
-
-    color:#3c8295;
-}
-
-
-.page-title{
-
-    margin:8px 0 0;
-
-    font-size:30px;
-
-    font-weight:500;
-
-    letter-spacing:3px;
-}
-
-
-.page-sub{
-
-    margin:10px 0 0;
-
-    font-size:10px;
-
-    color:#58717a;
-}
-
-
-/* ==================================================
-   HOME HERO
-================================================== */
-
-.home-hero{
-
-    min-height:
-        calc(100vh - 65px);
-
-    display:flex;
-
-    align-items:center;
-
-    position:relative;
-
-    overflow:hidden;
-}
-
-
-.home-hero::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:600px;
-
-    height:600px;
-
-    left:50%;
-
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    border-radius:50%;
-
-    background:
-
-        radial-gradient(
-            circle,
-            rgba(50,210,255,.08),
-            transparent 65%
-        );
-}
-
-
-.hero-content{
-
-    position:relative;
-
-    z-index:2;
-}
-
-
-.system{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:9px;
+    opacity:.5;
 
     margin-bottom:25px;
 
-    font-size:9px;
-
-    letter-spacing:3px;
-
-    color:#6de3ff;
 }
-
 
 .hero-title{
 
+    font-size:48px;
+
+    font-weight:600;
+
+    line-height:1.2;
+
+    letter-spacing:3px;
+
     margin:0;
 
-    font-size:
-        clamp(42px,9vw,90px);
-
-    font-weight:500;
-
-    line-height:1;
-
-    letter-spacing:6px;
-
-    color:#eaffff;
-
-    text-shadow:
-
-        0 0 10px
-        rgba(100,230,255,.6),
-
-        0 0 30px
-        rgba(0,180,255,.2);
 }
-
-
-.hero-jp{
-
-    margin-top:18px;
-
-    font-size:14px;
-
-    letter-spacing:5px;
-
-    color:#75929c;
-}
-
 
 .hero-copy{
 
     margin-top:22px;
 
-    font-size:12px;
+    font-size:15px;
 
     line-height:2;
 
-    color:#5e7882;
+    color:#bbb;
+
 }
 
+.hero-search{
 
-/* ==================================================
-   SEARCH BOX
-================================================== */
+    margin-top:35px;
 
-.search-box{
+    width:100%;
 
-    margin-top:40px;
+    max-width:580px;
 
-    max-width:720px;
-
-    height:62px;
+    height:60px;
 
     display:flex;
 
     align-items:center;
 
-    border:
+    background:#fff;
 
-        1px solid
-        rgba(80,220,255,.4);
+    color:#111;
 
-    background:
+    padding:0 20px;
 
-        rgba(20,100,120,.05);
+    border-radius:3px;
 
-    transition:.25s;
 }
-
-
-.search-box:focus-within{
-
-    border-color:#6de3ff;
-
-    box-shadow:
-
-        0 0 25px
-        rgba(50,210,255,.12);
-}
-
 
 .search-icon{
 
@@ -724,20 +287,19 @@ body::before{
 
     height:17px;
 
-    margin:0 18px;
-
-    border:
-
-        1px solid
-        #6de3ff;
+    border:1.5px solid #111;
 
     border-radius:50%;
 
     position:relative;
+
+    margin-right:13px;
+
+    flex-shrink:0;
+
 }
 
-
-.search-icon::after{
+.search-icon:after{
 
     content:"";
 
@@ -745,166 +307,163 @@ body::before{
 
     width:7px;
 
-    height:1px;
+    height:1.5px;
+
+    background:#111;
 
     right:-5px;
 
     bottom:-2px;
 
-    background:#6de3ff;
+    transform:rotate(45deg);
 
-    transform:
-        rotate(45deg);
 }
 
+.hero-search input{
 
-.search-box input{
-
-    flex:1;
-
-    height:100%;
+    width:100%;
 
     border:0;
 
     outline:0;
 
+    font-size:15px;
+
     background:transparent;
 
-    color:#eaffff;
-
-    font-size:13px;
 }
 
 
-.search-box input::placeholder{
+/* =========================
+   MAIN
+========================= */
 
-    color:#42606b;
+main{
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:55px 20px 80px;
+
 }
 
 
-/* ==================================================
-   MODULE
-================================================== */
+/* =========================
+   SECTION
+========================= */
 
-.module{
+.section{
 
-    margin-top:70px;
+    margin-bottom:65px;
+
 }
 
+.section-head{
 
-.module-head{
+    display:flex;
 
-    margin-bottom:22px;
+    justify-content:space-between;
+
+    align-items:end;
+
+    margin-bottom:25px;
+
 }
 
+.section-title{
 
-.module-code{
+    margin:0;
 
-    font-size:8px;
+    font-size:24px;
 
-    letter-spacing:3px;
+    font-weight:600;
 
-    color:#397487;
+    letter-spacing:1px;
+
 }
 
-
-.module-title{
+.section-sub{
 
     margin:6px 0 0;
 
-    font-size:21px;
+    color:#999;
 
-    font-weight:500;
+    font-size:12px;
 
-    letter-spacing:2px;
 }
 
 
-.module-sub{
-
-    margin:7px 0 0;
-
-    font-size:9px;
-
-    color:#58717a;
-}
-
-
-/* ==================================================
+/* =========================
    CATEGORY
-================================================== */
+========================= */
 
 .categories{
 
     display:grid;
 
-    grid-template-columns:
-        repeat(4,1fr);
+    grid-template-columns:repeat(4,1fr);
 
     gap:10px;
-}
 
+}
 
 .category{
 
-    min-height:125px;
+    min-height:110px;
+
+    background:#fff;
+
+    border:1px solid #e4e4e4;
 
     display:flex;
 
-    align-items:center;
+    flex-direction:column;
 
     justify-content:center;
 
-    flex-direction:column;
+    align-items:center;
 
-    gap:15px;
-
-    position:relative;
-
-    background:
-
-        linear-gradient(
-            140deg,
-            rgba(30,100,120,.08),
-            rgba(0,0,0,.25)
-        );
-
-    border:
-
-        1px solid
-        rgba(70,180,210,.2);
+    gap:12px;
 
     cursor:pointer;
 
-    transition:.25s;
-}
+    transition:.2s;
 
+}
 
 .category:hover{
 
-    transform:
-        translateY(-4px);
+    transform:translateY(-3px);
 
-    border-color:#6de3ff;
+    border-color:#111;
 
-    box-shadow:
+}
 
-        0 0 20px
-        rgba(70,220,255,.08);
+.category-name{
+
+    font-size:12px;
+
+    letter-spacing:1px;
+
 }
 
 
-/* CATEGORY SVG */
+/* =========================
+   ICON
+========================= */
 
-.category-svg{
+.icon{
 
-    width:32px;
+    width:30px;
 
-    height:32px;
+    height:30px;
 
     fill:none;
 
-    stroke:#6de3ff;
+    stroke:#111;
 
     stroke-width:1.5;
 
@@ -912,448 +471,195 @@ body::before{
 
     stroke-linejoin:round;
 
-    filter:
-
-        drop-shadow(
-            0 0 6px
-            rgba(70,220,255,.45)
-        );
-
-    transition:.25s;
 }
 
 
-.category:hover
-.category-svg{
+/* =========================
+   MAP
+========================= */
 
-    transform:
-        scale(1.12);
-
-    filter:
-
-        drop-shadow(
-            0 0 10px
-            rgba(70,220,255,.8)
-        );
-}
-
-
-.category-name{
-
-    font-size:10px;
-
-    letter-spacing:3px;
-}
-
-
-/* ==================================================
-   RADAR
-================================================== */
-
-.radar-wrap{
-
-    height:420px;
+.map-wrap{
 
     position:relative;
 
+    width:100%;
+
+    height:430px;
+
+    background:#ddd;
+
     overflow:hidden;
 
-    border:
-
-        1px solid
-        rgba(70,180,210,.25);
-
-    background:#050b0f;
 }
 
-
-.radar{
-
-    position:absolute;
-
-    width:300px;
-
-    height:300px;
-
-    left:50%;
-
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    border:
-
-        1px solid
-        rgba(70,220,255,.3);
-
-    border-radius:50%;
-}
-
-
-.radar::before,
-.radar::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:50%;
-
-    top:50%;
-
-    transform:
-        translate(-50%,-50%);
-
-    border:
-
-        1px solid
-        rgba(70,220,255,.15);
-
-    border-radius:50%;
-}
-
-
-.radar::before{
-
-    width:200px;
-
-    height:200px;
-}
-
-
-.radar::after{
-
-    width:100px;
-
-    height:100px;
-}
-
-
-.radar-line-h,
-.radar-line-v{
-
-    position:absolute;
-
-    background:
-
-        rgba(70,220,255,.12);
-}
-
-
-.radar-line-h{
-
-    left:0;
-
-    top:50%;
+#realMap{
 
     width:100%;
 
-    height:1px;
-}
-
-
-.radar-line-v{
-
-    top:0;
-
-    left:50%;
-
-    width:1px;
-
     height:100%;
+
 }
 
 
-.sweep{
+/* MAP LABEL */
+
+.map-label{
 
     position:absolute;
 
-    left:50%;
+    left:20px;
 
-    top:50%;
+    top:20px;
 
-    width:50%;
+    z-index:1000;
 
-    height:50%;
+    background:#fff;
 
-    transform-origin:
-        0 0;
+    padding:12px 16px;
 
-    background:
+    font-size:12px;
 
-        linear-gradient(
-            90deg,
-            rgba(70,220,255,.25),
-            transparent
-        );
+    letter-spacing:1px;
 
-    clip-path:
-        polygon(
-            0 0,
-            100% 0,
-            100% 3%
-        );
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
 
-    animation:
-
-        rotate 4s linear infinite;
 }
 
 
-.radar-point{
+/* CURRENT LOCATION BUTTON */
+
+.location-btn{
 
     position:absolute;
 
-    width:11px;
+    right:20px;
 
-    height:11px;
+    bottom:20px;
 
-    border-radius:50%;
+    z-index:1000;
 
-    background:#6de3ff;
+    border:0;
 
-    border:2px solid white;
+    background:#111;
 
-    box-shadow:
+    color:#fff;
 
-        0 0 10px #6de3ff,
+    padding:13px 18px;
 
-        0 0 20px
-        rgba(70,220,255,.6);
+    font-size:11px;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.25);
+
+}
+
+.location-btn:active{
+
+    transform:scale(.97);
+
 }
 
 
-.rp1{
-
-    left:30%;
-
-    top:32%;
-}
-
-
-.rp2{
-
-    left:68%;
-
-    top:28%;
-}
-
-
-.rp3{
-
-    left:72%;
-
-    top:70%;
-}
-
-
-.rp4{
-
-    left:27%;
-
-    top:67%;
-}
-
-
-.radar-current{
-
-    position:absolute;
-
-    left:50%;
-
-    top:50%;
-
-    width:20px;
-
-    height:20px;
-
-    transform:
-        translate(-50%,-50%);
-
-    border:
-
-        1px solid white;
-
-    border-radius:50%;
-
-    box-shadow:
-
-        0 0 10px #6de3ff,
-
-        0 0 30px
-        rgba(70,220,255,.7);
-}
-
-
-.radar-current::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:6px;
-
-    border-radius:50%;
-
-    background:#6de3ff;
-}
-
-
-.radar-info{
-
-    position:absolute;
-
-    top:18px;
-
-    left:18px;
-
-    font-size:8px;
-
-    line-height:2;
-
-    letter-spacing:2px;
-
-    color:#6de3ff;
-}
-
-
-.radar-info-right{
-
-    position:absolute;
-
-    right:18px;
-
-    bottom:18px;
-
-    font-size:8px;
-
-    line-height:2;
-
-    text-align:right;
-
-    color:#527783;
-}
-
-
-/* ==================================================
-   PLACE CARDS
-================================================== */
+/* =========================
+   PLACES
+========================= */
 
 .places{
 
     display:grid;
 
-    grid-template-columns:
-        repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
 
-    gap:12px;
+    gap:15px;
+
 }
-
 
 .place{
 
+    background:#fff;
+
+    border:1px solid #e2e2e2;
+
     padding:25px;
 
-    border:
+    transition:.2s;
 
-        1px solid
-        rgba(70,180,210,.2);
-
-    background:
-
-        linear-gradient(
-            140deg,
-            rgba(20,80,100,.08),
-            rgba(0,0,0,.25)
-        );
-
-    transition:.25s;
-
-    cursor:pointer;
 }
-
 
 .place:hover{
 
-    border-color:#6de3ff;
+    transform:translateY(-3px);
 
-    transform:
-        translateY(-4px);
+    border-color:#111;
+
 }
 
+.place-number{
 
-.place-id{
+    color:#aaa;
 
-    font-size:8px;
+    font-size:10px;
 
-    letter-spacing:3px;
+    letter-spacing:2px;
 
-    color:#397487;
+    margin-bottom:18px;
+
 }
-
 
 .place-name{
 
-    margin-top:14px;
+    font-size:19px;
 
-    font-size:18px;
+    font-weight:600;
 
-    letter-spacing:2px;
 }
 
+.place-info{
 
-.place-score{
-
-    margin-top:22px;
+    margin-top:18px;
 
     display:flex;
 
     justify-content:space-between;
 
     align-items:end;
-}
 
+}
 
 .score{
 
-    font-size:32px;
+    font-size:28px;
 
-    color:#6de3ff;
+    font-weight:600;
 
-    text-shadow:
-
-        0 0 10px
-        rgba(70,220,255,.4);
 }
-
 
 .score-label{
 
-    font-size:8px;
+    color:#999;
 
-    color:#527783;
+    font-size:10px;
 
-    letter-spacing:2px;
+    margin-top:3px;
+
 }
-
 
 .easy{
 
     padding:7px 10px;
 
-    border:
+    background:#111;
 
-        1px solid
-        rgba(70,220,255,.4);
+    color:#fff;
 
-    color:#6de3ff;
+    font-size:10px;
 
-    font-size:8px;
+    letter-spacing:1px;
 
-    letter-spacing:2px;
 }
-
 
 .tags{
 
@@ -1363,581 +669,146 @@ body::before{
 
     flex-wrap:wrap;
 
-    gap:6px;
-}
+    gap:7px;
 
+}
 
 .tag{
 
-    padding:5px 8px;
+    border:1px solid #ddd;
 
-    border:
+    padding:6px 8px;
 
-        1px solid
-        rgba(100,160,175,.2);
-
-    color:#66838c;
-
-    font-size:8px;
-}
-
-
-/* ==================================================
-   SEARCH PAGE
-================================================== */
-
-.search-large{
-
-    margin-top:35px;
-
-    width:100%;
-
-    height:60px;
-
-    display:flex;
-
-    align-items:center;
-
-    border:
-
-        1px solid
-        rgba(80,220,255,.35);
-
-    background:
-
-        rgba(20,100,120,.05);
-}
-
-
-.search-large input{
-
-    flex:1;
-
-    height:100%;
-
-    border:0;
-
-    outline:0;
-
-    background:transparent;
-
-    color:white;
-
-    padding:0 18px;
-
-    font-size:13px;
-}
-
-
-.search-results{
-
-    margin-top:35px;
-}
-
-
-.result-count{
-
-    font-size:9px;
-
-    letter-spacing:2px;
-
-    color:#4f7e8b;
-}
-
-
-.result{
-
-    margin-top:10px;
-
-    padding:20px;
-
-    border:
-
-        1px solid
-        rgba(70,180,210,.18);
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-
-.result:hover{
-
-    border-color:#6de3ff;
-}
-
-
-.result-name{
-
-    font-size:14px;
-
-    letter-spacing:1px;
-}
-
-
-.result-info{
-
-    margin-top:6px;
-
-    font-size:8px;
-
-    color:#58717a;
-}
-
-
-.result-score{
-
-    color:#6de3ff;
-
-    font-size:20px;
-}
-
-
-/* ==================================================
-   PLACE DETAIL
-================================================== */
-
-.detail-hero{
-
-    padding:45px 0;
-
-    border-bottom:
-
-        1px solid
-        rgba(70,180,210,.15);
-}
-
-
-.detail-name{
-
-    margin:10px 0 0;
-
-    font-size:34px;
-
-    letter-spacing:3px;
-}
-
-
-.detail-location{
-
-    margin-top:10px;
-
-    color:#58717a;
+    color:#666;
 
     font-size:10px;
+
 }
 
 
-.detail-score-box{
+/* =========================
+   FOOTER
+========================= */
 
-    margin-top:30px;
+footer{
 
-    display:flex;
+    background:#111;
 
-    gap:30px;
+    color:#fff;
 
-    align-items:end;
-}
-
-
-.big-score{
-
-    font-size:55px;
-
-    color:#6de3ff;
-}
-
-
-.detail-score-label{
-
-    font-size:9px;
-
-    color:#58717a;
-}
-
-
-.detail-actions{
-
-    margin-top:30px;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:8px;
-}
-
-
-.action{
-
-    padding:15px;
+    padding:45px 20px;
 
     text-align:center;
 
-    border:
-
-        1px solid
-        rgba(70,180,210,.25);
-
-    color:#6de3ff;
-
-    font-size:9px;
-
-    letter-spacing:2px;
-
-    cursor:pointer;
 }
 
+.footer-logo{
 
-.action:hover{
-
-    border-color:#6de3ff;
-
-    background:
-
-        rgba(70,220,255,.05);
-}
-
-
-.detail-section{
-
-    margin-top:50px;
-}
-
-
-.detail-section-title{
-
-    font-size:15px;
-
-    letter-spacing:2px;
-}
-
-
-.rating-row{
-
-    margin-top:18px;
-
-    padding:15px 0;
-
-    border-bottom:
-
-        1px solid
-        rgba(70,180,210,.1);
-
-    display:flex;
-
-    justify-content:space-between;
-}
-
-
-.rating-name{
-
-    font-size:10px;
-
-    color:#7c969e;
-}
-
-
-.rating{
-
-    color:#6de3ff;
-
-    letter-spacing:3px;
-}
-
-
-/* ==================================================
-   MY SPACE
-================================================== */
-
-.profile{
-
-    margin-top:35px;
-
-    padding:25px;
-
-    border:
-
-        1px solid
-        rgba(70,180,210,.2);
-
-    background:
-
-        rgba(20,100,120,.04);
-}
-
-
-.profile-label{
-
-    font-size:8px;
+    font-size:18px;
 
     letter-spacing:3px;
 
-    color:#397487;
 }
 
-
-.profile-name{
+.footer-copy{
 
     margin-top:10px;
 
-    font-size:22px;
+    color:#777;
 
-    letter-spacing:2px;
+    font-size:10px;
+
 }
 
 
-.my-grid{
-
-    margin-top:30px;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:10px;
-}
-
-
-.my-card{
-
-    padding:22px;
-
-    border:
-
-        1px solid
-        rgba(70,180,210,.18);
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-
-.my-card:hover{
-
-    border-color:#6de3ff;
-}
-
-
-.my-card-number{
-
-    font-size:25px;
-
-    color:#6de3ff;
-}
-
-
-.my-card-label{
-
-    margin-top:8px;
-
-    font-size:9px;
-
-    color:#64808a;
-
-    letter-spacing:2px;
-}
-
-
-.history{
-
-    margin-top:25px;
-}
-
-
-.history-item{
-
-    padding:17px 0;
-
-    border-bottom:
-
-        1px solid
-        rgba(70,180,210,.1);
-
-    display:flex;
-
-    justify-content:space-between;
-}
-
-
-.history-name{
-
-    font-size:11px;
-}
-
-
-.history-date{
-
-    font-size:8px;
-
-    color:#527783;
-}
-
-
-/* ==================================================
-   BOTTOM NAV
-================================================== */
-
-.navigation{
-
-    position:fixed;
-
-    z-index:500;
-
-    left:50%;
-
-    bottom:15px;
-
-    transform:
-        translateX(-50%);
-
-    width:
-        min(94%,500px);
-
-    height:65px;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    border:
-
-        1px solid
-        rgba(80,220,255,.3);
-
-    background:
-
-        rgba(3,8,11,.9);
-
-    backdrop-filter:
-        blur(15px);
-
-    box-shadow:
-
-        0 10px 40px
-        rgba(0,0,0,.5);
-}
-
-
-.nav-button{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:5px;
-
-    color:#52727d;
-
-    font-size:8px;
-
-    letter-spacing:1px;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-
-.nav-icon{
-
-    font-size:16px;
-}
-
-
-.nav-button.active{
-
-    color:#6de3ff;
-
-    text-shadow:
-
-        0 0 10px
-        rgba(70,220,255,.5);
-}
-
-
-/* ==================================================
+/* =========================
    MOBILE
-================================================== */
+========================= */
 
 @media(max-width:600px){
 
-    .container{
+    header{
 
-        padding:
-            45px 15px 80px;
+        min-height:480px;
+
+        padding:40px 20px;
+
     }
-
 
     .hero-title{
 
-        font-size:42px;
+        font-size:38px;
+
     }
 
+    .hero-copy{
+
+        font-size:13px;
+
+    }
+
+    main{
+
+        padding:40px 15px 60px;
+
+    }
+
+    .section{
+
+        margin-bottom:50px;
+
+    }
+
+    .section-title{
+
+        font-size:20px;
+
+    }
 
     .categories{
 
-        grid-template-columns:
-            repeat(2,1fr);
-    }
+        grid-template-columns:repeat(4,1fr);
 
+        gap:6px;
+
+    }
 
     .category{
 
-        min-height:115px;
+        min-height:90px;
+
     }
 
+    .icon{
 
-    .radar-wrap{
+        width:24px;
 
-        height:350px;
+        height:24px;
+
     }
 
+    .category-name{
 
-    .radar{
+        font-size:10px;
 
-        width:250px;
-
-        height:250px;
     }
 
+    .map-wrap{
+
+        height:330px;
+
+    }
 
     .places{
 
         grid-template-columns:1fr;
+
     }
 
+    .intro-title{
 
-    .detail-actions{
+        font-size:30px;
 
-        grid-template-columns:1fr;
-    }
-
-
-    .my-grid{
-
-        grid-template-columns:1fr;
-    }
-
-
-    .page-title{
-
-        font-size:25px;
     }
 
 }
@@ -1950,82 +821,71 @@ body::before{
 <body>
 
 
-<!-- ==================================================
-     BOOT
-================================================== -->
+<!-- =========================
+     INTRO
+========================= -->
 
-<div class="boot" id="boot">
+<div id="intro">
 
-<div class="boot-content" id="bootContent">
+    <div class="intro-inner">
 
-<div class="boot-core">
+        <div class="intro-small">
+            PERSONAL DISCOVERY SYSTEM
+        </div>
 
-<div class="boot-ring"></div>
+        <h1 class="intro-title">
+            ohitorisamap
+        </h1>
 
-</div>
+        <div class="intro-sub">
+            おひとりさまっぷ
+        </div>
 
+        <div class="intro-line"></div>
 
-<div class="boot-status" id="bootStatus">
-
-SYSTEM LOCKED
-
-<span class="boot-jp">
-システムを確認しています
-</span>
-
-</div>
-
-</div>
-
-
-<div class="access" id="access">
-
-<div class="access-title">
-ACCESS GRANTED
-</div>
-
-<div class="access-name">
-ohitorisamap
-</div>
-
-<div class="access-jp">
-おひとりさまっぷ
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
+<!-- =========================
+     HERO
+========================= -->
 
-<!-- ==================================================
-     APP
-================================================== -->
+<header>
 
-<div class="app" id="app">
+<div class="hero">
+
+    <div class="hero-small">
+        OHITORISAMAP
+    </div>
+
+    <h1 class="hero-title">
+        ひとりの時間を、<br>
+        もっと自由に。
+    </h1>
+
+    <div class="hero-copy">
+
+        一人で行きたい。<br>
+
+        でも、どこに行けばいいかわからない。<br>
+
+        そんなときのための場所探し。
+
+    </div>
 
 
-<!-- ==================================================
-     HOME
-================================================== -->
+    <div class="hero-search">
 
-<section class="page active" id="home">
+        <div class="search-icon"></div>
 
+        <input
+            type="text"
+            placeholder="行きたい場所を探す"
+        >
 
-<header class="topbar">
-
-<div class="logo">
-
-<span>o</span>hitorisamap
-
-</div>
-
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-SYSTEM ONLINE
+    </div>
 
 </div>
 
@@ -2033,83 +893,34 @@ SYSTEM ONLINE
 
 
 
-<div class="home-hero">
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
 
 
-<div class="container">
-
-
-<div class="hero-content">
-
-
-<div class="system">
-
-<div class="status-dot"></div>
-
-PERSONAL LOCATION SYSTEM
-
-</div>
-
-
-<h1 class="hero-title">
-ohitorisamap
-</h1>
-
-
-<div class="hero-jp">
-おひとりさまっぷ
-</div>
-
-
-<div class="hero-copy">
-
-一人で行きたい。<br>
-
-でも、どこに行けばいいかわからない。<br>
-
-そんなときのための場所探し。
-
-</div>
-
-
-
-<div class="search-box">
-
-<div class="search-icon"></div>
-
-<input
-    type="text"
-    placeholder="行きたい場所を探す"
-    onclick="go('search')"
->
-
-</div>
-
-
-
-<!-- ==================================================
+<!-- =========================
      CATEGORY
-================================================== -->
+========================= -->
 
-<div class="module">
+<section class="section">
 
+<div class="section-head">
 
-<div class="module-head">
+<div>
 
-<div class="module-code">
-MODULE 01 / ACTIVITY
-</div>
-
-<div class="module-title">
+<h2 class="section-title">
 何をする？
-</div>
+</h2>
 
-<div class="module-sub">
+<p class="section-sub">
 目的から探す
-</div>
+</p>
 
 </div>
 
+</div>
 
 
 <div class="categories">
@@ -2119,18 +930,14 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
+<svg class="icon" viewBox="0 0 32 32">
 
-<path d="M9 5v22"/>
-<path d="M13 5v22"/>
-<path d="M9 5v7"/>
-<path d="M13 5v7"/>
-
-<path d="M21 5v22"/>
-<path d="M21 5c4 2 5 6 5 10"/>
+<path d="M8 4v24"/>
+<path d="M12 4v24"/>
+<path d="M8 4v7"/>
+<path d="M12 4v7"/>
+<path d="M20 4v24"/>
+<path d="M20 4c5 3 5 8 5 12"/>
 
 </svg>
 
@@ -2146,18 +953,12 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
+<svg class="icon" viewBox="0 0 32 32">
 
-<path d="M6 12h18v10H6z"/>
-<path d="M24 14h2a4 4 0 0 1 0 8h-2"/>
-
-<path d="M10 8c0-2 2-2 2-4"/>
-<path d="M16 8c0-2 2-2 2-4"/>
-
-<path d="M8 26h16"/>
+<path d="M6 12h17v9H6z"/>
+<path d="M23 14h3a3 3 0 0 1 0 6h-3"/>
+<path d="M9 8c0-2 2-2 2-4"/>
+<path d="M14 8c0-2 2-2 2-4"/>
 
 </svg>
 
@@ -2173,26 +974,20 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
+<svg class="icon" viewBox="0 0 32 32">
 
 <rect
-    x="5"
-    y="7"
-    width="22"
-    height="18"
-    rx="2"
+x="4"
+y="7"
+width="24"
+height="18"
+rx="2"
 />
 
-<path d="M5 12h22"/>
-
-<path d="M10 7v5"/>
-<path d="M16 7v5"/>
-<path d="M22 7v5"/>
-
-<path d="M11 18l7 4v-8z"/>
+<path d="M4 12h24"/>
+<path d="M9 7v5"/>
+<path d="M15 7v5"/>
+<path d="M21 7v5"/>
 
 </svg>
 
@@ -2208,19 +1003,12 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
+<svg class="icon" viewBox="0 0 32 32">
 
-<path d="M8 25c3-3 3-7 0-10"/>
-<path d="M16 25c3-3 3-7 0-10"/>
-<path d="M24 25c3-3 3-7 0-10"/>
-
+<path d="M8 25c2-3 2-6 0-9"/>
+<path d="M16 25c2-3 2-6 0-9"/>
+<path d="M24 25c2-3 2-6 0-9"/>
 <path d="M5 28h22"/>
-
-<path d="M11 8c0-2 2-2 2-4"/>
-<path d="M19 8c0-2 2-2 2-4"/>
 
 </svg>
 
@@ -2236,23 +1024,18 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
+<svg class="icon" viewBox="0 0 32 32">
 
 <rect
-    x="10"
-    y="4"
-    width="12"
-    height="18"
-    rx="6"
+x="8"
+y="4"
+width="16"
+height="20"
+rx="8"
 />
 
-<path d="M7 15v2a9 9 0 0 0 18 0v-2"/>
-
-<path d="M16 26v3"/>
-<path d="M11 29h10"/>
+<path d="M16 24v4"/>
+<path d="M11 28h10"/>
 
 </svg>
 
@@ -2268,38 +1051,15 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
-
-<path
-    d="
-        M9 12h14
-        c3 0 5 3 4 6
-        l-2 7
-        c-.5 2-3 2-4 0
-        l-2-4h-6l-2 4
-        c-1 2-3 2-4 0
-        l-2-7
-        c-1-3 1-6 4-6z
-    "
-/>
-
-<path d="M10 16v5"/>
-<path d="M8 18h4"/>
+<svg class="icon" viewBox="0 0 32 32">
 
 <circle
-    cx="21"
-    cy="17"
-    r="1"
+cx="16"
+cy="16"
+r="12"
 />
 
-<circle
-    cx="24"
-    cy="20"
-    r="1"
-/>
+<path d="M13 11l8 5-8 5z"/>
 
 </svg>
 
@@ -2315,28 +1075,12 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
+<svg class="icon" viewBox="0 0 32 32">
 
-<path d="M5 20l3-8h16l3 8v7H5z"/>
-
-<path d="M9 12l2-5h10l2 5"/>
-
-<path d="M5 20h22"/>
-
-<circle
-    cx="10"
-    cy="26"
-    r="2"
-/>
-
-<circle
-    cx="22"
-    cy="26"
-    r="2"
-/>
+<path d="M5 20l3-7h16l3 7v6H5z"/>
+<path d="M9 13l2-5h10l2 5"/>
+<circle cx="10" cy="25" r="2"/>
+<circle cx="22" cy="25" r="2"/>
 
 </svg>
 
@@ -2352,28 +1096,17 @@ MODULE 01 / ACTIVITY
 
 <div class="category">
 
-<svg
-    class="category-svg"
-    viewBox="0 0 32 32"
->
+<svg class="icon" viewBox="0 0 32 32">
 
 <circle
-    cx="16"
-    cy="16"
-    r="12"
+cx="16"
+cy="16"
+r="12"
 />
 
-<path d="M16 4v24"/>
-<path d="M4 16h24"/>
-
-<path
-    d="
-        M21 11
-        l-4 9
-        -9 4
-        4-9z
-    "
-/>
+<path d="M16 6v20"/>
+<path d="M6 16h20"/>
+<path d="M20 12l-3 7-7 3 3-7z"/>
 
 </svg>
 
@@ -2386,133 +1119,91 @@ MODULE 01 / ACTIVITY
 
 </div>
 
-</div>
+</section>
 
 
 
-<!-- ==================================================
-     RADAR
-================================================== -->
+<!-- =========================
+     MAP
+========================= -->
 
-<div class="module">
+<section class="section">
 
+<div class="section-head">
 
-<div class="module-head">
+<div>
 
-<div class="module-code">
-MODULE 02 / SCANNER
-</div>
-
-<div class="module-title">
+<h2 class="section-title">
 近くから探す
-</div>
+</h2>
 
-<div class="module-sub">
-現在地周辺をスキャン
-</div>
-
-</div>
-
-
-
-<div class="radar-wrap">
-
-
-<div class="radar">
-
-<div class="radar-line-h"></div>
-
-<div class="radar-line-v"></div>
-
-<div class="sweep"></div>
-
-</div>
-
-
-<div class="radar-point rp1"></div>
-
-<div class="radar-point rp2"></div>
-
-<div class="radar-point rp3"></div>
-
-<div class="radar-point rp4"></div>
-
-
-<div class="radar-current"></div>
-
-
-<div class="radar-info">
-
-LOCATION SCANNER<br>
-
-STATUS : ACTIVE<br>
-
-RANGE : 5 KM
-
-</div>
-
-
-<div class="radar-info-right">
-
-現在地<br>
-
-スポット検出<br>
-
-スポット検出
-
-</div>
-
+<p class="section-sub">
+現在地周辺のひとりスポット
+</p>
 
 </div>
 
 </div>
 
 
+<div class="map-wrap">
 
-<!-- ==================================================
+    <div id="realMap"></div>
+
+    <div class="map-label">
+        現在地周辺
+    </div>
+
+    <button
+        id="locationBtn"
+        class="location-btn"
+    >
+        現在地を取得
+    </button>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
      POPULAR
-================================================== -->
+========================= -->
 
-<div class="module">
+<section class="section">
 
+<div class="section-head">
 
-<div class="module-head">
+<div>
 
-<div class="module-code">
-MODULE 03 / ANALYSIS
-</div>
-
-<div class="module-title">
+<h2 class="section-title">
 一人で行きやすい場所
-</div>
+</h2>
 
-<div class="module-sub">
+<p class="section-sub">
 みんなの評価から探す
-</div>
+</p>
 
 </div>
 
+</div>
 
 
 <div class="places">
 
 
-<div
-    class="place"
-    onclick="go('place')"
->
+<div class="place">
 
-<div class="place-id">
-TARGET 001
+<div class="place-number">
+01
 </div>
 
 <div class="place-name">
 ○○ラーメン
 </div>
 
-
-<div class="place-score">
-
+<div class="place-info">
 
 <div>
 
@@ -2526,19 +1217,16 @@ TARGET 001
 
 </div>
 
-
 <div class="easy">
 一人向き
 </div>
 
-
 </div>
-
 
 <div class="tags">
 
 <div class="tag">
-一人客 多
+一人客 多い
 </div>
 
 <div class="tag">
@@ -2547,27 +1235,21 @@ TARGET 001
 
 </div>
 
-
 </div>
 
 
 
-<div
-    class="place"
-    onclick="go('place')"
->
+<div class="place">
 
-<div class="place-id">
-TARGET 002
+<div class="place-number">
+02
 </div>
 
 <div class="place-name">
 ○○カフェ
 </div>
 
-
-<div class="place-score">
-
+<div class="place-info">
 
 <div>
 
@@ -2581,14 +1263,11 @@ TARGET 002
 
 </div>
 
-
 <div class="easy">
 一人向き
 </div>
 
-
 </div>
-
 
 <div class="tags">
 
@@ -2602,301 +1281,6 @@ Wi-Fiあり
 
 </div>
 
-
-</div>
-
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     SEARCH
-================================================== -->
-
-<section class="page" id="search">
-
-
-<header class="topbar">
-
-<div class="logo">
-
-<span>o</span>hitorisamap
-
-</div>
-
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-SEARCH SYSTEM
-
-</div>
-
-</header>
-
-
-
-<div class="container">
-
-
-<div class="page-code">
-MODULE 04 / SEARCH
-</div>
-
-<h2 class="page-title">
-場所を探す
-</h2>
-
-<p class="page-sub">
-あなたが一人で行きたい場所を検索
-</p>
-
-
-
-<div class="search-large">
-
-<input
-    type="text"
-    placeholder="例：ラーメン、映画、温泉、カフェ..."
->
-
-</div>
-
-
-
-<div class="search-results">
-
-
-<div class="result-count">
-検索結果 / 04
-</div>
-
-
-
-<div
-    class="result"
-    onclick="go('place')"
->
-
-<div>
-
-<div class="result-name">
-○○ラーメン
-</div>
-
-<div class="result-info">
-一人客 多い　｜　カウンターあり
-</div>
-
-</div>
-
-
-<div class="result-score">
-4.8
-</div>
-
-</div>
-
-
-
-<div
-    class="result"
-    onclick="go('place')"
->
-
-<div>
-
-<div class="result-name">
-○○カフェ
-</div>
-
-<div class="result-info">
-静か　｜　Wi-Fiあり
-</div>
-
-</div>
-
-
-<div class="result-score">
-4.7
-</div>
-
-</div>
-
-
-
-<div
-    class="result"
-    onclick="go('place')"
->
-
-<div>
-
-<div class="result-name">
-○○温泉
-</div>
-
-<div class="result-info">
-一人利用 多　｜　休憩スペース
-</div>
-
-</div>
-
-
-<div class="result-score">
-4.6
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     MAP
-================================================== -->
-
-<section class="page" id="map">
-
-
-<header class="topbar">
-
-<div class="logo">
-
-<span>o</span>hitorisamap
-
-</div>
-
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-LOCATION SYSTEM
-
-</div>
-
-</header>
-
-
-
-<div class="container">
-
-
-<div class="page-code">
-MODULE 05 / MAP
-</div>
-
-<h2 class="page-title">
-近くから探す
-</h2>
-
-<p class="page-sub">
-現在地周辺のひとりスポット
-</p>
-
-
-
-<div
-    class="radar-wrap"
-    style="margin-top:35px;"
->
-
-
-<div class="radar">
-
-<div class="radar-line-h"></div>
-
-<div class="radar-line-v"></div>
-
-<div class="sweep"></div>
-
-</div>
-
-
-<div class="radar-point rp1"></div>
-
-<div class="radar-point rp2"></div>
-
-<div class="radar-point rp3"></div>
-
-<div class="radar-point rp4"></div>
-
-
-<div class="radar-current"></div>
-
-
-<div class="radar-info">
-
-現在地<br>
-
-SCANNING...<br>
-
-RANGE : 5 KM
-
-</div>
-
-
-</div>
-
-
-
-<div
-    class="places"
-    style="margin-top:15px;"
->
-
-
-<div
-    class="place"
-    onclick="go('place')"
->
-
-<div class="place-id">
-1.2 KM
-</div>
-
-<div class="place-name">
-○○ラーメン
-</div>
-
-</div>
-
-
-
-<div
-    class="place"
-    onclick="go('place')"
->
-
-<div class="place-id">
-2.4 KM
-</div>
-
-<div class="place-name">
-○○カフェ
-</div>
-
-</div>
-
-
 </div>
 
 
@@ -2905,604 +1289,233 @@ RANGE : 5 KM
 </section>
 
 
+</main>
 
-<!-- ==================================================
-     PLACE
-================================================== -->
 
-<section class="page" id="place">
 
+<!-- =========================
+     FOOTER
+========================= -->
 
-<header class="topbar">
+<footer>
 
-<div class="logo">
-
-<span>o</span>hitorisamap
-
-</div>
-
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-PLACE ANALYSIS
-
-</div>
-
-</header>
-
-
-
-<div class="container">
-
-
-<div class="detail-hero">
-
-
-<div class="page-code">
-TARGET 001
-</div>
-
-
-<h2 class="detail-name">
-○○ラーメン
-</h2>
-
-
-<div class="detail-location">
-現在地から 1.2 km
-</div>
-
-
-
-<div class="detail-score-box">
-
-
-<div>
-
-<div class="big-score">
-4.8
-</div>
-
-<div class="detail-score-label">
-一人利用スコア
-</div>
-
-</div>
-
-
-<div class="easy">
-一人向き
-</div>
-
-
-</div>
-
-
-
-<div class="detail-actions">
-
-
-<div class="action">
-♡ お気に入り
-</div>
-
-
-<div class="action">
-★ 評価する
-</div>
-
-
-<div class="action">
-⌖ ルート
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-<div class="detail-section">
-
-
-<div class="detail-section-title">
-一人利用データ
-</div>
-
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-一人で入りやすい
-</div>
-
-<div class="rating">
-★★★★★
-</div>
-
-</div>
-
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-静かさ
-</div>
-
-<div class="rating">
-★★★★☆
-</div>
-
-</div>
-
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-一人客の多さ
-</div>
-
-<div class="rating">
-★★★★★
-</div>
-
-</div>
-
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-過ごしやすさ
-</div>
-
-<div class="rating">
-★★★★☆
-</div>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     MY SPACE
-================================================== -->
-
-<section class="page" id="my">
-
-
-<header class="topbar">
-
-<div class="logo">
-
-<span>o</span>hitorisamap
-
-</div>
-
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-MY SPACE
-
-</div>
-
-</header>
-
-
-
-<div class="container">
-
-
-<div class="page-code">
-MODULE 06 / PERSONAL
-</div>
-
-
-<h2 class="page-title">
-MY SPACE
-</h2>
-
-
-<p class="page-sub">
-あなたの「ひとり」を記録
-</p>
-
-
-
-<div class="profile">
-
-
-<div class="profile-label">
-ユーザー情報
-</div>
-
-
-<div class="profile-name">
-ゲストユーザー
-</div>
-
-
-</div>
-
-
-
-<div class="my-grid">
-
-
-<div class="my-card">
-
-<div class="my-card-number">
-12
-</div>
-
-<div class="my-card-label">
-検索した場所
-</div>
-
-</div>
-
-
-
-<div class="my-card">
-
-<div class="my-card-number">
-5
-</div>
-
-<div class="my-card-label">
-お気に入り
-</div>
-
-</div>
-
-
-
-<div class="my-card">
-
-<div class="my-card-number">
-8
-</div>
-
-<div class="my-card-label">
-評価した場所
-</div>
-
-</div>
-
-
-
-<div class="my-card">
-
-<div class="my-card-number">
-3
-</div>
-
-<div class="my-card-label">
-行った場所
-</div>
-
-</div>
-
-
-</div>
-
-
-
-<div class="module">
-
-
-<div class="module-head">
-
-<div class="module-code">
-RECENT ACTIVITY
-</div>
-
-<div class="module-title">
-最近見た場所
-</div>
-
-</div>
-
-
-
-<div class="history">
-
-
-<div class="history-item">
-
-<div class="history-name">
-○○ラーメン
-</div>
-
-<div class="history-date">
-2026.09.01
-</div>
-
-</div>
-
-
-
-<div class="history-item">
-
-<div class="history-name">
-○○カフェ
-</div>
-
-<div class="history-date">
-2026.08.31
-</div>
-
-</div>
-
-
-
-<div class="history-item">
-
-<div class="history-name">
-○○映画館
-</div>
-
-<div class="history-date">
-2026.08.29
-</div>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     NAVIGATION
-================================================== -->
-
-<nav class="navigation">
-
-
-<div
-    class="nav-button active"
-    data-page="home"
-    onclick="go('home')"
->
-
-<div class="nav-icon">
-⌂
-</div>
-
-HOME
-
-</div>
-
-
-
-<div
-    class="nav-button"
-    data-page="search"
-    onclick="go('search')"
->
-
-<div class="nav-icon">
-⌕
-</div>
-
-SEARCH
-
-</div>
-
-
-
-<div
-    class="nav-button"
-    data-page="map"
-    onclick="go('map')"
->
-
-<div class="nav-icon">
-◎
-</div>
-
-MAP
-
+<div class="footer-logo">
+ohitorisamap
 </div>
 
-
-
-<div
-    class="nav-button"
-    data-page="my"
-    onclick="go('my')"
->
-
-<div class="nav-icon">
-♡
+<div class="footer-copy">
+一人の時間を、もっと自由に。
 </div>
 
-MY
+</footer>
 
-</div>
 
 
-</nav>
+<!-- =========================
+     LEAFLET
+========================= -->
 
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 
-</div>
 
 
+<!-- =========================
+     MAP / LOCATION
+========================= -->
 
 <script>
 
-/* ==================================================
-   BOOT SEQUENCE
-================================================== */
 
-const bootStatus =
-    document.getElementById("bootStatus");
+// ---------------------------------
+// MAP
+// ---------------------------------
 
-const boot =
-    document.getElementById("boot");
-
-const access =
-    document.getElementById("access");
-
-const app =
-    document.getElementById("app");
+const map = L.map('realMap').setView(
+    [33.5597,133.5311],
+    13
+);
 
 
-const sequence = [
+// ---------------------------------
+// OPEN STREET MAP
+// ---------------------------------
 
-    [
-        0,
-        "SYSTEM LOCKED",
-        "システムを確認しています"
-    ],
+L.tileLayer(
 
-    [
-        800,
-        "AUTHENTICATING",
-        "接続を確認しています"
-    ],
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 
-    [
-        1600,
-        "ACCESS CHECK",
-        "アクセスを確認しています"
-    ],
+    {
 
-    [
-        2200,
-        "ACCESS GRANTED",
-        "アクセスを許可しました"
-    ]
+        maxZoom:19,
 
-];
+        attribution:
+        '&copy; OpenStreetMap contributors'
+
+    }
+
+).addTo(map);
 
 
-sequence.forEach(item => {
+// ---------------------------------
+// CURRENT LOCATION
+// ---------------------------------
 
-    setTimeout(() => {
+let currentMarker = null;
 
-        bootStatus.innerHTML =
-
-            item[1] +
-
-            '<span class="boot-jp">' +
-
-            item[2] +
-
-            '</span>';
-
-    },item[0]);
-
-});
+let currentCircle = null;
 
 
-setTimeout(() => {
-
-    access.classList.add("show");
-
-},2500);
+function getCurrentLocation(){
 
 
-setTimeout(() => {
+    if(!navigator.geolocation){
 
-    app.classList.add("show");
+        alert(
+            'この端末では現在地を取得できません。'
+        );
 
-},3300);
-
-
-setTimeout(() => {
-
-    boot.classList.add("hide");
-
-},3900);
-
-
-/* ==================================================
-   PAGE NAVIGATION
-================================================== */
-
-function go(pageName){
-
-    const pages =
-        document.querySelectorAll(".page");
-
-
-    pages.forEach(page => {
-
-        page.classList.remove("active");
-
-    });
-
-
-    const target =
-        document.getElementById(pageName);
-
-
-    if(target){
-
-        target.classList.add("active");
+        return;
 
     }
 
 
-    const buttons =
-        document.querySelectorAll(".nav-button");
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
 
 
-    buttons.forEach(button => {
+            const lat =
+            position.coords.latitude;
 
-        button.classList.remove("active");
+
+            const lng =
+            position.coords.longitude;
 
 
-        if(
-            button.dataset.page === pageName
-        ){
+            const accuracy =
+            position.coords.accuracy;
 
-            button.classList.add("active");
+
+            // MAP移動
+
+            map.setView(
+
+                [lat,lng],
+
+                16
+
+            );
+
+
+            // 古いマーカー削除
+
+            if(currentMarker){
+
+                map.removeLayer(
+                    currentMarker
+                );
+
+            }
+
+
+            // 古い円削除
+
+            if(currentCircle){
+
+                map.removeLayer(
+                    currentCircle
+                );
+
+            }
+
+
+            // 現在地
+
+            currentMarker =
+
+                L.marker(
+                    [lat,lng]
+                )
+
+                .addTo(map)
+
+                .bindPopup(
+                    '現在地'
+                )
+
+                .openPopup();
+
+
+            // 現在地の精度
+
+            currentCircle =
+
+                L.circle(
+
+                    [lat,lng],
+
+                    {
+
+                        radius:accuracy
+
+                    }
+
+                )
+
+                .addTo(map);
+
+
+        },
+
+
+        function(error){
+
+            alert(
+
+                '現在地を取得できませんでした。'
+
+            );
+
+        },
+
+
+        {
+
+            enableHighAccuracy:true,
+
+            timeout:10000,
+
+            maximumAge:0
 
         }
 
-    });
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
+    );
 
 }
+
+
+// ---------------------------------
+// BUTTON
+// ---------------------------------
+
+document
+
+.getElementById('locationBtn')
+
+.addEventListener(
+
+    'click',
+
+    getCurrentLocation
+
+);
+
 
 </script>
 
 
 </body>
+
 </html>
