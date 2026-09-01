@@ -29,15 +29,6 @@ body{
     overflow-x:hidden;
 }
 
-button,
-input{
-    font-family:inherit;
-}
-
-button{
-    -webkit-tap-highlight-color:transparent;
-}
-
 body::before{
     content:"";
     position:fixed;
@@ -374,7 +365,6 @@ body::before{
     border:1px solid rgba(80,220,255,.4);
     background:rgba(20,100,120,.05);
     transition:.25s;
-    cursor:text;
 }
 
 .search-box:focus-within{
@@ -389,7 +379,6 @@ body::before{
     border:1px solid #6de3ff;
     border-radius:50%;
     position:relative;
-    flex-shrink:0;
 }
 
 .search-icon::after{
@@ -411,7 +400,6 @@ body::before{
     background:transparent;
     color:#eaffff;
     font-size:13px;
-    cursor:pointer;
 }
 
 .search-box input::placeholder{
@@ -476,7 +464,6 @@ body::before{
     border:1px solid rgba(70,180,210,.2);
     cursor:pointer;
     transition:.25s;
-    -webkit-tap-highlight-color:transparent;
 }
 
 .category:hover{
@@ -593,7 +580,6 @@ body::before{
         0 0 20px rgba(70,220,255,.6);
     cursor:pointer;
     transition:.2s;
-    z-index:2;
 }
 
 .map-point:hover{
@@ -735,11 +721,6 @@ body::before{
     background:rgba(20,100,120,.05);
 }
 
-.search-large:focus-within{
-    border-color:#6de3ff;
-    box-shadow:0 0 25px rgba(50,210,255,.08);
-}
-
 .search-large input{
     flex:1;
     height:100%;
@@ -790,15 +771,6 @@ body::before{
 .result-score{
     color:#6de3ff;
     font-size:20px;
-}
-
-.no-result{
-    display:none;
-    padding:30px 10px;
-    text-align:center;
-    color:#527783;
-    font-size:10px;
-    letter-spacing:2px;
 }
 
 /* ==============================
@@ -855,18 +827,11 @@ body::before{
     letter-spacing:2px;
     cursor:pointer;
     transition:.2s;
-    background:transparent;
 }
 
 .action:hover{
     border-color:#6de3ff;
     background:rgba(70,220,255,.05);
-}
-
-.action.favorite-active{
-    background:rgba(70,220,255,.08);
-    border-color:#6de3ff;
-    text-shadow:0 0 8px rgba(70,220,255,.5);
 }
 
 .detail-section{
@@ -893,11 +858,11 @@ body::before{
 
 .rating{
     color:#6de3ff;
-    letter-spacing:3px;
+    letter-spacing:2px;
 }
 
 /* ==============================
-   評価システム
+   7段階評価システム
 ============================== */
 
 .rating-system{
@@ -961,6 +926,7 @@ body::before{
 .rating-stars{
     display:flex;
     gap:5px;
+    flex-wrap:wrap;
 }
 
 .star{
@@ -973,7 +939,7 @@ body::before{
     color:#42606b;
     cursor:pointer;
     transition:.15s;
-    font-size:14px;
+    font-size:13px;
     user-select:none;
 }
 
@@ -1064,7 +1030,7 @@ body::before{
 }
 
 /* ==============================
-   MY一覧
+   MY一覧パネル
 ============================== */
 
 .my-list-panel{
@@ -1114,14 +1080,6 @@ body::before{
 .my-list-score{
     color:#6de3ff;
     font-size:15px;
-}
-
-.my-empty{
-    padding:25px 0 5px;
-    text-align:center;
-    color:#527783;
-    font-size:9px;
-    letter-spacing:2px;
 }
 
 /* ==============================
@@ -1192,7 +1150,6 @@ body::before{
     letter-spacing:1px;
     cursor:pointer;
     transition:.2s;
-    user-select:none;
 }
 
 .nav-icon{
@@ -1210,17 +1167,12 @@ body::before{
 
 @media(max-width:600px){
 
-    .topbar{
-        padding:0 15px;
-    }
-
     .container{
         padding:45px 15px 80px;
     }
 
     .hero-title{
         font-size:42px;
-        letter-spacing:4px;
     }
 
     .categories{
@@ -1267,29 +1219,11 @@ body::before{
 
     .rating-stars{
         width:100%;
-        justify-content:space-between;
     }
 
     .star{
-        width:calc((100% - 20px) / 5);
-        height:38px;
-    }
-
-    .detail-name{
-        font-size:28px;
-    }
-
-    .big-score{
-        font-size:48px;
-    }
-
-    .search-box{
-        height:58px;
-    }
-
-    .navigation{
-        bottom:10px;
-        height:62px;
+        width:32px;
+        height:32px;
     }
 }
 </style>
@@ -1382,17 +1316,14 @@ body::before{
     そんなときのための場所探し。
 </div>
 
-<div class="search-box"
-     onclick="focusSearch()">
+<div class="search-box">
 
     <div class="search-icon"></div>
 
     <input
-        id="homeSearchInput"
         type="text"
         placeholder="行きたい場所を探す"
-        onclick="event.stopPropagation();focusSearch();"
-        onkeydown="homeSearchKey(event)"
+        onclick="go('search')"
     >
 
 </div>
@@ -1537,17 +1468,10 @@ body::before{
 <div class="map-road road2"></div>
 <div class="map-road road3"></div>
 
-<div class="map-point mp1"
-     onclick="openPlace('○○ラーメン','4.8')"></div>
-
-<div class="map-point mp2"
-     onclick="openPlace('○○カフェ','4.7')"></div>
-
-<div class="map-point mp3"
-     onclick="openPlace('○○温泉','4.6')"></div>
-
-<div class="map-point mp4"
-     onclick="openPlace('○○映画館','4.5')"></div>
+<div class="map-point mp1" onclick="openPlace('○○ラーメン','4.8')"></div>
+<div class="map-point mp2" onclick="openPlace('○○カフェ','4.7')"></div>
+<div class="map-point mp3" onclick="openPlace('○○温泉','4.6')"></div>
+<div class="map-point mp4" onclick="openPlace('○○映画館','4.5')"></div>
 
 <div class="map-current"></div>
 
@@ -1588,16 +1512,11 @@ body::before{
 
 <div class="places">
 
-<div class="place"
-     onclick="openPlace('○○ラーメン','4.8')">
+<div class="place" onclick="openPlace('○○ラーメン','4.8')">
 
-<div class="place-id">
-    TARGET 001
-</div>
+<div class="place-id">TARGET 001</div>
 
-<div class="place-name">
-    ○○ラーメン
-</div>
+<div class="place-name">○○ラーメン</div>
 
 <div class="place-score">
 
@@ -1617,16 +1536,11 @@ body::before{
 
 </div>
 
-<div class="place"
-     onclick="openPlace('○○カフェ','4.7')">
+<div class="place" onclick="openPlace('○○カフェ','4.7')">
 
-<div class="place-id">
-    TARGET 002
-</div>
+<div class="place-id">TARGET 002</div>
 
-<div class="place-name">
-    ○○カフェ
-</div>
+<div class="place-name">○○カフェ</div>
 
 <div class="place-score">
 
@@ -1703,11 +1617,12 @@ MODULE 04 / SEARCH
 検索結果 / 04
 </div>
 
-<div class="result"
-     data-name="○○ラーメン"
-     data-category="食事 ラーメン"
-     data-keywords="食事 ラーメン 飲食 カウンター 一人"
-     onclick="openPlace('○○ラーメン','4.8')">
+<div
+    class="result"
+    data-name="○○ラーメン"
+    data-keywords="ラーメン 食事"
+    onclick="openPlace('○○ラーメン','4.8')"
+>
 
 <div>
 <div class="result-name">○○ラーメン</div>
@@ -1718,11 +1633,12 @@ MODULE 04 / SEARCH
 
 </div>
 
-<div class="result"
-     data-name="○○カフェ"
-     data-category="カフェ"
-     data-keywords="カフェ コーヒー 静か Wi-Fi"
-     onclick="openPlace('○○カフェ','4.7')">
+<div
+    class="result"
+    data-name="○○カフェ"
+    data-keywords="カフェ"
+    onclick="openPlace('○○カフェ','4.7')"
+>
 
 <div>
 <div class="result-name">○○カフェ</div>
@@ -1733,11 +1649,12 @@ MODULE 04 / SEARCH
 
 </div>
 
-<div class="result"
-     data-name="○○温泉"
-     data-category="温泉"
-     data-keywords="温泉 風呂 サウナ 休憩"
-     onclick="openPlace('○○温泉','4.6')">
+<div
+    class="result"
+    data-name="○○温泉"
+    data-keywords="温泉"
+    onclick="openPlace('○○温泉','4.6')"
+>
 
 <div>
 <div class="result-name">○○温泉</div>
@@ -1748,23 +1665,20 @@ MODULE 04 / SEARCH
 
 </div>
 
-<div class="result"
-     data-name="○○映画館"
-     data-category="映画"
-     data-keywords="映画 映画館 シネマ 一人"
-     onclick="openPlace('○○映画館','4.5')">
+<div
+    class="result"
+    data-name="○○映画館"
+    data-keywords="映画 映画館"
+    onclick="openPlace('○○映画館','4.5')"
+>
 
 <div>
 <div class="result-name">○○映画館</div>
-<div class="result-info">一人利用 多　｜　座席指定</div>
+<div class="result-info">一人利用 多　｜　座席を選びやすい</div>
 </div>
 
 <div class="result-score">4.5</div>
 
-</div>
-
-<div class="no-result" id="noResult">
-該当する場所がありません
 </div>
 
 </div>
@@ -1810,17 +1724,10 @@ MODULE 05 / MAP
 <div class="map-road road2"></div>
 <div class="map-road road3"></div>
 
-<div class="map-point mp1"
-     onclick="openPlace('○○ラーメン','4.8')"></div>
-
-<div class="map-point mp2"
-     onclick="openPlace('○○カフェ','4.7')"></div>
-
-<div class="map-point mp3"
-     onclick="openPlace('○○温泉','4.6')"></div>
-
-<div class="map-point mp4"
-     onclick="openPlace('○○映画館','4.5')"></div>
+<div class="map-point mp1" onclick="openPlace('○○ラーメン','4.8')"></div>
+<div class="map-point mp2" onclick="openPlace('○○カフェ','4.7')"></div>
+<div class="map-point mp3" onclick="openPlace('○○温泉','4.6')"></div>
+<div class="map-point mp4" onclick="openPlace('○○映画館','4.5')"></div>
 
 <div class="map-current"></div>
 
@@ -1839,8 +1746,7 @@ MODULE 05 / MAP
 
 <div class="places" style="margin-top:15px;">
 
-<div class="place"
-     onclick="openPlace('○○ラーメン','4.8')">
+<div class="place" onclick="openPlace('○○ラーメン','4.8')">
 
 <div class="place-id">
 1.2 KM
@@ -1852,8 +1758,7 @@ MODULE 05 / MAP
 
 </div>
 
-<div class="place"
-     onclick="openPlace('○○カフェ','4.7')">
+<div class="place" onclick="openPlace('○○カフェ','4.7')">
 
 <div class="place-id">
 2.4 KM
@@ -1894,7 +1799,7 @@ MODULE 05 / MAP
 <div class="detail-hero">
 
 <div class="page-code">
-TARGET
+TARGET 001
 </div>
 
 <h2 class="detail-name" id="detailName">
@@ -1927,20 +1832,16 @@ TARGET
 
 <div class="detail-actions">
 
-<div class="action"
-     id="favoriteButton"
-     onclick="toggleFavorite()">
-♡ お気に入り
+<div class="action" onclick="toggleFavorite()">
+お気に入り
 </div>
 
-<div class="action"
-     onclick="openRating()">
-★ 評価する
+<div class="action" onclick="openRating()">
+評価する
 </div>
 
-<div class="action"
-     onclick="markVisited()">
-✓ 行った
+<div class="action" onclick="alert('ルート案内は地図機能と接続した際に利用できます。')">
+ルート
 </div>
 
 </div>
@@ -1957,37 +1858,37 @@ TARGET
 
 <div class="rating-row">
 <div class="rating-name">一人で入りやすい</div>
-<div class="rating">★★★★★</div>
+<div class="rating">★★★★★★☆</div>
 </div>
 
 <div class="rating-row">
 <div class="rating-name">一人客の多さ</div>
-<div class="rating">★★★★★</div>
+<div class="rating">★★★★★★☆</div>
 </div>
 
 <div class="rating-row">
 <div class="rating-name">過ごしやすさ</div>
-<div class="rating">★★★★☆</div>
+<div class="rating">★★★★★☆☆</div>
 </div>
 
 <div class="rating-row">
 <div class="rating-name">静かさ</div>
-<div class="rating">★★★★☆</div>
+<div class="rating">★★★★★☆☆</div>
 </div>
 
 <div class="rating-row">
 <div class="rating-name">一人席・カウンター</div>
-<div class="rating">★★★★★</div>
+<div class="rating">★★★★★★☆</div>
 </div>
 
 <div class="rating-row">
 <div class="rating-name">店員さんの対応</div>
-<div class="rating">★★★★☆</div>
+<div class="rating">★★★★★☆☆</div>
 </div>
 
 <div class="rating-row">
 <div class="rating-name">一人での居心地</div>
-<div class="rating">★★★★★</div>
+<div class="rating">★★★★★★☆</div>
 </div>
 
 </div>
@@ -2020,12 +1921,13 @@ PERSONAL ANALYSIS
 
 <div
     class="rating-total-number"
-    id="ratingTotal">
+    id="ratingTotal"
+>
 0.0
 </div>
 
 <div class="rating-total-label">
-一人利用スコア
+7段階評価 / 一人利用スコア
 </div>
 
 </div>
@@ -2036,8 +1938,8 @@ PERSONAL ANALYSIS
 
 <button
     class="rating-save"
-    type="button"
-    onclick="saveRating()">
+    onclick="saveRating()"
+>
 評価を保存
 </button>
 
@@ -2083,7 +1985,8 @@ MY
 
 <div
     class="profile"
-    onclick="toggleUserPanel()">
+    onclick="toggleUserPanel()"
+>
 
 <div class="profile-label">
 ユーザー情報
@@ -2099,7 +2002,8 @@ MY
 
 <div
     class="user-panel"
-    id="userPanel">
+    id="userPanel"
+>
 
 <div class="user-row">
 
@@ -2141,12 +2045,12 @@ MY
 
 <div class="my-grid">
 
-<div class="my-card"
-     onclick="showMyList('search')">
+<div class="my-card" onclick="showMyList('search')">
 
 <div
     class="my-card-number"
-    id="searchCount">
+    id="searchCount"
+>
 0
 </div>
 
@@ -2156,12 +2060,12 @@ MY
 
 </div>
 
-<div class="my-card"
-     onclick="showMyList('favorite')">
+<div class="my-card" onclick="showMyList('favorite')">
 
 <div
     class="my-card-number"
-    id="favoriteCount">
+    id="favoriteCount"
+>
 0
 </div>
 
@@ -2171,12 +2075,12 @@ MY
 
 </div>
 
-<div class="my-card"
-     onclick="showMyList('rating')">
+<div class="my-card" onclick="showMyList('rating')">
 
 <div
     class="my-card-number"
-    id="ratingCount">
+    id="ratingCount"
+>
 0
 </div>
 
@@ -2186,12 +2090,12 @@ MY
 
 </div>
 
-<div class="my-card"
-     onclick="showMyList('visited')">
+<div class="my-card" onclick="showMyList('visited')">
 
 <div
     class="my-card-number"
-    id="visitedCount">
+    id="visitedCount"
+>
 0
 </div>
 
@@ -2205,11 +2109,13 @@ MY
 
 <div
     class="my-list-panel"
-    id="myListPanel">
+    id="myListPanel"
+>
 
 <div
     class="my-list-title"
-    id="myListTitle">
+    id="myListTitle"
+>
 一覧
 </div>
 
@@ -2229,9 +2135,11 @@ MY
 <div
     class="nav-button active"
     data-page="home"
-    onclick="go('home')">
+    onclick="go('home')"
+>
 
 <div class="nav-icon">⌂</div>
+
 ホーム
 
 </div>
@@ -2239,9 +2147,11 @@ MY
 <div
     class="nav-button"
     data-page="search"
-    onclick="go('search')">
+    onclick="go('search')"
+>
 
 <div class="nav-icon">⌕</div>
+
 検索
 
 </div>
@@ -2249,9 +2159,11 @@ MY
 <div
     class="nav-button"
     data-page="map"
-    onclick="go('map')">
+    onclick="go('map')"
+>
 
 <div class="nav-icon">◎</div>
+
 マップ
 
 </div>
@@ -2259,9 +2171,11 @@ MY
 <div
     class="nav-button"
     data-page="my"
-    onclick="go('my')">
+    onclick="go('my')"
+>
 
 <div class="nav-icon">♡</div>
+
 MY
 
 </div>
@@ -2276,13 +2190,6 @@ MY
    データ
 ================================================== */
 
-const STORAGE_KEYS = {
-    ratings:"ohitorisamap_ratings",
-    favorites:"ohitorisamap_favorites",
-    searches:"ohitorisamap_searches",
-    visited:"ohitorisamap_visited"
-};
-
 const ratingItems = [
     "一人で入りやすい",
     "一人客の多さ",
@@ -2293,36 +2200,40 @@ const ratingItems = [
     "一人での居心地"
 ];
 
+const STORAGE_RATINGS = "ohitorisamap_ratings";
+const STORAGE_FAVORITES = "ohitorisamap_favorites";
+const STORAGE_SEARCH = "ohitorisamap_search_history";
+const STORAGE_VISITED = "ohitorisamap_visited";
+
 let currentPlace = "○○ラーメン";
 
-let currentRatings =
-    [0,0,0,0,0,0,0];
+let currentRatings = [0,0,0,0,0,0,0];
 
 let myRatings = loadJSON(
-    STORAGE_KEYS.ratings,
+    STORAGE_RATINGS,
     {}
 );
 
 let favorites = loadJSON(
-    STORAGE_KEYS.favorites,
+    STORAGE_FAVORITES,
     []
 );
 
 let searchHistory = loadJSON(
-    STORAGE_KEYS.searches,
+    STORAGE_SEARCH,
     []
 );
 
 let visitedPlaces = loadJSON(
-    STORAGE_KEYS.visited,
-    [] 
+    STORAGE_VISITED,
+    []
 );
 
 /* ==================================================
    安全なlocalStorage読み込み
 ================================================== */
 
-function loadJSON(key,fallback){
+function loadJSON(key, fallback){
 
     try{
 
@@ -2336,12 +2247,12 @@ function loadJSON(key,fallback){
         const parsed =
             JSON.parse(value);
 
-        return parsed ?? fallback;
+        return parsed;
 
     }catch(error){
 
         console.warn(
-            "保存データの読み込みに失敗しました:",
+            "保存データを読み込めませんでした:",
             key
         );
 
@@ -2361,9 +2272,10 @@ function saveJSON(key,value){
     }catch(error){
 
         console.warn(
-            "保存に失敗しました:",
+            "保存できませんでした:",
             key
         );
+
     }
 }
 
@@ -2426,15 +2338,21 @@ sequence.forEach(item => {
 });
 
 setTimeout(() => {
+
     access.classList.add("show");
+
 },2500);
 
 setTimeout(() => {
+
     app.classList.add("show");
+
 },3300);
 
 setTimeout(() => {
+
     boot.classList.add("hide");
+
 },3900);
 
 /* ==================================================
@@ -2443,19 +2361,21 @@ setTimeout(() => {
 
 function go(pageName){
 
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
     const target =
         document.getElementById(pageName);
 
     if(!target){
         return;
     }
-
-    const pages =
-        document.querySelectorAll(".page");
-
-    pages.forEach(page => {
-        page.classList.remove("active");
-    });
 
     target.classList.add("active");
 
@@ -2467,7 +2387,9 @@ function go(pageName){
         button.classList.remove("active");
 
         if(button.dataset.page === pageName){
+
             button.classList.add("active");
+
         }
 
     });
@@ -2476,65 +2398,6 @@ function go(pageName){
         top:0,
         behavior:"smooth"
     });
-
-    if(pageName === "my"){
-        updateMyCounts();
-    }
-}
-
-/* ==================================================
-   ホーム検索
-================================================== */
-
-function focusSearch(){
-
-    go("search");
-
-    setTimeout(() => {
-
-        const input =
-            document.getElementById("searchInput");
-
-        if(input){
-
-            input.focus();
-
-            input.select();
-
-        }
-
-    },100);
-
-}
-
-function homeSearchKey(event){
-
-    if(event.key !== "Enter"){
-        return;
-    }
-
-    event.preventDefault();
-
-    const value =
-        document
-        .getElementById("homeSearchInput")
-        .value
-        .trim();
-
-    go("search");
-
-    const input =
-        document.getElementById("searchInput");
-
-    if(input){
-
-        input.value = value;
-
-        filterResults();
-
-        input.focus();
-    }
-
 }
 
 /* ==================================================
@@ -2555,8 +2418,6 @@ function categorySearch(keyword){
     input.value = keyword;
 
     filterResults();
-
-    input.focus();
 }
 
 /* ==================================================
@@ -2580,27 +2441,26 @@ function filterResults(){
     const results =
         document.querySelectorAll(".result");
 
-    const noResult =
-        document.getElementById("noResult");
-
     let count = 0;
 
     results.forEach(result => {
 
-        const searchText =
+        const name =
             (
-                (result.dataset.name || "") +
-                " " +
-                (result.dataset.category || "") +
-                " " +
-                (result.dataset.keywords || "")
+                result.dataset.name || ""
             ).toLowerCase();
 
-        const matched =
-            keyword === "" ||
-            searchText.includes(keyword);
+        const keywords =
+            (
+                result.dataset.keywords || ""
+            ).toLowerCase();
 
-        if(matched){
+        const match =
+            keyword === "" ||
+            name.includes(keyword) ||
+            keywords.includes(keyword);
+
+        if(match){
 
             result.style.display = "flex";
 
@@ -2614,22 +2474,14 @@ function filterResults(){
 
     });
 
-    document.getElementById(
-        "resultCount"
-    ).textContent =
-        "検索結果 / " + count;
+    const resultCount =
+        document.getElementById("resultCount");
 
-    if(noResult){
+    if(resultCount){
 
-        noResult.style.display =
-            count === 0
-            ? "block"
-            : "none";
+        resultCount.textContent =
+            "検索結果 / " + count;
 
-    }
-
-    if(keyword !== ""){
-        addSearchHistory(keyword);
     }
 }
 
@@ -2637,27 +2489,25 @@ function filterResults(){
    検索履歴
 ================================================== */
 
-function addSearchHistory(keyword){
-
-    const clean =
-        keyword.trim();
-
-    if(!clean){
-        return;
-    }
+function addSearchHistory(name){
 
     searchHistory =
         searchHistory.filter(
-            item => item !== clean
+            item => item !== name
         );
 
-    searchHistory.unshift(clean);
+    searchHistory.unshift(name);
+
+    /*
+       履歴が増えすぎないよう
+       最大20件にする
+    */
 
     searchHistory =
-        searchHistory.slice(0,30);
+        searchHistory.slice(0,20);
 
     saveJSON(
-        STORAGE_KEYS.searches,
+        STORAGE_SEARCH,
         searchHistory
     );
 
@@ -2680,18 +2530,55 @@ function openPlace(name,score){
         "detailScore"
     ).textContent = score;
 
-    go("place");
+    addSearchHistory(name);
+
+    /*
+       店舗を開いた場所を
+       「行った場所」として記録
+    */
+
+    if(!visitedPlaces.includes(name)){
+
+        visitedPlaces.push(name);
+
+        saveJSON(
+            STORAGE_VISITED,
+            visitedPlaces
+        );
+
+    }
 
     buildRatingSystem();
 
-    updateFavoriteButton();
+    go("place");
 
-    addSearchHistory(name);
+}
+
+/* ==================================================
+   評価画面へ移動
+================================================== */
+
+function openRating(){
+
+    const section =
+        document.getElementById(
+            "ratingSection"
+        );
+
+    if(!section){
+        return;
+    }
+
+    section.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
 
 }
 
 /* ==================================================
    評価UI生成
+   7段階
 ================================================== */
 
 function buildRatingSystem(){
@@ -2707,7 +2594,11 @@ function buildRatingSystem(){
 
     container.innerHTML = "";
 
-    if(myRatings[currentPlace]){
+    if(
+        myRatings &&
+        Array.isArray(myRatings[currentPlace]) &&
+        myRatings[currentPlace].length === 7
+    ){
 
         currentRatings =
             [...myRatings[currentPlace]];
@@ -2742,7 +2633,11 @@ function buildRatingSystem(){
         stars.className =
             "rating-stars";
 
-        for(let i=1;i<=5;i++){
+        /*
+           1〜7の7段階
+        */
+
+        for(let i=1;i<=7;i++){
 
             const star =
                 document.createElement("div");
@@ -2756,22 +2651,39 @@ function buildRatingSystem(){
             star.dataset.value =
                 i;
 
+            star.setAttribute(
+                "role",
+                "button"
+            );
+
+            star.setAttribute(
+                "aria-label",
+                i + " / 7"
+            );
+
             if(
                 currentRatings[index] >= i
             ){
-                star.classList.add("selected");
+
+                star.classList.add(
+                    "selected"
+                );
+
             }
 
-            star.onclick = () => {
+            star.addEventListener(
+                "click",
+                function(){
 
-                currentRatings[index] =
-                    i;
+                    currentRatings[index] =
+                        i;
 
-                updateStars(index);
+                    updateStars(index);
 
-                updateTotal();
+                    updateTotal();
 
-            };
+                }
+            );
 
             stars.appendChild(star);
 
@@ -2788,29 +2700,7 @@ function buildRatingSystem(){
 }
 
 /* ==================================================
-   評価画面へ
-================================================== */
-
-function openRating(){
-
-    const section =
-        document.getElementById(
-            "ratingSection"
-        );
-
-    if(!section){
-        return;
-    }
-
-    section.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
-
-}
-
-/* ==================================================
-   星表示
+   星の表示
 ================================================== */
 
 function updateStars(index){
@@ -2835,11 +2725,15 @@ function updateStars(index){
             currentRatings[index]
         ){
 
-            star.classList.add("selected");
+            star.classList.add(
+                "selected"
+            );
 
         }else{
 
-            star.classList.remove("selected");
+            star.classList.remove(
+                "selected"
+            );
 
         }
 
@@ -2849,13 +2743,16 @@ function updateStars(index){
 
 /* ==================================================
    総合スコア
+   7段階
 ================================================== */
 
 function updateTotal(){
 
     const values =
         currentRatings.filter(
-            value => value > 0
+            value =>
+                Number.isFinite(value) &&
+                value > 0
         );
 
     const totalElement =
@@ -2873,6 +2770,7 @@ function updateTotal(){
             "0.0";
 
         return;
+
     }
 
     const total =
@@ -2887,6 +2785,7 @@ function updateTotal(){
 
     totalElement.textContent =
         average.toFixed(1);
+
 }
 
 /* ==================================================
@@ -2897,23 +2796,27 @@ function saveRating(){
 
     const incomplete =
         currentRatings.some(
-            value => value === 0
+            value =>
+                !Number.isFinite(value) ||
+                value < 1 ||
+                value > 7
         );
 
     if(incomplete){
 
         alert(
-            "すべての項目を評価してください。"
+            "すべての項目を7段階で評価してください。"
         );
 
         return;
+
     }
 
     myRatings[currentPlace] =
         [...currentRatings];
 
     saveJSON(
-        STORAGE_KEYS.ratings,
+        STORAGE_RATINGS,
         myRatings
     );
 
@@ -2922,6 +2825,7 @@ function saveRating(){
     alert(
         "評価を保存しました。"
     );
+
 }
 
 /* ==================================================
@@ -2931,103 +2835,40 @@ function saveRating(){
 function toggleFavorite(){
 
     const index =
-        favorites.indexOf(currentPlace);
+        favorites.indexOf(
+            currentPlace
+        );
 
     if(index === -1){
 
-        favorites.push(currentPlace);
+        favorites.push(
+            currentPlace
+        );
 
     }else{
 
-        favorites.splice(index,1);
+        favorites.splice(
+            index,
+            1
+        );
 
     }
 
     saveJSON(
-        STORAGE_KEYS.favorites,
+        STORAGE_FAVORITES,
         favorites
     );
 
-    updateFavoriteButton();
-
     updateMyCounts();
 
-}
+    const added =
+        index === -1;
 
-/* ==================================================
-   お気に入りボタン表示
-================================================== */
-
-function updateFavoriteButton(){
-
-    const button =
-        document.getElementById(
-            "favoriteButton"
-        );
-
-    if(!button){
-        return;
-    }
-
-    const isFavorite =
-        favorites.includes(currentPlace);
-
-    if(isFavorite){
-
-        button.textContent =
-            "♥ お気に入り済み";
-
-        button.classList.add(
-            "favorite-active"
-        );
-
-    }else{
-
-        button.textContent =
-            "♡ お気に入り";
-
-        button.classList.remove(
-            "favorite-active"
-        );
-
-    }
-
-}
-
-/* ==================================================
-   行った場所
-================================================== */
-
-function markVisited(){
-
-    if(
-        !visitedPlaces.includes(
-            currentPlace
-        )
-    ){
-
-        visitedPlaces.push(
-            currentPlace
-        );
-
-        saveJSON(
-            STORAGE_KEYS.visited,
-            visitedPlaces
-        );
-
-        updateMyCounts();
-
-        alert(
-            "行った場所に登録しました。"
-        );
-
-    }else{
-
-        alert(
-            "すでに「行った場所」に登録されています。"
-        );
-
-    }
+    alert(
+        added
+            ? "お気に入りに追加しました。"
+            : "お気に入りから削除しました。"
+    );
 
 }
 
@@ -3141,7 +2982,7 @@ function showMyList(type){
     if(type === "search"){
 
         title.textContent =
-            "検索履歴";
+            "検索した場所";
 
         data =
             [...searchHistory];
@@ -3164,14 +3005,15 @@ function showMyList(type){
             document.createElement("div");
 
         empty.className =
-            "my-empty";
+            "my-list-detail";
 
         empty.textContent =
-            "まだ登録されていません";
+            "まだ登録されていません。";
 
         list.appendChild(empty);
 
         return;
+
     }
 
     data.forEach(name => {
@@ -3182,38 +3024,11 @@ function showMyList(type){
         item.className =
             "my-list-item";
 
-        item.onclick = () => {
-
-            if(
-                type === "search"
-            ){
-
-                go("search");
-
-                const input =
-                    document.getElementById(
-                        "searchInput"
-                    );
-
-                if(input){
-
-                    input.value =
-                        name;
-
-                    filterResults();
-
-                }
-
-            }else{
-
-                openPlace(
-                    name,
-                    getPlaceScore(name)
-                );
-
-            }
-
-        };
+        item.onclick = () =>
+            openPlace(
+                name,
+                getPlaceScore(name)
+            );
 
         const left =
             document.createElement("div");
@@ -3233,49 +3048,23 @@ function showMyList(type){
         detail.className =
             "my-list-detail";
 
-        if(type === "favorite"){
-
-            detail.textContent =
-                "お気に入りに登録中";
-
-        }else if(type === "rating"){
-
-            detail.textContent =
-                "あなたが評価した場所";
-
-        }else if(type === "search"){
-
-            detail.textContent =
-                "検索履歴";
-
-        }else{
-
-            detail.textContent =
-                "行った場所";
-
-        }
+        detail.textContent =
+            "一人で行きやすい場所";
 
         left.appendChild(nameEl);
         left.appendChild(detail);
 
+        const score =
+            document.createElement("div");
+
+        score.className =
+            "my-list-score";
+
+        score.textContent =
+            getPlaceScore(name);
+
         item.appendChild(left);
-
-        if(
-            type !== "search"
-        ){
-
-            const score =
-                document.createElement("div");
-
-            score.className =
-                "my-list-score";
-
-            score.textContent =
-                getPlaceScore(name);
-
-            item.appendChild(score);
-
-        }
+        item.appendChild(score);
 
         list.appendChild(item);
 
@@ -3284,7 +3073,7 @@ function showMyList(type){
 }
 
 /* ==================================================
-   店舗スコア
+   仮店舗スコア
 ================================================== */
 
 function getPlaceScore(name){
@@ -3301,8 +3090,7 @@ function getPlaceScore(name){
 
     };
 
-    return scores[name] || "—";
-
+    return scores[name] || "0.0";
 }
 
 /* ==================================================
@@ -3320,7 +3108,19 @@ function toggleUserPanel(){
         return;
     }
 
-    panel.classList.toggle("show");
+    panel.classList.toggle(
+        "show"
+    );
+
+}
+
+/* ==================================================
+   検索画面初期化
+================================================== */
+
+function initializeSearch(){
+
+    filterResults();
 
 }
 
@@ -3328,19 +3128,11 @@ function toggleUserPanel(){
    初期化
 ================================================== */
 
-function initialize(){
+buildRatingSystem();
 
-    updateMyCounts();
+updateMyCounts();
 
-    buildRatingSystem();
-
-    updateFavoriteButton();
-
-    filterResults();
-
-}
-
-initialize();
+initializeSearch();
 
 </script>
 
