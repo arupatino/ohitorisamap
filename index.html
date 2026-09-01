@@ -3,9 +3,19 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>ohitorisamap｜おひとりさまっぷ</title>
+
+<!-- Leaflet -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
 <style>
 
@@ -22,8 +32,11 @@ html{
 }
 
 body{
+
     margin:0;
+
     background:#03070a;
+
     color:#e9fbff;
 
     font-family:
@@ -37,20 +50,30 @@ body{
     overflow-x:hidden;
 }
 
-/* FUTURE GRID */
+
+/* ==================================================
+   GRID
+================================================== */
 
 body::before{
+
     content:"";
+
     position:fixed;
+
     inset:0;
+
     pointer-events:none;
+
     z-index:9999;
 
     background:
+
         linear-gradient(
             rgba(80,220,255,.018) 1px,
             transparent 1px
         ),
+
         linear-gradient(
             90deg,
             rgba(80,220,255,.018) 1px,
@@ -62,16 +85,21 @@ body::before{
 
 
 /* ==================================================
-   BOOT SCREEN
+   BOOT
 ================================================== */
 
 .boot{
+
     position:fixed;
+
     inset:0;
+
     z-index:10000;
 
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
     background:#020506;
@@ -82,49 +110,71 @@ body::before{
 }
 
 .boot.hide{
+
     opacity:0;
+
     visibility:hidden;
+
     pointer-events:none;
 }
 
 .boot-content{
+
     text-align:center;
 }
 
 .boot-core{
+
     width:120px;
+
     height:120px;
+
     position:relative;
 
-    border:1px solid rgba(90,225,255,.5);
+    border:
+        1px solid
+        rgba(90,225,255,.5);
+
     border-radius:50%;
 
     box-shadow:
-        0 0 30px rgba(70,220,255,.1);
+        0 0 30px
+        rgba(70,220,255,.1);
 
     animation:pulse 2s infinite;
 }
 
 .boot-core::before{
+
     content:"";
+
     position:absolute;
+
     inset:12px;
 
-    border:1px solid rgba(90,225,255,.25);
+    border:
+        1px solid
+        rgba(90,225,255,.25);
+
     border-radius:50%;
 }
 
 .boot-core::after{
+
     content:"";
+
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     width:24px;
+
     height:24px;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
 
     border-radius:50%;
 
@@ -132,38 +182,54 @@ body::before{
 
     box-shadow:
         0 0 12px #6de3ff,
-        0 0 35px rgba(70,220,255,.7);
+        0 0 35px
+        rgba(70,220,255,.7);
 }
 
 .boot-ring{
+
     position:absolute;
+
     inset:-10px;
 
     border-radius:50%;
 
-    border-top:1px solid #6de3ff;
-    border-right:1px solid transparent;
-    border-bottom:1px solid rgba(100,225,255,.2);
-    border-left:1px solid transparent;
+    border-top:
+        1px solid #6de3ff;
 
-    animation:rotate 1.5s linear infinite;
+    border-right:
+        1px solid transparent;
+
+    border-bottom:
+        1px solid
+        rgba(100,225,255,.2);
+
+    border-left:
+        1px solid transparent;
+
+    animation:
+        rotate 1.5s linear infinite;
 }
 
 .boot-status{
+
     margin-top:35px;
 
     font-size:10px;
+
     letter-spacing:4px;
 
     color:#6de3ff;
 }
 
 .boot-jp{
+
     display:block;
 
     margin-top:8px;
 
     font-size:9px;
+
     letter-spacing:1px;
 
     color:#58727c;
@@ -173,45 +239,60 @@ body::before{
 /* ACCESS */
 
 .access{
+
     position:absolute;
+
     inset:0;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
 
     background:#020506;
 
     opacity:0;
+
     pointer-events:none;
 }
 
 .access.show{
-    animation:access .8s forwards;
+
+    animation:
+        access .8s forwards;
 }
 
 .access-title{
+
     font-size:11px;
+
     letter-spacing:5px;
 
     color:#6de3ff;
 
     text-shadow:
-        0 0 15px rgba(70,220,255,.8);
+        0 0 15px
+        rgba(70,220,255,.8);
 }
 
 .access-name{
+
     margin-top:18px;
 
     font-size:32px;
+
     letter-spacing:6px;
 }
 
 .access-jp{
+
     margin-top:10px;
 
     font-size:10px;
+
     letter-spacing:4px;
 
     color:#78949d;
@@ -223,33 +304,62 @@ body::before{
 ================================================== */
 
 @keyframes rotate{
+
     to{
         transform:rotate(360deg);
     }
 }
 
 @keyframes pulse{
+
     50%{
+
         box-shadow:
-            0 0 50px rgba(70,220,255,.2);
+            0 0 50px
+            rgba(70,220,255,.2);
     }
 }
 
 @keyframes access{
+
     to{
         opacity:1;
     }
 }
 
 @keyframes pageIn{
+
     from{
+
         opacity:0;
-        transform:translateY(8px);
+
+        transform:
+            translateY(8px);
     }
 
     to{
+
         opacity:1;
+
         transform:none;
+    }
+}
+
+@keyframes scan{
+
+    0%{
+        opacity:.2;
+        transform:scale(.8);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.05);
+    }
+
+    100%{
+        opacity:.2;
+        transform:scale(.8);
     }
 }
 
@@ -259,10 +369,13 @@ body::before{
 ================================================== */
 
 .app{
+
     min-height:100vh;
+
     opacity:0;
 
-    transition:opacity 1s ease;
+    transition:
+        opacity 1s ease;
 }
 
 .app.show{
@@ -275,13 +388,15 @@ body::before{
 ================================================== */
 
 .page{
+
     display:none;
 
     min-height:100vh;
 
     padding-bottom:100px;
 
-    animation:pageIn .4s ease;
+    animation:
+        pageIn .4s ease;
 }
 
 .page.active{
@@ -290,11 +405,13 @@ body::before{
 
 
 /* ==================================================
-   TOP BAR
+   TOPBAR
 ================================================== */
 
 .topbar{
+
     position:sticky;
+
     top:0;
 
     z-index:100;
@@ -302,22 +419,30 @@ body::before{
     height:65px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     padding:0 20px;
 
-    background:rgba(3,7,10,.9);
+    background:
+        rgba(3,7,10,.9);
 
-    backdrop-filter:blur(12px);
+    backdrop-filter:
+        blur(12px);
 
     border-bottom:
-        1px solid rgba(80,220,255,.12);
+        1px solid
+        rgba(80,220,255,.12);
 }
 
 .logo{
+
     font-size:14px;
+
     letter-spacing:3px;
+
     color:#eaffff;
 }
 
@@ -326,19 +451,24 @@ body::before{
 }
 
 .top-status{
+
     display:flex;
+
     align-items:center;
 
     gap:8px;
 
     font-size:8px;
+
     letter-spacing:2px;
 
     color:#5d8793;
 }
 
 .status-dot{
+
     width:6px;
+
     height:6px;
 
     border-radius:50%;
@@ -355,7 +485,9 @@ body::before{
 ================================================== */
 
 .container{
+
     width:100%;
+
     max-width:1050px;
 
     margin:auto;
@@ -364,36 +496,46 @@ body::before{
 }
 
 .page-code{
+
     font-size:8px;
+
     letter-spacing:3px;
+
     color:#3c8295;
 }
 
 .page-title{
+
     margin:8px 0 0;
 
     font-size:30px;
+
     font-weight:500;
 
     letter-spacing:3px;
 }
 
 .page-sub{
+
     margin:10px 0 0;
 
     font-size:10px;
+
     color:#58717a;
 }
 
 
 /* ==================================================
-   HOME HERO
+   HOME
 ================================================== */
 
 .home-hero{
-    min-height:calc(100vh - 65px);
+
+    min-height:
+        calc(100vh - 65px);
 
     display:flex;
+
     align-items:center;
 
     position:relative;
@@ -402,21 +544,26 @@ body::before{
 }
 
 .home-hero::before{
+
     content:"";
 
     position:absolute;
 
     width:600px;
+
     height:600px;
 
     left:50%;
+
     top:50%;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
 
     border-radius:50%;
 
     background:
+
         radial-gradient(
             circle,
             rgba(50,210,255,.08),
@@ -425,12 +572,16 @@ body::before{
 }
 
 .hero-content{
+
     position:relative;
+
     z-index:2;
 }
 
 .system{
+
     display:flex;
+
     align-items:center;
 
     gap:9px;
@@ -438,15 +589,18 @@ body::before{
     margin-bottom:25px;
 
     font-size:9px;
+
     letter-spacing:3px;
 
     color:#6de3ff;
 }
 
 .hero-title{
+
     margin:0;
 
-    font-size:clamp(42px,9vw,90px);
+    font-size:
+        clamp(42px,9vw,90px);
 
     font-weight:500;
 
@@ -457,23 +611,29 @@ body::before{
     color:#eaffff;
 
     text-shadow:
-        0 0 10px rgba(100,230,255,.6),
-        0 0 30px rgba(0,180,255,.2);
+        0 0 10px
+        rgba(100,230,255,.6),
+        0 0 30px
+        rgba(0,180,255,.2);
 }
 
 .hero-jp{
+
     margin-top:18px;
 
     font-size:14px;
+
     letter-spacing:5px;
 
     color:#75929c;
 }
 
 .hero-copy{
+
     margin-top:22px;
 
     font-size:12px;
+
     line-height:2;
 
     color:#5e7882;
@@ -485,6 +645,7 @@ body::before{
 ================================================== */
 
 .search-box{
+
     margin-top:40px;
 
     max-width:720px;
@@ -492,10 +653,12 @@ body::before{
     height:62px;
 
     display:flex;
+
     align-items:center;
 
     border:
-        1px solid rgba(80,220,255,.4);
+        1px solid
+        rgba(80,220,255,.4);
 
     background:
         rgba(20,100,120,.05);
@@ -504,20 +667,25 @@ body::before{
 }
 
 .search-box:focus-within{
+
     border-color:#6de3ff;
 
     box-shadow:
-        0 0 25px rgba(50,210,255,.12);
+        0 0 25px
+        rgba(50,210,255,.12);
 }
 
 .search-icon{
+
     width:17px;
+
     height:17px;
 
     margin:0 18px;
 
     border:
-        1px solid #6de3ff;
+        1px solid
+        #6de3ff;
 
     border-radius:50%;
 
@@ -525,27 +693,33 @@ body::before{
 }
 
 .search-icon::after{
+
     content:"";
 
     position:absolute;
 
     width:7px;
+
     height:1px;
 
     right:-5px;
+
     bottom:-2px;
 
     background:#6de3ff;
 
-    transform:rotate(45deg);
+    transform:
+        rotate(45deg);
 }
 
 .search-box input{
+
     flex:1;
 
     height:100%;
 
     border:0;
+
     outline:0;
 
     background:transparent;
@@ -573,24 +747,31 @@ body::before{
 }
 
 .module-code{
+
     font-size:8px;
+
     letter-spacing:3px;
+
     color:#397487;
 }
 
 .module-title{
+
     margin:6px 0 0;
 
     font-size:21px;
+
     font-weight:500;
 
     letter-spacing:2px;
 }
 
 .module-sub{
+
     margin:7px 0 0;
 
     font-size:9px;
+
     color:#58717a;
 }
 
@@ -600,6 +781,7 @@ body::before{
 ================================================== */
 
 .categories{
+
     display:grid;
 
     grid-template-columns:
@@ -609,10 +791,13 @@ body::before{
 }
 
 .category{
+
     min-height:125px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     flex-direction:column;
@@ -629,7 +814,8 @@ body::before{
         );
 
     border:
-        1px solid rgba(70,180,210,.2);
+        1px solid
+        rgba(70,180,210,.2);
 
     cursor:pointer;
 
@@ -637,16 +823,21 @@ body::before{
 }
 
 .category:hover{
-    transform:translateY(-4px);
+
+    transform:
+        translateY(-4px);
 
     border-color:#6de3ff;
 
     box-shadow:
-        0 0 20px rgba(70,220,255,.08);
+        0 0 20px
+        rgba(70,220,255,.08);
 }
 
 .category-svg{
+
     width:32px;
+
     height:32px;
 
     fill:none;
@@ -656,6 +847,7 @@ body::before{
     stroke-width:1.5;
 
     stroke-linecap:round;
+
     stroke-linejoin:round;
 
     filter:
@@ -668,7 +860,9 @@ body::before{
 }
 
 .category:hover .category-svg{
-    transform:scale(1.12);
+
+    transform:
+        scale(1.12);
 
     filter:
         drop-shadow(
@@ -678,7 +872,9 @@ body::before{
 }
 
 .category-name{
+
     font-size:10px;
+
     letter-spacing:3px;
 }
 
@@ -688,6 +884,7 @@ body::before{
 ================================================== */
 
 .radar-wrap{
+
     height:420px;
 
     position:relative;
@@ -695,87 +892,112 @@ body::before{
     overflow:hidden;
 
     border:
-        1px solid rgba(70,180,210,.25);
+        1px solid
+        rgba(70,180,210,.25);
 
     background:#050b0f;
 }
 
 .radar{
+
     position:absolute;
 
     width:300px;
+
     height:300px;
 
     left:50%;
+
     top:50%;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
 
     border:
-        1px solid rgba(70,220,255,.3);
+        1px solid
+        rgba(70,220,255,.3);
 
     border-radius:50%;
 }
 
 .radar::before,
 .radar::after{
+
     content:"";
 
     position:absolute;
 
     left:50%;
+
     top:50%;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
 
     border:
-        1px solid rgba(70,220,255,.15);
+        1px solid
+        rgba(70,220,255,.15);
 
     border-radius:50%;
 }
 
 .radar::before{
+
     width:200px;
     height:200px;
 }
 
 .radar::after{
+
     width:100px;
     height:100px;
 }
 
 .radar-line-h,
 .radar-line-v{
+
     position:absolute;
-    background:rgba(70,220,255,.12);
+
+    background:
+        rgba(70,220,255,.12);
 }
 
 .radar-line-h{
+
     left:0;
+
     top:50%;
 
     width:100%;
+
     height:1px;
 }
 
 .radar-line-v{
+
     top:0;
+
     left:50%;
 
     width:1px;
+
     height:100%;
 }
 
 .sweep{
+
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     width:50%;
+
     height:50%;
 
-    transform-origin:0 0;
+    transform-origin:
+        0 0;
 
     background:
         linear-gradient(
@@ -796,9 +1018,11 @@ body::before{
 }
 
 .radar-point{
+
     position:absolute;
 
     width:11px;
+
     height:11px;
 
     border-radius:50%;
@@ -809,7 +1033,8 @@ body::before{
 
     box-shadow:
         0 0 10px #6de3ff,
-        0 0 20px rgba(70,220,255,.6);
+        0 0 20px
+        rgba(70,220,255,.6);
 }
 
 .rp1{
@@ -833,26 +1058,33 @@ body::before{
 }
 
 .radar-current{
+
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     width:20px;
+
     height:20px;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
 
-    border:1px solid white;
+    border:
+        1px solid white;
 
     border-radius:50%;
 
     box-shadow:
         0 0 10px #6de3ff,
-        0 0 30px rgba(70,220,255,.7);
+        0 0 30px
+        rgba(70,220,255,.7);
 }
 
 .radar-current::after{
+
     content:"";
 
     position:absolute;
@@ -865,9 +1097,11 @@ body::before{
 }
 
 .radar-info{
+
     position:absolute;
 
     top:18px;
+
     left:18px;
 
     font-size:8px;
@@ -880,9 +1114,11 @@ body::before{
 }
 
 .radar-info-right{
+
     position:absolute;
 
     right:18px;
+
     bottom:18px;
 
     font-size:8px;
@@ -896,10 +1132,106 @@ body::before{
 
 
 /* ==================================================
+   MAP
+================================================== */
+
+.real-map{
+
+    width:100%;
+
+    height:420px;
+
+    margin-top:35px;
+
+    border:
+        1px solid
+        rgba(70,180,210,.25);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+#mapCanvas{
+
+    width:100%;
+
+    height:100%;
+}
+
+.map-overlay{
+
+    position:absolute;
+
+    top:15px;
+
+    left:15px;
+
+    z-index:500;
+
+    padding:12px 15px;
+
+    background:
+        rgba(3,10,14,.9);
+
+    border:
+        1px solid
+        rgba(80,220,255,.3);
+
+    color:#6de3ff;
+
+    font-size:8px;
+
+    line-height:2;
+
+    letter-spacing:2px;
+}
+
+.location-button{
+
+    position:absolute;
+
+    right:15px;
+
+    bottom:15px;
+
+    z-index:500;
+
+    padding:12px 15px;
+
+    background:
+        rgba(3,10,14,.95);
+
+    border:
+        1px solid
+        rgba(80,220,255,.4);
+
+    color:#6de3ff;
+
+    cursor:pointer;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+}
+
+.leaflet-container{
+
+    background:#061015;
+}
+
+.leaflet-control-attribution{
+
+    font-size:7px !important;
+}
+
+
+/* ==================================================
    PLACES
 ================================================== */
 
 .places{
+
     display:grid;
 
     grid-template-columns:
@@ -909,10 +1241,12 @@ body::before{
 }
 
 .place{
+
     padding:25px;
 
     border:
-        1px solid rgba(70,180,210,.2);
+        1px solid
+        rgba(70,180,210,.2);
 
     background:
         linear-gradient(
@@ -927,25 +1261,33 @@ body::before{
 }
 
 .place:hover{
+
     border-color:#6de3ff;
 
-    transform:translateY(-4px);
+    transform:
+        translateY(-4px);
 }
 
 .place-id{
+
     font-size:8px;
+
     letter-spacing:3px;
+
     color:#397487;
 }
 
 .place-name{
+
     margin-top:14px;
 
     font-size:18px;
+
     letter-spacing:2px;
 }
 
 .place-score{
+
     margin-top:22px;
 
     display:flex;
@@ -956,15 +1298,18 @@ body::before{
 }
 
 .score{
+
     font-size:32px;
 
     color:#6de3ff;
 
     text-shadow:
-        0 0 10px rgba(70,220,255,.4);
+        0 0 10px
+        rgba(70,220,255,.4);
 }
 
 .score-label{
+
     font-size:8px;
 
     color:#527783;
@@ -973,10 +1318,12 @@ body::before{
 }
 
 .easy{
+
     padding:7px 10px;
 
     border:
-        1px solid rgba(70,220,255,.4);
+        1px solid
+        rgba(70,220,255,.4);
 
     color:#6de3ff;
 
@@ -986,6 +1333,7 @@ body::before{
 }
 
 .tags{
+
     margin-top:18px;
 
     display:flex;
@@ -996,10 +1344,12 @@ body::before{
 }
 
 .tag{
+
     padding:5px 8px;
 
     border:
-        1px solid rgba(100,160,175,.2);
+        1px solid
+        rgba(100,160,175,.2);
 
     color:#66838c;
 
@@ -1012,6 +1362,7 @@ body::before{
 ================================================== */
 
 .search-large{
+
     margin-top:35px;
 
     width:100%;
@@ -1023,18 +1374,21 @@ body::before{
     align-items:center;
 
     border:
-        1px solid rgba(80,220,255,.35);
+        1px solid
+        rgba(80,220,255,.35);
 
     background:
         rgba(20,100,120,.05);
 }
 
 .search-large input{
+
     flex:1;
 
     height:100%;
 
     border:0;
+
     outline:0;
 
     background:transparent;
@@ -1051,6 +1405,7 @@ body::before{
 }
 
 .result-count{
+
     font-size:9px;
 
     letter-spacing:2px;
@@ -1059,12 +1414,14 @@ body::before{
 }
 
 .result{
+
     margin-top:10px;
 
     padding:20px;
 
     border:
-        1px solid rgba(70,180,210,.18);
+        1px solid
+        rgba(70,180,210,.18);
 
     display:flex;
 
@@ -1082,19 +1439,25 @@ body::before{
 }
 
 .result-name{
+
     font-size:14px;
+
     letter-spacing:1px;
 }
 
 .result-info{
+
     margin-top:6px;
 
     font-size:8px;
+
     color:#58717a;
 }
 
 .result-score{
+
     color:#6de3ff;
+
     font-size:20px;
 }
 
@@ -1104,13 +1467,16 @@ body::before{
 ================================================== */
 
 .detail-hero{
+
     padding:45px 0;
 
     border-bottom:
-        1px solid rgba(70,180,210,.15);
+        1px solid
+        rgba(70,180,210,.15);
 }
 
 .detail-name{
+
     margin:10px 0 0;
 
     font-size:34px;
@@ -1119,6 +1485,7 @@ body::before{
 }
 
 .detail-location{
+
     margin-top:10px;
 
     color:#58717a;
@@ -1127,6 +1494,7 @@ body::before{
 }
 
 .detail-score-box{
+
     margin-top:30px;
 
     display:flex;
@@ -1137,34 +1505,40 @@ body::before{
 }
 
 .big-score{
+
     font-size:55px;
 
     color:#6de3ff;
 }
 
 .detail-score-label{
+
     font-size:9px;
+
     color:#58717a;
 }
 
 .detail-actions{
+
     margin-top:30px;
 
     display:grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        repeat(4,1fr);
 
     gap:8px;
 }
 
 .action{
+
     padding:15px;
 
     text-align:center;
 
     border:
-        1px solid rgba(70,180,210,.25);
+        1px solid
+        rgba(70,180,210,.25);
 
     color:#6de3ff;
 
@@ -1173,11 +1547,10 @@ body::before{
     letter-spacing:2px;
 
     cursor:pointer;
-
-    transition:.2s;
 }
 
 .action:hover{
+
     border-color:#6de3ff;
 
     background:
@@ -1185,31 +1558,34 @@ body::before{
 }
 
 .action.active{
+
     background:
-        rgba(70,220,255,.08);
+        rgba(70,220,255,.12);
 
     border-color:#6de3ff;
-
-    box-shadow:
-        0 0 15px rgba(70,220,255,.1);
 }
 
 .detail-section{
+
     margin-top:50px;
 }
 
 .detail-section-title{
+
     font-size:15px;
+
     letter-spacing:2px;
 }
 
 .rating-row{
+
     margin-top:18px;
 
     padding:15px 0;
 
     border-bottom:
-        1px solid rgba(70,180,210,.1);
+        1px solid
+        rgba(70,180,210,.1);
 
     display:flex;
 
@@ -1217,12 +1593,16 @@ body::before{
 }
 
 .rating-name{
+
     font-size:10px;
+
     color:#7c969e;
 }
 
 .rating{
+
     color:#6de3ff;
+
     letter-spacing:3px;
 }
 
@@ -1232,52 +1612,33 @@ body::before{
 ================================================== */
 
 .rating-panel{
-    display:none;
 
-    margin-top:25px;
+    margin-top:30px;
 
-    padding:22px;
+    padding:25px;
 
     border:
-        1px solid rgba(70,220,255,.25);
+        1px solid
+        rgba(70,180,210,.2);
 
     background:
         rgba(20,100,120,.04);
 }
 
-.rating-panel.show{
-    display:block;
-}
-
-.rating-panel-title{
-    font-size:11px;
-
-    letter-spacing:2px;
-
-    color:#6de3ff;
-}
-
 .rating-stars{
+
     display:flex;
 
-    gap:8px;
+    gap:10px;
 
     margin-top:18px;
 }
 
 .star{
-    width:38px;
-    height:38px;
 
-    display:flex;
+    font-size:25px;
 
-    justify-content:center;
-    align-items:center;
-
-    border:
-        1px solid rgba(70,180,210,.25);
-
-    color:#527783;
+    color:#29424b;
 
     cursor:pointer;
 
@@ -1286,32 +1647,55 @@ body::before{
 
 .star.selected,
 .star:hover{
+
     color:#6de3ff;
 
-    border-color:#6de3ff;
+    text-shadow:
+        0 0 10px
+        rgba(70,220,255,.7);
+}
 
-    box-shadow:
-        0 0 10px rgba(70,220,255,.15);
+.save-button{
+
+    margin-top:20px;
+
+    padding:13px 20px;
+
+    border:
+        1px solid
+        rgba(70,220,255,.5);
+
+    background:
+        rgba(70,220,255,.05);
+
+    color:#6de3ff;
+
+    cursor:pointer;
+
+    letter-spacing:2px;
 }
 
 
 /* ==================================================
-   MY SPACE
+   MY
 ================================================== */
 
 .profile{
+
     margin-top:35px;
 
     padding:25px;
 
     border:
-        1px solid rgba(70,180,210,.2);
+        1px solid
+        rgba(70,180,210,.2);
 
     background:
         rgba(20,100,120,.04);
 }
 
 .profile-label{
+
     font-size:8px;
 
     letter-spacing:3px;
@@ -1320,6 +1704,7 @@ body::before{
 }
 
 .profile-name{
+
     margin-top:10px;
 
     font-size:22px;
@@ -1327,15 +1712,27 @@ body::before{
     letter-spacing:2px;
 }
 
-.profile-status{
-    margin-top:8px;
+.profile-edit{
 
-    font-size:9px;
+    margin-top:15px;
 
-    color:#58717a;
+    display:inline-block;
+
+    padding:8px 12px;
+
+    border:
+        1px solid
+        rgba(70,180,210,.3);
+
+    color:#6de3ff;
+
+    font-size:8px;
+
+    cursor:pointer;
 }
 
 .my-grid{
+
     margin-top:30px;
 
     display:grid;
@@ -1347,10 +1744,12 @@ body::before{
 }
 
 .my-card{
+
     padding:22px;
 
     border:
-        1px solid rgba(70,180,210,.18);
+        1px solid
+        rgba(70,180,210,.18);
 
     cursor:pointer;
 
@@ -1358,15 +1757,19 @@ body::before{
 }
 
 .my-card:hover{
+
     border-color:#6de3ff;
 }
 
 .my-card-number{
+
     font-size:25px;
+
     color:#6de3ff;
 }
 
 .my-card-label{
+
     margin-top:8px;
 
     font-size:9px;
@@ -1376,93 +1779,33 @@ body::before{
     letter-spacing:2px;
 }
 
-
-/* MY MENU */
-
-.my-menu{
-    margin-top:30px;
-
-    display:grid;
-
-    gap:8px;
-}
-
-.my-menu-item{
-    padding:18px 20px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    border:
-        1px solid rgba(70,180,210,.15);
-
-    background:
-        rgba(20,100,120,.03);
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.my-menu-item:hover{
-    border-color:#6de3ff;
-
-    background:
-        rgba(70,220,255,.04);
-}
-
-.my-menu-left{
-    display:flex;
-
-    flex-direction:column;
-
-    gap:5px;
-}
-
-.my-menu-title{
-    font-size:11px;
-
-    letter-spacing:1px;
-}
-
-.my-menu-sub{
-    font-size:8px;
-
-    color:#527783;
-}
-
-.my-arrow{
-    color:#6de3ff;
-
-    font-size:16px;
-}
-
-
-/* HISTORY */
-
 .history{
+
     margin-top:25px;
 }
 
 .history-item{
+
     padding:17px 0;
 
     border-bottom:
-        1px solid rgba(70,180,210,.1);
+        1px solid
+        rgba(70,180,210,.1);
 
     display:flex;
 
     justify-content:space-between;
+
+    cursor:pointer;
 }
 
 .history-name{
+
     font-size:11px;
 }
 
 .history-date{
+
     font-size:8px;
 
     color:#527783;
@@ -1470,61 +1813,125 @@ body::before{
 
 
 /* ==================================================
-   ACCOUNT
+   LOGIN
 ================================================== */
 
-.account-box{
+.login-panel{
+
     margin-top:35px;
 
-    padding:25px;
+    max-width:600px;
+
+    padding:30px;
 
     border:
-        1px solid rgba(70,220,255,.25);
+        1px solid
+        rgba(70,180,210,.25);
 
     background:
-        linear-gradient(
-            140deg,
-            rgba(30,100,120,.08),
-            rgba(0,0,0,.25)
-        );
+        rgba(20,100,120,.04);
 }
 
-.account-title{
+.form-title{
+
     font-size:12px;
 
     color:#6de3ff;
 
+    letter-spacing:3px;
+}
+
+.form-input{
+
+    width:100%;
+
+    margin-top:15px;
+
+    height:50px;
+
+    padding:0 15px;
+
+    border:
+        1px solid
+        rgba(70,180,210,.2);
+
+    background:#050b0f;
+
+    color:white;
+
+    outline:none;
+}
+
+.form-input:focus{
+
+    border-color:#6de3ff;
+
+    box-shadow:
+        0 0 15px
+        rgba(70,220,255,.08);
+}
+
+.form-button{
+
+    margin-top:15px;
+
+    width:100%;
+
+    height:50px;
+
+    border:
+        1px solid
+        rgba(70,220,255,.4);
+
+    background:
+        rgba(70,220,255,.05);
+
+    color:#6de3ff;
+
+    cursor:pointer;
+
     letter-spacing:2px;
 }
 
-.account-text{
-    margin-top:12px;
+.form-switch{
 
-    font-size:10px;
-
-    line-height:1.9;
-
-    color:#66838c;
-}
-
-.account-buttons{
     margin-top:20px;
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:8px;
-}
-
-.account-button{
-    padding:13px;
 
     text-align:center;
 
+    color:#527783;
+
+    font-size:9px;
+
+    cursor:pointer;
+}
+
+
+/* ==================================================
+   TOAST
+================================================== */
+
+.toast{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:95px;
+
+    transform:
+        translate(-50%,20px);
+
+    z-index:9000;
+
+    padding:14px 20px;
+
+    background:
+        rgba(3,10,14,.96);
+
     border:
-        1px solid rgba(70,180,210,.25);
+        1px solid
+        rgba(70,220,255,.5);
 
     color:#6de3ff;
 
@@ -1532,145 +1939,41 @@ body::before{
 
     letter-spacing:2px;
 
-    cursor:pointer;
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.3s;
 }
 
-.account-button:hover{
-    border-color:#6de3ff;
+.toast.show{
 
-    background:
-        rgba(70,220,255,.05);
-}
+    opacity:1;
 
-
-/* ==================================================
-   MODAL
-================================================== */
-
-.modal{
-    position:fixed;
-
-    inset:0;
-
-    z-index:9000;
-
-    display:none;
-
-    justify-content:center;
-    align-items:center;
-
-    padding:20px;
-
-    background:
-        rgba(0,0,0,.75);
-
-    backdrop-filter:
-        blur(8px);
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-box{
-    width:100%;
-    max-width:430px;
-
-    padding:28px;
-
-    border:
-        1px solid rgba(70,220,255,.35);
-
-    background:#050b0f;
-
-    box-shadow:
-        0 0 40px rgba(0,0,0,.6);
-}
-
-.modal-code{
-    font-size:8px;
-
-    letter-spacing:3px;
-
-    color:#397487;
-}
-
-.modal-title{
-    margin-top:8px;
-
-    font-size:20px;
-
-    letter-spacing:2px;
-}
-
-.modal-input{
-    width:100%;
-
-    height:48px;
-
-    margin-top:18px;
-
-    padding:0 14px;
-
-    border:
-        1px solid rgba(70,180,210,.25);
-
-    outline:none;
-
-    background:
-        rgba(20,100,120,.04);
-
-    color:white;
-}
-
-.modal-input:focus{
-    border-color:#6de3ff;
-}
-
-.modal-buttons{
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:8px;
-
-    margin-top:15px;
-}
-
-.modal-button{
-    padding:14px;
-
-    border:
-        1px solid rgba(70,180,210,.25);
-
-    background:transparent;
-
-    color:#6de3ff;
-
-    cursor:pointer;
-}
-
-.modal-button:hover{
-    border-color:#6de3ff;
+    transform:
+        translate(-50%,0);
 }
 
 
 /* ==================================================
-   NAVIGATION
+   NAV
 ================================================== */
 
 .navigation{
+
     position:fixed;
 
     z-index:500;
 
     left:50%;
+
     bottom:15px;
 
-    transform:translateX(-50%);
+    transform:
+        translateX(-50%);
 
-    width:min(94%,500px);
+    width:
+        min(94%,500px);
 
     height:65px;
 
@@ -1680,23 +1983,28 @@ body::before{
         repeat(4,1fr);
 
     border:
-        1px solid rgba(80,220,255,.3);
+        1px solid
+        rgba(80,220,255,.3);
 
     background:
         rgba(3,8,11,.9);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter:
+        blur(15px);
 
     box-shadow:
-        0 10px 40px rgba(0,0,0,.5);
+        0 10px 40px
+        rgba(0,0,0,.5);
 }
 
 .nav-button{
+
     display:flex;
 
     flex-direction:column;
 
     align-items:center;
+
     justify-content:center;
 
     gap:5px;
@@ -1713,14 +2021,88 @@ body::before{
 }
 
 .nav-icon{
+
     font-size:16px;
 }
 
 .nav-button.active{
+
     color:#6de3ff;
 
     text-shadow:
-        0 0 10px rgba(70,220,255,.5);
+        0 0 10px
+        rgba(70,220,255,.5);
+}
+
+
+/* ==================================================
+   MODAL
+================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:8000;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(0,0,0,.75);
+
+    backdrop-filter:
+        blur(8px);
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+
+    width:100%;
+
+    max-width:500px;
+
+    padding:30px;
+
+    background:#050b0f;
+
+    border:
+        1px solid
+        rgba(70,220,255,.35);
+
+    box-shadow:
+        0 0 40px
+        rgba(0,0,0,.7);
+}
+
+.modal-title{
+
+    color:#6de3ff;
+
+    letter-spacing:3px;
+
+    font-size:12px;
+}
+
+.modal-close{
+
+    float:right;
+
+    color:#6de3ff;
+
+    cursor:pointer;
+
+    font-size:18px;
 }
 
 
@@ -1731,7 +2113,8 @@ body::before{
 @media(max-width:600px){
 
     .container{
-        padding:45px 15px 80px;
+        padding:
+            45px 15px 80px;
     }
 
     .hero-title{
@@ -1761,23 +2144,26 @@ body::before{
     }
 
     .detail-actions{
-        grid-template-columns:1fr;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .my-grid{
         grid-template-columns:1fr;
     }
 
-    .account-buttons{
-        grid-template-columns:1fr;
-    }
-
     .page-title{
         font-size:25px;
     }
+
+    .real-map{
+        height:430px;
+    }
+
 }
 
 </style>
+
 </head>
 
 
@@ -1859,6 +2245,7 @@ body::before{
 </header>
 
 
+
 <div class="home-hero">
 
 <div class="container">
@@ -1891,9 +2278,10 @@ body::before{
 
     でも、どこに行けばいいかわからない。<br>
 
-    そんなときの場所探し。
+    そんなときのための場所探し。
 
 </div>
+
 
 
 <div class="search-box">
@@ -1904,7 +2292,7 @@ body::before{
         id="homeSearch"
         type="text"
         placeholder="行きたい場所を探す"
-        onkeydown="homeSearch(event)"
+        onkeydown="homeSearchKey(event)"
     >
 
 </div>
@@ -1917,17 +2305,17 @@ body::before{
 
 <div class="module-head">
 
-    <div class="module-code">
-        MODULE 01 / ACTIVITY
-    </div>
+<div class="module-code">
+    MODULE 01 / ACTIVITY
+</div>
 
-    <div class="module-title">
-        何をする？
-    </div>
+<div class="module-title">
+    何をする？
+</div>
 
-    <div class="module-sub">
-        目的から探す
-    </div>
+<div class="module-sub">
+    目的から探す
+</div>
 
 </div>
 
@@ -1935,8 +2323,7 @@ body::before{
 <div class="categories">
 
 
-<div class="category"
-     onclick="categorySearch('食事')">
+<div class="category" onclick="categorySearch('食事')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
 
@@ -1944,43 +2331,38 @@ body::before{
 <path d="M13 5v22"/>
 <path d="M9 5v7"/>
 <path d="M13 5v7"/>
-
 <path d="M21 5v22"/>
 <path d="M21 5c4 2 5 6 5 10"/>
 
 </svg>
 
 <div class="category-name">
-    食事
+食事
 </div>
 
 </div>
 
 
-<div class="category"
-     onclick="categorySearch('カフェ')">
+<div class="category" onclick="categorySearch('カフェ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
 
 <path d="M6 12h18v10H6z"/>
 <path d="M24 14h2a4 4 0 0 1 0 8h-2"/>
-
 <path d="M10 8c0-2 2-2 2-4"/>
 <path d="M16 8c0-2 2-2 2-4"/>
-
 <path d="M8 26h16"/>
 
 </svg>
 
 <div class="category-name">
-    カフェ
+カフェ
 </div>
 
 </div>
 
 
-<div class="category"
-     onclick="categorySearch('映画')">
+<div class="category" onclick="categorySearch('映画')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
 
@@ -1997,1917 +2379,88 @@ body::before{
 </svg>
 
 <div class="category-name">
-    映画
+映画
 </div>
 
 </div>
 
 
-<div class="category"
-     onclick="categorySearch('温泉')">
+<div class="category" onclick="categorySearch('温泉')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
 
 <path d="M8 25c3-3 3-7 0-10"/>
 <path d="M16 25c3-3 3-7 0-10"/>
 <path d="M24 25c3-3 3-7 0-10"/>
-
 <path d="M5 28h22"/>
-
 <path d="M11 8c0-2 2-2 2-4"/>
 <path d="M19 8c0-2 2-2 2-4"/>
 
 </svg>
 
 <div class="category-name">
-    温泉
+温泉
 </div>
 
 </div>
 
 
-<div class="category"
-     onclick="categorySearch('カラオケ')">
+<div class="category" onclick="categorySearch('カラオケ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
 
 <rect x="10" y="4" width="12" height="18" rx="6"/>
-
 <path d="M7 15v2a9 9 0 0 0 18 0v-2"/>
-
 <path d="M16 26v3"/>
 <path d="M11 29h10"/>
 
 </svg>
 
 <div class="category-name">
-    カラオケ
+カラオケ
 </div>
 
 </div>
 
 
-<div class="category"
-     onclick="categorySearch('遊ぶ')">
+<div class="category" onclick="categorySearch('遊ぶ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
 
-<path d="
-M9 12h14
-c3 0 5 3 4 6
-l-2 7
-c-.5 2-3 2-4 0
-l-2-4h-6l-2 4
-c-1 2-3 2-4 0
-l-2-7
-c-1-3 1-6 4-6z
-"/>
-
+<path d="M9 12h14c3 0 5 3 4 6l-2 7c-.5 2-3 2-4 0l-2-4h-6l-2 4c-1 2-3 2-4 0l-2-7c-1-3 1-6 4-6z"/>
 <path d="M10 16v5"/>
 <path d="M8 18h4"/>
-
 <circle cx="21" cy="17" r="1"/>
 <circle cx="24" cy="20" r="1"/>
 
 </svg>
 
 <div class="category-name">
-    遊ぶ
+遊ぶ
 </div>
 
 </div>
 
 
-<div class="category"
-     onclick="categorySearch('ドライブ')">
+<div class="category" onclick="categorySearch('ドライブ')">
 
 <svg class="category-svg" viewBox="0 0 32 32">
 
 <path d="M5 20l3-8h16l3 8v7H5z"/>
-
 <path d="M9 12l2-5h10l2 5"/>
-
 <path d="M5 20h22"/>
-
 <circle cx="10" cy="26" r="2"/>
 <circle cx="22" cy="26" r="2"/>
 
 </svg>
 
 <div class="category-name">
-    ドライブ
+ドライブ
 </div>
 
 </div>
 
 
-<div class="category"
-     onclick="categorySearch('お出かけ')">
+<div class="category" onclick="categorySearch('お出かけ')">
 
-<svg class="category-svg" viewBox="0 0 32 32">
-
-<circle cx="16" cy="16" r="12"/>
-
-<path d="M16 4v24"/>
-<path d="M4 16h24"/>
-
-<path d="
-M21 11
-l-4 9
--9 4
-4-9z
-"/>
-
-</svg>
-
-<div class="category-name">
-    お出かけ
-</div>
-
-</div>
-
-
-</div>
-</div>
-
-
-
-<!-- RADAR -->
-
-<div class="module">
-
-<div class="module-head">
-
-    <div class="module-code">
-        MODULE 02 / SCANNER
-    </div>
-
-    <div class="module-title">
-        近くから探す
-    </div>
-
-    <div class="module-sub">
-        現在地周辺をスキャン
-    </div>
-
-</div>
-
-
-<div class="radar-wrap">
-
-    <div class="radar">
-
-        <div class="radar-line-h"></div>
-        <div class="radar-line-v"></div>
-
-        <div class="sweep"></div>
-
-    </div>
-
-    <div class="radar-point rp1"></div>
-    <div class="radar-point rp2"></div>
-    <div class="radar-point rp3"></div>
-    <div class="radar-point rp4"></div>
-
-    <div class="radar-current"></div>
-
-    <div class="radar-info">
-
-        LOCATION SCANNER<br>
-        STATUS : ACTIVE<br>
-        RANGE : 5 KM
-
-    </div>
-
-    <div class="radar-info-right">
-
-        現在地<br>
-        スポット検出<br>
-        スポット検出
-
-    </div>
-
-</div>
-
-</div>
-
-
-
-<!-- POPULAR -->
-
-<div class="module">
-
-<div class="module-head">
-
-    <div class="module-code">
-        MODULE 03 / ANALYSIS
-    </div>
-
-    <div class="module-title">
-        一人で行きやすい場所
-    </div>
-
-    <div class="module-sub">
-        みんなの評価から探す
-    </div>
-
-</div>
-
-
-<div class="places">
-
-
-<div class="place"
-     onclick="openPlace('○○ラーメン')">
-
-    <div class="place-id">
-        TARGET 001
-    </div>
-
-    <div class="place-name">
-        ○○ラーメン
-    </div>
-
-    <div class="place-score">
-
-        <div>
-
-            <div class="score">
-                4.8
-            </div>
-
-            <div class="score-label">
-                一人利用スコア
-            </div>
-
-        </div>
-
-        <div class="easy">
-            一人向き
-        </div>
-
-    </div>
-
-    <div class="tags">
-
-        <div class="tag">
-            一人客 多
-        </div>
-
-        <div class="tag">
-            カウンターあり
-        </div>
-
-    </div>
-
-</div>
-
-
-<div class="place"
-     onclick="openPlace('○○カフェ')">
-
-    <div class="place-id">
-        TARGET 002
-    </div>
-
-    <div class="place-name">
-        ○○カフェ
-    </div>
-
-    <div class="place-score">
-
-        <div>
-
-            <div class="score">
-                4.7
-            </div>
-
-            <div class="score-label">
-                一人利用スコア
-            </div>
-
-        </div>
-
-        <div class="easy">
-            一人向き
-        </div>
-
-    </div>
-
-    <div class="tags">
-
-        <div class="tag">
-            静か
-        </div>
-
-        <div class="tag">
-            Wi-Fiあり
-        </div>
-
-    </div>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-</div>
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     SEARCH
-================================================== -->
-
-<section class="page" id="search">
-
-<header class="topbar">
-
-<div class="logo">
-    <span>o</span>hitorisamap
-</div>
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-検索システム
-
-</div>
-
-</header>
-
-
-<div class="container">
-
-<div class="page-code">
-    MODULE 04 / SEARCH
-</div>
-
-<h2 class="page-title">
-    場所を探す
-</h2>
-
-<p class="page-sub">
-    あなたが一人で行きたい場所を検索
-</p>
-
-
-<div class="search-large">
-
-<input
-    id="searchInput"
-    type="text"
-    placeholder="例：ラーメン、映画、温泉、カフェ..."
-    onkeydown="searchPlaces(event)"
->
-
-</div>
-
-
-<div class="search-results">
-
-<div
-    class="result-count"
-    id="resultCount"
->
-    検索結果 / 04
-</div>
-
-
-<div class="result"
-     onclick="openPlace('○○ラーメン')">
-
-<div>
-
-<div class="result-name">
-    ○○ラーメン
-</div>
-
-<div class="result-info">
-    一人客 多い　｜　カウンターあり
-</div>
-
-</div>
-
-<div class="result-score">
-    4.8
-</div>
-
-</div>
-
-
-<div class="result"
-     onclick="openPlace('○○カフェ')">
-
-<div>
-
-<div class="result-name">
-    ○○カフェ
-</div>
-
-<div class="result-info">
-    静か　｜　Wi-Fiあり
-</div>
-
-</div>
-
-<div class="result-score">
-    4.7
-</div>
-
-</div>
-
-
-<div class="result"
-     onclick="openPlace('○○温泉')">
-
-<div>
-
-<div class="result-name">
-    ○○温泉
-</div>
-
-<div class="result-info">
-    一人利用 多　｜　休憩スペース
-</div>
-
-</div>
-
-<div class="result-score">
-    4.6
-</div>
-
-</div>
-
-
-</div>
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     MAP
-================================================== -->
-
-<section class="page" id="map">
-
-<header class="topbar">
-
-<div class="logo">
-    <span>o</span>hitorisamap
-</div>
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-位置情報システム
-
-</div>
-
-</header>
-
-
-<div class="container">
-
-<div class="page-code">
-    MODULE 05 / MAP
-</div>
-
-<h2 class="page-title">
-    近くから探す
-</h2>
-
-<p class="page-sub">
-    現在地周辺のひとりスポット
-</p>
-
-
-<div
-    class="radar-wrap"
-    style="margin-top:35px;"
->
-
-<div class="radar">
-
-<div class="radar-line-h"></div>
-<div class="radar-line-v"></div>
-
-<div class="sweep"></div>
-
-</div>
-
-<div class="radar-point rp1"></div>
-<div class="radar-point rp2"></div>
-<div class="radar-point rp3"></div>
-<div class="radar-point rp4"></div>
-
-<div class="radar-current"></div>
-
-<div class="radar-info">
-
-現在地<br>
-SCANNING...<br>
-RANGE : 5 KM
-
-</div>
-
-</div>
-
-
-<div
-    class="places"
-    style="margin-top:15px;"
->
-
-<div class="place"
-     onclick="openPlace('○○ラーメン')">
-
-<div class="place-id">
-    1.2 KM
-</div>
-
-<div class="place-name">
-    ○○ラーメン
-</div>
-
-</div>
-
-
-<div class="place"
-     onclick="openPlace('○○カフェ')">
-
-<div class="place-id">
-    2.4 KM
-</div>
-
-<div class="place-name">
-    ○○カフェ
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     PLACE
-================================================== -->
-
-<section class="page" id="place">
-
-<header class="topbar">
-
-<div class="logo">
-    <span>o</span>hitorisamap
-</div>
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-場所分析
-
-</div>
-
-</header>
-
-
-<div class="container">
-
-<div class="detail-hero">
-
-<div class="page-code">
-    TARGET 001
-</div>
-
-<h2
-    class="detail-name"
-    id="detailName"
->
-    ○○ラーメン
-</h2>
-
-<div class="detail-location">
-    現在地から 1.2 km
-</div>
-
-
-<div class="detail-score-box">
-
-<div>
-
-<div class="big-score">
-    4.8
-</div>
-
-<div class="detail-score-label">
-    一人利用スコア
-</div>
-
-</div>
-
-<div class="easy">
-    一人向き
-</div>
-
-</div>
-
-
-<div class="detail-actions">
-
-<div
-    class="action"
-    id="favoriteButton"
-    onclick="toggleFavorite()"
->
-    ♡ お気に入り
-</div>
-
-<div
-    class="action"
-    onclick="toggleRating()"
->
-    ★ 評価する
-</div>
-
-<div
-    class="action"
-    onclick="routeAlert()"
->
-    ルート
-</div>
-
-</div>
-
-
-<div
-    class="rating-panel"
-    id="ratingPanel"
->
-
-<div class="rating-panel-title">
-    この場所を評価する
-</div>
-
-<div class="rating-stars">
-
-<div class="star"
-     onclick="selectStar(1)">
-    1
-</div>
-
-<div class="star"
-     onclick="selectStar(2)">
-    2
-</div>
-
-<div class="star"
-     onclick="selectStar(3)">
-    3
-</div>
-
-<div class="star"
-     onclick="selectStar(4)">
-    4
-</div>
-
-<div class="star"
-     onclick="selectStar(5)">
-    5
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="detail-section">
-
-<div class="detail-section-title">
-    一人利用データ
-</div>
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-    一人で入りやすい
-</div>
-
-<div class="rating">
-    ★★★★★
-</div>
-
-</div>
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-    静かさ
-</div>
-
-<div class="rating">
-    ★★★★☆
-</div>
-
-</div>
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-    一人客の多さ
-</div>
-
-<div class="rating">
-    ★★★★★
-</div>
-
-</div>
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-    過ごしやすさ
-</div>
-
-<div class="rating">
-    ★★★★☆
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     MY
-================================================== -->
-
-<section class="page" id="my">
-
-<header class="topbar">
-
-<div class="logo">
-    <span>o</span>hitorisamap
-</div>
-
-<div class="top-status">
-
-<div class="status-dot"></div>
-
-PERSONAL SYSTEM
-
-</div>
-
-</header>
-
-
-<div class="container">
-
-<div class="page-code">
-    MODULE 06 / PERSONAL
-</div>
-
-<h2 class="page-title">
-    MY SPACE
-</h2>
-
-<p class="page-sub">
-    あなたの「ひとり」を記録
-</p>
-
-
-<div class="profile">
-
-<div class="profile-label">
-    ユーザー情報
-</div>
-
-<div
-    class="profile-name"
-    id="profileName"
->
-    ゲストユーザー
-</div>
-
-<div class="profile-status"
-     id="profileStatus">
-    現在はゲストとして利用中
-</div>
-
-</div>
-
-
-<div class="my-grid">
-
-<div class="my-card">
-
-<div
-    class="my-card-number"
-    id="historyCount"
->
-    0
-</div>
-
-<div class="my-card-label">
-    検索した場所
-</div>
-
-</div>
-
-
-<div class="my-card">
-
-<div
-    class="my-card-number"
-    id="favoriteCount"
->
-    0
-</div>
-
-<div class="my-card-label">
-    お気に入り
-</div>
-
-</div>
-
-
-<div class="my-card">
-
-<div
-    class="my-card-number"
-    id="ratingCount"
->
-    0
-</div>
-
-<div class="my-card-label">
-    評価した場所
-</div>
-
-</div>
-
-
-<div class="my-card">
-
-<div
-    class="my-card-number"
-    id="visitedCount"
->
-    0
-</div>
-
-<div class="my-card-label">
-    行った場所
-</div>
-
-</div>
-
-</div>
-
-
-<!-- MY MENU -->
-
-<div class="my-menu">
-
-
-<div
-    class="my-menu-item"
-    onclick="showHistory()"
->
-
-<div class="my-menu-left">
-
-<div class="my-menu-title">
-    検索履歴
-</div>
-
-<div class="my-menu-sub">
-    最近調べた場所を確認
-</div>
-
-</div>
-
-<div class="my-arrow">
-    →
-</div>
-
-</div>
-
-
-<div
-    class="my-menu-item"
-    onclick="showFavorites()"
->
-
-<div class="my-menu-left">
-
-<div class="my-menu-title">
-    お気に入り
-</div>
-
-<div class="my-menu-sub">
-    保存した場所を確認
-</div>
-
-</div>
-
-<div class="my-arrow">
-    →
-</div>
-
-</div>
-
-
-<div
-    class="my-menu-item"
-    onclick="showRatings()"
->
-
-<div class="my-menu-left">
-
-<div class="my-menu-title">
-    自分の評価
-</div>
-
-<div class="my-menu-sub">
-    評価した場所を確認
-</div>
-
-</div>
-
-<div class="my-arrow">
-    →
-</div>
-
-</div>
-
-
-<div
-    class="my-menu-item"
-    onclick="openAccount()"
->
-
-<div class="my-menu-left">
-
-<div class="my-menu-title">
-    アカウント
-</div>
-
-<div class="my-menu-sub">
-    名前や利用情報を管理
-</div>
-
-</div>
-
-<div class="my-arrow">
-    →
-</div>
-
-</div>
-
-
-</div>
-
-
-<div class="module">
-
-<div class="module-head">
-
-<div class="module-code">
-    RECENT ACTIVITY
-</div>
-
-<div class="module-title">
-    最近見た場所
-</div>
-
-</div>
-
-
-<div
-    class="history"
-    id="historyList"
->
-
-<div class="history-item">
-
-<div class="history-name">
-    まだ履歴はありません
-</div>
-
-<div class="history-date">
-    —
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ACCOUNT -->
-
-<div
-    class="account-box"
-    id="accountBox"
->
-
-<div class="account-title">
-    ACCOUNT SYSTEM
-</div>
-
-<div class="account-text">
-
-現在は無料のゲストモードです。<br>
-アカウントを作成すると、検索履歴・お気に入り・評価などを保存できるようになります。
-
-</div>
-
-
-<div class="account-buttons">
-
-<div
-    class="account-button"
-    onclick="openRegister()"
->
-    アカウント登録
-</div>
-
-<div
-    class="account-button"
-    onclick="openLogin()"
->
-    ログイン
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-</section>
-
-
-
-<!-- ==================================================
-     NAV
-================================================== -->
-
-<nav class="navigation">
-
-
-<div
-    class="nav-button active"
-    data-page="home"
-    onclick="go('home')"
->
-
-<div class="nav-icon">
-    ⌂
-</div>
-
-ホーム
-
-</div>
-
-
-<div
-    class="nav-button"
-    data-page="search"
-    onclick="go('search')"
->
-
-<div class="nav-icon">
-    ⌕
-</div>
-
-検索
-
-</div>
-
-
-<div
-    class="nav-button"
-    data-page="map"
-    onclick="go('map')"
->
-
-<div class="nav-icon">
-    ◎
-</div>
-
-マップ
-
-</div>
-
-
-<div
-    class="nav-button"
-    data-page="my"
-    onclick="go('my')"
->
-
-<div class="nav-icon">
-    ♡
-</div>
-
-マイページ
-
-</div>
-
-
-</nav>
-
-
-</div>
-
-
-
-<!-- ==================================================
-     MODAL
-================================================== -->
-
-<div
-    class="modal"
-    id="accountModal"
->
-
-<div class="modal-box">
-
-<div class="modal-code">
-    ACCOUNT SYSTEM
-</div>
-
-<div
-    class="modal-title"
-    id="modalTitle"
->
-    アカウント登録
-</div>
-
-<input
-    class="modal-input"
-    id="accountName"
-    type="text"
-    placeholder="表示する名前"
->
-
-<input
-    class="modal-input"
-    id="accountEmail"
-    type="email"
-    placeholder="メールアドレス"
->
-
-<div class="modal-buttons">
-
-<button
-    class="modal-button"
-    onclick="saveAccount()"
->
-    保存
-</button>
-
-<button
-    class="modal-button"
-    onclick="closeModal()"
->
-    閉じる
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<script>
-
-/* ==================================================
-   DATA
-================================================== */
-
-let currentPlace = "○○ラーメン";
-
-let favorites =
-    JSON.parse(
-        localStorage.getItem("ohitori_favorites") || "[]"
-    );
-
-let ratings =
-    JSON.parse(
-        localStorage.getItem("ohitori_ratings") || "[]"
-    );
-
-let history =
-    JSON.parse(
-        localStorage.getItem("ohitori_history") || "[]"
-    );
-
-let account =
-    JSON.parse(
-        localStorage.getItem("ohitori_account") || "null"
-    );
-
-
-/* ==================================================
-   BOOT
-================================================== */
-
-const bootStatus =
-    document.getElementById("bootStatus");
-
-const boot =
-    document.getElementById("boot");
-
-const access =
-    document.getElementById("access");
-
-const app =
-    document.getElementById("app");
-
-
-const sequence = [
-
-    [
-        0,
-        "SYSTEM LOCKED",
-        "システムを確認しています"
-    ],
-
-    [
-        800,
-        "AUTHENTICATING",
-        "接続を確認しています"
-    ],
-
-    [
-        1600,
-        "ACCESS CHECK",
-        "アクセスを確認しています"
-    ],
-
-    [
-        2200,
-        "ACCESS GRANTED",
-        "アクセスを許可しました"
-    ]
-
-];
-
-
-sequence.forEach(item => {
-
-    setTimeout(() => {
-
-        bootStatus.innerHTML =
-            item[1] +
-            '<span class="boot-jp">' +
-            item[2] +
-            '</span>';
-
-    },item[0]);
-
-});
-
-
-setTimeout(() => {
-
-    access.classList.add("show");
-
-},2500);
-
-
-setTimeout(() => {
-
-    app.classList.add("show");
-
-},3300);
-
-
-setTimeout(() => {
-
-    boot.classList.add("hide");
-
-},3900);
-
-
-/* ==================================================
-   PAGE NAVIGATION
-================================================== */
-
-function go(pageName){
-
-    const pages =
-        document.querySelectorAll(".page");
-
-    pages.forEach(page => {
-
-        page.classList.remove("active");
-
-    });
-
-
-    const target =
-        document.getElementById(pageName);
-
-    if(target){
-
-        target.classList.add("active");
-
-    }
-
-
-    const buttons =
-        document.querySelectorAll(".nav-button");
-
-    buttons.forEach(button => {
-
-        button.classList.remove("active");
-
-        if(
-            button.dataset.page === pageName
-        ){
-
-            button.classList.add("active");
-
-        }
-
-    });
-
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-/* ==================================================
-   SEARCH
-================================================== */
-
-function homeSearch(event){
-
-    if(event.key !== "Enter"){
-        return;
-    }
-
-    const value =
-        event.target.value.trim();
-
-    if(!value){
-        return;
-    }
-
-    document.getElementById("searchInput").value =
-        value;
-
-    saveSearch(value);
-
-    go("search");
-
-}
-
-
-function searchPlaces(event){
-
-    if(event.key !== "Enter"){
-        return;
-    }
-
-    const value =
-        event.target.value.trim();
-
-    if(!value){
-        return;
-    }
-
-    saveSearch(value);
-
-    const count =
-        document.getElementById("resultCount");
-
-    count.textContent =
-        "検索 : " + value;
-
-}
-
-
-function categorySearch(category){
-
-    document.getElementById("searchInput").value =
-        category;
-
-    saveSearch(category);
-
-    go("search");
-
-}
-
-
-/* ==================================================
-   SEARCH HISTORY
-================================================== */
-
-function saveSearch(value){
-
-    const item = {
-
-        name:value,
-
-        date:new Date()
-            .toLocaleDateString(
-                "ja-JP"
-            )
-    };
-
-    history =
-        history.filter(
-            h => h.name !== value
-        );
-
-    history.unshift(item);
-
-    history =
-        history.slice(0,20);
-
-    localStorage.setItem(
-        "ohitori_history",
-        JSON.stringify(history)
-    );
-
-    updateMy();
-
-}
-
-
-/* ==================================================
-   PLACE
-================================================== */
-
-function openPlace(name){
-
-    currentPlace = name;
-
-    document.getElementById(
-        "detailName"
-    ).textContent = name;
-
-    saveSearch(name);
-
-    updateFavoriteButton();
-
-    go("place");
-
-}
-
-
-function toggleFavorite(){
-
-    const index =
-        favorites.indexOf(currentPlace);
-
-    if(index === -1){
-
-        favorites.push(currentPlace);
-
-    }else{
-
-        favorites.splice(index,1);
-
-    }
-
-    localStorage.setItem(
-        "ohitori_favorites",
-        JSON.stringify(favorites)
-    );
-
-    updateFavoriteButton();
-
-    updateMy();
-
-}
-
-
-function updateFavoriteButton(){
-
-    const button =
-        document.getElementById(
-            "favoriteButton"
-        );
-
-    if(
-        favorites.includes(currentPlace)
-    ){
-
-        button.textContent =
-            "♥ お気に入り済み";
-
-        button.classList.add("active");
-
-    }else{
-
-        button.textContent =
-            "♡ お気に入り";
-
-        button.classList.remove("active");
-
-    }
-
-}
-
-
-/* ==================================================
-   RATING
-================================================== */
-
-function toggleRating(){
-
-    const panel =
-        document.getElementById(
-            "ratingPanel"
-        );
-
-    panel.classList.toggle("show");
-
-}
-
-
-function selectStar(number){
-
-    document
-        .querySelectorAll(".star")
-        .forEach(
-            (star,index) => {
-
-                if(index < number){
-
-                    star.classList.add(
-                        "selected"
-                    );
-
-                }else{
-
-                    star.classList.remove(
-                        "selected"
-                    );
-
-                }
-
-            }
-        );
-
-
-    ratings =
-        ratings.filter(
-            item =>
-                item.name !== currentPlace
-        );
-
-
-    ratings.push({
-
-        name:currentPlace,
-
-        score:number,
-
-        date:new Date()
-            .toLocaleDateString(
-                "ja-JP"
-            )
-
-    });
-
-
-    localStorage.setItem(
-        "ohitori_ratings",
-        JSON.stringify(ratings)
-    );
-
-    updateMy();
-
-}
-
-
-function routeAlert(){
-
-    alert(
-        "現在はルート機能の準備中です。"
-    );
-
-}
-
-
-/* ==================================================
-   MY
-================================================== */
-
-function updateMy(){
-
-    document.getElementById(
-        "historyCount"
-    ).textContent =
-        history.length;
-
-    document.getElementById(
-        "favoriteCount"
-    ).textContent =
-        favorites.length;
-
-    document.getElementById(
-        "ratingCount"
-    ).textContent =
-        ratings.length;
-
-    document.getElementById(
-        "visitedCount"
-    ).textContent =
-        0;
-
-
-    const list =
-        document.getElementById(
-            "historyList"
-        );
-
-
-    if(history.length === 0){
-
-        list.innerHTML = `
-
-            <div class="history-item">
-
-                <div class="history-name">
-                    まだ履歴はありません
-                </div>
-
-                <div class="history-date">
-                    —
-                </div>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    list.innerHTML =
-        history
-            .slice(0,10)
-            .map(
-                item => `
-
-                    <div
-                        class="history-item"
-                        onclick="openPlace('${item.name}')"
-                        style="cursor:pointer;"
-                    >
-
-                        <div class="history-name">
-                            ${item.name}
-                        </div>
-
-                        <div class="history-date">
-                            ${item.date}
-                        </div>
-
-                    </div>
-
-                `
-            )
-            .join("");
-
-}
-
-
-function showHistory(){
-
-    go("my");
-
-    setTimeout(() => {
-
-        document
-            .getElementById(
-                "historyList"
-            )
-            .scrollIntoView({
-                behavior:"smooth"
-            });
-
-    },100);
-
-}
-
-
-function showFavorites(){
-
-    go("my");
-
-    alert(
-        favorites.length
-        ? "お気に入り :\n\n" +
-          favorites.join("\n")
-        : "お気に入りはまだありません。"
-    );
-
-}
-
-
-function showRatings(){
-
-    go("my");
-
-    if(!ratings.length){
-
-        alert(
-            "まだ評価した場所はありません。"
-        );
-
-        return;
-
-    }
-
-    alert(
-        ratings
-            .map(
-                item =>
-                    item.name +
-                    "　" +
-                    item.score +
-                    " / 5"
-            )
-            .join("\n")
-    );
-
-}
-
-
-/* ==================================================
-   ACCOUNT
-================================================== */
-
-function openAccount(){
-
-    document
-        .getElementById(
-            "accountModal"
-        )
-        .classList.add("show");
-
-}
-
-
-function openRegister(){
-
-    openAccount();
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "アカウント登録";
-
-}
-
-
-function openLogin(){
-
-    openAccount();
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "ログイン";
-
-}
-
-
-function closeModal(){
-
-    document
-        .getElementById(
-            "accountModal"
-        )
-        .classList.remove("show");
-
-}
-
-
-function saveAccount(){
-
-    const name =
-        document.getElementById(
-            "accountName"
-        ).value.trim();
-
-    const email =
-        document.getElementById(
-            "accountEmail"
-        ).value.trim();
-
-
-    if(!name){
-
-        alert(
-            "表示する名前を入力してください。"
-        );
-
-        return;
-
-    }
-
-
-    account = {
-
-        name:name,
-
-        email:email
-
-    };
-
-
-    localStorage.setItem(
-        "ohitori_account",
-        JSON.stringify(account)
-    );
-
-
-    updateAccount();
-
-    closeModal();
-
-
-    alert(
-        "アカウント情報を保存しました。"
-    );
-
-}
-
-
-function updateAccount(){
-
-    if(!account){
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "profileName"
-    ).textContent =
-        account.name;
-
-
-    document.getElementById(
-        "profileStatus"
-    ).textContent =
-        "アカウント情報をこの端末に保存中";
-
-}
-
-
-updateAccount();
-
-updateMy();
-
-</script>
-
-
-</body>
-</html>
+<svg class="category-svg" viewBox="0 0 32 
