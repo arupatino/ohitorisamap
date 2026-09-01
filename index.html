@@ -11,6 +11,17 @@
 
 <title>ohitorisamap｜おひとりさまっぷ</title>
 
+
+<!-- ==================================================
+     LEAFLET MAP
+================================================== -->
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+
 <style>
 
 /* ==================================================
@@ -26,8 +37,11 @@ html{
 }
 
 body{
+
     margin:0;
+
     background:#03070a;
+
     color:#e9fbff;
 
     font-family:
@@ -41,34 +55,30 @@ body{
     overflow-x:hidden;
 }
 
-button,
-input{
-    font:inherit;
-}
-
-button{
-    color:inherit;
-}
-
 
 /* ==================================================
    FUTURE GRID
 ================================================== */
 
 body::before{
+
     content:"";
 
     position:fixed;
+
     inset:0;
 
     pointer-events:none;
+
     z-index:9999;
 
     background:
+
         linear-gradient(
             rgba(80,220,255,.018) 1px,
             transparent 1px
         ),
+
         linear-gradient(
             90deg,
             rgba(80,220,255,.018) 1px,
@@ -84,12 +94,17 @@ body::before{
 ================================================== */
 
 .boot{
+
     position:fixed;
+
     inset:0;
+
     z-index:10000;
 
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
     background:#020506;
@@ -100,48 +115,67 @@ body::before{
 }
 
 .boot.hide{
+
     opacity:0;
+
     visibility:hidden;
+
     pointer-events:none;
 }
 
 .boot-content{
+
     text-align:center;
 }
 
 .boot-core{
+
     width:120px;
+
     height:120px;
+
     position:relative;
 
-    border:1px solid rgba(90,225,255,.5);
+    border:
+        1px solid
+        rgba(90,225,255,.5);
+
     border-radius:50%;
 
     box-shadow:
-        0 0 30px rgba(70,220,255,.1);
+        0 0 30px
+        rgba(70,220,255,.1);
 
     animation:pulse 2s infinite;
 }
 
 .boot-core::before{
+
     content:"";
 
     position:absolute;
+
     inset:12px;
 
-    border:1px solid rgba(90,225,255,.25);
+    border:
+        1px solid
+        rgba(90,225,255,.25);
+
     border-radius:50%;
 }
 
 .boot-core::after{
+
     content:"";
 
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     width:24px;
+
     height:24px;
 
     transform:
@@ -157,84 +191,113 @@ body::before{
 }
 
 .boot-ring{
+
     position:absolute;
+
     inset:-10px;
 
     border-radius:50%;
 
-    border-top:1px solid #6de3ff;
-    border-right:1px solid transparent;
-    border-bottom:1px solid rgba(100,225,255,.2);
-    border-left:1px solid transparent;
+    border-top:
+        1px solid #6de3ff;
+
+    border-right:
+        1px solid transparent;
+
+    border-bottom:
+        1px solid rgba(100,225,255,.2);
+
+    border-left:
+        1px solid transparent;
 
     animation:
         rotate 1.5s linear infinite;
 }
 
 .boot-status{
+
     margin-top:35px;
 
     font-size:10px;
+
     letter-spacing:4px;
 
     color:#6de3ff;
 }
 
 .boot-jp{
+
     display:block;
 
     margin-top:8px;
 
     font-size:9px;
+
     letter-spacing:1px;
 
     color:#58727c;
 }
 
 
-/* ACCESS */
+/* ==================================================
+   ACCESS
+================================================== */
 
 .access{
+
     position:absolute;
+
     inset:0;
 
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
 
     background:#020506;
 
     opacity:0;
+
     pointer-events:none;
 }
 
 .access.show{
+
     animation:
         access .8s forwards;
 }
 
 .access-title{
+
     font-size:11px;
+
     letter-spacing:5px;
 
     color:#6de3ff;
 
     text-shadow:
-        0 0 15px rgba(70,220,255,.8);
+        0 0 15px
+        rgba(70,220,255,.8);
 }
 
 .access-name{
+
     margin-top:18px;
 
     font-size:32px;
+
     letter-spacing:6px;
 }
 
 .access-jp{
+
     margin-top:10px;
 
     font-size:10px;
+
     letter-spacing:4px;
 
     color:#78949d;
@@ -246,45 +309,44 @@ body::before{
 ================================================== */
 
 @keyframes rotate{
+
     to{
-        transform:
-            rotate(360deg);
+        transform:rotate(360deg);
     }
 }
 
 @keyframes pulse{
+
     50%{
+
         box-shadow:
-            0 0 50px rgba(70,220,255,.2);
+            0 0 50px
+            rgba(70,220,255,.2);
     }
 }
 
 @keyframes access{
+
     to{
         opacity:1;
     }
 }
 
 @keyframes pageIn{
+
     from{
+
         opacity:0;
+
         transform:
             translateY(8px);
     }
 
     to{
+
         opacity:1;
+
         transform:none;
-    }
-}
-
-@keyframes scanPulse{
-    0%,100%{
-        opacity:.45;
-    }
-
-    50%{
-        opacity:1;
     }
 }
 
@@ -294,6 +356,7 @@ body::before{
 ================================================== */
 
 .app{
+
     min-height:100vh;
 
     opacity:0;
@@ -303,6 +366,7 @@ body::before{
 }
 
 .app.show{
+
     opacity:1;
 }
 
@@ -312,6 +376,7 @@ body::before{
 ================================================== */
 
 .page{
+
     display:none;
 
     min-height:100vh;
@@ -323,6 +388,7 @@ body::before{
 }
 
 .page.active{
+
     display:block;
 }
 
@@ -332,14 +398,19 @@ body::before{
 ================================================== */
 
 .topbar{
+
     position:sticky;
+
     top:0;
+
     z-index:100;
 
     height:65px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
 
     padding:0 20px;
@@ -351,33 +422,43 @@ body::before{
         blur(12px);
 
     border-bottom:
-        1px solid rgba(80,220,255,.12);
+        1px solid
+        rgba(80,220,255,.12);
 }
 
 .logo{
+
     font-size:14px;
+
     letter-spacing:3px;
+
     color:#eaffff;
 }
 
 .logo span{
+
     color:#6de3ff;
 }
 
 .top-status{
+
     display:flex;
+
     align-items:center;
 
     gap:8px;
 
     font-size:8px;
+
     letter-spacing:2px;
 
     color:#5d8793;
 }
 
 .status-dot{
+
     width:6px;
+
     height:6px;
 
     border-radius:50%;
@@ -394,7 +475,9 @@ body::before{
 ================================================== */
 
 .container{
+
     width:100%;
+
     max-width:1050px;
 
     margin:auto;
@@ -403,23 +486,31 @@ body::before{
 }
 
 .page-code{
+
     font-size:8px;
+
     letter-spacing:3px;
+
     color:#3c8295;
 }
 
 .page-title{
+
     margin:8px 0 0;
 
     font-size:30px;
+
     font-weight:500;
+
     letter-spacing:3px;
 }
 
 .page-sub{
+
     margin:10px 0 0;
 
     font-size:10px;
+
     color:#58717a;
 }
 
@@ -429,25 +520,31 @@ body::before{
 ================================================== */
 
 .home-hero{
+
     min-height:
         calc(100vh - 65px);
 
     display:flex;
+
     align-items:center;
 
     position:relative;
+
     overflow:hidden;
 }
 
 .home-hero::before{
+
     content:"";
 
     position:absolute;
 
     width:600px;
+
     height:600px;
 
     left:50%;
+
     top:50%;
 
     transform:
@@ -456,6 +553,7 @@ body::before{
     border-radius:50%;
 
     background:
+
         radial-gradient(
             circle,
             rgba(50,210,255,.08),
@@ -464,12 +562,16 @@ body::before{
 }
 
 .hero-content{
+
     position:relative;
+
     z-index:2;
 }
 
 .system{
+
     display:flex;
+
     align-items:center;
 
     gap:9px;
@@ -477,12 +579,14 @@ body::before{
     margin-bottom:25px;
 
     font-size:9px;
+
     letter-spacing:3px;
 
     color:#6de3ff;
 }
 
 .hero-title{
+
     margin:0;
 
     font-size:
@@ -497,23 +601,31 @@ body::before{
     color:#eaffff;
 
     text-shadow:
-        0 0 10px rgba(100,230,255,.6),
-        0 0 30px rgba(0,180,255,.2);
+
+        0 0 10px
+        rgba(100,230,255,.6),
+
+        0 0 30px
+        rgba(0,180,255,.2);
 }
 
 .hero-jp{
+
     margin-top:18px;
 
     font-size:14px;
+
     letter-spacing:5px;
 
     color:#75929c;
 }
 
 .hero-copy{
+
     margin-top:22px;
 
     font-size:12px;
+
     line-height:2;
 
     color:#5e7882;
@@ -524,18 +636,22 @@ body::before{
    SEARCH
 ================================================== */
 
-.search-box{
+.search-box,
+.search-large{
+
     margin-top:40px;
 
-    max-width:720px;
+    width:100%;
 
     height:62px;
 
     display:flex;
+
     align-items:center;
 
     border:
-        1px solid rgba(80,220,255,.4);
+        1px solid
+        rgba(80,220,255,.4);
 
     background:
         rgba(20,100,120,.05);
@@ -543,35 +659,52 @@ body::before{
     transition:.25s;
 }
 
-.search-box:focus-within{
+.search-large{
+
+    margin-top:35px;
+}
+
+.search-box:focus-within,
+.search-large:focus-within{
+
     border-color:#6de3ff;
 
     box-shadow:
-        0 0 25px rgba(50,210,255,.12);
+        0 0 25px
+        rgba(50,210,255,.12);
 }
 
 .search-icon{
+
     width:17px;
+
     height:17px;
 
     margin:0 18px;
 
-    border:1px solid #6de3ff;
+    border:
+        1px solid
+        #6de3ff;
 
     border-radius:50%;
 
     position:relative;
+
+    flex-shrink:0;
 }
 
 .search-icon::after{
+
     content:"";
 
     position:absolute;
 
     width:7px;
+
     height:1px;
 
     right:-5px;
+
     bottom:-2px;
 
     background:#6de3ff;
@@ -580,22 +713,34 @@ body::before{
         rotate(45deg);
 }
 
-.search-box input{
+.search-box input,
+.search-large input{
+
     flex:1;
 
     height:100%;
 
     border:0;
+
     outline:0;
 
     background:transparent;
 
     color:#eaffff;
 
+    padding:0 18px;
+
     font-size:13px;
 }
 
-.search-box input::placeholder{
+.search-box input{
+
+    padding-left:0;
+}
+
+.search-box input::placeholder,
+.search-large input::placeholder{
+
     color:#42606b;
 }
 
@@ -605,32 +750,41 @@ body::before{
 ================================================== */
 
 .module{
+
     margin-top:70px;
 }
 
 .module-head{
+
     margin-bottom:22px;
 }
 
 .module-code{
+
     font-size:8px;
+
     letter-spacing:3px;
+
     color:#397487;
 }
 
 .module-title{
+
     margin:6px 0 0;
 
     font-size:21px;
+
     font-weight:500;
 
     letter-spacing:2px;
 }
 
 .module-sub{
+
     margin:7px 0 0;
 
     font-size:9px;
+
     color:#58717a;
 }
 
@@ -640,6 +794,7 @@ body::before{
 ================================================== */
 
 .categories{
+
     display:grid;
 
     grid-template-columns:
@@ -649,10 +804,13 @@ body::before{
 }
 
 .category{
+
     min-height:125px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     flex-direction:column;
@@ -662,6 +820,7 @@ body::before{
     position:relative;
 
     background:
+
         linear-gradient(
             140deg,
             rgba(30,100,120,.08),
@@ -669,26 +828,30 @@ body::before{
         );
 
     border:
-        1px solid rgba(70,180,210,.2);
+        1px solid
+        rgba(70,180,210,.2);
 
     cursor:pointer;
 
     transition:.25s;
 }
 
-.category:hover,
-.category.selected{
+.category:hover{
+
     transform:
         translateY(-4px);
 
     border-color:#6de3ff;
 
     box-shadow:
-        0 0 20px rgba(70,220,255,.08);
+        0 0 20px
+        rgba(70,220,255,.08);
 }
 
 .category-svg{
+
     width:32px;
+
     height:32px;
 
     fill:none;
@@ -698,11 +861,13 @@ body::before{
     stroke-width:1.5;
 
     stroke-linecap:round;
+
     stroke-linejoin:round;
 
     filter:
         drop-shadow(
-            0 0 6px rgba(70,220,255,.45)
+            0 0 6px
+            rgba(70,220,255,.45)
         );
 
     transition:.25s;
@@ -710,17 +875,21 @@ body::before{
 
 .category:hover
 .category-svg{
+
     transform:
         scale(1.12);
 
     filter:
         drop-shadow(
-            0 0 10px rgba(70,220,255,.8)
+            0 0 10px
+            rgba(70,220,255,.8)
         );
 }
 
 .category-name{
+
     font-size:10px;
+
     letter-spacing:3px;
 }
 
@@ -730,6 +899,7 @@ body::before{
 ================================================== */
 
 .radar-wrap{
+
     height:420px;
 
     position:relative;
@@ -737,93 +907,117 @@ body::before{
     overflow:hidden;
 
     border:
-        1px solid rgba(70,180,210,.25);
+        1px solid
+        rgba(70,180,210,.25);
 
     background:#050b0f;
 }
 
 .radar{
+
     position:absolute;
 
     width:300px;
+
     height:300px;
 
     left:50%;
+
     top:50%;
 
     transform:
         translate(-50%,-50%);
 
     border:
-        1px solid rgba(70,220,255,.3);
+        1px solid
+        rgba(70,220,255,.3);
 
     border-radius:50%;
 }
 
 .radar::before,
 .radar::after{
+
     content:"";
 
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     transform:
         translate(-50%,-50%);
 
     border:
-        1px solid rgba(70,220,255,.15);
+        1px solid
+        rgba(70,220,255,.15);
 
     border-radius:50%;
 }
 
 .radar::before{
+
     width:200px;
+
     height:200px;
 }
 
 .radar::after{
+
     width:100px;
+
     height:100px;
 }
 
 .radar-line-h,
 .radar-line-v{
+
     position:absolute;
+
     background:
         rgba(70,220,255,.12);
 }
 
 .radar-line-h{
+
     left:0;
+
     top:50%;
 
     width:100%;
+
     height:1px;
 }
 
 .radar-line-v{
+
     top:0;
+
     left:50%;
 
     width:1px;
+
     height:100%;
 }
 
 .sweep{
+
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     width:50%;
+
     height:50%;
 
     transform-origin:
         0 0;
 
     background:
+
         linear-gradient(
             90deg,
             rgba(70,220,255,.25),
@@ -842,9 +1036,11 @@ body::before{
 }
 
 .radar-point{
+
     position:absolute;
 
     width:11px;
+
     height:11px;
 
     border-radius:50%;
@@ -854,45 +1050,49 @@ body::before{
     border:2px solid white;
 
     box-shadow:
+
         0 0 10px #6de3ff,
-        0 0 20px rgba(70,220,255,.6);
+
+        0 0 20px
+        rgba(70,220,255,.6);
 
     cursor:pointer;
-
-    transition:.2s;
-}
-
-.radar-point:hover{
-    transform:scale(1.4);
 }
 
 .rp1{
+
     left:30%;
     top:32%;
 }
 
 .rp2{
+
     left:68%;
     top:28%;
 }
 
 .rp3{
+
     left:72%;
     top:70%;
 }
 
 .rp4{
+
     left:27%;
     top:67%;
 }
 
 .radar-current{
+
     position:absolute;
 
     left:50%;
+
     top:50%;
 
     width:20px;
+
     height:20px;
 
     transform:
@@ -904,14 +1104,15 @@ body::before{
     border-radius:50%;
 
     box-shadow:
-        0 0 10px #6de3ff,
-        0 0 30px rgba(70,220,255,.7);
 
-    animation:
-        scanPulse 2s infinite;
+        0 0 10px #6de3ff,
+
+        0 0 30px
+        rgba(70,220,255,.7);
 }
 
 .radar-current::after{
+
     content:"";
 
     position:absolute;
@@ -924,12 +1125,15 @@ body::before{
 }
 
 .radar-info{
+
     position:absolute;
 
     top:18px;
+
     left:18px;
 
     font-size:8px;
+
     line-height:2;
 
     letter-spacing:2px;
@@ -938,12 +1142,15 @@ body::before{
 }
 
 .radar-info-right{
+
     position:absolute;
 
     right:18px;
+
     bottom:18px;
 
     font-size:8px;
+
     line-height:2;
 
     text-align:right;
@@ -953,10 +1160,222 @@ body::before{
 
 
 /* ==================================================
-   PLACES
+   REAL MAP
+================================================== */
+
+.real-map-wrap{
+
+    position:relative;
+
+    margin-top:35px;
+
+    height:500px;
+
+    border:
+        1px solid
+        rgba(70,180,210,.3);
+
+    overflow:hidden;
+
+    background:#071015;
+
+    box-shadow:
+        0 0 30px
+        rgba(0,180,255,.05);
+}
+
+#realMap{
+
+    width:100%;
+
+    height:100%;
+
+    filter:
+        saturate(.65)
+        brightness(.72)
+        contrast(1.1);
+}
+
+
+/* HUD */
+
+.map-hud{
+
+    position:absolute;
+
+    z-index:500;
+
+    left:15px;
+
+    top:15px;
+
+    padding:12px 15px;
+
+    background:
+        rgba(3,10,14,.88);
+
+    border:
+        1px solid
+        rgba(80,220,255,.3);
+
+    backdrop-filter:
+        blur(10px);
+
+    font-size:8px;
+
+    line-height:2;
+
+    letter-spacing:2px;
+
+    color:#6de3ff;
+
+    pointer-events:none;
+}
+
+.map-hud-right{
+
+    position:absolute;
+
+    z-index:500;
+
+    right:15px;
+
+    top:15px;
+
+    padding:10px 12px;
+
+    background:
+        rgba(3,10,14,.88);
+
+    border:
+        1px solid
+        rgba(80,220,255,.25);
+
+    font-size:8px;
+
+    letter-spacing:1px;
+
+    color:#668792;
+}
+
+.location-button{
+
+    position:absolute;
+
+    z-index:600;
+
+    right:15px;
+
+    bottom:15px;
+
+    padding:12px 16px;
+
+    border:
+        1px solid
+        rgba(80,220,255,.4);
+
+    background:
+        rgba(3,10,14,.92);
+
+    color:#6de3ff;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    backdrop-filter:
+        blur(10px);
+}
+
+.location-button:hover{
+
+    border-color:#6de3ff;
+
+    box-shadow:
+        0 0 20px
+        rgba(70,220,255,.15);
+}
+
+
+/* Leaflet */
+
+.leaflet-control-zoom{
+
+    border:
+        1px solid
+        rgba(80,220,255,.25)
+        !important;
+}
+
+.leaflet-control-zoom a{
+
+    background:
+        rgba(3,10,14,.9)
+        !important;
+
+    color:#6de3ff
+        !important;
+
+    border-color:
+        rgba(80,220,255,.15)
+        !important;
+}
+
+
+/* custom marker */
+
+.cyber-marker{
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    background:#6de3ff;
+
+    border:
+        2px solid #fff;
+
+    box-shadow:
+
+        0 0 8px #6de3ff,
+
+        0 0 20px
+        rgba(70,220,255,.8);
+}
+
+.current-marker{
+
+    width:20px;
+
+    height:20px;
+
+    border-radius:50%;
+
+    background:#6de3ff;
+
+    border:
+        3px solid #fff;
+
+    box-shadow:
+
+        0 0 0 7px
+        rgba(70,220,255,.15),
+
+        0 0 25px
+        #6de3ff;
+}
+
+
+/* ==================================================
+   PLACE CARDS
 ================================================== */
 
 .places{
+
     display:grid;
 
     grid-template-columns:
@@ -966,12 +1385,15 @@ body::before{
 }
 
 .place{
+
     padding:25px;
 
     border:
-        1px solid rgba(70,180,210,.2);
+        1px solid
+        rgba(70,180,210,.2);
 
     background:
+
         linear-gradient(
             140deg,
             rgba(20,80,100,.08),
@@ -984,6 +1406,7 @@ body::before{
 }
 
 .place:hover{
+
     border-color:#6de3ff;
 
     transform:
@@ -991,37 +1414,47 @@ body::before{
 }
 
 .place-id{
+
     font-size:8px;
+
     letter-spacing:3px;
+
     color:#397487;
 }
 
 .place-name{
+
     margin-top:14px;
 
     font-size:18px;
+
     letter-spacing:2px;
 }
 
 .place-score{
+
     margin-top:22px;
 
     display:flex;
 
     justify-content:space-between;
+
     align-items:end;
 }
 
 .score{
+
     font-size:32px;
 
     color:#6de3ff;
 
     text-shadow:
-        0 0 10px rgba(70,220,255,.4);
+        0 0 10px
+        rgba(70,220,255,.4);
 }
 
 .score-label{
+
     font-size:8px;
 
     color:#527783;
@@ -1030,10 +1463,12 @@ body::before{
 }
 
 .easy{
+
     padding:7px 10px;
 
     border:
-        1px solid rgba(70,220,255,.4);
+        1px solid
+        rgba(70,220,255,.4);
 
     color:#6de3ff;
 
@@ -1043,6 +1478,7 @@ body::before{
 }
 
 .tags{
+
     margin-top:18px;
 
     display:flex;
@@ -1053,10 +1489,12 @@ body::before{
 }
 
 .tag{
+
     padding:5px 8px;
 
     border:
-        1px solid rgba(100,160,175,.2);
+        1px solid
+        rgba(100,160,175,.2);
 
     color:#66838c;
 
@@ -1065,48 +1503,16 @@ body::before{
 
 
 /* ==================================================
-   SEARCH PAGE
+   SEARCH RESULTS
 ================================================== */
 
-.search-large{
-    margin-top:35px;
-
-    width:100%;
-
-    height:60px;
-
-    display:flex;
-    align-items:center;
-
-    border:
-        1px solid rgba(80,220,255,.35);
-
-    background:
-        rgba(20,100,120,.05);
-}
-
-.search-large input{
-    flex:1;
-
-    height:100%;
-
-    border:0;
-    outline:0;
-
-    background:transparent;
-
-    color:white;
-
-    padding:0 18px;
-
-    font-size:13px;
-}
-
 .search-results{
+
     margin-top:35px;
 }
 
 .result-count{
+
     font-size:9px;
 
     letter-spacing:2px;
@@ -1115,16 +1521,19 @@ body::before{
 }
 
 .result{
+
     margin-top:10px;
 
     padding:20px;
 
     border:
-        1px solid rgba(70,180,210,.18);
+        1px solid
+        rgba(70,180,210,.18);
 
     display:flex;
 
     justify-content:space-between;
+
     align-items:center;
 
     cursor:pointer;
@@ -1133,23 +1542,30 @@ body::before{
 }
 
 .result:hover{
+
     border-color:#6de3ff;
 }
 
 .result-name{
+
     font-size:14px;
+
     letter-spacing:1px;
 }
 
 .result-info{
+
     margin-top:6px;
 
     font-size:8px;
+
     color:#58717a;
 }
 
 .result-score{
+
     color:#6de3ff;
+
     font-size:20px;
 }
 
@@ -1159,13 +1575,16 @@ body::before{
 ================================================== */
 
 .detail-hero{
+
     padding:45px 0;
 
     border-bottom:
-        1px solid rgba(70,180,210,.15);
+        1px solid
+        rgba(70,180,210,.15);
 }
 
 .detail-name{
+
     margin:10px 0 0;
 
     font-size:34px;
@@ -1174,6 +1593,7 @@ body::before{
 }
 
 .detail-location{
+
     margin-top:10px;
 
     color:#58717a;
@@ -1182,6 +1602,7 @@ body::before{
 }
 
 .detail-score-box{
+
     margin-top:30px;
 
     display:flex;
@@ -1192,18 +1613,21 @@ body::before{
 }
 
 .big-score{
+
     font-size:55px;
 
     color:#6de3ff;
 }
 
 .detail-score-label{
+
     font-size:9px;
 
     color:#58717a;
 }
 
 .detail-actions{
+
     margin-top:30px;
 
     display:grid;
@@ -1215,16 +1639,16 @@ body::before{
 }
 
 .action{
+
     padding:15px;
 
     text-align:center;
 
     border:
-        1px solid rgba(70,180,210,.25);
+        1px solid
+        rgba(70,180,210,.25);
 
     color:#6de3ff;
-
-    background:transparent;
 
     font-size:9px;
 
@@ -1235,33 +1659,47 @@ body::before{
     transition:.2s;
 }
 
-.action:hover,
-.action.active{
+.action:hover{
+
     border-color:#6de3ff;
 
     background:
         rgba(70,220,255,.05);
+}
+
+.action.active{
+
+    background:
+        rgba(70,220,255,.08);
+
+    border-color:#6de3ff;
 
     box-shadow:
-        0 0 15px rgba(70,220,255,.08);
+        0 0 15px
+        rgba(70,220,255,.08);
 }
 
 .detail-section{
+
     margin-top:50px;
 }
 
 .detail-section-title{
+
     font-size:15px;
+
     letter-spacing:2px;
 }
 
 .rating-row{
+
     margin-top:18px;
 
     padding:15px 0;
 
     border-bottom:
-        1px solid rgba(70,180,210,.1);
+        1px solid
+        rgba(70,180,210,.1);
 
     display:flex;
 
@@ -1269,13 +1707,70 @@ body::before{
 }
 
 .rating-name{
+
     font-size:10px;
+
     color:#7c969e;
 }
 
 .rating{
+
     color:#6de3ff;
+
     letter-spacing:3px;
+}
+
+
+/* USER RATING */
+
+.user-rating{
+
+    margin-top:30px;
+
+    padding:20px;
+
+    border:
+        1px solid
+        rgba(70,180,210,.18);
+}
+
+.user-rating-title{
+
+    font-size:10px;
+
+    color:#6d8993;
+
+    letter-spacing:2px;
+}
+
+.stars{
+
+    margin-top:15px;
+
+    display:flex;
+
+    gap:8px;
+}
+
+.star{
+
+    font-size:25px;
+
+    color:#365762;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.star:hover,
+.star.active{
+
+    color:#6de3ff;
+
+    text-shadow:
+        0 0 10px
+        rgba(70,220,255,.7);
 }
 
 
@@ -1284,31 +1779,39 @@ body::before{
 ================================================== */
 
 .profile{
+
     margin-top:35px;
 
     padding:25px;
 
     border:
-        1px solid rgba(70,180,210,.2);
+        1px solid
+        rgba(70,180,210,.2);
 
     background:
         rgba(20,100,120,.04);
 }
 
 .profile-label{
+
     font-size:8px;
+
     letter-spacing:3px;
+
     color:#397487;
 }
 
 .profile-name{
+
     margin-top:10px;
 
     font-size:22px;
+
     letter-spacing:2px;
 }
 
 .my-grid{
+
     margin-top:30px;
 
     display:grid;
@@ -1320,10 +1823,12 @@ body::before{
 }
 
 .my-card{
+
     padding:22px;
 
     border:
-        1px solid rgba(70,180,210,.18);
+        1px solid
+        rgba(70,180,210,.18);
 
     cursor:pointer;
 
@@ -1331,15 +1836,19 @@ body::before{
 }
 
 .my-card:hover{
+
     border-color:#6de3ff;
 }
 
 .my-card-number{
+
     font-size:25px;
+
     color:#6de3ff;
 }
 
 .my-card-label{
+
     margin-top:8px;
 
     font-size:9px;
@@ -1350,42 +1859,116 @@ body::before{
 }
 
 .history{
+
     margin-top:25px;
 }
 
 .history-item{
+
     padding:17px 0;
 
     border-bottom:
-        1px solid rgba(70,180,210,.1);
+        1px solid
+        rgba(70,180,210,.1);
 
     display:flex;
 
     justify-content:space-between;
-
-    cursor:pointer;
 }
 
 .history-name{
+
     font-size:11px;
 }
 
 .history-date{
+
     font-size:8px;
+
     color:#527783;
+}
+
+.empty{
+
+    padding:25px 0;
+
+    color:#49636c;
+
+    font-size:10px;
+
+    letter-spacing:1px;
 }
 
 
 /* ==================================================
-   BOTTOM NAV
+   TOAST
+================================================== */
+
+.toast{
+
+    position:fixed;
+
+    z-index:20000;
+
+    left:50%;
+
+    bottom:95px;
+
+    transform:
+        translate(-50%,20px);
+
+    min-width:240px;
+
+    max-width:90%;
+
+    padding:14px 18px;
+
+    text-align:center;
+
+    border:
+        1px solid
+        rgba(80,220,255,.4);
+
+    background:
+        rgba(3,10,14,.95);
+
+    color:#6de3ff;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.3s;
+
+    backdrop-filter:
+        blur(12px);
+}
+
+.toast.show{
+
+    opacity:1;
+
+    transform:
+        translate(-50%,0);
+}
+
+
+/* ==================================================
+   NAVIGATION
 ================================================== */
 
 .navigation{
+
     position:fixed;
 
     z-index:500;
 
     left:50%;
+
     bottom:15px;
 
     transform:
@@ -1402,7 +1985,8 @@ body::before{
         repeat(4,1fr);
 
     border:
-        1px solid rgba(80,220,255,.3);
+        1px solid
+        rgba(80,220,255,.3);
 
     background:
         rgba(3,8,11,.9);
@@ -1411,15 +1995,18 @@ body::before{
         blur(15px);
 
     box-shadow:
-        0 10px 40px rgba(0,0,0,.5);
+        0 10px 40px
+        rgba(0,0,0,.5);
 }
 
 .nav-button{
+
     display:flex;
 
     flex-direction:column;
 
     align-items:center;
+
     justify-content:center;
 
     gap:5px;
@@ -1436,69 +2023,17 @@ body::before{
 }
 
 .nav-icon{
+
     font-size:16px;
 }
 
 .nav-button.active{
+
     color:#6de3ff;
 
     text-shadow:
-        0 0 10px rgba(70,220,255,.5);
-}
-
-
-/* ==================================================
-   SYSTEM MESSAGE
-================================================== */
-
-.system-message{
-    position:fixed;
-
-    left:50%;
-    bottom:95px;
-
-    transform:
-        translateX(-50%);
-
-    z-index:9998;
-
-    max-width:
-        calc(100% - 30px);
-
-    padding:12px 20px;
-
-    border:
-        1px solid rgba(109,227,255,.5);
-
-    background:
-        rgba(3,8,11,.96);
-
-    color:#6de3ff;
-
-    font-size:9px;
-
-    letter-spacing:2px;
-
-    box-shadow:
-        0 0 25px rgba(70,220,255,.15);
-
-    animation:
-        messageIn .25s ease;
-}
-
-@keyframes messageIn{
-
-    from{
-        opacity:0;
-        transform:
-            translate(-50%,10px);
-    }
-
-    to{
-        opacity:1;
-        transform:
-            translate(-50%,0);
-    }
+        0 0 10px
+        rgba(70,220,255,.5);
 }
 
 
@@ -1509,50 +2044,68 @@ body::before{
 @media(max-width:600px){
 
     .container{
+
         padding:
             45px 15px 80px;
     }
 
     .hero-title{
+
         font-size:42px;
     }
 
     .categories{
+
         grid-template-columns:
             repeat(2,1fr);
     }
 
     .category{
+
         min-height:115px;
     }
 
     .radar-wrap{
+
         height:350px;
     }
 
     .radar{
+
         width:250px;
+
         height:250px;
     }
 
+    .real-map-wrap{
+
+        height:430px;
+    }
+
     .places{
+
         grid-template-columns:1fr;
     }
 
     .detail-actions{
+
         grid-template-columns:1fr;
     }
 
     .my-grid{
+
         grid-template-columns:1fr;
     }
 
     .page-title{
+
         font-size:25px;
     }
+
 }
 
 </style>
+
 </head>
 
 
@@ -1560,7 +2113,7 @@ body::before{
 
 
 <!-- ==================================================
-     BOOT
+     BOOT SCREEN
 ================================================== -->
 
 <div class="boot" id="boot">
@@ -1605,6 +2158,14 @@ body::before{
 
 
 <!-- ==================================================
+     TOAST
+================================================== -->
+
+<div class="toast" id="toast"></div>
+
+
+
+<!-- ==================================================
      APP
 ================================================== -->
 
@@ -1616,6 +2177,7 @@ body::before{
 ================================================== -->
 
 <section class="page active" id="home">
+
 
 <header class="topbar">
 
@@ -1637,7 +2199,9 @@ body::before{
 
 <div class="home-hero">
 
+
 <div class="container">
+
 
 <div class="hero-content">
 
@@ -1664,7 +2228,9 @@ body::before{
 <div class="hero-copy">
 
     一人で行きたい。<br>
+
     でも、どこに行けばいいかわからない。<br>
+
     そんなときのための場所探し。
 
 </div>
@@ -1679,15 +2245,14 @@ body::before{
         id="homeSearch"
         type="text"
         placeholder="行きたい場所を探す"
+        autocomplete="off"
     >
 
 </div>
 
 
 
-<!-- ==================================================
-     CATEGORY
-================================================== -->
+<!-- CATEGORY -->
 
 <div class="module">
 
@@ -1712,9 +2277,7 @@ body::before{
 <div class="categories">
 
 
-<!-- 食事 -->
-
-<div class="category" data-category="食事">
+<div class="category" onclick="categorySearch('食事')">
 
 <svg
     class="category-svg"
@@ -1732,16 +2295,14 @@ body::before{
 </svg>
 
 <div class="category-name">
-    食事
+食事
 </div>
 
 </div>
 
 
 
-<!-- カフェ -->
-
-<div class="category" data-category="カフェ">
+<div class="category" onclick="categorySearch('カフェ')">
 
 <svg
     class="category-svg"
@@ -1759,16 +2320,14 @@ body::before{
 </svg>
 
 <div class="category-name">
-    カフェ
+カフェ
 </div>
 
 </div>
 
 
 
-<!-- 映画 -->
-
-<div class="category" data-category="映画">
+<div class="category" onclick="categorySearch('映画')">
 
 <svg
     class="category-svg"
@@ -1794,16 +2353,14 @@ body::before{
 </svg>
 
 <div class="category-name">
-    映画
+映画
 </div>
 
 </div>
 
 
 
-<!-- 温泉 -->
-
-<div class="category" data-category="温泉">
+<div class="category" onclick="categorySearch('温泉')">
 
 <svg
     class="category-svg"
@@ -1822,16 +2379,14 @@ body::before{
 </svg>
 
 <div class="category-name">
-    温泉
+温泉
 </div>
 
 </div>
 
 
 
-<!-- カラオケ -->
-
-<div class="category" data-category="カラオケ">
+<div class="category" onclick="categorySearch('カラオケ')">
 
 <svg
     class="category-svg"
@@ -1854,16 +2409,14 @@ body::before{
 </svg>
 
 <div class="category-name">
-    カラオケ
+カラオケ
 </div>
 
 </div>
 
 
 
-<!-- 遊ぶ -->
-
-<div class="category" data-category="遊ぶ">
+<div class="category" onclick="categorySearch('遊ぶ')">
 
 <svg
     class="category-svg"
@@ -1892,16 +2445,14 @@ body::before{
 </svg>
 
 <div class="category-name">
-    遊ぶ
+遊ぶ
 </div>
 
 </div>
 
 
 
-<!-- ドライブ -->
-
-<div class="category" data-category="ドライブ">
+<div class="category" onclick="categorySearch('ドライブ')">
 
 <svg
     class="category-svg"
@@ -1909,9 +2460,7 @@ body::before{
 >
 
 <path d="M5 20l3-8h16l3 8v7H5z"/>
-
 <path d="M9 12l2-5h10l2 5"/>
-
 <path d="M5 20h22"/>
 
 <circle cx="10" cy="26" r="2"/>
@@ -1920,27 +2469,21 @@ body::before{
 </svg>
 
 <div class="category-name">
-    ドライブ
+ドライブ
 </div>
 
 </div>
 
 
 
-<!-- お出かけ -->
-
-<div class="category" data-category="お出かけ">
+<div class="category" onclick="categorySearch('お出かけ')">
 
 <svg
     class="category-svg"
     viewBox="0 0 32 32"
 >
 
-<circle
-    cx="16"
-    cy="16"
-    r="12"
-/>
+<circle cx="16" cy="16" r="12"/>
 
 <path d="M16 4v24"/>
 <path d="M4 16h24"/>
@@ -1957,7 +2500,7 @@ body::before{
 </svg>
 
 <div class="category-name">
-    お出かけ
+お出かけ
 </div>
 
 </div>
@@ -1969,9 +2512,7 @@ body::before{
 
 
 
-<!-- ==================================================
-     RADAR
-================================================== -->
+<!-- HOME RADAR -->
 
 <div class="module">
 
@@ -1995,26 +2536,33 @@ body::before{
 
 <div class="radar-wrap">
 
+
 <div class="radar">
 
     <div class="radar-line-h"></div>
+
     <div class="radar-line-v"></div>
+
     <div class="sweep"></div>
 
 </div>
 
-<div class="radar-point rp1" data-spot="001"></div>
-<div class="radar-point rp2" data-spot="002"></div>
-<div class="radar-point rp3" data-spot="003"></div>
-<div class="radar-point rp4" data-spot="004"></div>
+
+<div class="radar-point rp1"></div>
+<div class="radar-point rp2"></div>
+<div class="radar-point rp3"></div>
+<div class="radar-point rp4"></div>
+
 
 <div class="radar-current"></div>
 
 
-<div class="radar-info" id="homeRadarInfo">
+<div class="radar-info">
 
     LOCATION SCANNER<br>
-    STATUS : READY<br>
+
+    STATUS : ACTIVE<br>
+
     RANGE : 5 KM
 
 </div>
@@ -2023,20 +2571,21 @@ body::before{
 <div class="radar-info-right">
 
     現在地<br>
+
     スポット検出<br>
-    GPS待機中
+
+    スポット検出
+
+</div>
+
 
 </div>
 
 </div>
 
-</div>
 
 
-
-<!-- ==================================================
-     POPULAR
-================================================== -->
+<!-- POPULAR -->
 
 <div class="module">
 
@@ -2060,8 +2609,11 @@ body::before{
 
 <div class="places" id="homePlaces"></div>
 
+
 </div>
 
+
+</div>
 
 </div>
 
@@ -2072,7 +2624,7 @@ body::before{
 
 
 <!-- ==================================================
-     SEARCH
+     SEARCH PAGE
 ================================================== -->
 
 <section class="page" id="search">
@@ -2113,12 +2665,11 @@ body::before{
 
 <div class="search-large">
 
-    <div class="search-icon"></div>
-
     <input
         id="searchInput"
         type="text"
         placeholder="例：ラーメン、映画、温泉、カフェ..."
+        autocomplete="off"
     >
 
 </div>
@@ -2131,13 +2682,12 @@ body::before{
         class="result-count"
         id="resultCount"
     >
-        検索結果 / 08
+        SEARCH RESULT / 00
     </div>
 
     <div id="searchResults"></div>
 
 </div>
-
 
 </div>
 
@@ -2146,7 +2696,7 @@ body::before{
 
 
 <!-- ==================================================
-     MAP
+     MAP PAGE
 ================================================== -->
 
 <section class="page" id="map">
@@ -2180,42 +2730,60 @@ body::before{
 </h2>
 
 <p class="page-sub">
-    現在地周辺のひとりスポット
+    実際の地図から、ひとりスポットを探す
 </p>
 
 
 
-<div
-    class="radar-wrap"
-    style="margin-top:35px;"
->
+<div class="real-map-wrap">
 
-<div class="radar">
+    <div id="realMap"></div>
 
-    <div class="radar-line-h"></div>
-    <div class="radar-line-v"></div>
-    <div class="sweep"></div>
+
+    <div class="map-hud">
+
+        LOCATION SYSTEM<br>
+
+        STATUS : <span id="locationStatus">
+        WAITING
+        </span><br>
+
+        RANGE : 5 KM
+
+    </div>
+
+
+    <div class="map-hud-right">
+
+        LIVE MAP<br>
+
+        OPENSTREETMAP
+
+    </div>
+
+
+    <button
+        class="location-button"
+        onclick="locateUser()"
+    >
+        ◎ 現在地を取得
+    </button>
 
 </div>
 
-<div class="radar-point rp1" data-spot="001"></div>
-<div class="radar-point rp2" data-spot="002"></div>
-<div class="radar-point rp3" data-spot="003"></div>
-<div class="radar-point rp4" data-spot="004"></div>
-
-<div class="radar-current"></div>
 
 
-<div
-    class="radar-info"
-    id="mapRadarInfo"
->
+<div class="module">
 
-    現在地<br>
-    SCANNING...<br>
-    RANGE : 5 KM
+<div class="module-head">
 
-</div>
+    <div class="module-code">
+        DETECTED TARGETS
+    </div>
+
+    <div class="module-title">
+        周辺スポット
+    </div>
 
 </div>
 
@@ -2224,9 +2792,10 @@ body::before{
 <div
     class="places"
     id="mapPlaces"
-    style="margin-top:15px;"
 ></div>
 
+
+</div>
 
 </div>
 
@@ -2235,7 +2804,7 @@ body::before{
 
 
 <!-- ==================================================
-     PLACE
+     PLACE DETAIL
 ================================================== -->
 
 <section class="page" id="place">
@@ -2262,94 +2831,86 @@ body::before{
 
 <div class="detail-hero">
 
-<div
-    class="page-code"
-    id="detailId"
->
-    TARGET 001
-</div>
+    <div
+        class="page-code"
+        id="detailId"
+    >
+        TARGET 001
+    </div>
 
 
-<h2
-    class="detail-name"
-    id="detailName"
->
-    ○○ラーメン
-</h2>
+    <h2
+        class="detail-name"
+        id="detailName"
+    >
+        ○○ラーメン
+    </h2>
 
 
-<div
-    class="detail-location"
-    id="detailLocation"
->
-    現在地から 1.2 km
-</div>
-
-
-
-<div class="detail-score-box">
-
-<div>
-
-<div
-    class="big-score"
-    id="detailScore"
->
-    4.8
-</div>
-
-<div class="detail-score-label">
-    一人利用スコア
-</div>
-
-</div>
-
-
-<div
-    class="easy"
-    id="detailEasy"
->
-    一人向き
-</div>
-
-</div>
+    <div
+        class="detail-location"
+        id="detailLocation"
+    >
+        現在地から 1.2 km
+    </div>
 
 
 
-<div class="detail-actions">
+    <div class="detail-score-box">
 
-<button
-    class="action"
-    id="favoriteButton"
->
-    ♡ お気に入り
-</button>
+        <div>
 
-<button
-    class="action"
-    id="ratingButton"
->
-    ★ 評価する
-</button>
+            <div
+                class="big-score"
+                id="detailScore"
+            >
+                4.8
+            </div>
 
-<button
-    class="action"
-    id="visitedButton"
->
-    👣 行った
-</button>
+            <div class="detail-score-label">
+                一人利用スコア
+            </div>
 
-</div>
+        </div>
 
 
-<div
-    class="action"
-    id="routeButton"
-    style="margin-top:8px;"
->
-    ⌖ ルートを開く
-</div>
+        <div class="easy">
+            一人向き
+        </div>
 
+    </div>
+
+
+
+    <div class="detail-actions">
+
+
+        <div
+            class="action"
+            id="favoriteButton"
+            onclick="toggleFavorite()"
+        >
+            ♡ お気に入り
+        </div>
+
+
+        <div
+            class="action"
+            onclick="focusRating()"
+        >
+            ★ 評価する
+        </div>
+
+
+        <div
+            class="action"
+            onclick="markVisited()"
+        >
+            ◎ 行った
+        </div>
+
+
+    </div>
 
 </div>
 
@@ -2365,27 +2926,13 @@ body::before{
 
 <div class="rating-row">
 
-<div class="rating-name">
-    一人で入りやすい
-</div>
+    <div class="rating-name">
+        一人で入りやすい
+    </div>
 
-<div class="rating">
-    ★★★★★
-</div>
-
-</div>
-
-
-
-<div class="rating-row">
-
-<div class="rating-name">
-    静かさ
-</div>
-
-<div class="rating">
-    ★★★★☆
-</div>
+    <div class="rating">
+        ★★★★★
+    </div>
 
 </div>
 
@@ -2393,13 +2940,13 @@ body::before{
 
 <div class="rating-row">
 
-<div class="rating-name">
-    一人客の多さ
-</div>
+    <div class="rating-name">
+        静かさ
+    </div>
 
-<div class="rating">
-    ★★★★★
-</div>
+    <div class="rating">
+        ★★★★☆
+    </div>
 
 </div>
 
@@ -2407,15 +2954,58 @@ body::before{
 
 <div class="rating-row">
 
-<div class="rating-name">
-    過ごしやすさ
+    <div class="rating-name">
+        一人客の多さ
+    </div>
+
+    <div class="rating">
+        ★★★★★
+    </div>
+
 </div>
 
-<div class="rating">
-    ★★★★☆
+
+
+<div class="rating-row">
+
+    <div class="rating-name">
+        過ごしやすさ
+    </div>
+
+    <div class="rating">
+        ★★★★☆
+    </div>
+
+</div>
+
+
+
+<div
+    class="user-rating"
+    id="userRating"
+>
+
+<div class="user-rating-title">
+    あなたの評価
+</div>
+
+
+<div class="stars">
+
+    <div class="star" onclick="setRating(1)">★</div>
+
+    <div class="star" onclick="setRating(2)">★</div>
+
+    <div class="star" onclick="setRating(3)">★</div>
+
+    <div class="star" onclick="setRating(4)">★</div>
+
+    <div class="star" onclick="setRating(5)">★</div>
+
 </div>
 
 </div>
+
 
 </div>
 
@@ -2426,7 +3016,7 @@ body::before{
 
 
 <!-- ==================================================
-     MY
+     MY SPACE
 ================================================== -->
 
 <section class="page" id="my">
@@ -2441,7 +3031,7 @@ body::before{
 
         <div class="status-dot"></div>
 
-        MY SPACE
+        PERSONAL SYSTEM
 
     </div>
 
@@ -2451,13 +3041,16 @@ body::before{
 
 <div class="container">
 
+
 <div class="page-code">
     MODULE 06 / PERSONAL
 </div>
 
+
 <h2 class="page-title">
     MY SPACE
 </h2>
+
 
 <p class="page-sub">
     あなたの「ひとり」を記録
@@ -2467,13 +3060,13 @@ body::before{
 
 <div class="profile">
 
-<div class="profile-label">
-    ユーザー情報
-</div>
+    <div class="profile-label">
+        ユーザー情報
+    </div>
 
-<div class="profile-name">
-    ゲストユーザー
-</div>
+    <div class="profile-name">
+        ゲストユーザー
+    </div>
 
 </div>
 
@@ -2481,35 +3074,19 @@ body::before{
 
 <div class="my-grid">
 
-<div class="my-card">
-
-<div
-    class="my-card-number"
-    id="myHistoryCount"
->
-    0
-</div>
-
-<div class="my-card-label">
-    検索した場所
-</div>
-
-</div>
-
-
 
 <div class="my-card">
 
-<div
-    class="my-card-number"
-    id="myFavoriteCount"
->
-    0
-</div>
+    <div
+        class="my-card-number"
+        id="historyCount"
+    >
+        0
+    </div>
 
-<div class="my-card-label">
-    お気に入り
-</div>
+    <div class="my-card-label">
+        検索した場所
+    </div>
 
 </div>
 
@@ -2517,16 +3094,16 @@ body::before{
 
 <div class="my-card">
 
-<div
-    class="my-card-number"
-    id="myRatingCount"
->
-    0
-</div>
+    <div
+        class="my-card-number"
+        id="favoriteCount"
+    >
+        0
+    </div>
 
-<div class="my-card-label">
-    評価した場所
-</div>
+    <div class="my-card-label">
+        お気に入り
+    </div>
 
 </div>
 
@@ -2534,18 +3111,36 @@ body::before{
 
 <div class="my-card">
 
-<div
-    class="my-card-number"
-    id="myVisitedCount"
->
-    0
+    <div
+        class="my-card-number"
+        id="ratingCount"
+    >
+        0
+    </div>
+
+    <div class="my-card-label">
+        評価した場所
+    </div>
+
 </div>
 
-<div class="my-card-label">
-    行った場所
-</div>
+
+
+<div class="my-card">
+
+    <div
+        class="my-card-number"
+        id="visitedCount"
+    >
+        0
+    </div>
+
+    <div class="my-card-label">
+        行った場所
+    </div>
 
 </div>
+
 
 </div>
 
@@ -2553,24 +3148,103 @@ body::before{
 
 <div class="module">
 
+
 <div class="module-head">
 
-<div class="module-code">
-    RECENT ACTIVITY
+    <div class="module-code">
+        FAVORITES
+    </div>
+
+    <div class="module-title">
+        お気に入り
+    </div>
+
 </div>
 
-<div class="module-title">
-    最近見た場所
-</div>
+
+<div
+    class="history"
+    id="favoriteList"
+></div>
+
 
 </div>
 
+
+
+<div class="module">
+
+
+<div class="module-head">
+
+    <div class="module-code">
+        MY RATINGS
+    </div>
+
+    <div class="module-title">
+        評価した場所
+    </div>
+
+</div>
+
+
+<div
+    class="history"
+    id="ratingList"
+></div>
+
+
+</div>
+
+
+
+<div class="module">
+
+
+<div class="module-head">
+
+    <div class="module-code">
+        VISITED
+    </div>
+
+    <div class="module-title">
+        行った場所
+    </div>
+
+</div>
+
+
+<div
+    class="history"
+    id="visitedList"
+></div>
+
+
+</div>
+
+
+
+<div class="module">
+
+
+<div class="module-head">
+
+    <div class="module-code">
+        RECENT ACTIVITY
+    </div>
+
+    <div class="module-title">
+        最近見た場所
+    </div>
+
+</div>
 
 
 <div
     class="history"
     id="historyList"
 ></div>
+
 
 </div>
 
@@ -2582,10 +3256,11 @@ body::before{
 
 
 <!-- ==================================================
-     NAV
+     NAVIGATION
 ================================================== -->
 
 <nav class="navigation">
+
 
 <div
     class="nav-button active"
@@ -2593,11 +3268,11 @@ body::before{
     onclick="go('home')"
 >
 
-<div class="nav-icon">
-    ⌂
-</div>
+    <div class="nav-icon">
+        ⌂
+    </div>
 
-HOME
+    HOME
 
 </div>
 
@@ -2609,11 +3284,11 @@ HOME
     onclick="go('search')"
 >
 
-<div class="nav-icon">
-    ⌕
-</div>
+    <div class="nav-icon">
+        ⌕
+    </div>
 
-SEARCH
+    SEARCH
 
 </div>
 
@@ -2625,11 +3300,11 @@ SEARCH
     onclick="go('map')"
 >
 
-<div class="nav-icon">
-    ◎
-</div>
+    <div class="nav-icon">
+        ◎
+    </div>
 
-MAP
+    MAP
 
 </div>
 
@@ -2641,13 +3316,14 @@ MAP
     onclick="go('my')"
 >
 
-<div class="nav-icon">
-    ♡
+    <div class="nav-icon">
+        ♡
+    </div>
+
+    MY
+
 </div>
 
-MY
-
-</div>
 
 </nav>
 
@@ -2655,21 +3331,33 @@ MY
 </div>
 
 
+<!-- ==================================================
+     LEAFLET
+================================================== -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
 
 <script>
 
 /* ==================================================
-   OHITORISAMAP DATA
+   SAMPLE DATA
 ================================================== */
 
-const spots = [
+const places = [
 
     {
         id:"001",
         name:"○○ラーメン",
         category:"食事",
         score:4.8,
+        lat:33.5597,
+        lng:133.5311,
         distance:"1.2 km",
+        info:"一人客 多い　｜　カウンターあり",
         tags:["一人客 多","カウンターあり"]
     },
 
@@ -2678,448 +3366,259 @@ const spots = [
         name:"○○カフェ",
         category:"カフェ",
         score:4.7,
-        distance:"2.4 km",
+        lat:33.5617,
+        lng:133.5360,
+        distance:"1.5 km",
+        info:"静か　｜　Wi-Fiあり",
         tags:["静か","Wi-Fiあり"]
     },
 
     {
         id:"003",
-        name:"○○映画館",
-        category:"映画",
-        score:4.6,
-        distance:"1.8 km",
-        tags:["一人利用 多","座席広め"]
-    },
-
-    {
-        id:"004",
         name:"○○温泉",
         category:"温泉",
         score:4.6,
-        distance:"3.1 km",
+        lat:33.5552,
+        lng:133.5280,
+        distance:"1.8 km",
+        info:"一人利用 多　｜　休憩スペース",
         tags:["一人利用 多","休憩スペース"]
     },
 
     {
-        id:"005",
-        name:"○○カラオケ",
-        category:"カラオケ",
+        id:"004",
+        name:"○○映画館",
+        category:"映画",
         score:4.5,
-        distance:"2.0 km",
-        tags:["一人利用歓迎","個室"]
-    },
-
-    {
-        id:"006",
-        name:"○○アミューズメント",
-        category:"遊ぶ",
-        score:4.4,
-        distance:"2.8 km",
-        tags:["一人でもOK","長時間利用"]
-    },
-
-    {
-        id:"007",
-        name:"○○ドライブスポット",
-        category:"ドライブ",
-        score:4.7,
-        distance:"4.2 km",
-        tags:["景色が良い","駐車場あり"]
-    },
-
-    {
-        id:"008",
-        name:"○○観光スポット",
-        category:"お出かけ",
-        score:4.5,
-        distance:"4.8 km",
-        tags:["一人旅向き","写真映え"]
+        lat:33.5650,
+        lng:133.5300,
+        distance:"2.1 km",
+        info:"一人客 多　｜　座席指定",
+        tags:["一人客 多","座席指定"]
     }
 
 ];
 
 
 /* ==================================================
-   USER DATA
+   STORAGE
 ================================================== */
 
-const STORAGE_KEY =
-    "ohitorisamap_user_data_v1";
+let favorites =
+    JSON.parse(
+        localStorage.getItem("ohitorisamap_favorites") || "[]"
+    );
 
+let ratings =
+    JSON.parse(
+        localStorage.getItem("ohitorisamap_ratings") || "{}"
+    );
 
-let userData;
+let visited =
+    JSON.parse(
+        localStorage.getItem("ohitorisamap_visited") || "[]"
+    );
 
-
-try{
-
-    userData =
-        JSON.parse(
-            localStorage.getItem(
-                STORAGE_KEY
-            )
-        ) || null;
-
-}catch(error){
-
-    userData = null;
-
-}
-
-
-if(!userData){
-
-    userData = {
-
-        favorites:[],
-        visited:[],
-        ratings:{},
-        history:[],
-        searches:[]
-
-    };
-
-}
+let history =
+    JSON.parse(
+        localStorage.getItem("ohitorisamap_history") || "[]"
+    );
 
 
 function saveData(){
 
     localStorage.setItem(
+        "ohitorisamap_favorites",
+        JSON.stringify(favorites)
+    );
 
-        STORAGE_KEY,
+    localStorage.setItem(
+        "ohitorisamap_ratings",
+        JSON.stringify(ratings)
+    );
 
-        JSON.stringify(
-            userData
-        )
+    localStorage.setItem(
+        "ohitorisamap_visited",
+        JSON.stringify(visited)
+    );
 
+    localStorage.setItem(
+        "ohitorisamap_history",
+        JSON.stringify(history)
     );
 
 }
 
 
 /* ==================================================
-   CURRENT SPOT
+   CURRENT PLACE
 ================================================== */
 
-let currentSpot = null;
+let currentPlace = places[0];
 
 
 /* ==================================================
-   SYSTEM MESSAGE
+   BOOT
 ================================================== */
 
-function systemMessage(text){
+const bootStatus =
+    document.getElementById("bootStatus");
 
-    const old =
-        document.querySelector(
-            ".system-message"
-        );
+const boot =
+    document.getElementById("boot");
 
-    if(old)
-        old.remove();
+const access =
+    document.getElementById("access");
+
+const app =
+    document.getElementById("app");
 
 
-    const message =
-        document.createElement("div");
+const sequence = [
 
-    message.className =
-        "system-message";
+    [
+        0,
+        "SYSTEM LOCKED",
+        "システムを確認しています"
+    ],
 
-    message.textContent =
-        text;
+    [
+        800,
+        "AUTHENTICATING",
+        "接続を確認しています"
+    ],
 
-    document.body.appendChild(
-        message
-    );
+    [
+        1600,
+        "ACCESS CHECK",
+        "アクセスを確認しています"
+    ],
 
+    [
+        2200,
+        "ACCESS GRANTED",
+        "アクセスを許可しました"
+    ]
+
+];
+
+
+sequence.forEach(item => {
 
     setTimeout(() => {
 
-        message.style.opacity =
-            "0";
+        bootStatus.innerHTML =
 
-        message.style.transition =
-            "opacity .35s";
+            item[1] +
+
+            '<span class="boot-jp">' +
+
+            item[2] +
+
+            '</span>';
+
+    },item[0]);
+
+});
+
+
+setTimeout(() => {
+
+    access.classList.add("show");
+
+},2500);
+
+
+setTimeout(() => {
+
+    app.classList.add("show");
+
+},3300);
+
+
+setTimeout(() => {
+
+    boot.classList.add("hide");
+
+},3900);
+
+
+/* ==================================================
+   PAGE NAVIGATION
+================================================== */
+
+function go(pageName){
+
+    const pages =
+        document.querySelectorAll(".page");
+
+
+    pages.forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const target =
+        document.getElementById(pageName);
+
+
+    if(target){
+
+        target.classList.add("active");
+
+    }
+
+
+    const buttons =
+        document.querySelectorAll(".nav-button");
+
+
+    buttons.forEach(button => {
+
+        button.classList.remove("active");
+
+
+        if(
+            button.dataset.page === pageName
+        ){
+
+            button.classList.add("active");
+
+        }
+
+    });
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    if(pageName === "map"){
 
         setTimeout(() => {
 
-            message.remove();
+            initMap();
 
-        },350);
+            if(map){
 
-    },1800);
+                map.invalidateSize();
 
-}
+            }
 
-
-/* ==================================================
-   GET SPOT
-================================================== */
-
-function getSpot(id){
-
-    return spots.find(
-        spot => spot.id === id
-    );
-
-}
-
-
-/* ==================================================
-   HISTORY
-================================================== */
-
-function addHistory(id){
-
-    userData.history =
-        userData.history.filter(
-            item => item !== id
-        );
-
-    userData.history.unshift(
-        id
-    );
-
-    userData.history =
-        userData.history.slice(
-            0,
-            30
-        );
-
-    saveData();
-
-}
-
-
-/* ==================================================
-   SEARCH HISTORY
-================================================== */
-
-function addSearchHistory(keyword){
-
-    if(!keyword.trim())
-        return;
-
-    userData.searches =
-        userData.searches.filter(
-            item => item !== keyword
-        );
-
-    userData.searches.unshift(
-        keyword
-    );
-
-    userData.searches =
-        userData.searches.slice(
-            0,
-            30
-        );
-
-    saveData();
-
-}
-
-
-/* ==================================================
-   SEARCH ENGINE
-================================================== */
-
-function searchSpots(keyword){
-
-    const q =
-        keyword
-            .trim()
-            .toLowerCase();
-
-    if(!q)
-        return spots;
-
-
-    return spots.filter(
-        spot => {
-
-            const text = [
-
-                spot.name,
-                spot.category,
-                ...spot.tags
-
-            ]
-            .join(" ")
-            .toLowerCase();
-
-            return text.includes(q);
-
-        }
-    );
-
-}
-
-
-function performSearch(keyword){
-
-    keyword =
-        keyword.trim();
-
-    if(!keyword){
-
-        systemMessage(
-            "SEARCH QUERY REQUIRED"
-        );
-
-        return;
+        },150);
 
     }
 
 
-    addSearchHistory(
-        keyword
-    );
+    if(pageName === "my"){
 
-
-    const results =
-        searchSpots(
-            keyword
-        );
-
-
-    renderSearchResults(
-        results,
-        keyword
-    );
-
-
-    go("search");
-
-
-    document.getElementById(
-        "searchInput"
-    ).value =
-        keyword;
-
-
-    systemMessage(
-        `SEARCH : ${keyword}`
-    );
-
-}
-
-
-/* ==================================================
-   SEARCH RESULTS
-================================================== */
-
-function renderSearchResults(
-    results,
-    keyword = ""
-){
-
-    const container =
-        document.getElementById(
-            "searchResults"
-        );
-
-    const count =
-        document.getElementById(
-            "resultCount"
-        );
-
-
-    container.innerHTML = "";
-
-
-    count.textContent =
-        `検索結果 / ${String(results.length).padStart(2,"0")}`;
-
-
-    if(results.length === 0){
-
-        const empty =
-            document.createElement(
-                "div"
-            );
-
-        empty.className =
-            "result";
-
-        empty.innerHTML =
-
-            `<div>
-
-                <div class="result-name">
-                    該当する場所がありません
-                </div>
-
-                <div class="result-info">
-                    「${escapeHTML(keyword)}」に一致する場所を検索できませんでした
-                </div>
-
-            </div>`;
-
-        container.appendChild(
-            empty
-        );
-
-        return;
+        renderMySpace();
 
     }
-
-
-    results.forEach(
-        spot => {
-
-            const result =
-                document.createElement(
-                    "div"
-                );
-
-            result.className =
-                "result";
-
-
-            result.innerHTML =
-
-                `<div>
-
-                    <div class="result-name">
-                        ${escapeHTML(spot.name)}
-                    </div>
-
-                    <div class="result-info">
-                        ${escapeHTML(spot.category)}
-                       　｜　
-                        ${spot.tags
-                            .map(
-                                tag =>
-                                escapeHTML(tag)
-                            )
-                            .join("　｜　")}
-                    </div>
-
-                </div>
-
-                <div class="result-score">
-                    ${spot.score}
-                </div>`;
-
-
-            result.addEventListener(
-                "click",
-                () => {
-
-                    openSpot(
-                        spot.id
-                    );
-
-                }
-            );
-
-
-            container.appendChild(
-                result
-            );
-
-        }
-    );
 
 }
 
@@ -3128,73 +3627,189 @@ function renderSearchResults(
    CATEGORY SEARCH
 ================================================== */
 
-function searchCategory(
-    category
-){
-
-    const results =
-        spots.filter(
-            spot =>
-                spot.category ===
-                category
-        );
-
-
-    addSearchHistory(
-        category
-    );
-
-
-    renderSearchResults(
-        results,
-        category
-    );
-
+function categorySearch(category){
 
     go("search");
 
+    const input =
+        document.getElementById("searchInput");
 
-    document.getElementById(
-        "searchInput"
-    ).value =
-        category;
+    input.value = category;
 
-
-    systemMessage(
-        `CATEGORY : ${category}`
-    );
+    performSearch(category);
 
 }
 
 
 /* ==================================================
-   OPEN SPOT
+   SEARCH
 ================================================== */
 
-function openSpot(id){
+function performSearch(query){
 
-    const spot =
-        getSpot(id);
-
-    if(!spot)
-        return;
+    query =
+        query.trim().toLowerCase();
 
 
-    currentSpot =
-        spot;
+    let results = places.filter(place => {
+
+        if(!query){
+            return true;
+        }
+
+        return (
+
+            place.name.toLowerCase().includes(query)
+
+            ||
+
+            place.category.toLowerCase().includes(query)
+
+            ||
+
+            place.info.toLowerCase().includes(query)
+
+        );
+
+    });
 
 
-    addHistory(
-        id
+    document.getElementById("resultCount").textContent =
+
+        "SEARCH RESULT / " +
+
+        String(results.length).padStart(2,"0");
+
+
+    const container =
+        document.getElementById("searchResults");
+
+
+    container.innerHTML = "";
+
+
+    results.forEach(place => {
+
+        const div =
+            document.createElement("div");
+
+
+        div.className = "result";
+
+
+        div.innerHTML = `
+
+            <div>
+
+                <div class="result-name">
+                    ${place.name}
+                </div>
+
+                <div class="result-info">
+                    ${place.info}
+                </div>
+
+            </div>
+
+            <div class="result-score">
+                ${place.score}
+            </div>
+
+        `;
+
+
+        div.onclick = () => {
+
+            openPlace(place);
+
+        };
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* ==================================================
+   SEARCH INPUTS
+================================================== */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "input",
+        function(){
+
+            performSearch(this.value);
+
+        }
     );
 
 
-    updatePlace(
-        spot
+document
+    .getElementById("homeSearch")
+    .addEventListener(
+        "focus",
+        function(){
+
+            go("search");
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("searchInput")
+                    .focus();
+
+            },200);
+
+        }
     );
 
 
-    updateMySpace();
+/* ==================================================
+   OPEN PLACE
+================================================== */
+
+function openPlace(place){
+
+    currentPlace = place;
+
+
+    addHistory(place);
+
+
+    document
+        .getElementById("detailId")
+        .textContent =
+            "TARGET " + place.id;
+
+
+    document
+        .getElementById("detailName")
+        .textContent =
+            place.name;
+
+
+    document
+        .getElementById("detailLocation")
+        .textContent =
+            "現在地から " +
+            place.distance;
+
+
+    document
+        .getElementById("detailScore")
+        .textContent =
+            place.score;
+
+
+    updateFavoriteButton();
+
+
+    loadUserRating();
+
 
     go("place");
 
@@ -3202,122 +3817,37 @@ function openSpot(id){
 
 
 /* ==================================================
-   UPDATE DETAIL
+   HISTORY
 ================================================== */
 
-function updatePlace(
-    spot
-){
+function addHistory(place){
 
-    document.getElementById(
-        "detailId"
-    ).textContent =
-        `TARGET ${spot.id}`;
+    const item = {
 
+        id:place.id,
 
-    document.getElementById(
-        "detailName"
-    ).textContent =
-        spot.name;
+        date:
+            new Date()
+                .toLocaleDateString(
+                    "ja-JP"
+                )
+    };
 
 
-    document.getElementById(
-        "detailLocation"
-    ).textContent =
-        `現在地から ${spot.distance}`;
-
-
-    document.getElementById(
-        "detailScore"
-    ).textContent =
-        spot.score;
-
-
-    updateActionButtons();
-
-}
-
-
-/* ==================================================
-   ACTION BUTTONS
-================================================== */
-
-function updateActionButtons(){
-
-    if(!currentSpot)
-        return;
-
-
-    const id =
-        currentSpot.id;
-
-
-    const favoriteButton =
-        document.getElementById(
-            "favoriteButton"
-        );
-
-    const ratingButton =
-        document.getElementById(
-            "ratingButton"
-        );
-
-    const visitedButton =
-        document.getElementById(
-            "visitedButton"
+    history =
+        history.filter(
+            x => x.id !== place.id
         );
 
 
-    const favorite =
-        userData.favorites.includes(
-            id
-        );
+    history.unshift(item);
 
 
-    const visited =
-        userData.visited.includes(
-            id
-        );
+    history =
+        history.slice(0,20);
 
 
-    const rating =
-        userData.ratings[id];
-
-
-    favoriteButton.textContent =
-        favorite
-        ? "♥ お気に入り済"
-        : "♡ お気に入り";
-
-
-    ratingButton.textContent =
-        rating
-        ? `★ ${rating} / 5`
-        : "★ 評価する";
-
-
-    visitedButton.textContent =
-        visited
-        ? "✓ 行った"
-        : "👣 行った";
-
-
-    favoriteButton.classList.toggle(
-        "active",
-        favorite
-    );
-
-
-    ratingButton.classList.toggle(
-        "active",
-        !!rating
-    );
-
-
-    visitedButton.classList.toggle(
-        "active",
-        visited
-    );
+    saveData();
 
 }
 
@@ -3328,39 +3858,31 @@ function updateActionButtons(){
 
 function toggleFavorite(){
 
-    if(!currentSpot)
-        return;
-
-
-    const id =
-        currentSpot.id;
-
-
     const index =
-        userData.favorites.indexOf(
-            id
+        favorites.indexOf(
+            currentPlace.id
         );
 
 
     if(index === -1){
 
-        userData.favorites.push(
-            id
+        favorites.push(
+            currentPlace.id
         );
 
-        systemMessage(
-            "FAVORITE ADDED"
+        showToast(
+            "FAVORITE ADDED / お気に入りに追加しました"
         );
 
     }else{
 
-        userData.favorites.splice(
+        favorites.splice(
             index,
             1
         );
 
-        systemMessage(
-            "FAVORITE REMOVED"
+        showToast(
+            "FAVORITE REMOVED / お気に入りから削除しました"
         );
 
     }
@@ -3368,9 +3890,40 @@ function toggleFavorite(){
 
     saveData();
 
-    updateActionButtons();
+    updateFavoriteButton();
 
-    updateMySpace();
+    renderMySpace();
+
+}
+
+
+function updateFavoriteButton(){
+
+    const button =
+        document.getElementById(
+            "favoriteButton"
+        );
+
+
+    if(
+        favorites.includes(
+            currentPlace.id
+        )
+    ){
+
+        button.textContent =
+            "♥ お気に入り済";
+
+        button.classList.add("active");
+
+    }else{
+
+        button.textContent =
+            "♡ お気に入り";
+
+        button.classList.remove("active");
+
+    }
 
 }
 
@@ -3379,51 +3932,34 @@ function toggleFavorite(){
    VISITED
 ================================================== */
 
-function toggleVisited(){
+function markVisited(){
 
-    if(!currentSpot)
-        return;
+    if(
+        !visited.includes(
+            currentPlace.id
+        )
+    ){
 
-
-    const id =
-        currentSpot.id;
-
-
-    const index =
-        userData.visited.indexOf(
-            id
+        visited.push(
+            currentPlace.id
         );
 
+        saveData();
 
-    if(index === -1){
-
-        userData.visited.push(
-            id
-        );
-
-        systemMessage(
-            "VISIT RECORDED"
+        showToast(
+            "VISITED / 行った場所に記録しました"
         );
 
     }else{
 
-        userData.visited.splice(
-            index,
-            1
-        );
-
-        systemMessage(
-            "VISIT REMOVED"
+        showToast(
+            "ALREADY RECORDED / すでに記録されています"
         );
 
     }
 
 
-    saveData();
-
-    updateActionButtons();
-
-    updateMySpace();
+    renderMySpace();
 
 }
 
@@ -3432,264 +3968,77 @@ function toggleVisited(){
    RATING
 ================================================== */
 
-function rateSpot(){
+function setRating(value){
 
-    if(!currentSpot)
-        return;
-
-
-    const current =
-        userData.ratings[
-            currentSpot.id
-        ] || "";
-
-
-    const value =
-        prompt(
-            "この場所を5段階で評価してください\n\n1 ～ 5",
-            current
-        );
-
-
-    if(value === null)
-        return;
-
-
-    const rating =
-        Number(
-            value
-        );
-
-
-    if(
-        !Number.isInteger(
-            rating
-        ) ||
-        rating < 1 ||
-        rating > 5
-    ){
-
-        systemMessage(
-            "INVALID RATING"
-        );
-
-        return;
-
-    }
-
-
-    userData.ratings[
-        currentSpot.id
-    ] =
-        rating;
+    ratings[currentPlace.id] =
+        value;
 
 
     saveData();
 
 
-    updateActionButtons();
-
-    updateMySpace();
-
-
-    systemMessage(
-        `RATING SAVED : ${rating} / 5`
-    );
-
-}
-
-
-/* ==================================================
-   ROUTE
-================================================== */
-
-function openRoute(){
-
-    if(!currentSpot)
-        return;
-
-
-    const query =
-        encodeURIComponent(
-            currentSpot.name
+    const stars =
+        document.querySelectorAll(
+            ".star"
         );
 
 
-    const url =
-        `https://www.google.com/maps/search/?api=1&query=${query}`;
+    stars.forEach(
+        (star,index) => {
 
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-
-    systemMessage(
-        "MAP ROUTE SYSTEM"
-    );
-
-}
-
-
-/* ==================================================
-   GPS
-================================================== */
-
-function getCurrentLocation(){
-
-    if(!navigator.geolocation){
-
-        systemMessage(
-            "LOCATION NOT SUPPORTED"
-        );
-
-        return;
-
-    }
-
-
-    systemMessage(
-        "LOCATION SCANNING..."
-    );
-
-
-    const mapInfo =
-        document.getElementById(
-            "mapRadarInfo"
-        );
-
-    const homeInfo =
-        document.getElementById(
-            "homeRadarInfo"
-        );
-
-
-    if(mapInfo){
-
-        mapInfo.innerHTML =
-            "現在地<br>" +
-            "SCANNING...<br>" +
-            "GPS : SEARCHING";
-
-    }
-
-
-    if(homeInfo){
-
-        homeInfo.innerHTML =
-            "LOCATION SCANNER<br>" +
-            "STATUS : SCANNING<br>" +
-            "GPS : SEARCHING";
-
-    }
-
-
-    navigator.geolocation.getCurrentPosition(
-
-        position => {
-
-            const lat =
-                position.coords.latitude;
-
-            const lon =
-                position.coords.longitude;
-
-
-            localStorage.setItem(
-
-                "ohitorisamap_location",
-
-                JSON.stringify({
-
-                    lat:lat,
-                    lon:lon,
-                    time:Date.now()
-
-                })
-
+            star.classList.toggle(
+                "active",
+                index < value
             );
-
-
-            if(mapInfo){
-
-                mapInfo.innerHTML =
-                    "現在地<br>" +
-                    "LOCATION : LOCKED<br>" +
-                    "GPS : ACTIVE";
-
-            }
-
-
-            if(homeInfo){
-
-                homeInfo.innerHTML =
-                    "LOCATION SCANNER<br>" +
-                    "STATUS : ACTIVE<br>" +
-                    "GPS : LOCKED";
-
-            }
-
-
-            systemMessage(
-                "LOCATION ACQUIRED"
-            );
-
-        },
-
-        error => {
-
-            if(mapInfo){
-
-                mapInfo.innerHTML =
-                    "現在地<br>" +
-                    "LOCATION : UNAVAILABLE<br>" +
-                    "GPS : DENIED";
-
-            }
-
-
-            if(homeInfo){
-
-                homeInfo.innerHTML =
-                    "LOCATION SCANNER<br>" +
-                    "STATUS : OFFLINE<br>" +
-                    "GPS : DENIED";
-
-            }
-
-
-            let message =
-                "LOCATION ACCESS DENIED";
-
-
-            if(error.code === 2)
-                message =
-                    "LOCATION UNAVAILABLE";
-
-
-            if(error.code === 3)
-                message =
-                    "LOCATION TIMEOUT";
-
-
-            systemMessage(
-                message
-            );
-
-        },
-
-        {
-
-            enableHighAccuracy:true,
-
-            timeout:10000,
-
-            maximumAge:60000
 
         }
-
     );
+
+
+    showToast(
+        "RATING SAVED / 評価を保存しました"
+    );
+
+
+    renderMySpace();
+
+}
+
+
+function loadUserRating(){
+
+    const value =
+        ratings[currentPlace.id] || 0;
+
+
+    const stars =
+        document.querySelectorAll(
+            ".star"
+        );
+
+
+    stars.forEach(
+        (star,index) => {
+
+            star.classList.toggle(
+                "active",
+                index < value
+            );
+
+        }
+    );
+
+}
+
+
+function focusRating(){
+
+    document
+        .getElementById("userRating")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
 
 }
 
@@ -3698,32 +4047,51 @@ function getCurrentLocation(){
    MY SPACE
 ================================================== */
 
-function updateMySpace(){
+function renderMySpace(){
 
-    document.getElementById(
-        "myHistoryCount"
-    ).textContent =
-        userData.history.length;
-
-
-    document.getElementById(
-        "myFavoriteCount"
-    ).textContent =
-        userData.favorites.length;
+    document
+        .getElementById("historyCount")
+        .textContent =
+            history.length;
 
 
-    document.getElementById(
-        "myRatingCount"
-    ).textContent =
-        Object.keys(
-            userData.ratings
-        ).length;
+    document
+        .getElementById("favoriteCount")
+        .textContent =
+            favorites.length;
 
 
-    document.getElementById(
-        "myVisitedCount"
-    ).textContent =
-        userData.visited.length;
+    document
+        .getElementById("ratingCount")
+        .textContent =
+            Object.keys(ratings).length;
+
+
+    document
+        .getElementById("visitedCount")
+        .textContent =
+            visited.length;
+
+
+    renderList(
+        "favoriteList",
+        favorites,
+        "お気に入りはまだありません。"
+    );
+
+
+    renderList(
+        "ratingList",
+        Object.keys(ratings),
+        "評価した場所はまだありません。"
+    );
+
+
+    renderList(
+        "visitedList",
+        visited,
+        "行った場所はまだありません。"
+    );
 
 
     renderHistory();
@@ -3731,9 +4099,93 @@ function updateMySpace(){
 }
 
 
-/* ==================================================
-   HISTORY DISPLAY
-================================================== */
+function renderList(
+    elementId,
+    ids,
+    emptyText
+){
+
+    const container =
+        document.getElementById(
+            elementId
+        );
+
+
+    container.innerHTML = "";
+
+
+    if(ids.length === 0){
+
+        container.innerHTML =
+            `<div class="empty">
+                ${emptyText}
+            </div>`;
+
+        return;
+
+    }
+
+
+    ids.forEach(id => {
+
+        const place =
+            places.find(
+                p => p.id === id
+            );
+
+
+        if(!place) return;
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "history-item";
+
+
+        let right =
+            place.category;
+
+
+        if(
+            elementId === "ratingList"
+        ){
+
+            right =
+                "★ " +
+                ratings[id];
+
+        }
+
+
+        div.innerHTML = `
+
+            <div class="history-name">
+                ${place.name}
+            </div>
+
+            <div class="history-date">
+                ${right}
+            </div>
+
+        `;
+
+
+        div.onclick = () => {
+
+            openPlace(place);
+
+        };
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
 
 function renderHistory(){
 
@@ -3746,22 +4198,11 @@ function renderHistory(){
     container.innerHTML = "";
 
 
-    if(
-        userData.history.length === 0
-    ){
+    if(history.length === 0){
 
         container.innerHTML =
-
-            `<div class="history-item">
-
-                <div class="history-name">
-                    まだ履歴がありません
-                </div>
-
-                <div class="history-date">
-                    NO DATA
-                </div>
-
+            `<div class="empty">
+                まだ閲覧履歴はありません。
             </div>`;
 
         return;
@@ -3769,69 +4210,85 @@ function renderHistory(){
     }
 
 
-    userData.history
-        .slice(0,10)
-        .forEach(
-            id => {
+    history.forEach(item => {
 
-                const spot =
-                    getSpot(id);
-
-
-                if(!spot)
-                    return;
+        const place =
+            places.find(
+                p => p.id === item.id
+            );
 
 
-                const item =
-                    document.createElement(
-                        "div"
-                    );
+        if(!place) return;
 
 
-                item.className =
-                    "history-item";
+        const div =
+            document.createElement("div");
 
 
-                item.innerHTML =
-
-                    `<div>
-
-                        <div class="history-name">
-                            ${escapeHTML(spot.name)}
-                        </div>
-
-                        <div
-                            class="history-date"
-                            style="margin-top:5px;"
-                        >
-                            ${escapeHTML(spot.category)}
-                        </div>
-
-                    </div>
-
-                    <div class="history-date">
-                        VIEWED
-                    </div>`;
+        div.className =
+            "history-item";
 
 
-                item.addEventListener(
-                    "click",
-                    () => {
+        div.innerHTML = `
 
-                        openSpot(
-                            spot.id
-                        );
+            <div class="history-name">
+                ${place.name}
+            </div>
 
-                    }
-                );
+            <div class="history-date">
+                ${item.date}
+            </div>
+
+        `;
 
 
-                container.appendChild(
-                    item
-                );
+        div.onclick = () => {
 
-            }
+            openPlace(place);
+
+        };
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* ==================================================
+   TOAST
+================================================== */
+
+let toastTimer;
+
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
         );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },2200);
 
 }
 
@@ -3851,18 +4308,76 @@ function renderHomePlaces(){
     container.innerHTML = "";
 
 
-    spots
-        .slice(0,4)
+    places
+        .slice(0,2)
         .forEach(
-            spot => {
+            (place,index) => {
 
-                const place =
-                    createPlaceCard(
-                        spot
+                const div =
+                    document.createElement(
+                        "div"
                     );
 
+
+                div.className =
+                    "place";
+
+
+                div.innerHTML = `
+
+                    <div class="place-id">
+                        TARGET 00${index + 1}
+                    </div>
+
+                    <div class="place-name">
+                        ${place.name}
+                    </div>
+
+                    <div class="place-score">
+
+                        <div>
+
+                            <div class="score">
+                                ${place.score}
+                            </div>
+
+                            <div class="score-label">
+                                一人利用スコア
+                            </div>
+
+                        </div>
+
+                        <div class="easy">
+                            一人向き
+                        </div>
+
+                    </div>
+
+                    <div class="tags">
+
+                        ${place.tags
+                            .map(
+                                tag =>
+                                `<div class="tag">
+                                    ${tag}
+                                </div>`
+                            )
+                            .join("")
+                        }
+
+                    </div>
+                `;
+
+
+                div.onclick = () => {
+
+                    openPlace(place);
+
+                };
+
+
                 container.appendChild(
-                    place
+                    div
                 );
 
             }
@@ -3872,7 +4387,163 @@ function renderHomePlaces(){
 
 
 /* ==================================================
-   MAP PLACES
+   MAP
+================================================== */
+
+let map = null;
+
+let userMarker = null;
+
+let accuracyCircle = null;
+
+let mapMarkers = [];
+
+
+function initMap(){
+
+    if(map){
+
+        map.invalidateSize();
+
+        return;
+
+    }
+
+
+    map =
+        L.map(
+            "realMap",
+            {
+                zoomControl:true
+            }
+        );
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution:
+                '&copy; OpenStreetMap contributors',
+            maxZoom:19
+        }
+    ).addTo(map);
+
+
+    /*
+       初期表示
+       高知市周辺
+    */
+
+    map.setView(
+        [33.5597,133.5311],
+        14
+    );
+
+
+    addMapMarkers();
+
+}
+
+
+/* ==================================================
+   MAP MARKERS
+================================================== */
+
+function addMapMarkers(){
+
+    if(!map) return;
+
+
+    mapMarkers.forEach(
+        marker => map.removeLayer(marker)
+    );
+
+
+    mapMarkers = [];
+
+
+    places.forEach(place => {
+
+        const icon =
+            L.divIcon({
+
+                className:"",
+
+                html:
+                    '<div class="cyber-marker"></div>',
+
+                iconSize:[18,18],
+
+                iconAnchor:[9,9]
+
+            });
+
+
+        const marker =
+            L.marker(
+                [place.lat,place.lng],
+                {icon}
+            ).addTo(map);
+
+
+        marker.bindPopup(`
+
+            <div style="
+                color:#111;
+                min-width:150px;
+                font-family:sans-serif;
+            ">
+
+                <strong>
+                    ${place.name}
+                </strong>
+
+                <br>
+
+                <span>
+                    ${place.category}
+                </span>
+
+                <br>
+
+                <span>
+                    ★ ${place.score}
+                </span>
+
+                <br><br>
+
+                <button
+                    onclick="openMapPlace('${place.id}')"
+                    style="
+                        border:1px solid #111;
+                        background:#111;
+                        color:white;
+                        padding:7px 10px;
+                        cursor:pointer;
+                    "
+                >
+                    詳細を見る
+                </button>
+
+            </div>
+
+        `);
+
+
+        mapMarkers.push(
+            marker
+        );
+
+    });
+
+
+    renderMapPlaces();
+
+}
+
+
+/* ==================================================
+   MAP CARDS
 ================================================== */
 
 function renderMapPlaces(){
@@ -3886,249 +4557,63 @@ function renderMapPlaces(){
     container.innerHTML = "";
 
 
-    spots
-        .slice(0,4)
-        .forEach(
-            spot => {
+    places.forEach(place => {
 
-                const place =
-                    createMapPlaceCard(
-                        spot
-                    );
-
-                container.appendChild(
-                    place
-                );
-
-            }
-        );
-
-}
+        const div =
+            document.createElement(
+                "div"
+            );
 
 
-/* ==================================================
-   PLACE CARD
-================================================== */
-
-function createPlaceCard(
-    spot
-){
-
-    const element =
-        document.createElement(
-            "div"
-        );
+        div.className =
+            "place";
 
 
-    element.className =
-        "place";
+        div.innerHTML = `
 
+            <div class="place-id">
+                ${place.distance}
+            </div>
 
-    element.innerHTML =
+            <div class="place-name">
+                ${place.name}
+            </div>
 
-        `<div class="place-id">
-            TARGET ${spot.id}
-        </div>
+            <div class="place-score">
 
-        <div class="place-name">
-            ${escapeHTML(spot.name)}
-        </div>
+                <div>
 
-        <div class="place-score">
+                    <div class="score">
+                        ${place.score}
+                    </div>
 
-            <div>
+                    <div class="score-label">
+                        一人利用スコア
+                    </div>
 
-                <div class="score">
-                    ${spot.score}
                 </div>
 
-                <div class="score-label">
-                    一人利用スコア
+                <div class="easy">
+                    ${place.category}
                 </div>
 
             </div>
 
-            <div class="easy">
-                一人向き
-            </div>
-
-        </div>
-
-        <div class="tags">
-
-            ${spot.tags
-                .map(
-                    tag =>
-                    `<div class="tag">
-                        ${escapeHTML(tag)}
-                    </div>`
-                )
-                .join("")}
-
-        </div>`;
+        `;
 
 
-    element.addEventListener(
-        "click",
-        () => {
+        div.onclick = () => {
 
-            openSpot(
-                spot.id
+            openMapPlace(
+                place.id
             );
 
-        }
-    );
+        };
 
 
-    return element;
-
-}
-
-
-/* ==================================================
-   MAP CARD
-================================================== */
-
-function createMapPlaceCard(
-    spot
-){
-
-    const element =
-        document.createElement(
-            "div"
+        container.appendChild(
+            div
         );
-
-
-    element.className =
-        "place";
-
-
-    element.innerHTML =
-
-        `<div class="place-id">
-            ${spot.distance.toUpperCase()}
-        </div>
-
-        <div class="place-name">
-            ${escapeHTML(spot.name)}
-        </div>
-
-        <div
-            class="place-info"
-            style="margin-top:10px;color:#527783;font-size:8px;"
-        >
-            ${escapeHTML(spot.category)}
-        </div>`;
-
-
-    element.addEventListener(
-        "click",
-        () => {
-
-            openSpot(
-                spot.id
-            );
-
-        }
-    );
-
-
-    return element;
-
-}
-
-
-/* ==================================================
-   NAVIGATION
-================================================== */
-
-function go(pageName){
-
-    const pages =
-        document.querySelectorAll(
-            ".page"
-        );
-
-
-    pages.forEach(
-        page => {
-
-            page.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-
-    const target =
-        document.getElementById(
-            pageName
-        );
-
-
-    if(!target)
-        return;
-
-
-    target.classList.add(
-        "active"
-    );
-
-
-    const buttons =
-        document.querySelectorAll(
-            ".nav-button"
-        );
-
-
-    buttons.forEach(
-        button => {
-
-            button.classList.remove(
-                "active"
-            );
-
-
-            if(
-                button.dataset.page ===
-                pageName
-            ){
-
-                button.classList.add(
-                    "active"
-                );
-
-            }
-
-        }
-    );
-
-
-    if(pageName === "my"){
-
-        updateMySpace();
-
-    }
-
-
-    if(pageName === "map"){
-
-        renderMapPlaces();
-
-        setTimeout(
-            getCurrentLocation,
-            250
-        );
-
-    }
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
 
     });
 
@@ -4136,336 +4621,202 @@ function go(pageName){
 
 
 /* ==================================================
-   ESCAPE HTML
+   OPEN MAP PLACE
 ================================================== */
 
-function escapeHTML(
-    value
-){
+function openMapPlace(id){
 
-    return String(
-        value
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#039;"
-    );
+    const place =
+        places.find(
+            p => p.id === id
+        );
+
+
+    if(!place) return;
+
+
+    openPlace(place);
+
+
+    if(
+        map &&
+        place
+    ){
+
+        setTimeout(() => {
+
+            map.setView(
+                [place.lat,place.lng],
+                16
+            );
+
+        },300);
+
+    }
 
 }
 
 
 /* ==================================================
-   EVENTS
+   USER LOCATION
 ================================================== */
 
-function setupEvents(){
+function locateUser(){
 
-    /* HOME SEARCH */
-
-    const homeSearch =
+    const status =
         document.getElementById(
-            "homeSearch"
+            "locationStatus"
         );
 
 
-    homeSearch.addEventListener(
-        "keydown",
-        event => {
+    if(
+        !navigator.geolocation
+    ){
 
-            if(
-                event.key ===
-                "Enter"
-            ){
+        status.textContent =
+            "NOT SUPPORTED";
 
-                performSearch(
-                    homeSearch.value
+        showToast(
+            "現在地取得に対応していません"
+        );
+
+        return;
+
+    }
+
+
+    status.textContent =
+        "SCANNING...";
+
+
+    showToast(
+        "LOCATION SCANNING..."
+    );
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        position => {
+
+            const lat =
+                position.coords.latitude;
+
+            const lng =
+                position.coords.longitude;
+
+            const accuracy =
+                position.coords.accuracy;
+
+
+            if(!map){
+
+                initMap();
+
+            }
+
+
+            if(userMarker){
+
+                map.removeLayer(
+                    userMarker
                 );
 
             }
 
-        }
-    );
 
+            if(accuracyCircle){
 
-    /* SEARCH */
-
-    const searchInput =
-        document.getElementById(
-            "searchInput"
-        );
-
-
-    searchInput.addEventListener(
-        "keydown",
-        event => {
-
-            if(
-                event.key ===
-                "Enter"
-            ){
-
-                performSearch(
-                    searchInput.value
+                map.removeLayer(
+                    accuracyCircle
                 );
 
             }
 
-        }
-    );
+
+            const icon =
+                L.divIcon({
+
+                    className:"",
+
+                    html:
+                        '<div class="current-marker"></div>',
+
+                    iconSize:[20,20],
+
+                    iconAnchor:[10,10]
+
+                });
 
 
-    /* CATEGORIES */
-
-    document
-        .querySelectorAll(
-            ".category"
-        )
-        .forEach(
-            category => {
-
-                category.addEventListener(
-                    "click",
-                    () => {
-
-                        document
-                            .querySelectorAll(
-                                ".category"
-                            )
-                            .forEach(
-                                item =>
-                                item.classList.remove(
-                                    "selected"
-                                )
-                            );
+            userMarker =
+                L.marker(
+                    [lat,lng],
+                    {icon}
+                )
+                .addTo(map);
 
 
-                        category.classList.add(
-                            "selected"
-                        );
+            userMarker.bindPopup(
+                "現在地"
+            );
 
 
-                        searchCategory(
-                            category.dataset.category
-                        );
+            accuracyCircle =
+                L.circle(
+                    [lat,lng],
+                    {
+                        radius:accuracy,
 
+                        color:"#6de3ff",
+
+                        fillColor:"#6de3ff",
+
+                        fillOpacity:.06,
+
+                        weight:1
                     }
-                );
-
-            }
-        );
+                )
+                .addTo(map);
 
 
-    /* FAVORITE */
-
-    document
-        .getElementById(
-            "favoriteButton"
-        )
-        .addEventListener(
-            "click",
-            toggleFavorite
-        );
-
-
-    /* RATING */
-
-    document
-        .getElementById(
-            "ratingButton"
-        )
-        .addEventListener(
-            "click",
-            rateSpot
-        );
-
-
-    /* VISITED */
-
-    document
-        .getElementById(
-            "visitedButton"
-        )
-        .addEventListener(
-            "click",
-            toggleVisited
-        );
-
-
-    /* ROUTE */
-
-    document
-        .getElementById(
-            "routeButton"
-        )
-        .addEventListener(
-            "click",
-            openRoute
-        );
-
-
-    /* RADAR POINTS */
-
-    document
-        .querySelectorAll(
-            ".radar-point"
-        )
-        .forEach(
-            point => {
-
-                point.addEventListener(
-                    "click",
-                    () => {
-
-                        const id =
-                            point.dataset.spot;
-
-
-                        if(id){
-
-                            openSpot(
-                                id
-                            );
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-/* ==================================================
-   BOOT
-================================================== */
-
-function startBoot(){
-
-    const bootStatus =
-        document.getElementById(
-            "bootStatus"
-        );
-
-    const boot =
-        document.getElementById(
-            "boot"
-        );
-
-    const access =
-        document.getElementById(
-            "access"
-        );
-
-    const app =
-        document.getElementById(
-            "app"
-        );
-
-
-    const sequence = [
-
-        [
-            0,
-            "SYSTEM LOCKED",
-            "システムを確認しています"
-        ],
-
-        [
-            800,
-            "AUTHENTICATING",
-            "接続を確認しています"
-        ],
-
-        [
-            1600,
-            "ACCESS CHECK",
-            "アクセスを確認しています"
-        ],
-
-        [
-            2200,
-            "ACCESS GRANTED",
-            "アクセスを許可しました"
-        ]
-
-    ];
-
-
-    sequence.forEach(
-        item => {
-
-            setTimeout(
-                () => {
-
-                    bootStatus.innerHTML =
-
-                        item[1] +
-
-                        '<span class="boot-jp">' +
-
-                        item[2] +
-
-                        '</span>';
-
-                },
-                item[0]
+            map.setView(
+                [lat,lng],
+                15
             );
+
+
+            status.textContent =
+                "ONLINE";
+
+
+            showToast(
+                "LOCATION ACQUIRED / 現在地を取得しました"
+            );
+
+        },
+
+        error => {
+
+            status.textContent =
+                "UNAVAILABLE";
+
+
+            showToast(
+                "現在地を取得できませんでした"
+            );
+
+        },
+
+        {
+
+            enableHighAccuracy:true,
+
+            timeout:10000,
+
+            maximumAge:0
 
         }
-    );
 
-
-    setTimeout(
-        () => {
-
-            access.classList.add(
-                "show"
-            );
-
-        },
-        2500
-    );
-
-
-    setTimeout(
-        () => {
-
-            app.classList.add(
-                "show"
-            );
-
-        },
-        3300
-    );
-
-
-    setTimeout(
-        () => {
-
-            boot.classList.add(
-                "hide"
-            );
-
-        },
-        3900
     );
 
 }
@@ -4475,23 +4826,25 @@ function startBoot(){
    INITIALIZE
 ================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
+renderHomePlaces();
+
+performSearch("");
+
+renderMySpace();
+
+
+/* ==================================================
+   INITIAL MAP PREP
+================================================== */
+
+window.addEventListener(
+    "load",
     () => {
 
-        renderHomePlaces();
-
-        renderMapPlaces();
-
-        renderSearchResults(
-            spots
-        );
-
-        updateMySpace();
-
-        setupEvents();
-
-        startBoot();
+        /*
+           MAPページを開くまで
+           Leafletは初期化しない
+        */
 
     }
 );
