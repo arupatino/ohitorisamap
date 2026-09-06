@@ -3,11 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#03070a">
 
 <title>ohitorisamap｜おひとりさまっぷ</title>
 
 <style>
+:root{
+  --bg:#03070a;
+  --bg2:#07131b;
+  --card:rgba(10,25,35,.92);
+  --card2:rgba(14,34,47,.9);
+  --line:rgba(90,190,220,.18);
+  --cyan:#48d7f5;
+  --cyan2:#83e8ff;
+  --text:#f4fbff;
+  --muted:#8095a2;
+  --yellow:#ffd75a;
+  --danger:#ff6076;
+}
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -19,6 +33,8 @@ html{
 }
 
 body{
+  background:#000;
+  color:var(--text);
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -26,10 +42,6 @@ body{
     "Hiragino Kaku Gothic ProN",
     "Yu Gothic",
     sans-serif;
-
-  background:#f5f6f8;
-  color:#222;
-  min-height:100vh;
 }
 
 button,
@@ -38,9 +50,9 @@ input{
 }
 
 button{
-  border:none;
+  border:0;
   background:none;
-  cursor:pointer;
+  color:inherit;
 }
 
 #app{
@@ -48,8 +60,19 @@ button{
   max-width:430px;
   min-height:100vh;
   margin:auto;
-  background:#fff;
   position:relative;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(46,151,190,.13),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #03070a 0%,
+      #06121a 55%,
+      #03070a 100%
+    );
   overflow:hidden;
 }
 
@@ -64,27 +87,53 @@ button{
 }
 
 /* =========================
+   subtle background
+========================= */
+
+#app::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  max-width:430px;
+  margin:auto;
+  pointer-events:none;
+  opacity:.12;
+
+  background-image:
+    linear-gradient(
+      rgba(100,200,230,.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(100,200,230,.08) 1px,
+      transparent 1px
+    );
+
+  background-size:42px 42px;
+}
+
+/* =========================
    HEADER
 ========================= */
 
 .header{
-  padding:22px 20px 8px;
+  padding:22px 20px 5px;
+  position:relative;
+  z-index:2;
 }
 
 .brand{
   font-size:13px;
+  letter-spacing:.14em;
   font-weight:700;
-  letter-spacing:.08em;
-  color:#222;
 }
 
-.brand span{
-  display:block;
-  font-size:10px;
-  font-weight:500;
-  color:#999;
-  letter-spacing:.08em;
+.brand-sub{
   margin-top:3px;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:.15em;
 }
 
 /* =========================
@@ -92,39 +141,63 @@ button{
 ========================= */
 
 .hero{
-  padding:20px;
+  padding:25px 20px 5px;
+}
+
+.hero-label{
+  color:var(--cyan);
+  font-size:9px;
+  letter-spacing:.18em;
+  margin-bottom:10px;
 }
 
 .hero h1{
-  font-size:27px;
-  line-height:1.4;
-  letter-spacing:-.04em;
-  font-weight:700;
+  font-size:29px;
+  line-height:1.35;
+  letter-spacing:-.045em;
 }
 
 .hero p{
-  margin-top:7px;
-  font-size:13px;
-  color:#888;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:9px;
 }
 
 /* SEARCH */
 
 .search-box{
-  margin-top:20px;
-  height:52px;
-  border-radius:15px;
-  background:#f3f4f6;
+  margin-top:22px;
+  height:54px;
+  border:1px solid var(--line);
+  background:rgba(9,25,35,.82);
+  border-radius:14px;
+
   display:flex;
   align-items:center;
   padding:0 16px;
-  gap:10px;
+  gap:11px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.2);
+}
+
+.search-box input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
+  font-size:13px;
+}
+
+.search-box input::placeholder{
+  color:#687d89;
 }
 
 .search-icon{
-  width:18px;
-  height:18px;
-  border:2px solid #777;
+  width:17px;
+  height:17px;
+  border:1.5px solid var(--cyan);
   border-radius:50%;
   position:relative;
   flex:none;
@@ -132,49 +205,52 @@ button{
 
 .search-icon::after{
   content:"";
-  width:7px;
-  height:2px;
-  background:#777;
+  width:6px;
+  height:1.5px;
   position:absolute;
   right:-5px;
   bottom:-2px;
+  background:var(--cyan);
   transform:rotate(45deg);
-  border-radius:2px;
 }
 
-.search-box input{
-  border:none;
-  outline:none;
-  background:none;
-  width:100%;
-  font-size:14px;
-  color:#333;
+/* =========================
+   SECTION
+========================= */
+
+.section{
+  margin-top:29px;
 }
 
-.search-box input::placeholder{
-  color:#aaa;
+.section-head{
+  padding:0 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+}
+
+.section-title{
+  font-size:17px;
+  letter-spacing:-.03em;
+}
+
+.section-sub{
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:.08em;
 }
 
 /* =========================
    CATEGORY
 ========================= */
 
-.section{
-  margin-top:8px;
-}
-
-.section-title{
-  padding:0 20px;
-  font-size:18px;
-  font-weight:700;
-  letter-spacing:-.03em;
-}
-
 .category-scroll{
   display:flex;
-  gap:14px;
+  gap:15px;
+
   overflow-x:auto;
-  padding:18px 20px 5px;
+  padding:17px 20px 5px;
+
   scrollbar-width:none;
   -webkit-overflow-scrolling:touch;
 }
@@ -191,37 +267,51 @@ button{
 .category-circle{
   width:60px;
   height:60px;
-  margin:auto;
-
   border-radius:50%;
-  border:1px solid #ddd;
+
+  border:1px solid rgba(72,215,245,.38);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(72,215,245,.08),
+      rgba(8,25,35,.85)
+    );
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  background:#fff;
-  transition:.2s;
+  position:relative;
+
+  box-shadow:
+    inset 0 0 15px rgba(72,215,245,.04);
 }
 
-.category:active .category-circle{
-  transform:scale(.94);
+.category-circle::after{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border:1px solid rgba(72,215,245,.08);
+  border-radius:50%;
 }
 
 .category svg{
   width:25px;
   height:25px;
-  stroke:#444;
-  stroke-width:1.7;
+  stroke:var(--cyan2);
+  stroke-width:1.4;
   fill:none;
   stroke-linecap:round;
   stroke-linejoin:round;
+  position:relative;
+  z-index:2;
 }
 
 .category-name{
   margin-top:8px;
-  font-size:11px;
-  color:#444;
+  font-size:10px;
+  color:#c9d6dc;
   white-space:nowrap;
 }
 
@@ -229,54 +319,86 @@ button{
    RECOMMEND
 ========================= */
 
-.recommend-section{
-  margin-top:28px;
+.recommend{
+  margin-top:31px;
 }
 
-.horizontal-cards{
+.cards{
   display:flex;
-  gap:12px;
+  gap:13px;
+
   overflow-x:auto;
-  padding:15px 20px 4px;
+  padding:15px 20px 6px;
+
   scrollbar-width:none;
 }
 
-.horizontal-cards::-webkit-scrollbar{
+.cards::-webkit-scrollbar{
   display:none;
 }
 
 .place-card{
-  flex:0 0 220px;
-  background:#fff;
-  border:1px solid #eee;
+  flex:0 0 235px;
+
+  border:1px solid var(--line);
   border-radius:17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,42,56,.95),
+      rgba(7,20,28,.96)
+    );
+
   overflow:hidden;
-  box-shadow:0 5px 18px rgba(0,0,0,.05);
+
+  box-shadow:
+    0 14px 35px rgba(0,0,0,.25);
+
+  text-align:left;
 }
 
-.place-image{
-  height:130px;
+.place-photo{
+  height:135px;
+  position:relative;
+
   background:
     linear-gradient(
       135deg,
-      #ddd,
-      #f2f2f2
+      rgba(39,110,130,.5),
+      rgba(5,17,24,.9)
     );
+}
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#aaa;
-  font-size:12px;
+.place-photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      135deg,
+      transparent 35%,
+      rgba(100,220,245,.08)
+    );
+}
+
+.photo-text{
+  position:absolute;
+  left:13px;
+  bottom:11px;
+  color:rgba(255,255,255,.45);
+  font-size:8px;
+  letter-spacing:.15em;
 }
 
 .place-info{
-  padding:13px;
+  padding:14px;
 }
 
 .place-category{
-  font-size:10px;
-  color:#999;
+  color:var(--cyan);
+  font-size:9px;
+  letter-spacing:.08em;
 }
 
 .place-name{
@@ -286,17 +408,15 @@ button{
 }
 
 .place-meta{
+  margin-top:8px;
   display:flex;
-  align-items:center;
-  gap:7px;
-  margin-top:7px;
-  font-size:11px;
-  color:#888;
+  gap:9px;
+  color:var(--muted);
+  font-size:10px;
 }
 
 .rating{
-  color:#333;
-  font-weight:600;
+  color:var(--yellow);
 }
 
 /* =========================
@@ -304,317 +424,236 @@ button{
 ========================= */
 
 .map-section{
-  margin-top:30px;
-  padding-bottom:10px;
+  margin-top:34px;
 }
 
 .map-preview{
+  height:230px;
   margin:15px 20px 0;
-  height:220px;
-  border-radius:20px;
-  overflow:hidden;
+
   position:relative;
+  overflow:hidden;
+
+  border:1px solid var(--line);
+  border-radius:19px;
 
   background:
     linear-gradient(
-      90deg,
-      transparent 49%,
-      rgba(0,0,0,.06) 50%,
-      transparent 51%
-    ),
-    linear-gradient(
-      transparent 49%,
-      rgba(0,0,0,.06) 50%,
-      transparent 51%
-    ),
-    #eef0ed;
-
-  background-size:70px 70px;
+      135deg,
+      rgba(10,32,43,.95),
+      rgba(4,13,18,.98)
+    );
 }
 
-/* roads */
+/* map roads */
 
-.road{
+.map-road{
   position:absolute;
-  height:8px;
-  background:#fff;
-  box-shadow:0 0 0 1px rgba(0,0,0,.03);
-  transform:rotate(-25deg);
+  height:1px;
+  background:rgba(130,205,220,.18);
 }
 
-.road.r1{
+.map-road.a{
+  width:140%;
+  left:-20%;
+  top:45%;
+  transform:rotate(-20deg);
+}
+
+.map-road.b{
   width:130%;
-  left:-15%;
-  top:50%;
+  left:-10%;
+  top:65%;
+  transform:rotate(17deg);
 }
 
-.road.r2{
+.map-road.c{
   width:100%;
-  left:10%;
+  left:15%;
   top:25%;
-  transform:rotate(28deg);
+  transform:rotate(54deg);
 }
 
-.road.r3{
+.map-road.d{
   width:90%;
-  left:20%;
-  top:76%;
-  transform:rotate(-10deg);
+  left:10%;
+  top:78%;
+  transform:rotate(-5deg);
+}
+
+.map-block{
+  position:absolute;
+  border:1px solid rgba(100,190,210,.08);
+}
+
+.map-block.one{
+  width:70px;
+  height:50px;
+  left:12%;
+  top:18%;
+}
+
+.map-block.two{
+  width:90px;
+  height:65px;
+  right:10%;
+  bottom:15%;
+}
+
+.map-block.three{
+  width:55px;
+  height:70px;
+  left:45%;
+  top:12%;
 }
 
 /* radar */
 
 .radar{
+  width:118px;
+  height:118px;
+
   position:absolute;
-  width:110px;
-  height:110px;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
+
   border-radius:50%;
 }
 
-.radar-ring{
+.ring{
   position:absolute;
   inset:0;
-  border:1px solid rgba(40,130,110,.35);
+  border:1px solid rgba(72,215,245,.25);
   border-radius:50%;
 }
 
-.radar-ring.r2{
+.ring.r2{
   inset:20px;
 }
 
-.radar-ring.r3{
+.ring.r3{
   inset:40px;
 }
 
-.radar-sweep{
+.sweep{
   position:absolute;
   inset:0;
   border-radius:50%;
+
   background:
     conic-gradient(
       from 0deg,
-      rgba(50,160,130,.25),
-      transparent 45deg
+      rgba(72,215,245,.20),
+      transparent 55deg
     );
-  animation:radarRotate 3.5s linear infinite;
+
+  animation:rotateRadar 4s linear infinite;
 }
 
-@keyframes radarRotate{
+@keyframes rotateRadar{
   to{
     transform:rotate(360deg);
   }
 }
 
-.location-dot{
+.current{
+  width:12px;
+  height:12px;
+
   position:absolute;
-  width:13px;
-  height:13px;
-  border-radius:50%;
-  background:#287f68;
   left:50%;
   top:50%;
+
   transform:translate(-50%,-50%);
-  border:3px solid #fff;
-  box-shadow:0 2px 8px rgba(0,0,0,.18);
-}
-
-.map-label{
-  position:absolute;
-  top:15px;
-  left:15px;
-  padding:7px 11px;
-  background:rgba(255,255,255,.88);
-  backdrop-filter:blur(8px);
-  border-radius:10px;
-  font-size:11px;
-  color:#555;
-}
-
-/* =========================
-   BOTTOM NAV
-========================= */
-
-.bottom-nav{
-  position:fixed;
-  z-index:1000;
-
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-
-  width:min(430px,100%);
-  height:78px;
-
-  background:rgba(255,255,255,.96);
-  border-top:1px solid #eee;
-
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
-
-  padding-bottom:env(safe-area-inset-bottom);
-}
-
-.nav-item{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-
-  color:#999;
-  font-size:9px;
-}
-
-.nav-icon{
-  width:21px;
-  height:21px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.nav-icon svg{
-  width:21px;
-  height:21px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:1.7;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-.nav-item.active{
-  color:#222;
-}
-
-/* =========================
-   CENTER MAP BUTTON
-========================= */
-
-.map-nav{
-  position:relative;
-}
-
-.map-nav .nav-icon{
-  width:50px;
-  height:50px;
-  margin-top:-20px;
 
   border-radius:50%;
-  background:#fff;
-
-  border:1px solid #ddd;
+  background:var(--cyan);
+  border:3px solid #06131b;
 
   box-shadow:
-    0 5px 18px rgba(0,0,0,.10);
-
-  position:relative;
-  overflow:hidden;
+    0 0 0 4px rgba(72,215,245,.12),
+    0 0 18px rgba(72,215,245,.35);
 }
 
-/* radar inside MAP */
-
-.map-nav .nav-icon::before,
-.map-nav .nav-icon::after{
-  content:"";
+.map-location{
   position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(40,127,104,.28);
-}
+  top:13px;
+  left:13px;
 
-.map-nav .nav-icon::before{
-  width:34px;
-  height:34px;
-}
+  padding:7px 10px;
 
-.map-nav .nav-icon::after{
-  width:20px;
-  height:20px;
-}
+  border:1px solid var(--line);
+  border-radius:8px;
 
-.map-nav .nav-icon svg{
-  width:14px;
-  height:14px;
-  position:relative;
-  z-index:2;
-  color:#287f68;
-}
+  background:rgba(3,12,17,.75);
 
-.map-nav .nav-icon .mini-sweep{
-  position:absolute;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background:
-    conic-gradient(
-      from 0deg,
-      rgba(40,127,104,.22),
-      transparent 60deg
-    );
-  animation:radarRotate 3s linear infinite;
+  color:#a9bdc6;
+  font-size:9px;
 }
 
 /* =========================
    MAP PAGE
 ========================= */
 
-.map-page-header{
-  padding:20px;
+.map-header{
+  padding:23px 20px 10px;
 }
 
-.map-page-header h2{
-  font-size:24px;
+.map-header h2{
+  font-size:25px;
 }
 
 .map-full{
-  margin:10px 14px 0;
-  height:calc(100vh - 180px);
+  margin:5px 14px;
+  height:calc(100vh - 165px);
   min-height:520px;
-  border-radius:22px;
-  overflow:hidden;
+
+  border:1px solid var(--line);
+  border-radius:20px;
+
   position:relative;
+  overflow:hidden;
 
   background:
     linear-gradient(
-      90deg,
-      transparent 49%,
-      rgba(0,0,0,.07) 50%,
-      transparent 51%
-    ),
-    linear-gradient(
-      transparent 49%,
-      rgba(0,0,0,.07) 50%,
-      transparent 51%
-    ),
-    #eef0ed;
-
-  background-size:75px 75px;
+      135deg,
+      #081923,
+      #030c11
+    );
 }
 
 .map-full .radar{
-  width:180px;
-  height:180px;
+  width:190px;
+  height:190px;
+}
+
+.map-full .map-road{
+  background:rgba(130,205,220,.15);
 }
 
 .pin{
   position:absolute;
-  width:30px;
-  height:30px;
+  width:27px;
+  height:27px;
   border-radius:50% 50% 50% 0;
+
+  background:#142d39;
+  border:1px solid rgba(72,215,245,.5);
+
   transform:rotate(-45deg);
-  background:#222;
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,.3);
 }
 
 .pin::after{
   content:"";
-  width:9px;
-  height:9px;
-  background:#fff;
+  width:7px;
+  height:7px;
   border-radius:50%;
+  background:var(--cyan);
+
   position:absolute;
   left:50%;
   top:50%;
@@ -622,12 +661,12 @@ button{
 }
 
 .pin.p1{
-  left:24%;
-  top:28%;
+  left:22%;
+  top:27%;
 }
 
 .pin.p2{
-  right:20%;
+  right:18%;
   top:43%;
 }
 
@@ -640,19 +679,23 @@ button{
    SEARCH PAGE
 ========================= */
 
-.search-page{
-  padding:20px;
+.sub-page{
+  padding:22px 20px 100px;
 }
 
-.search-page h2{
-  font-size:24px;
+.sub-page h2{
+  font-size:25px;
 }
 
 .big-search{
-  margin-top:20px;
   height:54px;
-  border-radius:15px;
-  background:#f3f4f6;
+  margin-top:20px;
+
+  border:1px solid var(--line);
+  background:var(--card);
+
+  border-radius:14px;
+
   display:flex;
   align-items:center;
   padding:0 15px;
@@ -661,69 +704,75 @@ button{
 
 .big-search input{
   width:100%;
-  border:none;
-  outline:none;
   background:none;
+  border:0;
+  outline:0;
+  color:white;
 }
 
-.search-heading{
-  margin-top:30px;
-  font-size:15px;
+.search-title{
+  margin-top:28px;
+  font-size:14px;
   font-weight:700;
 }
 
-.keyword-list{
+.tags{
   display:flex;
   flex-wrap:wrap;
   gap:9px;
   margin-top:13px;
 }
 
-.keyword{
+.tag{
+  border:1px solid var(--line);
+  background:rgba(10,28,38,.8);
   padding:9px 13px;
   border-radius:30px;
-  background:#f4f4f4;
-  font-size:11px;
-  color:#666;
+  font-size:10px;
+  color:#b7c7ce;
 }
 
 /* =========================
    FAVORITES
 ========================= */
 
-.simple-page{
-  padding:20px;
-}
-
-.simple-page h2{
-  font-size:24px;
-}
-
 .favorite-card{
   margin-top:15px;
-  padding:15px;
-  border:1px solid #eee;
-  border-radius:16px;
+
   display:flex;
   gap:13px;
+
+  padding:13px;
+
+  border:1px solid var(--line);
+  background:var(--card);
+
+  border-radius:15px;
 }
 
-.favorite-image{
-  width:70px;
-  height:70px;
-  border-radius:12px;
-  background:#eee;
+.favorite-photo{
+  width:75px;
+  height:75px;
   flex:none;
+
+  border-radius:11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #123442,
+      #07141b
+    );
 }
 
 .favorite-card h3{
-  font-size:14px;
+  font-size:13px;
 }
 
 .favorite-card p{
   margin-top:5px;
-  font-size:11px;
-  color:#999;
+  color:var(--muted);
+  font-size:10px;
 }
 
 /* =========================
@@ -731,63 +780,76 @@ button{
 ========================= */
 
 .profile{
-  margin-top:25px;
-  padding:20px;
-  border-radius:20px;
-  background:#f6f6f6;
+  margin-top:24px;
+
+  padding:22px;
+
+  border:1px solid var(--line);
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(12,32,43,.92),
+      rgba(5,15,21,.96)
+    );
+
   text-align:center;
 }
 
 .avatar{
-  width:70px;
-  height:70px;
+  width:68px;
+  height:68px;
   margin:auto;
+
   border-radius:50%;
-  background:#ddd;
+
+  border:1px solid rgba(72,215,245,.35);
+
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#888;
-  font-size:25px;
+
+  color:var(--cyan);
 }
 
 .profile h3{
   margin-top:10px;
-  font-size:16px;
+  font-size:15px;
 }
 
 .profile p{
-  margin-top:4px;
-  color:#999;
-  font-size:11px;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px;
 }
 
 .stats{
+  margin-top:20px;
+
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  margin-top:20px;
-  background:#fff;
-  border-radius:14px;
-  padding:15px 0;
+
+  border-top:1px solid var(--line);
+  padding-top:17px;
 }
 
 .stat{
-  text-align:center;
-  border-right:1px solid #eee;
+  border-right:1px solid var(--line);
 }
 
 .stat:last-child{
-  border:none;
+  border-right:0;
 }
 
 .stat strong{
   display:block;
-  font-size:18px;
+  font-size:17px;
 }
 
 .stat span{
-  font-size:10px;
-  color:#999;
+  color:var(--muted);
+  font-size:9px;
 }
 
 .settings{
@@ -795,15 +857,19 @@ button{
 }
 
 .setting{
-  padding:17px 4px;
-  border-bottom:1px solid #eee;
-  font-size:13px;
+  padding:16px 3px;
+
+  border-bottom:1px solid var(--line);
+
   display:flex;
   justify-content:space-between;
+
+  font-size:12px;
+  color:#c6d2d7;
 }
 
 .setting span{
-  color:#aaa;
+  color:#71848e;
 }
 
 /* =========================
@@ -811,57 +877,225 @@ button{
 ========================= */
 
 .detail{
-  padding-bottom:100px;
+  position:relative;
 }
 
-.detail-image{
-  height:270px;
-  background:#e8e8e8;
+.detail-photo{
+  height:280px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #103442,
+      #06131a
+    );
+
   display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#aaa;
+  align-items:flex-end;
+  padding:18px;
+
+  color:rgba(255,255,255,.4);
+  font-size:9px;
+  letter-spacing:.12em;
+}
+
+.back{
+  position:absolute;
+  top:17px;
+  left:17px;
+
+  width:38px;
+  height:38px;
+
+  border-radius:50%;
+
+  background:rgba(4,13,18,.78);
+  border:1px solid var(--line);
+
+  font-size:17px;
 }
 
 .detail-content{
   padding:22px 20px;
 }
 
-.back-button{
-  position:absolute;
-  top:18px;
-  left:18px;
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  background:rgba(255,255,255,.9);
-  z-index:2;
-}
-
-.detail h1{
+.detail-content h1{
   font-size:24px;
 }
 
 .detail-rating{
   margin-top:8px;
-  font-size:13px;
+  color:var(--yellow);
+  font-size:12px;
 }
 
-.detail-description{
+.detail-text{
   margin-top:18px;
-  font-size:13px;
-  color:#777;
+  color:var(--muted);
+  font-size:12px;
   line-height:1.8;
 }
 
 .detail-button{
   width:100%;
   height:50px;
+
   margin-top:22px;
-  border-radius:14px;
-  background:#222;
-  color:#fff;
-  font-size:13px;
+
+  border-radius:13px;
+
+  background:var(--cyan);
+  color:#031017;
+
+  font-size:12px;
+  font-weight:700;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  z-index:1000;
+
+  left:50%;
+  bottom:0;
+
+  transform:translateX(-50%);
+
+  width:min(430px,100%);
+  height:79px;
+
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+
+  background:rgba(3,10,14,.94);
+  backdrop-filter:blur(15px);
+
+  border-top:1px solid var(--line);
+
+  padding-bottom:env(safe-area-inset-bottom);
+}
+
+.nav-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:4px;
+
+  color:#627984;
+  font-size:8px;
+}
+
+.nav-icon{
+  width:21px;
+  height:21px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon svg{
+  width:20px;
+  height:20px;
+
+  stroke:currentColor;
+  fill:none;
+
+  stroke-width:1.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.nav-item.active{
+  color:var(--cyan);
+}
+
+/* CENTER MAP */
+
+.map-nav{
+  position:relative;
+}
+
+.map-nav .nav-icon{
+  width:51px;
+  height:51px;
+
+  margin-top:-21px;
+
+  border-radius:50%;
+
+  background:#06151d;
+
+  border:1px solid rgba(72,215,245,.48);
+
+  position:relative;
+
+  box-shadow:
+    0 5px 22px rgba(0,0,0,.45),
+    inset 0 0 15px rgba(72,215,245,.06);
+
+  overflow:hidden;
+}
+
+.map-nav .nav-icon::before{
+  content:"";
+
+  position:absolute;
+
+  width:35px;
+  height:35px;
+
+  border:1px solid rgba(72,215,245,.22);
+  border-radius:50%;
+}
+
+.map-nav .nav-icon::after{
+  content:"";
+
+  position:absolute;
+
+  width:20px;
+  height:20px;
+
+  border:1px solid rgba(72,215,245,.25);
+  border-radius:50%;
+}
+
+.map-nav .nav-icon svg{
+  width:13px;
+  height:13px;
+
+  color:var(--cyan);
+
+  position:relative;
+  z-index:3;
+}
+
+.mini-sweep{
+  position:absolute;
+  inset:5px;
+
+  border-radius:50%;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(72,215,245,.18),
+      transparent 55deg
+    );
+
+  animation:rotateRadar 3.5s linear infinite;
+}
+
+.map-nav span{
+  color:var(--cyan);
+  font-size:8px;
+  margin-top:1px;
 }
 
 /* =========================
@@ -873,16 +1107,22 @@ button{
   z-index:2000;
 
   left:50%;
-  bottom:95px;
-  transform:translateX(-50%) translateY(20px);
+  bottom:96px;
 
-  background:#222;
-  color:#fff;
+  transform:
+    translateX(-50%)
+    translateY(15px);
 
-  padding:11px 16px;
+  padding:10px 16px;
+
   border-radius:30px;
 
-  font-size:11px;
+  background:#10232d;
+  border:1px solid var(--line);
+
+  color:#dcecf1;
+
+  font-size:10px;
 
   opacity:0;
   pointer-events:none;
@@ -892,23 +1132,9 @@ button{
 
 .toast.show{
   opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:430px){
-
-  .hero h1{
-    font-size:25px;
-  }
-
-  .map-preview{
-    height:210px;
-  }
-
+  transform:
+    translateX(-50%)
+    translateY(0);
 }
 </style>
 </head>
@@ -918,273 +1144,367 @@ button{
 <div id="app">
 
 <!-- =========================
-     HOME
+ HOME
 ========================= -->
 
 <section id="home" class="page active">
 
-  <header class="header">
-    <div class="brand">
-      ohitorisamap
-      <span>おひとりさまっぷ</span>
-    </div>
-  </header>
+<header class="header">
+  <div class="brand">
+    ohitorisamap
+  </div>
+  <div class="brand-sub">
+    おひとりさまっぷ
+  </div>
+</header>
 
-  <div class="hero">
 
-    <h1>
-      ひとりの時間を、<br>
-      もっと自由に。
-    </h1>
+<div class="hero">
 
-    <p>
-      ひとりで行きたい場所を見つけよう。
-    </p>
-
-    <div class="search-box"
-         onclick="goPage('search')">
-
-      <div class="search-icon"></div>
-
-      <input
-        type="text"
-        placeholder="どこに行こう？"
-        readonly
-      >
-
-    </div>
-
+  <div class="hero-label">
+    SOLO TIME
   </div>
 
+  <h1>
+    ひとりの時間を、<br>
+    もっと自由に。
+  </h1>
 
-  <!-- CATEGORY -->
+  <p>
+    ひとりで行きたい場所を見つけよう。
+  </p>
 
-  <section class="section">
+  <button
+    class="search-box"
+    onclick="goPage('search')"
+  >
+
+    <div class="search-icon"></div>
+
+    <input
+      placeholder="どこに行こう？"
+      readonly
+    >
+
+  </button>
+
+</div>
+
+
+<!-- CATEGORY -->
+
+<section class="section">
+
+  <div class="section-head">
 
     <h2 class="section-title">
       何する？
     </h2>
 
-    <div class="category-scroll">
+    <span class="section-sub">
+      CATEGORY
+    </span>
 
-      <button class="category" onclick="categoryClick('食事')">
-        <div class="category-circle">
-          <svg viewBox="0 0 24 24">
-            <path d="M7 3v7"/>
-            <path d="M5 3v4"/>
-            <path d="M9 3v4"/>
-            <path d="M7 10v11"/>
-            <path d="M15 3v18"/>
-            <path d="M15 3c3 2 3 5 0 7"/>
-          </svg>
-        </div>
-        <div class="category-name">食事</div>
-      </button>
-
-      <button class="category" onclick="categoryClick('カフェ')">
-        <div class="category-circle">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 9h14v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/>
-            <path d="M18 11h1a3 3 0 0 1 0 6h-2"/>
-            <path d="M7 5c0-1 1-1 1-2"/>
-            <path d="M11 5c0-1 1-1 1-2"/>
-          </svg>
-        </div>
-        <div class="category-name">カフェ</div>
-      </button>
-
-      <button class="category" onclick="categoryClick('映画')">
-        <div class="category-circle">
-          <svg viewBox="0 0 24 24">
-            <rect x="3" y="5" width="18" height="14" rx="2"/>
-            <path d="M3 9h18"/>
-            <path d="M8 5v4"/>
-            <path d="M16 5v4"/>
-          </svg>
-        </div>
-        <div class="category-name">映画</div>
-      </button>
-
-      <button class="category" onclick="categoryClick('温泉')">
-        <div class="category-circle">
-          <svg viewBox="0 0 24 24">
-            <path d="M6 19c0-3 2-5 6-5s6 2 6 5"/>
-            <path d="M8 10c0-2 1-3 1-4"/>
-            <path d="M13 10c0-2 1-3 1-4"/>
-            <path d="M18 10c0-2 1-3 1-4"/>
-          </svg>
-        </div>
-        <div class="category-name">温泉</div>
-      </button>
-
-      <button class="category" onclick="categoryClick('ドライブ')">
-        <div class="category-circle">
-          <svg viewBox="0 0 24 24">
-            <path d="M5 16l2-7h10l2 7"/>
-            <path d="M4 16h16v3H4z"/>
-            <circle cx="7" cy="19" r="1"/>
-            <circle cx="17" cy="19" r="1"/>
-            <path d="M8 12h8"/>
-          </svg>
-        </div>
-        <div class="category-name">ドライブ</div>
-      </button>
-
-    </div>
-
-  </section>
+  </div>
 
 
-  <!-- RECOMMEND -->
+  <div class="category-scroll">
 
-  <section class="recommend-section">
+    <button class="category"
+      onclick="categoryClick('食事')">
+
+      <div class="category-circle">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 3v7"/>
+          <path d="M5 3v4"/>
+          <path d="M9 3v4"/>
+          <path d="M7 10v11"/>
+          <path d="M15 3v18"/>
+          <path d="M15 3c3 2 3 5 0 7"/>
+        </svg>
+      </div>
+
+      <div class="category-name">食事</div>
+
+    </button>
+
+
+    <button class="category"
+      onclick="categoryClick('カフェ')">
+
+      <div class="category-circle">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 9h14v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/>
+          <path d="M18 11h1a3 3 0 0 1 0 6h-2"/>
+          <path d="M7 5c0-1 1-1 1-2"/>
+          <path d="M11 5c0-1 1-1 1-2"/>
+        </svg>
+      </div>
+
+      <div class="category-name">カフェ</div>
+
+    </button>
+
+
+    <button class="category"
+      onclick="categoryClick('映画')">
+
+      <div class="category-circle">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 9h18"/>
+          <path d="M8 5v4"/>
+          <path d="M16 5v4"/>
+        </svg>
+      </div>
+
+      <div class="category-name">映画</div>
+
+    </button>
+
+
+    <button class="category"
+      onclick="categoryClick('温泉')">
+
+      <div class="category-circle">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 19c0-3 2-5 6-5s6 2 6 5"/>
+          <path d="M8 10c0-2 1-3 1-4"/>
+          <path d="M13 10c0-2 1-3 1-4"/>
+          <path d="M18 10c0-2 1-3 1-4"/>
+        </svg>
+      </div>
+
+      <div class="category-name">温泉</div>
+
+    </button>
+
+
+    <button class="category"
+      onclick="categoryClick('ドライブ')">
+
+      <div class="category-circle">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 16l2-7h10l2 7"/>
+          <path d="M4 16h16v3H4z"/>
+          <circle cx="7" cy="19" r="1"/>
+          <circle cx="17" cy="19" r="1"/>
+          <path d="M8 12h8"/>
+        </svg>
+      </div>
+
+      <div class="category-name">ドライブ</div>
+
+    </button>
+
+
+    <button class="category"
+      onclick="categoryClick('買い物')">
+
+      <div class="category-circle">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 8h14l-1 12H6L5 8z"/>
+          <path d="M9 8a3 3 0 0 1 6 0"/>
+        </svg>
+      </div>
+
+      <div class="category-name">買い物</div>
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- RECOMMEND -->
+
+<section class="recommend section">
+
+  <div class="section-head">
 
     <h2 class="section-title">
       おすすめ
     </h2>
 
-    <div class="horizontal-cards">
+    <span class="section-sub">
+      FOR YOU
+    </span>
 
-      <button class="place-card"
-              onclick="openDetail('ひとり居酒屋 たかし')">
+  </div>
 
-        <div class="place-image">
-          PHOTO
+
+  <div class="cards">
+
+    <button
+      class="place-card"
+      onclick="openDetail('Blue Coffee')"
+    >
+
+      <div class="place-photo">
+        <div class="photo-text">
+          BLUE COFFEE
+        </div>
+      </div>
+
+      <div class="place-info">
+
+        <div class="place-category">
+          CAFE
         </div>
 
-        <div class="place-info">
-
-          <div class="place-category">
-            居酒屋
-          </div>
-
-          <div class="place-name">
-            ひとり居酒屋 たかし
-          </div>
-
-          <div class="place-meta">
-            <span class="rating">★ 4.5</span>
-            <span>ひとり利用◎</span>
-          </div>
-
+        <div class="place-name">
+          Blue Coffee
         </div>
 
-      </button>
-
-
-      <button class="place-card"
-              onclick="openDetail('Blue Coffee')">
-
-        <div class="place-image">
-          PHOTO
+        <div class="place-meta">
+          <span class="rating">★ 4.6</span>
+          <span>静か</span>
+          <span>ひとり◎</span>
         </div>
 
-        <div class="place-info">
+      </div>
 
-          <div class="place-category">
-            カフェ
-          </div>
+    </button>
 
-          <div class="place-name">
-            Blue Coffee
-          </div>
 
-          <div class="place-meta">
-            <span class="rating">★ 4.3</span>
-            <span>静か</span>
-          </div>
+    <button
+      class="place-card"
+      onclick="openDetail('ひとり居酒屋 たかし')"
+    >
 
+      <div class="place-photo">
+        <div class="photo-text">
+          RESTAURANT
+        </div>
+      </div>
+
+      <div class="place-info">
+
+        <div class="place-category">
+          居酒屋
         </div>
 
-      </button>
-
-
-      <button class="place-card"
-              onclick="openDetail('CINEMA')">
-
-        <div class="place-image">
-          PHOTO
+        <div class="place-name">
+          ひとり居酒屋 たかし
         </div>
 
-        <div class="place-info">
-
-          <div class="place-category">
-            映画
-          </div>
-
-          <div class="place-name">
-            CINEMA
-          </div>
-
-          <div class="place-meta">
-            <span class="rating">★ 4.6</span>
-            <span>ひとり◎</span>
-          </div>
-
+        <div class="place-meta">
+          <span class="rating">★ 4.5</span>
+          <span>一人席</span>
+          <span>入りやすい</span>
         </div>
 
-      </button>
+      </div>
 
-    </div>
-
-  </section>
+    </button>
 
 
-  <!-- MAP -->
+    <button
+      class="place-card"
+      onclick="openDetail('CINEMA')"
+    >
 
-  <section class="map-section">
+      <div class="place-photo">
+        <div class="photo-text">
+          CINEMA
+        </div>
+      </div>
+
+      <div class="place-info">
+
+        <div class="place-category">
+          映画
+        </div>
+
+        <div class="place-name">
+          CINEMA
+        </div>
+
+        <div class="place-meta">
+          <span class="rating">★ 4.7</span>
+          <span>ひとり◎</span>
+        </div>
+
+      </div>
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- MAP -->
+
+<section class="map-section section">
+
+  <div class="section-head">
 
     <h2 class="section-title">
       マップ
     </h2>
 
-    <button
-      class="map-preview"
-      onclick="goPage('map')"
-    >
+    <span class="section-sub">
+      NEARBY
+    </span>
 
-      <div class="road r1"></div>
-      <div class="road r2"></div>
-      <div class="road r3"></div>
+  </div>
 
-      <div class="map-label">
-        現在地周辺
-      </div>
 
-      <div class="radar">
+  <button
+    class="map-preview"
+    onclick="goPage('map')"
+  >
 
-        <div class="radar-ring"></div>
-        <div class="radar-ring r2"></div>
-        <div class="radar-ring r3"></div>
+    <div class="map-road a"></div>
+    <div class="map-road b"></div>
+    <div class="map-road c"></div>
+    <div class="map-road d"></div>
 
-        <div class="radar-sweep"></div>
+    <div class="map-block one"></div>
+    <div class="map-block two"></div>
+    <div class="map-block three"></div>
 
-      </div>
+    <div class="map-location">
+      現在地周辺
+    </div>
 
-      <div class="location-dot"></div>
+    <div class="radar">
 
-    </button>
+      <div class="ring"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
 
-  </section>
+      <div class="sweep"></div>
+
+    </div>
+
+    <div class="current"></div>
+
+  </button>
+
+</section>
 
 </section>
 
 
 <!-- =========================
-     MAP
+ MAP
 ========================= -->
 
 <section id="map" class="page">
 
-  <div class="map-page-header">
+  <div class="map-header">
     <h2>マップ</h2>
   </div>
 
   <div class="map-full">
 
-    <div class="road r1"></div>
-    <div class="road r2"></div>
-    <div class="road r3"></div>
+    <div class="map-road a"></div>
+    <div class="map-road b"></div>
+    <div class="map-road c"></div>
+    <div class="map-road d"></div>
 
     <div class="pin p1"></div>
     <div class="pin p2"></div>
@@ -1192,15 +1512,15 @@ button{
 
     <div class="radar">
 
-      <div class="radar-ring"></div>
-      <div class="radar-ring r2"></div>
-      <div class="radar-ring r3"></div>
+      <div class="ring"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
 
-      <div class="radar-sweep"></div>
+      <div class="sweep"></div>
 
     </div>
 
-    <div class="location-dot"></div>
+    <div class="current"></div>
 
   </div>
 
@@ -1208,12 +1528,12 @@ button{
 
 
 <!-- =========================
-     SEARCH
+ SEARCH
 ========================= -->
 
 <section id="search" class="page">
 
-  <div class="search-page">
+  <div class="sub-page">
 
     <h2>検索</h2>
 
@@ -1223,59 +1543,60 @@ button{
 
       <input
         id="searchInput"
-        type="text"
-        placeholder="場所・お店・ジャンルを検索"
+        placeholder="場所・お店・ジャンル"
       >
 
     </div>
 
 
-    <div class="search-heading">
+    <div class="search-title">
       人気の検索
     </div>
 
-    <div class="keyword-list">
+    <div class="tags">
 
-      <button class="keyword"
-              onclick="setSearch('ひとり焼肉')">
+      <button class="tag"
+        onclick="setSearch('ひとり焼肉')">
         ひとり焼肉
       </button>
 
-      <button class="keyword"
-              onclick="setSearch('静かなカフェ')">
+      <button class="tag"
+        onclick="setSearch('静かなカフェ')">
         静かなカフェ
       </button>
 
-      <button class="keyword"
-              onclick="setSearch('映画')">
+      <button class="tag"
+        onclick="setSearch('映画')">
         映画
       </button>
 
-      <button class="keyword"
-              onclick="setSearch('温泉')">
+      <button class="tag"
+        onclick="setSearch('温泉')">
         温泉
       </button>
 
-      <button class="keyword"
-              onclick="setSearch('ドライブ')">
+      <button class="tag"
+        onclick="setSearch('ドライブ')">
         ドライブ
       </button>
 
     </div>
 
 
-    <div class="search-heading">
+    <div class="search-title">
       ジャンル
     </div>
 
-    <div class="keyword-list">
+    <div class="tags">
 
-      <button class="keyword">食事</button>
-      <button class="keyword">カフェ</button>
-      <button class="keyword">映画</button>
-      <button class="keyword">温泉</button>
-      <button class="keyword">ドライブ</button>
-      <button class="keyword">買い物</button>
+      <button class="tag">食事</button>
+      <button class="tag">カフェ</button>
+      <button class="tag">映画</button>
+      <button class="tag">温泉</button>
+      <button class="tag">ドライブ</button>
+      <button class="tag">買い物</button>
+      <button class="tag">遊ぶ</button>
+      <button class="tag">その他</button>
 
     </div>
 
@@ -1285,23 +1606,28 @@ button{
 
 
 <!-- =========================
-     FAVORITES
+ FAVORITES
 ========================= -->
 
 <section id="favorites" class="page">
 
-  <div class="simple-page">
+  <div class="sub-page">
 
     <h2>お気に入り</h2>
 
+
     <div class="favorite-card">
 
-      <div class="favorite-image"></div>
+      <div class="favorite-photo"></div>
 
       <div>
+
         <h3>Blue Coffee</h3>
-        <p>カフェ　★4.3</p>
-        <p>静かに過ごせるお店</p>
+
+        <p>カフェ　★4.6</p>
+
+        <p>静かに過ごせる</p>
+
       </div>
 
     </div>
@@ -1309,12 +1635,16 @@ button{
 
     <div class="favorite-card">
 
-      <div class="favorite-image"></div>
+      <div class="favorite-photo"></div>
 
       <div>
+
         <h3>ひとり居酒屋 たかし</h3>
+
         <p>居酒屋　★4.5</p>
-        <p>ひとり利用しやすい</p>
+
+        <p>一人席あり</p>
+
       </div>
 
     </div>
@@ -1325,26 +1655,30 @@ button{
 
 
 <!-- =========================
-     MY PAGE
+ MY PAGE
 ========================= -->
 
 <section id="mypage" class="page">
 
-  <div class="simple-page">
+  <div class="sub-page">
 
     <h2>マイページ</h2>
+
 
     <div class="profile">
 
       <div class="avatar">
-        ●
+        ◯
       </div>
 
-      <h3>ひとり旅好き</h3>
+      <h3>
+        ひとり旅好き
+      </h3>
 
       <p>
         自分だけのお気に入りを見つけよう
       </p>
+
 
       <div class="stats">
 
@@ -1381,7 +1715,7 @@ button{
       </div>
 
       <div class="setting">
-        通知設定
+        お気に入り
         <span>›</span>
       </div>
 
@@ -1398,21 +1732,23 @@ button{
 
 
 <!-- =========================
-     DETAIL
+ DETAIL
 ========================= -->
 
 <section id="detail" class="page detail">
 
   <button
-    class="back-button"
+    class="back"
     onclick="goPage('home')"
   >
     ←
   </button>
 
-  <div class="detail-image">
-    PHOTO
+
+  <div class="detail-photo">
+    PLACE PHOTO
   </div>
+
 
   <div class="detail-content">
 
@@ -1424,11 +1760,11 @@ button{
       ★ 4.5　ひとり利用◎
     </div>
 
-    <div class="detail-description">
+    <div class="detail-text">
       ひとりでも入りやすく、
-      ゆっくり自分の時間を過ごせる場所です。
+      自分の時間をゆっくり過ごせる場所です。
       おひとりさまっぷでは、
-      ひとり利用のしやすさを重視して紹介しています。
+      ひとり利用のしやすさも紹介していきます。
     </div>
 
     <button
@@ -1444,42 +1780,56 @@ button{
 
 
 <!-- =========================
-     BOTTOM NAV
+ BOTTOM NAV
 ========================= -->
 
 <nav class="bottom-nav">
+
+  <!-- HOME -->
 
   <button
     class="nav-item active"
     data-page="home"
     onclick="goPage('home')"
   >
+
     <div class="nav-icon">
+
       <svg viewBox="0 0 24 24">
-        <path d="M3 11l9-7 9 7"/>
+        <path d="M3 11l9-8 9 8"/>
         <path d="M5 10v10h14V10"/>
       </svg>
+
     </div>
+
     <span>ホーム</span>
+
   </button>
 
+
+  <!-- SEARCH -->
 
   <button
     class="nav-item"
     data-page="search"
     onclick="goPage('search')"
   >
+
     <div class="nav-icon">
+
       <svg viewBox="0 0 24 24">
         <circle cx="10.5" cy="10.5" r="6"/>
         <path d="M15 15l5 5"/>
       </svg>
+
     </div>
+
     <span>検索</span>
+
   </button>
 
 
-  <!-- CENTER MAP -->
+  <!-- MAP CENTER -->
 
   <button
     class="nav-item map-nav"
@@ -1492,11 +1842,18 @@ button{
       <div class="mini-sweep"></div>
 
       <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="3"/>
+
+        <circle
+          cx="12"
+          cy="12"
+          r="3"
+        />
+
         <path d="M12 2v3"/>
         <path d="M12 19v3"/>
         <path d="M2 12h3"/>
         <path d="M19 12h3"/>
+
       </svg>
 
     </div>
@@ -1505,6 +1862,8 @@ button{
 
   </button>
 
+
+  <!-- FAVORITES -->
 
   <button
     class="nav-item"
@@ -1515,7 +1874,17 @@ button{
     <div class="nav-icon">
 
       <svg viewBox="0 0 24 24">
-        <path d="M20 8.5c0 5-8 10-8 10s-8-5-8-10A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 8 2.5z"/>
+
+        <path
+          d="M20 8.5
+             c0 5-8 10-8 10
+             S4 13.5 4 8.5
+             A4.5 4.5 0 0 1
+             12 6
+             A4.5 4.5 0 0 1
+             20 8.5z"
+        />
+
       </svg>
 
     </div>
@@ -1524,6 +1893,8 @@ button{
 
   </button>
 
+
+  <!-- MY PAGE -->
 
   <button
     class="nav-item"
@@ -1534,8 +1905,19 @@ button{
     <div class="nav-icon">
 
       <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21c0-4 3-7 8-7s8 3 8 7"/>
+
+        <circle
+          cx="12"
+          cy="8"
+          r="4"
+        />
+
+        <path
+          d="M4 21
+             c0-4 3-7 8-7
+             s8 3 8 7"
+        />
+
       </svg>
 
     </div>
@@ -1557,7 +1939,7 @@ button{
 <script>
 
 /* =========================
-   PAGE NAVIGATION
+ PAGE
 ========================= */
 
 function goPage(page){
@@ -1567,56 +1949,60 @@ function goPage(page){
       p.classList.remove('active');
     });
 
-  const target=document.getElementById(page);
+  const target=
+    document.getElementById(page);
 
   if(target){
     target.classList.add('active');
   }
 
+
   document.querySelectorAll('.nav-item')
     .forEach(item=>{
+
       item.classList.remove('active');
 
       if(item.dataset.page===page){
         item.classList.add('active');
       }
+
     });
+
 
   window.scrollTo({
     top:0,
     behavior:'instant'
   });
+
 }
 
 
 /* =========================
-   CATEGORY
+ CATEGORY
 ========================= */
 
 function categoryClick(category){
 
-  showToast(category + 'を探しています');
+  goPage('search');
 
-  setTimeout(()=>{
-    goPage('search');
+  const input=
+    document.getElementById('searchInput');
 
-    const input=document.getElementById('searchInput');
+  if(input){
+    input.value=category;
+  }
 
-    if(input){
-      input.value=category;
-    }
-
-  },300);
 }
 
 
 /* =========================
-   SEARCH
+ SEARCH
 ========================= */
 
 function setSearch(text){
 
-  const input=document.getElementById('searchInput');
+  const input=
+    document.getElementById('searchInput');
 
   if(input){
     input.value=text;
@@ -1627,13 +2013,14 @@ function setSearch(text){
 
 
 /* =========================
-   DETAIL
+ DETAIL
 ========================= */
 
 function openDetail(name){
 
-  document.getElementById('detailName')
-    .textContent=name;
+  document.getElementById(
+    'detailName'
+  ).textContent=name;
 
   goPage('detail');
 
@@ -1641,14 +2028,15 @@ function openDetail(name){
 
 
 /* =========================
-   TOAST
+ TOAST
 ========================= */
 
 let toastTimer;
 
 function showToast(message){
 
-  const toast=document.getElementById('toast');
+  const toast=
+    document.getElementById('toast');
 
   toast.textContent=message;
 
@@ -1659,33 +2047,6 @@ function showToast(message){
   toastTimer=setTimeout(()=>{
     toast.classList.remove('show');
   },1800);
-
-}
-
-
-/* =========================
-   SEARCH ENTER
-========================= */
-
-const searchInput=
-  document.getElementById('searchInput');
-
-if(searchInput){
-
-  searchInput.addEventListener(
-    'keydown',
-    function(e){
-
-      if(e.key==='Enter'){
-
-        showToast(
-          '「'+this.value+'」を検索'
-        );
-
-      }
-
-    }
-  );
 
 }
 
