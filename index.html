@@ -2,33 +2,42 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>ohitorisamap</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>ohitorisamap｜おひとりさまっぷ</title>
 
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+:root{
+  --bg:#02070b;
+  --bg2:#06121b;
+  --panel:rgba(7,22,32,.86);
+  --panel2:rgba(8,29,42,.72);
+  --line:rgba(67,214,255,.20);
+  --cyan:#20d8ff;
+  --cyan2:#8beeff;
+  --text:#eefaff;
+  --muted:#78909e;
+  --danger:#ff526b;
+  --yellow:#ffd75a;
 }
 
-html,
-body{
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
   width:100%;
   min-height:100%;
   background:#000;
-  color:#fff;
+  color:var(--text);
   font-family:
     -apple-system,
     BlinkMacSystemFont,
-    "Noto Sans JP",
     "Helvetica Neue",
-    Arial,
+    "Noto Sans JP",
     sans-serif;
 }
 
@@ -38,3741 +47,2535 @@ body{
 
 button,
 input{
-  font-family:inherit;
+  font:inherit;
 }
 
+button{
+  border:0;
+  color:inherit;
+  background:none;
+}
 
-/* =========================================================
+/* =====================================================
    OPENING
-========================================================= */
+===================================================== */
 
 #opening{
   position:fixed;
   inset:0;
-  z-index:99999;
-  overflow:hidden;
+  z-index:9999;
   background:#000;
-  opacity:1;
-  transition:
-    opacity 1.1s cubic-bezier(.77,0,.18,1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  transition:opacity .9s ease, visibility .9s ease;
 }
 
-#opening.fade-out{
+#opening.hide{
   opacity:0;
+  visibility:hidden;
   pointer-events:none;
 }
 
+.opening-core{
+  position:relative;
+  width:240px;
+  height:240px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-/* =========================================================
-   OPENING WORLD
-========================================================= */
-
-.opening-world{
+.opening-ring{
   position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(
-      circle at 50% 48%,
-      rgba(255,255,255,1) 0%,
-      rgba(247,250,252,1) 38%,
-      rgba(225,234,240,1) 75%,
-      rgba(205,218,225,1) 100%
-    );
-
-  opacity:1;
-
-  transform:scale(1);
-
-  transition:
-    opacity 1s ease,
-    transform 1.2s cubic-bezier(.7,0,.15,1);
-}
-
-.opening-black{
-  position:absolute;
-  inset:0;
-
-  background:#000;
-
-  opacity:0;
-
-  transition:
-    opacity .8s ease;
-}
-
-#opening.system-mode .opening-world{
-  opacity:0;
-  transform:scale(1.08);
-}
-
-#opening.system-mode .opening-black{
-  opacity:1;
-}
-
-
-/* =========================================================
-   GRID
-========================================================= */
-
-.opening-grid{
-  position:absolute;
-  inset:-40%;
-
-  opacity:.14;
-
-  background-image:
-    linear-gradient(
-      rgba(0,150,220,.24) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0,150,220,.24) 1px,
-      transparent 1px
-    );
-
-  background-size:55px 55px;
-
-  transform:
-    perspective(650px)
-    rotateX(63deg)
-    translateY(12%);
-
-  animation:
-    gridMove 4.5s linear infinite;
-
-  transition:
-    opacity .7s ease;
-}
-
-#opening.system-mode .opening-grid{
-  opacity:.07;
-}
-
-
-/* =========================================================
-   SCAN LINE
-========================================================= */
-
-.scan-line{
-  position:absolute;
-  left:0;
-  top:-5%;
-
-  width:100%;
-  height:2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(30,210,255,.2),
-      rgba(30,210,255,.9),
-      rgba(30,210,255,.2),
-      transparent
-    );
-
-  box-shadow:
-    0 0 20px rgba(30,210,255,.7),
-    0 0 60px rgba(30,210,255,.25);
-
-  opacity:0;
-
-  animation:
-    scanDown 2.8s 1s ease-in-out forwards;
-}
-
-#opening.system-mode .scan-line{
-  display:none;
-}
-
-
-/* =========================================================
-   CONNECTION SVG
-========================================================= */
-
-.connections{
-  position:absolute;
-  inset:0;
-
-  width:100%;
-  height:100%;
-}
-
-.connection{
-  stroke:#111;
-  stroke-width:2.2;
-  stroke-linecap:round;
-
-  opacity:0;
-
-  stroke-dasharray:100;
-  stroke-dashoffset:100;
-
-  animation:
-    drawLine .75s ease forwards;
-}
-
-.connection:nth-child(1){animation-delay:.25s;}
-.connection:nth-child(2){animation-delay:.35s;}
-.connection:nth-child(3){animation-delay:.45s;}
-.connection:nth-child(4){animation-delay:.55s;}
-.connection:nth-child(5){animation-delay:.65s;}
-.connection:nth-child(6){animation-delay:.75s;}
-
-
-/* =========================================================
-   NODES
-========================================================= */
-
-.node{
-  position:absolute;
-
-  width:142px;
-  height:142px;
-
+  width:18px;
+  height:18px;
+  border:1px solid rgba(110,232,255,.85);
   border-radius:50%;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.1);
-
   opacity:0;
-
-  z-index:5;
-
-  box-shadow:
-    inset -18px -18px 32px rgba(0,0,0,.05),
-    0 12px 35px rgba(0,0,0,.05);
-
-  animation:
-    nodeIn .55s cubic-bezier(.16,1,.3,1) forwards,
-    nodeGather 1.6s cubic-bezier(.7,0,.15,1) 1.55s forwards;
+  animation:linkRing 1.8s cubic-bezier(.2,.75,.2,1) forwards;
 }
 
-.yellow{
-  left:12%;
-  top:30%;
-  background:#ffdb55;
-  animation-delay:.2s,1.55s;
+.opening-ring.r2{
+  animation-delay:.18s;
 }
 
-.red{
-  left:47%;
-  top:16%;
-  background:#ff3038;
-  animation-delay:.3s,1.65s;
+.opening-ring.r3{
+  animation-delay:.34s;
 }
 
-.green{
-  left:84%;
-  top:16%;
-  background:#b1ff68;
-  animation-delay:.4s,1.75s;
-}
-
-.blue{
-  left:83%;
-  top:52%;
-  background:#1d0bb8;
-  animation-delay:.5s,1.85s;
-}
-
-.cyan{
-  left:69%;
-  top:87%;
-  background:#55d8df;
-  animation-delay:.6s,1.95s;
-}
-
-.pink{
-  left:18%;
-  top:87%;
-  background:#f55bc1;
-  animation-delay:.7s,2.05s;
-}
-
-
-/* =========================================================
-   NODE SCAN RING
-========================================================= */
-
-.node::after{
-  content:"";
-
+.opening-line{
   position:absolute;
-  inset:-7px;
-
-  border:
-    1px solid rgba(0,170,230,.45);
-
-  border-radius:50%;
-
-  opacity:0;
-
-  animation:
-    nodeScan .9s 1.1s ease-out forwards;
-}
-
-
-/* =========================================================
-   CORE
-========================================================= */
-
-.core{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  width:100px;
-  height:100px;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.05);
-
-  z-index:20;
-
-  opacity:0;
-
-  animation:
-    coreIn .9s 1.15s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-.core-ball{
-  position:absolute;
-  inset:18px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #fff,
-      #8cffff 18%,
-      #32d8ff 42%,
-      #1765ff 68%,
-      #060b40 100%
-    );
-
-  box-shadow:
-    0 0 20px rgba(80,230,255,.95),
-    0 0 60px rgba(60,210,255,.65),
-    0 0 120px rgba(60,160,255,.3);
-
-  animation:
-    corePulse 1.8s 2.1s ease-in-out infinite;
-}
-
-.core-ring{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  width:100%;
-  height:100%;
-
-  border:
-    1px solid rgba(20,205,255,.75);
-
-  border-radius:50%;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.3);
-
-  opacity:0;
-
-  animation:
-    ringExpand 1.4s 2.25s ease-out forwards;
-}
-
-.r2{
-  animation-delay:2.5s;
-}
-
-.r3{
-  animation-delay:2.75s;
-}
-
-
-/* =========================================================
-   CORE CROSSHAIR
-========================================================= */
-
-.core-cross{
-  position:absolute;
-  inset:-30px;
-
-  opacity:0;
-
-  animation:
-    crossIn .5s 2.5s ease forwards;
-}
-
-.core-cross::before,
-.core-cross::after{
-  content:"";
-
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  background:rgba(50,220,255,.65);
-
-  transform:translate(-50%,-50%);
-}
-
-.core-cross::before{
-  width:160%;
-  height:1px;
-}
-
-.core-cross::after{
   width:1px;
-  height:160%;
-}
-
-
-/* =========================================================
-   FLASH
-========================================================= */
-
-.flash{
-  position:absolute;
-  inset:0;
-
-  z-index:100;
-
-  pointer-events:none;
-
-  background:
-    radial-gradient(
-      circle at center,
-      #fff 0%,
-      rgba(255,255,255,.95) 5%,
-      rgba(80,225,255,.65) 14%,
-      rgba(30,180,255,.12) 35%,
-      transparent 65%
-    );
-
+  height:0;
+  background:linear-gradient(
+    to bottom,
+    transparent,
+    rgba(105,230,255,.9),
+    transparent
+  );
   opacity:0;
-
-  animation:
-    flashBurst .9s 3.35s ease-out forwards;
+  animation:scanLine .7s ease-out .55s forwards;
 }
 
-
-/* =========================================================
-   SYSTEM SCREEN
-========================================================= */
-
-.system{
-  position:absolute;
-  inset:0;
-
-  z-index:500;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  background:
-    radial-gradient(
-      circle at 50% 45%,
-      #092a3b 0%,
-      #03131e 28%,
-      #01070b 62%,
-      #000 100%
-    );
-
-  opacity:0;
-  visibility:hidden;
-
-  transition:
-    opacity .8s ease;
-}
-
-#opening.system-mode .system{
-  opacity:1;
-  visibility:visible;
-}
-
-
-/* =========================================================
-   SYSTEM GRID
-========================================================= */
-
-.system::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background-image:
-    linear-gradient(
-      rgba(50,210,255,.045) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(50,210,255,.045) 1px,
-      transparent 1px
-    );
-
-  background-size:50px 50px;
-
-  mask-image:
-    radial-gradient(
-      circle at center,
-      black,
-      transparent 76%
-    );
-
-  animation:
-    systemGrid 10s linear infinite;
-}
-
-
-/* =========================================================
-   SYSTEM HUD
-========================================================= */
-
-.system-hud{
-  position:absolute;
-  inset:0;
-
-  pointer-events:none;
-
-  opacity:0;
-
-  animation:
-    hudIn .8s 4.1s ease forwards;
-}
-
-.hud-line{
-  position:absolute;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(55,220,255,.6),
-      transparent
-    );
-}
-
-.hud-line.top{
-  left:10%;
-  right:10%;
-  top:18%;
-  height:1px;
-}
-
-.hud-line.bottom{
-  left:15%;
-  right:15%;
-  bottom:18%;
-  height:1px;
-}
-
-.hud-corner{
-  position:absolute;
-
-  width:28px;
-  height:28px;
-
-  border-color:rgba(70,220,255,.5);
-  border-style:solid;
-}
-
-.hud-corner.tl{
-  left:18px;
-  top:18px;
-  border-width:1px 0 0 1px;
-}
-
-.hud-corner.tr{
-  right:18px;
-  top:18px;
-  border-width:1px 1px 0 0;
-}
-
-.hud-corner.bl{
-  left:18px;
-  bottom:18px;
-  border-width:0 0 1px 1px;
-}
-
-.hud-corner.br{
-  right:18px;
-  bottom:18px;
-  border-width:0 1px 1px 0;
-}
-
-
-/* =========================================================
-   SYSTEM LOGO
-========================================================= */
-
-.system-logo{
-  position:relative;
-  z-index:5;
-
-  font-size:25px;
-  font-weight:300;
-
-  letter-spacing:7px;
-
-  color:#e7fbff;
-
-  text-shadow:
-    0 0 8px rgba(50,220,255,.95),
-    0 0 30px rgba(50,220,255,.55),
-    0 0 70px rgba(50,220,255,.25);
-
-  opacity:0;
-
-  transform:
-    translateY(12px)
-    scale(.95);
-
-  animation:
-    systemLogoIn .9s 4.55s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-.system-logo::before{
-  content:"";
-
-  position:absolute;
-
-  left:-25px;
-  right:-25px;
-  bottom:-13px;
-
-  height:1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #42dcff,
-      transparent
-    );
-
-  box-shadow:
-    0 0 12px rgba(50,220,255,.7);
-}
-
-
-/* =========================================================
-   SYSTEM STATUS
-========================================================= */
-
-.system-status{
-  position:relative;
-  z-index:5;
-
-  margin-top:24px;
-
-  font-size:8px;
-
-  letter-spacing:5px;
-
-  color:#5d9eb1;
-
-  opacity:0;
-
-  animation:
-    systemText .7s 4.8s ease forwards;
-}
-
-
-/* =========================================================
-   SYSTEM MESSAGE
-========================================================= */
-
-.system-message{
-  position:relative;
-  z-index:5;
-
-  margin-top:11px;
-
-  font-size:8px;
-
-  letter-spacing:3px;
-
-  color:#376676;
-
-  opacity:0;
-
-  animation:
-    systemText .7s 5s ease forwards;
-}
-
-
-/* =========================================================
-   CONNECTION STATUS
-========================================================= */
-
-.connection-status{
-  position:relative;
-  z-index:5;
-
-  display:flex;
-  flex-direction:column;
-
-  gap:8px;
-
-  width:220px;
-
-  margin-top:37px;
-
-  opacity:0;
-
-  animation:
-    statusIn .8s 5.25s ease forwards;
-}
-
-.connection-row{
-  display:flex;
-  align-items:center;
-
-  height:20px;
-
-  border-left:
-    1px solid rgba(40,210,255,.25);
-
-  padding-left:10px;
-
-  color:#527e8b;
-
-  font-size:8px;
-
-  letter-spacing:2px;
-}
-
-.connection-row span:last-child{
-  margin-left:auto;
-
-  color:#39ddff;
-
-  font-size:7px;
-
-  letter-spacing:1px;
-}
-
-.status-dot{
-  width:4px;
-  height:4px;
-
-  border-radius:50%;
-
-  margin-right:8px;
-
-  background:#31ddff;
-
-  box-shadow:
-    0 0 8px #31ddff;
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-.start-wrap{
-  position:relative;
-  z-index:10;
-
-  margin-top:38px;
-
-  text-align:center;
-
-  opacity:0;
-
-  transform:translateY(15px);
-
-  animation:
-    startIn .9s 6.2s cubic-bezier(.16,1,.3,1) forwards;
-}
-
-.start-button{
-  position:relative;
-
-  width:210px;
-  height:54px;
-
-  border:
-    1px solid rgba(71,220,255,.85);
-
-  border-radius:2px;
-
-  color:#e5fbff;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(20,100,125,.08),
-      rgba(30,190,230,.12),
-      rgba(20,100,125,.08)
-    );
-
-  letter-spacing:8px;
-
-  font-size:12px;
-
-  cursor:pointer;
-
-  box-shadow:
-    0 0 20px rgba(30,210,255,.08),
-    inset 0 0 20px rgba(30,210,255,.04);
-
-  transition:
-    .3s ease;
-}
-
-.start-button:hover{
-  background:
-    rgba(25,140,170,.25);
-
-  box-shadow:
-    0 0 35px rgba(30,210,255,.3),
-    inset 0 0 25px rgba(30,210,255,.1);
-
-  transform:scale(1.04);
-}
-
-.start-button:active{
-  transform:scale(.97);
-}
-
-.start-button::before,
-.start-button::after{
-  content:"";
-
-  position:absolute;
-
-  width:20px;
-  height:1px;
-
-  background:#62eaff;
-
-  box-shadow:
-    0 0 8px #62eaff;
-}
-
-.start-button::before{
-  left:-1px;
-  top:-1px;
-}
-
-.start-button::after{
-  right:-1px;
-  bottom:-1px;
-}
-
-.start-button::marker{
-  display:none;
-}
-
-.touch{
-  margin-top:11px;
-
-  color:#416b79;
-
-  font-size:7px;
-
-  letter-spacing:3px;
-}
-
-
-/* =========================================================
-   START CONNECTING OVERLAY
-========================================================= */
-
-.connecting{
-  position:absolute;
-  inset:0;
-
-  z-index:900;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(8,48,65,.97),
-      rgba(0,8,13,.99) 65%
-    );
-
-  opacity:0;
-  visibility:hidden;
-
-  transition:
-    opacity .4s ease;
-}
-
-#opening.connecting-mode .connecting{
-  opacity:1;
-  visibility:visible;
-}
-
-.connecting-title{
-  font-size:10px;
-
-  letter-spacing:5px;
-
-  color:#66eaff;
-
-  text-shadow:
-    0 0 15px rgba(50,220,255,.8);
-}
-
-.connecting-sub{
-  margin-top:8px;
-
-  color:#477887;
-
-  font-size:7px;
-
-  letter-spacing:3px;
-}
-
-.connect-list{
-  width:230px;
-
-  margin-top:35px;
-
-  display:flex;
-  flex-direction:column;
-
-  gap:13px;
-}
-
-.connect-item{
-  display:flex;
-  justify-content:space-between;
-
-  color:#6e9ba9;
-
-  font-size:8px;
-
-  letter-spacing:2px;
-
-  opacity:0;
-  transform:translateX(-12px);
-}
-
-.connect-item.active{
-  animation:
-    connectItem .45s ease forwards;
-}
-
-.connect-item .ok{
-  color:#3fe6ff;
-
-  opacity:0;
-}
-
-.connect-item.done .ok{
-  opacity:1;
-}
-
-.connect-progress{
-  width:230px;
-  height:1px;
-
-  margin-top:25px;
-
-  background:rgba(50,210,255,.12);
-
-  overflow:hidden;
-}
-
-.connect-progress::after{
-  content:"";
-
-  display:block;
-
+.opening-line.horizontal{
   width:0;
-  height:100%;
-
-  background:#42dcff;
-
-  box-shadow:
-    0 0 12px #42dcff;
-
-  transition:
-    width 2.1s cubic-bezier(.16,1,.3,1);
+  height:1px;
+  background:linear-gradient(
+    to right,
+    transparent,
+    rgba(105,230,255,.9),
+    transparent
+  );
+  animation:scanHorizontal .7s ease-out .65s forwards;
 }
 
-#opening.connecting-mode .connect-progress::after{
-  width:100%;
+.opening-logo{
+  position:relative;
+  z-index:3;
+  text-align:center;
+  opacity:0;
+  animation:logoIn .8s ease .75s forwards;
 }
 
+.opening-logo .en{
+  font-size:18px;
+  letter-spacing:.34em;
+  font-weight:500;
+  margin-left:.34em;
+}
 
-/* =========================================================
-   START BURST
-========================================================= */
+.opening-logo .jp{
+  margin-top:9px;
+  font-size:10px;
+  color:#a4b8c2;
+  letter-spacing:.22em;
+  margin-left:.22em;
+}
 
-.start-burst{
-  position:fixed;
-
-  left:50%;
+.opening-sweep{
+  position:absolute;
+  width:300px;
+  height:1px;
+  left:-30px;
   top:50%;
-
-  width:20px;
-  height:20px;
-
-  transform:
-    translate(-50%,-50%)
-    scale(0);
-
-  border-radius:50%;
-
-  z-index:999999;
-
-  background:#fff;
-
-  box-shadow:
-    0 0 40px #49ddff,
-    0 0 100px #49ddff,
-    0 0 200px rgba(49,210,255,.8);
-
-  pointer-events:none;
+  background:linear-gradient(
+    to right,
+    transparent,
+    rgba(91,229,255,.75),
+    transparent
+  );
+  transform:translateX(-120%);
+  opacity:0;
+  animation:sweep .9s ease-in-out 1s forwards;
 }
 
-.start-burst.active{
-  animation:
-    burst 1.5s cubic-bezier(.7,0,.1,1) forwards;
+@keyframes linkRing{
+  0%{
+    width:18px;
+    height:18px;
+    opacity:0;
+  }
+  25%{
+    opacity:1;
+  }
+  100%{
+    width:210px;
+    height:210px;
+    opacity:0;
+  }
 }
 
+@keyframes scanLine{
+  0%{
+    height:0;
+    opacity:0;
+  }
+  30%{
+    opacity:.8;
+  }
+  100%{
+    height:230px;
+    opacity:0;
+  }
+}
 
-/* =========================================================
+@keyframes scanHorizontal{
+  0%{
+    width:0;
+    opacity:0;
+  }
+  30%{
+    opacity:.8;
+  }
+  100%{
+    width:230px;
+    opacity:0;
+  }
+}
+
+@keyframes logoIn{
+  from{
+    opacity:0;
+    transform:scale(.94);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+@keyframes sweep{
+  0%{
+    transform:translateX(-120%);
+    opacity:0;
+  }
+  25%{
+    opacity:1;
+  }
+  100%{
+    transform:translateX(120%);
+    opacity:0;
+  }
+}
+
+/* =====================================================
    APP
-========================================================= */
+===================================================== */
 
 #app{
   width:100%;
+  max-width:430px;
   min-height:100vh;
-
+  margin:0 auto;
+  position:relative;
   background:
     radial-gradient(
       circle at 50% -10%,
-      rgba(0,190,255,.16),
-      transparent 30%
+      rgba(22,148,190,.13),
+      transparent 42%
     ),
-    #020a10;
-
-  opacity:0;
-
-  transform:scale(1.02);
-
-  transition:
-    opacity 1.3s ease,
-    transform 1.3s ease;
-}
-
-#app.show{
-  opacity:1;
-  transform:scale(1);
-}
-
-.phone{
-  position:relative;
-
-  width:100%;
-  max-width:430px;
-
-  min-height:100vh;
-
-  margin:auto;
-
-  overflow:hidden;
-
-  background:
     linear-gradient(
       180deg,
-      #03121d,
-      #020910
+      #02070b 0%,
+      #041019 48%,
+      #02070b 100%
     );
+  overflow:hidden;
 }
 
-
-/* =========================================================
-   STATUS BAR
-========================================================= */
-
-.status{
-  height:30px;
-
-  padding:8px 18px 0;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  font-size:11px;
-
-  position:relative;
-  z-index:50;
+#app::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  background-image:
+    linear-gradient(
+      rgba(70,205,240,.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(70,205,240,.035) 1px,
+      transparent 1px
+    );
+  background-size:40px 40px;
+  mask-image:linear-gradient(
+    to bottom,
+    black,
+    transparent 85%
+  );
 }
-
-.status-right{
-  display:flex;
-  gap:7px;
-  font-size:9px;
-}
-
-
-/* =========================================================
-   SCREENS
-========================================================= */
 
 .screen{
   display:none;
-
-  min-height:calc(100vh - 30px);
-
+  min-height:100vh;
   padding-bottom:100px;
+  position:relative;
 }
 
 .screen.active{
   display:block;
 }
 
+/* =====================================================
+   TOP
+===================================================== */
 
-/* =========================================================
-   HOME HERO
-========================================================= */
-
-.hero{
+.top-header{
+  padding:27px 20px 10px;
   position:relative;
-
-  height:280px;
-
-  margin:0 10px;
-
-  border-radius:23px;
-
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,0,0,.05),
-      rgba(0,7,14,.88)
-    ),
-    url(
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
-    )
-    center / cover;
-
-  box-shadow:
-    0 20px 50px rgba(0,0,0,.4);
-}
-
-.hero::after{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      transparent 30%,
-      rgba(0,8,14,.95)
-    );
-}
-
-.hero-content{
-  position:absolute;
-
-  inset:35px 18px 20px;
-
   z-index:2;
+}
 
+.brand{
   display:flex;
-  flex-direction:column;
+  align-items:center;
   justify-content:space-between;
 }
 
-.logo{
-  text-align:center;
-
-  font-size:26px;
-
-  font-weight:300;
-
-  letter-spacing:1px;
+.brand-main{
+  font-size:19px;
+  font-weight:500;
+  letter-spacing:.17em;
 }
 
-.logo-small{
-  display:block;
-
-  margin-top:3px;
-
+.brand-sub{
   font-size:8px;
+  letter-spacing:.25em;
+  color:var(--muted);
+  margin-top:5px;
+}
 
-  color:#d0e1e7;
+.signal{
+  width:30px;
+  height:30px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-  letter-spacing:4px;
+.signal::before,
+.signal::after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(32,216,255,.35);
+  border-radius:50%;
+}
+
+.signal::before{
+  inset:6px;
+}
+
+.signal::after{
+  inset:11px;
+  background:var(--cyan);
+  box-shadow:0 0 12px rgba(32,216,255,.7);
+}
+
+/* =====================================================
+   HOME
+===================================================== */
+
+.home-content{
+  padding:5px 20px 0;
 }
 
 .hero-copy{
-  text-align:center;
+  padding:28px 0 22px;
 }
 
-.hero-copy p{
-  font-size:11px;
-
-  color:rgba(255,255,255,.75);
-
-  margin-bottom:6px;
-}
-
-.hero-copy strong{
-  font-size:14px;
-
-  letter-spacing:2px;
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-.search{
-  height:43px;
-
-  display:flex;
-  align-items:center;
-
-  padding:0 14px;
-
-  gap:8px;
-
-  border-radius:22px;
-
-  border:
-    1px solid rgba(130,210,240,.28);
-
-  background:
-    rgba(1,13,21,.72);
-
-  backdrop-filter:blur(15px);
-
-  color:#7e98a6;
-}
-
-.search input{
-  flex:1;
-
-  outline:none;
-  border:none;
-
-  background:transparent;
-
-  color:white;
-
-  font-size:11px;
-}
-
-.search input::placeholder{
-  color:#718997;
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.section{
-  margin-top:22px;
-  padding:0 18px;
-}
-
-.categories{
-  display:grid;
-
-  grid-template-columns:
-    repeat(5,1fr);
-
-  gap:7px;
-}
-
-.category{
-  height:70px;
-
-  display:flex;
-  flex-direction:column;
-
-  justify-content:center;
-  align-items:center;
-
-  gap:5px;
-
-  border-radius:16px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18,50,67,.95),
-      rgba(4,20,30,.9)
-    );
-
-  border:
-    1px solid rgba(65,190,235,.15);
-}
-
-.category-icon{
-  font-size:18px;
-  color:#27d8ff;
-}
-
-.category span{
+.hero-kicker{
   font-size:8px;
-}
-
-
-/* =========================================================
-   LOCATION
-========================================================= */
-
-.location{
-  min-height:68px;
-
-  display:flex;
-  align-items:center;
-
-  gap:12px;
-
-  padding:10px 13px;
-
-  border-radius:17px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(15,48,65,.9),
-      rgba(4,21,31,.9)
-    );
-
-  border:
-    1px solid rgba(65,190,235,.18);
-}
-
-.location-icon{
-  width:40px;
-  height:40px;
-
-  display:grid;
-  place-items:center;
-
-  border-radius:50%;
-
-  color:#20d7ff;
-
-  border:
-    1px solid rgba(32,215,255,.4);
-
-  background:
-    rgba(32,215,255,.08);
-}
-
-.location-text{
-  flex:1;
-}
-
-.location-text small{
-  display:block;
-
-  color:#78909e;
-
-  font-size:8px;
-
-  margin-bottom:4px;
-}
-
-.location-text strong{
-  font-size:11px;
-}
-
-
-/* =========================================================
-   SECTION TITLE
-========================================================= */
-
-.section-title{
-  display:flex;
-
-  justify-content:space-between;
-
+  color:var(--cyan2);
+  letter-spacing:.3em;
   margin-bottom:13px;
-
-  font-size:13px;
-
-  font-weight:700;
+  opacity:.85;
 }
 
-.section-title .more{
-  color:#20d7ff;
-
-  font-size:9px;
+.hero-title{
+  font-size:29px;
+  line-height:1.3;
+  font-weight:500;
+  letter-spacing:.04em;
 }
 
+.hero-title span{
+  display:block;
+}
 
-/* =========================================================
-   PLACE CARDS
-========================================================= */
+.hero-description{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.8;
+}
 
-.place-scroll{
+/* SEARCH */
+
+.search-box{
+  height:52px;
+  border:1px solid var(--line);
+  background:rgba(5,19,28,.72);
   display:flex;
-
-  gap:10px;
-
-  overflow-x:auto;
-
-  scrollbar-width:none;
+  align-items:center;
+  padding:0 16px;
+  position:relative;
+  overflow:hidden;
+  margin-bottom:28px;
 }
 
-.place-scroll::-webkit-scrollbar{
+.search-box::after{
+  content:"";
+  position:absolute;
+  width:70px;
+  height:1px;
+  background:var(--cyan);
+  opacity:.45;
+  top:0;
+  left:20px;
+}
+
+.search-icon{
+  width:16px;
+  height:16px;
+  border:1px solid #79dff5;
+  border-radius:50%;
+  position:relative;
+  margin-right:13px;
+  flex-shrink:0;
+}
+
+.search-icon::after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:1px;
+  background:#79dff5;
+  right:-5px;
+  bottom:-2px;
+  transform:rotate(45deg);
+}
+
+.search-box input{
+  width:100%;
+  border:0;
+  outline:none;
+  color:var(--text);
+  background:transparent;
+  font-size:13px;
+}
+
+.search-box input::placeholder{
+  color:#637b88;
+}
+
+/* =====================================================
+   CATEGORY
+===================================================== */
+
+.section-label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.section-label span{
+  font-size:9px;
+  color:#9bb0ba;
+  letter-spacing:.25em;
+}
+
+.section-label::after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:linear-gradient(
+    to right,
+    var(--line),
+    transparent
+  );
+}
+
+/* horizontal category */
+
+.category-scroll{
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+  padding:2px 4px 18px;
+  margin:0 -4px;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+
+.category-scroll::-webkit-scrollbar{
   display:none;
 }
 
-.place{
-  min-width:130px;
-
-  width:130px;
+.category-item{
+  flex:0 0 66px;
+  text-align:center;
+  cursor:pointer;
 }
 
-.place-image{
-  height:105px;
-
-  overflow:hidden;
-
-  border-radius:13px;
+.category-circle{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:1px solid rgba(54,205,240,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 9px;
+  position:relative;
+  background:
+    radial-gradient(
+      circle,
+      rgba(32,216,255,.08),
+      rgba(4,15,22,.8)
+    );
+  transition:.25s ease;
 }
 
-.place-image img{
+.category-circle::before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border-radius:50%;
+  border:1px solid rgba(87,219,245,.09);
+}
+
+.category-circle::after{
+  content:"";
+  position:absolute;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:var(--cyan);
+  top:7px;
+  right:11px;
+  box-shadow:0 0 8px rgba(32,216,255,.8);
+}
+
+.category-item:active .category-circle,
+.category-item.selected .category-circle{
+  border-color:var(--cyan);
+  box-shadow:
+    0 0 10px rgba(32,216,255,.20),
+    inset 0 0 15px rgba(32,216,255,.08);
+  transform:scale(1.04);
+}
+
+.category-icon{
+  width:24px;
+  height:24px;
+  color:#a8efff;
+  position:relative;
+}
+
+.category-icon svg{
   width:100%;
   height:100%;
-
-  object-fit:cover;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.place-name{
-  margin-top:7px;
-
+.category-name{
   font-size:10px;
-
-  font-weight:600;
+  color:#c0d0d7;
+  white-space:nowrap;
 }
 
-.place-tag{
-  color:#22d8ff;
-
-  font-size:8px;
-
+.category-en{
+  font-size:7px;
+  color:#607984;
+  letter-spacing:.12em;
   margin-top:3px;
 }
 
-.place-meta{
-  color:#718895;
+/* =====================================================
+   CURRENT MAP
+===================================================== */
 
-  font-size:8px;
-
-  margin-top:3px;
-}
-
-.star{
-  color:#ffd55a;
-}
-
-
-/* =========================================================
-   MAP
-========================================================= */
-
-.map-screen{
-  position:relative;
-
-  height:calc(100vh - 30px);
-
-  min-height:700px;
-
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      rgba(1,15,24,.62),
-      rgba(1,10,16,.88)
-    ),
-    url(
-      "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=85"
-    )
-    center / cover;
-}
-
-.map-title{
-  position:absolute;
-
-  top:20px;
-  left:18px;
-
-  font-size:20px;
-
-  font-weight:600;
-}
-
-.map-sub{
-  font-size:8px;
-
-  color:#78909e;
-
-  margin-top:4px;
-}
-
-.pin{
-  position:absolute;
-
-  width:35px;
-  height:35px;
-
-  display:grid;
-  place-items:center;
-
-  border-radius:50%;
-
-  color:white;
-
-  background:
-    rgba(9,62,83,.9);
-
-  border:
-    1px solid rgba(60,215,255,.5);
-
-  box-shadow:
-    0 0 20px rgba(20,200,255,.2);
-
-  font-size:15px;
-}
-
-.pin.p1{left:18%;top:35%;}
-.pin.p2{left:67%;top:28%;}
-.pin.p3{left:28%;top:58%;}
-.pin.p4{left:72%;top:59%;}
-.pin.p5{left:45%;top:43%;}
-
-.current{
-  position:absolute;
-
-  left:50%;
-  top:45%;
-
-  width:17px;
-  height:17px;
-
-  border-radius:50%;
-
-  background:#23d9ff;
-
-  border:3px solid white;
-
-  box-shadow:
-    0 0 0 12px rgba(35,217,255,.12),
-    0 0 35px #23d9ff;
+.current-map{
+  margin-top:15px;
 }
 
 .map-card{
+  height:230px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(20,139,175,.13),
+      transparent 35%
+    ),
+    #031018;
+}
+
+/* map grid */
+
+.map-card::before{
+  content:"";
   position:absolute;
-
-  left:14px;
-  right:14px;
-  bottom:85px;
-
-  padding:17px;
-
-  border-radius:20px;
-
-  background:
-    rgba(3,19,29,.92);
-
-  border:
-    1px solid rgba(60,190,230,.18);
-
-  backdrop-filter:blur(18px);
-}
-
-.map-card-tag{
-  color:#21d8ff;
-
-  font-size:8px;
-}
-
-.map-card h3{
-  margin-top:7px;
-
-  font-size:16px;
-}
-
-.map-card-meta{
-  margin-top:7px;
-
-  color:#718995;
-
-  font-size:9px;
-}
-
-.detail-button{
-  width:100%;
-
-  height:38px;
-
-  margin-top:13px;
-
-  border:none;
-
-  border-radius:20px;
-
-  background:
+  inset:0;
+  background-image:
+    linear-gradient(
+      rgba(70,210,240,.09) 1px,
+      transparent 1px
+    ),
     linear-gradient(
       90deg,
-      #19ccef,
-      #25ddff
+      rgba(70,210,240,.09) 1px,
+      transparent 1px
     );
-
-  color:#001018;
-
-  font-weight:700;
-
-  font-size:10px;
+  background-size:34px 34px;
+  transform:perspective(450px) rotateX(52deg) scale(1.4);
+  transform-origin:center bottom;
+  opacity:.42;
 }
 
-
-/* =========================================================
-   GENERIC PAGES
-========================================================= */
-
-.page{
-  padding:22px 18px 100px;
-}
-
-.page-title{
-  font-size:21px;
-
-  margin-bottom:20px;
-}
-
-.card{
-  padding:17px;
-
-  margin-bottom:10px;
-
-  border-radius:17px;
-
+.map-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
   background:
     linear-gradient(
-      145deg,
-      rgba(15,46,63,.9),
-      rgba(4,20,30,.9)
+      120deg,
+      transparent 0%,
+      rgba(32,216,255,.06) 48%,
+      transparent 52%
     );
-
-  border:
-    1px solid rgba(70,190,230,.16);
 }
 
-.keyword{
-  display:inline-block;
-
-  padding:9px 13px;
-
-  margin:3px;
-
-  border-radius:20px;
-
-  color:#cde1e7;
-
-  font-size:9px;
-
-  background:#0a2635;
-
-  border:
-    1px solid rgba(60,190,230,.14);
+.map-road{
+  position:absolute;
+  height:1px;
+  background:rgba(104,215,237,.16);
+  transform-origin:left center;
 }
 
+.road1{
+  width:130%;
+  left:-10%;
+  top:43%;
+  transform:rotate(-17deg);
+}
 
-/* =========================================================
-   FAVORITES
-========================================================= */
+.road2{
+  width:120%;
+  left:-5%;
+  top:66%;
+  transform:rotate(22deg);
+}
 
-.favorite-row{
+.road3{
+  width:100%;
+  left:20%;
+  top:25%;
+  transform:rotate(67deg);
+}
+
+.road4{
+  width:80%;
+  left:-5%;
+  top:80%;
+  transform:rotate(-48deg);
+}
+
+.map-label{
+  position:absolute;
+  font-size:7px;
+  color:rgba(140,206,221,.43);
+  letter-spacing:.14em;
+}
+
+.map-label.l1{
+  left:14px;
+  top:18px;
+}
+
+.map-label.l2{
+  right:15px;
+  top:55px;
+}
+
+.map-label.l3{
+  left:18px;
+  bottom:18px;
+}
+
+.map-label.l4{
+  right:18px;
+  bottom:35px;
+}
+
+/* radar */
+
+.radar{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:104px;
+  height:104px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(54,220,255,.38);
+  box-shadow:
+    0 0 25px rgba(32,216,255,.10),
+    inset 0 0 20px rgba(32,216,255,.04);
+}
+
+.radar::before,
+.radar::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(54,220,255,.18);
+}
+
+.radar::before{
+  inset:17px;
+}
+
+.radar::after{
+  inset:34px;
+}
+
+.radar-cross{
+  position:absolute;
+  inset:0;
+}
+
+.radar-cross::before{
+  content:"";
+  position:absolute;
+  width:1px;
+  height:100%;
+  background:rgba(60,221,255,.18);
+  left:50%;
+}
+
+.radar-cross::after{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:1px;
+  background:rgba(60,221,255,.18);
+  top:50%;
+}
+
+.radar-sweep{
+  position:absolute;
+  width:50%;
+  height:1px;
+  top:50%;
+  left:50%;
+  transform-origin:left center;
+  background:linear-gradient(
+    to right,
+    rgba(95,235,255,.9),
+    transparent
+  );
+  animation:radarSweep 3.2s linear infinite;
+}
+
+@keyframes radarSweep{
+  from{
+    transform:rotate(0deg);
+  }
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.current-location{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:10px;
+  height:10px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#dffbff;
+  border:2px solid var(--cyan);
+  box-shadow:
+    0 0 5px #fff,
+    0 0 16px rgba(32,216,255,.9);
+  z-index:3;
+}
+
+.location-pulse{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:10px;
+  height:10px;
+  transform:translate(-50%,-50%);
+  border:1px solid var(--cyan);
+  border-radius:50%;
+  animation:pulse 2s ease-out infinite;
+}
+
+@keyframes pulse{
+  0%{
+    width:10px;
+    height:10px;
+    opacity:.9;
+  }
+  100%{
+    width:70px;
+    height:70px;
+    opacity:0;
+  }
+}
+
+.map-info{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  z-index:4;
   display:flex;
-
-  align-items:center;
-
-  gap:12px;
+  justify-content:space-between;
+  align-items:end;
 }
 
-.favorite-image{
-  width:65px;
-  height:65px;
+.map-status{
+  font-size:7px;
+  color:#80d9eb;
+  letter-spacing:.2em;
+}
 
-  border-radius:12px;
+.map-action{
+  font-size:9px;
+  letter-spacing:.1em;
+  color:#d9f9ff;
+  padding:7px 10px;
+  border:1px solid rgba(80,220,245,.25);
+  background:rgba(2,11,16,.7);
+}
 
+/* =====================================================
+   RECOMMEND
+===================================================== */
+
+.recommend{
+  margin-top:28px;
+}
+
+.recommend-scroll{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:12px;
+}
+
+.recommend-scroll::-webkit-scrollbar{
+  display:none;
+}
+
+.place-card{
+  flex:0 0 210px;
+  min-height:125px;
+  border:1px solid var(--line);
+  background:linear-gradient(
+    145deg,
+    rgba(9,29,42,.9),
+    rgba(4,14,21,.92)
+  );
+  padding:15px;
+  position:relative;
   overflow:hidden;
 }
 
-.favorite-image img{
-  width:100%;
-  height:100%;
-
-  object-fit:cover;
+.place-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:45px;
+  height:1px;
+  background:var(--cyan);
 }
 
-.favorite-info{
+.place-type{
+  font-size:7px;
+  color:var(--cyan2);
+  letter-spacing:.2em;
+}
+
+.place-name{
+  margin-top:10px;
+  font-size:15px;
+}
+
+.place-meta{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.place-rating{
+  position:absolute;
+  right:13px;
+  top:13px;
+  color:var(--yellow);
+  font-size:9px;
+}
+
+/* =====================================================
+   OTHER SCREENS
+===================================================== */
+
+.page-inner{
+  padding:15px 20px;
+}
+
+.page-title{
+  padding:20px 0 25px;
+}
+
+.page-title .small{
+  color:var(--cyan2);
+  font-size:8px;
+  letter-spacing:.25em;
+  margin-bottom:9px;
+}
+
+.page-title h1{
+  font-size:26px;
+  font-weight:500;
+}
+
+.page-title p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:8px;
+}
+
+/* MAP SCREEN */
+
+.full-map{
+  height:calc(100vh - 160px);
+  min-height:500px;
+  margin:0 12px;
+  border:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(17,129,164,.18),
+      transparent 35%
+    ),
+    #031018;
+}
+
+.full-map::before{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background-image:
+    linear-gradient(
+      rgba(70,210,240,.10) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(70,210,240,.10) 1px,
+      transparent 1px
+    );
+  background-size:35px 35px;
+  transform:rotate(8deg);
+}
+
+.full-map .radar{
+  width:150px;
+  height:150px;
+}
+
+.map-pin{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 13px rgba(32,216,255,.9);
+}
+
+.pin1{
+  left:24%;
+  top:31%;
+}
+
+.pin2{
+  left:72%;
+  top:27%;
+}
+
+.pin3{
+  left:68%;
+  top:62%;
+}
+
+.pin4{
+  left:31%;
+  top:70%;
+}
+
+.map-bottom{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  padding:15px;
+  background:rgba(3,13,19,.91);
+  border:1px solid var(--line);
+  backdrop-filter:blur(12px);
+}
+
+.map-bottom-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.map-bottom-name{
+  font-size:15px;
+}
+
+.map-bottom-type{
+  font-size:8px;
+  color:var(--cyan2);
+  letter-spacing:.15em;
+}
+
+.map-bottom-detail{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:9px;
+}
+
+/* SEARCH SCREEN */
+
+.search-large{
+  height:55px;
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  padding:0 16px;
+  background:rgba(6,20,29,.8);
+}
+
+.search-large input{
   flex:1;
+  background:none;
+  border:0;
+  outline:0;
+  color:#fff;
+  font-size:13px;
 }
 
-.favorite-info strong{
+.keyword-title{
+  margin-top:30px;
+  margin-bottom:14px;
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:.2em;
+}
+
+.keyword-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.keyword{
+  border:1px solid var(--line);
+  padding:8px 12px;
+  font-size:10px;
+  color:#b5cbd4;
+  background:rgba(7,23,33,.55);
+}
+
+.genre-list{
+  margin-top:30px;
+}
+
+.genre-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:17px 3px;
+  border-bottom:1px solid rgba(74,190,235,.10);
+}
+
+.genre-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.genre-mini{
+  width:30px;
+  height:30px;
+  border:1px solid var(--line);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--cyan2);
+}
+
+.genre-row span{
   font-size:11px;
 }
 
-.favorite-info small{
-  display:block;
-
-  color:#718895;
-
-  margin-top:5px;
-
-  font-size:8px;
+.genre-arrow{
+  color:#597581;
 }
 
-.heart{
-  color:#21d9ff;
+/* FAVORITES */
 
-  font-size:18px;
+.favorite-card{
+  padding:17px;
+  border:1px solid var(--line);
+  margin-bottom:12px;
+  background:linear-gradient(
+    145deg,
+    rgba(8,28,40,.82),
+    rgba(3,13,19,.9)
+  );
+  position:relative;
 }
 
+.favorite-type{
+  font-size:7px;
+  color:var(--cyan2);
+  letter-spacing:.2em;
+}
 
-/* =========================================================
-   PROFILE
-========================================================= */
+.favorite-name{
+  margin-top:9px;
+  font-size:15px;
+}
+
+.favorite-info{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.favorite-star{
+  position:absolute;
+  right:15px;
+  top:15px;
+  color:var(--yellow);
+}
+
+/* MY PAGE */
 
 .profile{
+  border:1px solid var(--line);
+  padding:22px;
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(32,216,255,.08),
+      transparent 35%
+    ),
+    rgba(6,22,32,.8);
+}
+
+.profile-top{
   display:flex;
-
   align-items:center;
-
-  gap:13px;
+  gap:15px;
 }
 
 .avatar{
-  width:50px;
-  height:50px;
-
+  width:58px;
+  height:58px;
   border-radius:50%;
-
-  display:grid;
-  place-items:center;
-
-  background:
-    linear-gradient(
-      135deg,
-      #dbeef4,
-      #62818e
-    );
-
-  color:#16313c;
+  border:1px solid rgba(50,220,255,.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--cyan);
+  box-shadow:0 0 18px rgba(32,216,255,.08);
 }
 
 .profile-name{
-  font-size:13px;
-
-  font-weight:700;
+  font-size:16px;
 }
 
 .profile-sub{
-  margin-top:4px;
-
-  color:#718895;
-
-  font-size:8px;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:9px;
 }
 
 .stats{
-  display:grid;
+  display:flex;
+  margin-top:25px;
+  border-top:1px solid var(--line);
+  padding-top:18px;
+}
 
-  grid-template-columns:
-    repeat(3,1fr);
-
-  margin:25px 0;
-
+.stat{
+  flex:1;
   text-align:center;
 }
 
+.stat:not(:last-child){
+  border-right:1px solid var(--line);
+}
+
 .stat-number{
-  font-size:20px;
-}
-
-.stat-label{
-  margin-top:4px;
-
-  color:#718895;
-
-  font-size:8px;
-}
-
-
-/* =========================================================
-   BOTTOM NAV
-========================================================= */
-
-.bottom-nav{
-  position:fixed;
-
-  left:50%;
-  bottom:0;
-
-  transform:translateX(-50%);
-
-  width:100%;
-  max-width:430px;
-
-  height:73px;
-
-  z-index:5000;
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(5,1fr);
-
-  padding:
-    7px 7px
-    calc(7px + env(safe-area-inset-bottom));
-
-  background:
-    rgba(2,13,21,.94);
-
-  border-top:
-    1px solid rgba(70,180,220,.13);
-
-  backdrop-filter:blur(22px);
-}
-
-.nav{
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:center;
-
-  align-items:center;
-
-  gap:4px;
-
-  color:#5f7886;
-
-  font-size:8px;
-
-  cursor:pointer;
-
-  transition:.25s;
-}
-
-.nav-icon{
   font-size:19px;
 }
 
-.nav.active{
-  color:#25d9ff;
-
-  text-shadow:
-    0 0 12px rgba(35,220,255,.6);
+.stat-label{
+  font-size:7px;
+  color:var(--muted);
+  margin-top:4px;
+  letter-spacing:.12em;
 }
 
-
-/* =========================================================
-   ANIMATIONS
-========================================================= */
-
-@keyframes drawLine{
-
-  from{
-    opacity:0;
-    stroke-dashoffset:100;
-  }
-
-  to{
-    opacity:.9;
-    stroke-dashoffset:0;
-  }
-
+.settings{
+  margin-top:28px;
 }
 
-@keyframes nodeIn{
-
-  from{
-    opacity:0;
-
-    transform:
-      translate(-50%,-50%)
-      scale(.1);
-  }
-
-  to{
-    opacity:1;
-
-    transform:
-      translate(-50%,-50%)
-      scale(1);
-  }
-
+.setting{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 4px;
+  border-bottom:1px solid rgba(74,190,235,.10);
+  font-size:11px;
 }
 
-@keyframes nodeGather{
-
-  0%{
-    opacity:1;
-  }
-
-  55%{
-    opacity:1;
-
-    transform:
-      translate(
-        calc(50vw - var(--x)),
-        calc(50vh - var(--y))
-      )
-      scale(.62);
-  }
-
-  100%{
-    left:50%;
-    top:50%;
-
-    opacity:0;
-
-    transform:
-      translate(-50%,-50%)
-      scale(.12);
-  }
-
+.setting span:last-child{
+  color:#55717d;
 }
 
-@keyframes nodeScan{
+/* DETAIL */
 
-  0%{
-    opacity:0;
-    transform:scale(.7);
-  }
-
-  40%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:0;
-    transform:scale(1.3);
-  }
-
+.detail-hero{
+  height:190px;
+  margin:0 12px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(27,167,208,.16),
+      transparent 45%
+    ),
+    linear-gradient(
+      145deg,
+      #071b27,
+      #02090e
+    );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
 }
 
-@keyframes coreIn{
-
-  0%{
-    opacity:0;
-
-    transform:
-      translate(-50%,-50%)
-      scale(.05);
-  }
-
-  60%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:1;
-
-    transform:
-      translate(-50%,-50%)
-      scale(1);
-  }
-
+.detail-hero::after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  border:1px solid rgba(32,216,255,.24);
+  border-radius:50%;
+  box-shadow:
+    0 0 30px rgba(32,216,255,.08);
 }
 
-@keyframes corePulse{
-
-  0%,100%{
-    transform:scale(1);
-  }
-
-  50%{
-    transform:scale(1.12);
-  }
-
+.detail-center{
+  position:relative;
+  z-index:2;
+  text-align:center;
 }
 
-@keyframes ringExpand{
-
-  0%{
-    opacity:.8;
-
-    transform:
-      translate(-50%,-50%)
-      scale(.35);
-  }
-
-  100%{
-    opacity:0;
-
-    transform:
-      translate(-50%,-50%)
-      scale(2.8);
-  }
-
+.detail-center .type{
+  font-size:8px;
+  color:var(--cyan2);
+  letter-spacing:.25em;
 }
 
-@keyframes crossIn{
-
-  from{
-    opacity:0;
-    transform:scale(.5);
-  }
-
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-
+.detail-center h1{
+  margin-top:10px;
+  font-size:22px;
+  font-weight:500;
 }
 
-@keyframes flashBurst{
-
-  0%{
-    opacity:0;
-  }
-
-  25%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:0;
-  }
-
+.detail-content{
+  padding:25px 20px;
 }
 
-@keyframes gridMove{
-
-  from{
-    background-position:0 0;
-  }
-
-  to{
-    background-position:0 55px;
-  }
-
+.detail-rating{
+  color:var(--yellow);
+  font-size:12px;
 }
 
-@keyframes scanDown{
-
-  0%{
-    top:-5%;
-    opacity:0;
-  }
-
-  10%{
-    opacity:1;
-  }
-
-  90%{
-    opacity:1;
-  }
-
-  100%{
-    top:105%;
-    opacity:0;
-  }
-
+.detail-description{
+  margin-top:15px;
+  color:#8da4ae;
+  font-size:11px;
+  line-height:1.9;
 }
 
-@keyframes systemGrid{
-
-  from{
-    background-position:0 0;
-  }
-
-  to{
-    background-position:50px 50px;
-  }
-
+.detail-action{
+  margin-top:22px;
+  height:48px;
+  width:100%;
+  border:1px solid rgba(32,216,255,.4);
+  background:rgba(32,216,255,.05);
+  color:var(--cyan2);
+  font-size:10px;
+  letter-spacing:.16em;
 }
 
-@keyframes hudIn{
+/* =====================================================
+   BOTTOM NAV
+===================================================== */
 
-  from{
-    opacity:0;
-  }
-
-  to{
-    opacity:1;
-  }
-
+.bottom-nav{
+  position:fixed;
+  z-index:100;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(430px,100%);
+  height:76px;
+  border-top:1px solid rgba(75,200,235,.18);
+  background:rgba(2,9,14,.94);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding-bottom:env(safe-area-inset-bottom);
 }
 
-@keyframes systemLogoIn{
-
-  from{
-    opacity:0;
-
-    transform:
-      translateY(12px)
-      scale(.95);
-  }
-
-  to{
-    opacity:1;
-
-    transform:
-      translateY(0)
-      scale(1);
-  }
-
+.nav-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:#506974;
+  position:relative;
+  cursor:pointer;
 }
 
-@keyframes systemText{
-
-  from{
-    opacity:0;
-    transform:translateY(8px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
+.nav-item.active{
+  color:var(--cyan2);
 }
 
-@keyframes statusIn{
-
-  from{
-    opacity:0;
-    transform:translateY(10px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
+.nav-icon{
+  width:20px;
+  height:20px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-@keyframes startIn{
-
-  from{
-    opacity:0;
-    transform:translateY(18px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
+.nav-icon svg{
+  width:100%;
+  height:100%;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-@keyframes connectItem{
+/* central MAP */
 
-  from{
-    opacity:0;
-    transform:translateX(-12px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateX(0);
-  }
-
+.nav-item.map-nav{
+  margin-top:-18px;
 }
 
-@keyframes burst{
-
-  0%{
-    opacity:1;
-
-    transform:
-      translate(-50%,-50%)
-      scale(0);
-  }
-
-  25%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:0;
-
-    transform:
-      translate(-50%,-50%)
-      scale(150);
-  }
-
+.nav-item.map-nav .nav-icon{
+  width:48px;
+  height:48px;
+  border:1px solid rgba(32,216,255,.55);
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(32,216,255,.14),
+      rgba(2,10,15,.96)
+    );
+  box-shadow:
+    0 0 15px rgba(32,216,255,.16),
+    inset 0 0 14px rgba(32,216,255,.07);
 }
 
-
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media (min-width:600px){
-
-  body{
-    display:flex;
-    justify-content:center;
-
-    padding:20px 0;
-
-    background:
-      radial-gradient(
-        circle,
-        #09212d,
-        #000 75%
-      );
-  }
-
-  #app{
-    min-height:850px;
-  }
-
-  .phone{
-    min-height:850px;
-
-    max-height:900px;
-
-    border-radius:30px;
-
-    box-shadow:
-      0 0 0 1px rgba(100,220,255,.08),
-      0 30px 100px rgba(0,0,0,.7);
-  }
-
-  .bottom-nav{
-    bottom:20px;
-
-    border-radius:
-      0 0 30px 30px;
-  }
-
+.nav-item.map-nav .nav-icon::before,
+.nav-item.map-nav .nav-icon::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(32,216,255,.20);
 }
 
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion:reduce){
-
-  *,
-  *::before,
-  *::after{
-    animation-duration:.01ms !important;
-    animation-iteration-count:1 !important;
-    scroll-behavior:auto !important;
-  }
-
+.nav-item.map-nav .nav-icon::before{
+  inset:7px;
 }
 
+.nav-item.map-nav .nav-icon::after{
+  inset:15px;
+}
+
+.nav-item.map-nav .nav-icon svg{
+  width:20px;
+  height:20px;
+  z-index:2;
+  filter:drop-shadow(0 0 5px rgba(32,216,255,.7));
+}
+
+.nav-item.map-nav .nav-label{
+  margin-top:1px;
+}
+
+.nav-item.active::after{
+  content:"";
+  position:absolute;
+  bottom:7px;
+  width:18px;
+  height:1px;
+  background:var(--cyan);
+  box-shadow:0 0 8px rgba(32,216,255,.8);
+}
+
+.nav-item.map-nav.active::after{
+  bottom:4px;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+#toast{
+  position:fixed;
+  z-index:9998;
+  left:50%;
+  bottom:92px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  padding:11px 16px;
+  min-width:190px;
+  text-align:center;
+  border:1px solid rgba(32,216,255,.25);
+  background:rgba(3,13,19,.94);
+  color:#bdeefa;
+  font-size:10px;
+  letter-spacing:.08em;
+  transition:.3s ease;
+  backdrop-filter:blur(10px);
+}
+
+#toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:360px){
+
+  .hero-title{
+    font-size:25px;
+  }
+
+  .category-scroll{
+    gap:15px;
+  }
+
+  .category-item{
+    flex-basis:62px;
+  }
+
+  .category-circle{
+    width:56px;
+    height:56px;
+  }
+}
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =======================================================
+<!-- =====================================================
      OPENING
-======================================================= -->
+===================================================== -->
 
 <div id="opening">
 
-  <div class="opening-world"></div>
+  <div class="opening-core">
 
-  <div class="opening-black"></div>
+    <div class="opening-ring"></div>
+    <div class="opening-ring r2"></div>
+    <div class="opening-ring r3"></div>
 
-  <div class="opening-grid"></div>
+    <div class="opening-line"></div>
+    <div class="opening-line horizontal"></div>
 
-  <div class="scan-line"></div>
+    <div class="opening-sweep"></div>
 
-
-  <!-- CONNECTIONS -->
-
-  <svg
-    class="connections"
-    viewBox="0 0 100 100"
-    preserveAspectRatio="none"
-  >
-
-    <line
-      class="connection"
-      x1="12"
-      y1="30"
-      x2="50"
-      y2="50"
-    />
-
-    <line
-      class="connection"
-      x1="47"
-      y1="16"
-      x2="50"
-      y2="50"
-    />
-
-    <line
-      class="connection"
-      x1="84"
-      y1="16"
-      x2="50"
-      y2="50"
-    />
-
-    <line
-      class="connection"
-      x1="83"
-      y1="52"
-      x2="50"
-      y2="50"
-    />
-
-    <line
-      class="connection"
-      x1="69"
-      y1="87"
-      x2="50"
-      y2="50"
-    />
-
-    <line
-      class="connection"
-      x1="18"
-      y1="87"
-      x2="50"
-      y2="50"
-    />
-
-  </svg>
-
-
-  <!-- NODES -->
-
-  <div
-    class="node yellow"
-    style="--x:12vw;--y:30vh"
-  ></div>
-
-  <div
-    class="node red"
-    style="--x:47vw;--y:16vh"
-  ></div>
-
-  <div
-    class="node green"
-    style="--x:84vw;--y:16vh"
-  ></div>
-
-  <div
-    class="node blue"
-    style="--x:83vw;--y:52vh"
-  ></div>
-
-  <div
-    class="node cyan"
-    style="--x:69vw;--y:87vh"
-  ></div>
-
-  <div
-    class="node pink"
-    style="--x:18vw;--y:87vh"
-  ></div>
-
-
-  <!-- CORE -->
-
-  <div class="core">
-
-    <div class="core-cross"></div>
-
-    <div class="core-ring r1"></div>
-    <div class="core-ring r2"></div>
-    <div class="core-ring r3"></div>
-
-    <div class="core-ball"></div>
-
-  </div>
-
-
-  <div class="flash"></div>
-
-
-  <!-- =====================================================
-       SYSTEM MODE
-  ====================================================== -->
-
-  <div class="system">
-
-
-    <!-- HUD -->
-
-    <div class="system-hud">
-
-      <div class="hud-line top"></div>
-      <div class="hud-line bottom"></div>
-
-      <div class="hud-corner tl"></div>
-      <div class="hud-corner tr"></div>
-      <div class="hud-corner bl"></div>
-      <div class="hud-corner br"></div>
-
+    <div class="opening-logo">
+      <div class="en">ohitorisamap</div>
+      <div class="jp">おひとりさまっぷ</div>
     </div>
-
-
-    <div class="system-logo">
-      OHITORISAMAP
-    </div>
-
-
-    <div class="system-status">
-      SYSTEM INITIALIZING
-    </div>
-
-
-    <div class="system-message">
-      SOLO DISCOVERY SYSTEM
-    </div>
-
-
-    <!-- CONNECTION STATUS -->
-
-    <div class="connection-status">
-
-      <div class="connection-row">
-
-        <span class="status-dot"></span>
-
-        LOCATION SYSTEM
-
-        <span>READY</span>
-
-      </div>
-
-
-      <div class="connection-row">
-
-        <span class="status-dot"></span>
-
-        MAP DATABASE
-
-        <span>READY</span>
-
-      </div>
-
-
-      <div class="connection-row">
-
-        <span class="status-dot"></span>
-
-        SOLO MODE
-
-        <span>READY</span>
-
-      </div>
-
-    </div>
-
-
-    <!-- START -->
-
-    <div class="start-wrap">
-
-      <button
-        class="start-button"
-        id="startButton"
-      >
-        START
-      </button>
-
-      <div class="touch">
-        TOUCH TO BEGIN
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       CONNECTING
-  ====================================================== -->
-
-  <div class="connecting">
-
-    <div class="connecting-title">
-      CONNECTING
-    </div>
-
-    <div class="connecting-sub">
-      INITIALIZING YOUR SOLO EXPERIENCE
-    </div>
-
-
-    <div class="connect-list">
-
-      <div class="connect-item" data-connect="0">
-
-        <span>LOCATION</span>
-
-        <span class="ok">
-          ✓
-        </span>
-
-      </div>
-
-
-      <div class="connect-item" data-connect="1">
-
-        <span>MAP DATABASE</span>
-
-        <span class="ok">
-          ✓
-        </span>
-
-      </div>
-
-
-      <div class="connect-item" data-connect="2">
-
-        <span>SOLO MODE</span>
-
-        <span class="ok">
-          ✓
-        </span>
-
-      </div>
-
-
-      <div class="connect-item" data-connect="3">
-
-        <span>PERSONAL SPACE</span>
-
-        <span class="ok">
-          ✓
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div class="connect-progress"></div>
 
   </div>
 
 </div>
 
 
-<!-- =======================================================
-     START BURST
-======================================================= -->
-
-<div
-  id="startBurst"
-  class="start-burst"
-></div>
-
-
-<!-- =======================================================
+<!-- =====================================================
      APP
-======================================================= -->
+===================================================== -->
 
 <div id="app">
 
-<div class="phone">
+  <!-- ================= HOME ================= -->
 
+  <section class="screen active" id="home">
 
-<!-- =====================================================
-     HOME
-===================================================== -->
+    <header class="top-header">
 
-<section
-  id="home"
-  class="screen active"
->
+      <div class="brand">
 
-  <div class="status">
-
-    <span>9:41</span>
-
-    <div class="status-right">
-      <span>▮▮▮</span>
-      <span>Wi-Fi</span>
-      <span>▰</span>
-    </div>
-
-  </div>
-
-
-  <div class="hero">
-
-    <div class="hero-content">
-
-      <div>
-
-        <div class="logo">
-          ohitorisamap
-
-          <span class="logo-small">
-            おひとりさまっぷ
-          </span>
-
+        <div>
+          <div class="brand-main">ohitorisamap</div>
+          <div class="brand-sub">おひとりさまっぷ</div>
         </div>
+
+        <div class="signal"></div>
 
       </div>
 
+    </header>
+
+    <main class="home-content">
 
       <div class="hero-copy">
 
-        <p>
-          ひとりの時間を、
-        </p>
+        <div class="hero-kicker">
+          PERSONAL DISCOVERY SYSTEM
+        </div>
 
-        <strong>
-          もっと自由に。
-        </strong>
+        <h1 class="hero-title">
+          ひとりの時間を、
+          <span>もっと自由に。</span>
+        </h1>
+
+        <p class="hero-description">
+          今の気分から、ひとりで行きたい場所を探そう。
+        </p>
 
       </div>
 
 
-      <div class="search">
+      <!-- SEARCH -->
 
-        <span>⌕</span>
+      <div class="search-box">
+
+        <div class="search-icon"></div>
 
         <input
           id="homeSearch"
-          placeholder="行きたい場所・ジャンル・キーワード"
+          type="text"
+          placeholder="どこへ行こう？"
         >
 
-        <span>›</span>
+      </div>
+
+
+      <!-- CATEGORY -->
+
+      <div class="section-label">
+        <span>CATEGORY</span>
+      </div>
+
+      <div class="category-scroll" id="categoryScroll">
+
+        <!-- 食事 -->
+
+        <div class="category-item selected" data-category="食事">
+
+          <div class="category-circle">
+
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 3v8"/>
+                <path d="M9 3v8"/>
+                <path d="M6 7h3"/>
+                <path d="M7.5 11v10"/>
+                <path d="M16 3v18"/>
+                <path d="M16 3c3 2 3 6 0 8"/>
+              </svg>
+            </div>
+
+          </div>
+
+          <div class="category-name">食事</div>
+          <div class="category-en">FOOD</div>
+
+        </div>
+
+
+        <!-- カフェ -->
+
+        <div class="category-item" data-category="カフェ">
+
+          <div class="category-circle">
+
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 8h12v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/>
+                <path d="M17 10h2a3 3 0 0 1 0 6h-2"/>
+                <path d="M8 4c0 1 1 1 1 2"/>
+                <path d="M12 4c0 1 1 1 1 2"/>
+              </svg>
+            </div>
+
+          </div>
+
+          <div class="category-name">カフェ</div>
+          <div class="category-en">CAFE</div>
+
+        </div>
+
+
+        <!-- 映画 -->
+
+        <div class="category-item" data-category="映画">
+
+          <div class="category-circle">
+
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="M8 5v14"/>
+                <path d="M16 5v14"/>
+                <path d="M3 9h5"/>
+                <path d="M16 9h5"/>
+                <path d="M3 15h5"/>
+                <path d="M16 15h5"/>
+              </svg>
+            </div>
+
+          </div>
+
+          <div class="category-name">映画</div>
+          <div class="category-en">CINEMA</div>
+
+        </div>
+
+
+        <!-- 温泉 -->
+
+        <div class="category-item" data-category="温泉">
+
+          <div class="category-circle">
+
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 20c4-5 12-5 16 0"/>
+                <path d="M7 16c1-2 1-4 0-6"/>
+                <path d="M12 16c1-2 1-4 0-6"/>
+                <path d="M17 16c1-2 1-4 0-6"/>
+              </svg>
+            </div>
+
+          </div>
+
+          <div class="category-name">温泉</div>
+          <div class="category-en">ONSEN</div>
+
+        </div>
+
+
+        <!-- ドライブ -->
+
+        <div class="category-item" data-category="ドライブ">
+
+          <div class="category-circle">
+
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 16l2-6h10l2 6"/>
+                <path d="M4 16h16v4H4z"/>
+                <circle cx="7" cy="20" r="1"/>
+                <circle cx="17" cy="20" r="1"/>
+                <path d="M8 10l1-3h6l1 3"/>
+              </svg>
+            </div>
+
+          </div>
+
+          <div class="category-name">ドライブ</div>
+          <div class="category-en">DRIVE</div>
+
+        </div>
 
       </div>
 
-    </div>
 
-  </div>
+      <!-- MAP -->
 
+      <div class="current-map">
 
-  <div class="section">
+        <div class="section-label">
+          <span>AREA SCAN</span>
+        </div>
 
-    <div class="categories">
+        <div class="map-card">
 
-      <div class="category">
-        <div class="category-icon">🍴</div>
-        <span>食事</span>
-      </div>
+          <div class="map-road road1"></div>
+          <div class="map-road road2"></div>
+          <div class="map-road road3"></div>
+          <div class="map-road road4"></div>
 
-      <div class="category">
-        <div class="category-icon">☕</div>
-        <span>カフェ</span>
-      </div>
+          <div class="map-label l1">AREA 01</div>
+          <div class="map-label l2">SECTOR B</div>
+          <div class="map-label l3">LOCAL AREA</div>
+          <div class="map-label l4">SCAN READY</div>
 
-      <div class="category">
-        <div class="category-icon">▣</div>
-        <span>映画</span>
-      </div>
+          <div class="radar">
 
-      <div class="category">
-        <div class="category-icon">♨</div>
-        <span>温泉</span>
-      </div>
+            <div class="radar-cross"></div>
+            <div class="radar-sweep"></div>
 
-      <div class="category">
-        <div class="category-icon">🚗</div>
-        <span>ドライブ</span>
-      </div>
+          </div>
 
-    </div>
+          <div class="location-pulse"></div>
+          <div class="current-location"></div>
 
-  </div>
+          <div class="map-info">
 
+            <div class="map-status">
+              LOCATION SCAN / ONLINE
+            </div>
 
-  <div class="section">
+            <button
+              class="map-action"
+              onclick="navigate('map')"
+            >
+              MAPを開く →
+            </button>
 
-    <div class="location">
+          </div>
 
-      <div class="location-icon">
-        ◎
-      </div>
-
-      <div class="location-text">
-
-        <small>
-          現在地から探す
-        </small>
-
-        <strong>
-          あなたの近くのお店を表示
-        </strong>
+        </div>
 
       </div>
 
-      <span>›</span>
 
-    </div>
+      <!-- RECOMMEND -->
 
-  </div>
+      <div class="recommend">
 
+        <div class="section-label">
+          <span>RECOMMENDED</span>
+        </div>
 
-  <div class="section">
+        <div class="recommend-scroll">
 
-    <div class="section-title">
-
-      <span>
-        あなたにおすすめ
-      </span>
-
-      <span class="more">
-        もっと見る ›
-      </span>
-
-    </div>
-
-
-    <div class="place-scroll">
-
-
-      <div class="place">
-
-        <div class="place-image">
-
-          <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+          <div
+            class="place-card"
+            onclick="openDetail('居酒屋 たかし','食事')"
           >
+            <div class="place-type">FOOD / SOLO</div>
+            <div class="place-name">居酒屋 たかし</div>
+            <div class="place-meta">ひとりでも入りやすい · 4.6km</div>
+            <div class="place-rating">★ 4.6</div>
+          </div>
+
+          <div
+            class="place-card"
+            onclick="openDetail('Blue Coffee','カフェ')"
+          >
+            <div class="place-type">CAFE / QUIET</div>
+            <div class="place-name">Blue Coffee</div>
+            <div class="place-meta">静かに過ごせる · 2.1km</div>
+            <div class="place-rating">★ 4.4</div>
+          </div>
+
+          <div
+            class="place-card"
+            onclick="openDetail('CINEMA','映画')"
+          >
+            <div class="place-type">CINEMA / SOLO</div>
+            <div class="place-name">CINEMA</div>
+            <div class="place-meta">ひとり映画におすすめ</div>
+            <div class="place-rating">★ 4.7</div>
+          </div>
 
         </div>
 
-        <div class="place-tag">
-          焼き鳥
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <!-- ================= MAP ================= -->
+
+  <section class="screen" id="map">
+
+    <header class="top-header">
+
+      <div class="brand">
+
+        <div>
+          <div class="brand-main">MAP</div>
+          <div class="brand-sub">AREA NAVIGATION</div>
         </div>
 
-        <div class="place-name">
+        <div class="signal"></div>
+
+      </div>
+
+    </header>
+
+    <div class="full-map">
+
+      <div class="map-road road1"></div>
+      <div class="map-road road2"></div>
+      <div class="map-road road3"></div>
+      <div class="map-road road4"></div>
+
+      <div class="map-pin pin1"></div>
+      <div class="map-pin pin2"></div>
+      <div class="map-pin pin3"></div>
+      <div class="map-pin pin4"></div>
+
+      <div class="radar">
+
+        <div class="radar-cross"></div>
+        <div class="radar-sweep"></div>
+
+      </div>
+
+      <div class="location-pulse"></div>
+      <div class="current-location"></div>
+
+      <div class="map-bottom">
+
+        <div class="map-bottom-top">
+
+          <div>
+            <div class="map-bottom-type">NEARBY</div>
+            <div class="map-bottom-name">居酒屋 たかし</div>
+          </div>
+
+          <div class="place-rating">★ 4.6</div>
+
+        </div>
+
+        <div class="map-bottom-detail">
+          ひとりでも入りやすい · 徒歩8分
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= SEARCH ================= -->
+
+  <section class="screen" id="search">
+
+    <header class="top-header">
+
+      <div class="brand">
+
+        <div>
+          <div class="brand-main">SEARCH</div>
+          <div class="brand-sub">DISCOVERY SYSTEM</div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <div class="page-inner">
+
+      <div class="search-large">
+
+        <div class="search-icon"></div>
+
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="場所・ジャンルを検索"
+        >
+
+      </div>
+
+
+      <div class="keyword-title">
+        POPULAR
+      </div>
+
+      <div class="keyword-list">
+
+        <button class="keyword">ひとり焼肉</button>
+        <button class="keyword">ひとりカフェ</button>
+        <button class="keyword">映画</button>
+        <button class="keyword">温泉</button>
+        <button class="keyword">ドライブ</button>
+        <button class="keyword">夜ごはん</button>
+
+      </div>
+
+
+      <div class="genre-list">
+
+        <div class="section-label">
+          <span>GENRE</span>
+        </div>
+
+        <div
+          class="genre-row"
+          onclick="showToast('食事を検索します')"
+        >
+          <div class="genre-left">
+            <div class="genre-mini">食</div>
+            <span>食事</span>
+          </div>
+          <div class="genre-arrow">›</div>
+        </div>
+
+        <div
+          class="genre-row"
+          onclick="showToast('カフェを検索します')"
+        >
+          <div class="genre-left">
+            <div class="genre-mini">珈</div>
+            <span>カフェ</span>
+          </div>
+          <div class="genre-arrow">›</div>
+        </div>
+
+        <div
+          class="genre-row"
+          onclick="showToast('映画を検索します')"
+        >
+          <div class="genre-left">
+            <div class="genre-mini">映</div>
+            <span>映画</span>
+          </div>
+          <div class="genre-arrow">›</div>
+        </div>
+
+        <div
+          class="genre-row"
+          onclick="showToast('温泉を検索します')"
+        >
+          <div class="genre-left">
+            <div class="genre-mini">湯</div>
+            <span>温泉</span>
+          </div>
+          <div class="genre-arrow">›</div>
+        </div>
+
+        <div
+          class="genre-row"
+          onclick="showToast('ドライブスポットを検索します')"
+        >
+          <div class="genre-left">
+            <div class="genre-mini">車</div>
+            <span>ドライブ</span>
+          </div>
+          <div class="genre-arrow">›</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FAVORITES ================= -->
+
+  <section class="screen" id="favorites">
+
+    <header class="top-header">
+
+      <div class="brand">
+
+        <div>
+          <div class="brand-main">FAVORITES</div>
+          <div class="brand-sub">SAVED PLACES</div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <div class="page-inner">
+
+      <div class="page-title">
+
+        <div class="small">YOUR COLLECTION</div>
+
+        <h1>お気に入り</h1>
+
+        <p>
+          また行きたい場所をここに保存。
+        </p>
+
+      </div>
+
+
+      <div
+        class="favorite-card"
+        onclick="openDetail('居酒屋 たかし','食事')"
+      >
+
+        <div class="favorite-type">FOOD / SOLO</div>
+
+        <div class="favorite-name">
           居酒屋 たかし
         </div>
 
-        <div class="place-meta">
-          徒歩5分
-          <span class="star">★4.6</span>
+        <div class="favorite-info">
+          ひとりでも入りやすい · ★ 4.6
         </div>
+
+        <div class="favorite-star">★</div>
 
       </div>
 
 
-      <div class="place">
+      <div
+        class="favorite-card"
+        onclick="openDetail('Blue Coffee','カフェ')"
+      >
 
-        <div class="place-image">
+        <div class="favorite-type">CAFE / QUIET</div>
 
-          <img
-            src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80"
-          >
-
-        </div>
-
-        <div class="place-tag">
-          カフェ
-        </div>
-
-        <div class="place-name">
+        <div class="favorite-name">
           Blue Coffee
         </div>
 
-        <div class="place-meta">
-          徒歩8分
-          <span class="star">★4.8</span>
+        <div class="favorite-info">
+          静かに過ごせる · ★ 4.4
         </div>
+
+        <div class="favorite-star">★</div>
 
       </div>
 
 
-      <div class="place">
+      <div
+        class="favorite-card"
+        onclick="openDetail('CINEMA','映画')"
+      >
 
-        <div class="place-image">
+        <div class="favorite-type">CINEMA / SOLO</div>
 
-          <img
-            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80"
-          >
-
-        </div>
-
-        <div class="place-tag">
-          映画
-        </div>
-
-        <div class="place-name">
+        <div class="favorite-name">
           CINEMA
         </div>
 
-        <div class="place-meta">
-          徒歩12分
-          <span class="star">★4.5</span>
+        <div class="favorite-info">
+          ひとり映画におすすめ · ★ 4.7
+        </div>
+
+        <div class="favorite-star">★</div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= MY PAGE ================= -->
+
+  <section class="screen" id="mypage">
+
+    <header class="top-header">
+
+      <div class="brand">
+
+        <div>
+          <div class="brand-main">MY PAGE</div>
+          <div class="brand-sub">PERSONAL SYSTEM</div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <div class="page-inner">
+
+      <div class="profile">
+
+        <div class="profile-top">
+
+          <div class="avatar">
+
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.2"
+            >
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 21c1-5 15-5 16 0"/>
+            </svg>
+
+          </div>
+
+          <div>
+
+            <div class="profile-name">
+              ひとり旅好き
+            </div>
+
+            <div class="profile-sub">
+              MEMBER / ONLINE
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="stats">
+
+          <div class="stat">
+            <div class="stat-number">12</div>
+            <div class="stat-label">VISITED</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-number">8</div>
+            <div class="stat-label">FAVORITES</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-number">4</div>
+            <div class="stat-label">REVIEWS</div>
+          </div>
+
         </div>
 
       </div>
 
 
-    </div>
+      <div class="settings">
 
-  </div>
+        <div class="section-label">
+          <span>SETTING</span>
+        </div>
 
-</section>
+        <div class="setting">
+          <span>プロフィール</span>
+          <span>›</span>
+        </div>
 
+        <div class="setting">
+          <span>行った場所</span>
+          <span>›</span>
+        </div>
 
-<!-- =====================================================
-     MAP
-===================================================== -->
+        <div class="setting">
+          <span>レビュー</span>
+          <span>›</span>
+        </div>
 
-<section
-  id="map"
-  class="screen"
->
+        <div class="setting">
+          <span>通知設定</span>
+          <span>›</span>
+        </div>
 
-  <div class="status">
+        <div class="setting">
+          <span>アカウント設定</span>
+          <span>›</span>
+        </div>
 
-    <span>9:41</span>
-
-    <div class="status-right">
-      <span>▮▮▮</span>
-      <span>Wi-Fi</span>
-      <span>▰</span>
-    </div>
-
-  </div>
-
-
-  <div class="map-screen">
-
-    <div class="map-title">
-
-      マップ
-
-      <div class="map-sub">
-        現在地周辺のおすすめスポット
       </div>
 
     </div>
 
-
-    <div class="pin p1">☕</div>
-    <div class="pin p2">♨</div>
-    <div class="pin p3">🍴</div>
-    <div class="pin p4">▣</div>
-    <div class="pin p5">🍴</div>
-
-    <div class="current"></div>
+  </section>
 
 
-    <div class="map-card">
+  <!-- ================= DETAIL ================= -->
 
-      <div class="map-card-tag">
-        居酒屋・ひとりでも入りやすい
+  <section class="screen" id="detail">
+
+    <header class="top-header">
+
+      <div class="brand">
+
+        <button onclick="navigate('home')">
+          ←
+        </button>
+
+        <div style="margin-left:auto;">
+          <div class="brand-main">DETAIL</div>
+          <div class="brand-sub">PLACE INFORMATION</div>
+        </div>
+
       </div>
 
-      <h3>
-        居酒屋 たかし
-      </h3>
+    </header>
 
-      <div class="star">
-        ★ 4.5
+
+    <div class="detail-hero">
+
+      <div class="detail-center">
+
+        <div class="type" id="detailType">
+          FOOD / SOLO
+        </div>
+
+        <h1 id="detailName">
+          居酒屋 たかし
+        </h1>
+
       </div>
 
-      <div class="map-card-meta">
-        徒歩3分　　¥1,000〜3,000
+    </div>
+
+
+    <div class="detail-content">
+
+      <div class="detail-rating">
+        ★ 4.6
       </div>
+
+      <p class="detail-description">
+        ひとりでも入りやすく、落ち着いて過ごせるお店。
+        おひとりさまっぷユーザーからも人気のスポットです。
+      </p>
 
       <button
-        class="detail-button"
-        onclick="showToast('店舗詳細を表示')"
+        class="detail-action"
+        onclick="showToast('お気に入りに追加しました')"
       >
-        詳しく見る
+        ☆ FAVORITE
+      </button>
+
+      <button
+        class="detail-action"
+        onclick="navigate('map')"
+      >
+        ◎ MAPで見る
       </button>
 
     </div>
 
-  </div>
-
-</section>
+  </section>
 
 
-<!-- =====================================================
-     SEARCH
-===================================================== -->
+  <!-- =================================================
+       FIXED NAV
+  ================================================= -->
 
-<section
-  id="search"
-  class="screen"
->
+  <nav class="bottom-nav">
 
-  <div class="status">
+    <!-- HOME -->
 
-    <span>9:41</span>
+    <button
+      class="nav-item active"
+      data-screen="home"
+      onclick="navigate('home')"
+    >
 
-    <div class="status-right">
-      <span>▮▮▮</span>
-      <span>Wi-Fi</span>
-      <span>▰</span>
-    </div>
-
-  </div>
-
-
-  <div class="page">
-
-    <div class="page-title">
-      検索
-    </div>
-
-
-    <div class="search">
-
-      <span>⌕</span>
-
-      <input
-        id="searchInput"
-        placeholder="お店名・ジャンル・エリアで検索"
-      >
-
-    </div>
-
-
-    <div style="margin-top:28px">
-
-      <div class="section-title">
-        人気のキーワード
+      <div class="nav-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 11l9-8 9 8"/>
+          <path d="M5 10v10h14V10"/>
+          <path d="M9 20v-6h6v6"/>
+        </svg>
       </div>
 
+      <div class="nav-label">ホーム</div>
 
-      <div>
+    </button>
 
-        <span class="keyword">ラーメン</span>
-        <span class="keyword">カフェ</span>
-        <span class="keyword">夜ごはん</span>
-        <span class="keyword">居酒屋</span>
-        <span class="keyword">温泉</span>
-        <span class="keyword">映画</span>
-        <span class="keyword">ドライブ</span>
+
+    <!-- MAP -->
+
+    <button
+      class="nav-item map-nav"
+      data-screen="map"
+      onclick="navigate('map')"
+    >
+
+      <div class="nav-icon">
+
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="2"/>
+          <path d="M12 3v3"/>
+          <path d="M12 18v3"/>
+          <path d="M3 12h3"/>
+          <path d="M18 12h3"/>
+        </svg>
 
       </div>
 
-    </div>
+      <div class="nav-label">MAP</div>
+
+    </button>
 
 
-    <div style="margin-top:25px">
+    <!-- SEARCH -->
 
-      <div class="card">
-        🍴　食事　›
-      </div>
+    <button
+      class="nav-item"
+      data-screen="search"
+      onclick="navigate('search')"
+    >
 
-      <div class="card">
-        ☕　カフェ　›
-      </div>
+      <div class="nav-icon">
 
-      <div class="card">
-        ▣　映画　›
-      </div>
-
-      <div class="card">
-        ♨　温泉　›
-      </div>
-
-      <div class="card">
-        🚗　ドライブ　›
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     FAVORITES
-===================================================== -->
-
-<section
-  id="favorites"
-  class="screen"
->
-
-  <div class="status">
-
-    <span>9:41</span>
-
-    <div class="status-right">
-      <span>▮▮▮</span>
-      <span>Wi-Fi</span>
-      <span>▰</span>
-    </div>
-
-  </div>
-
-
-  <div class="page">
-
-    <div class="page-title">
-      お気に入り
-    </div>
-
-
-    <div class="card">
-
-      <div class="favorite-row">
-
-        <div class="favorite-image">
-
-          <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=300&q=80"
-          >
-
-        </div>
-
-        <div class="favorite-info">
-
-          <strong>
-            居酒屋 たかし
-          </strong>
-
-          <small>
-            ★4.5　徒歩3分
-          </small>
-
-        </div>
-
-        <div class="heart">
-          ♥
-        </div>
+        <svg viewBox="0 0 24 24">
+          <circle cx="10.5" cy="10.5" r="6.5"/>
+          <path d="M16 16l5 5"/>
+        </svg>
 
       </div>
 
-    </div>
+      <div class="nav-label">検索</div>
+
+    </button>
 
 
-    <div class="card">
+    <!-- FAVORITES -->
 
-      <div class="favorite-row">
+    <button
+      class="nav-item"
+      data-screen="favorites"
+      onclick="navigate('favorites')"
+    >
 
-        <div class="favorite-image">
+      <div class="nav-icon">
 
-          <img
-            src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=300&q=80"
-          >
-
-        </div>
-
-        <div class="favorite-info">
-
-          <strong>
-            Blue Coffee
-          </strong>
-
-          <small>
-            ★4.8　徒歩8分
-          </small>
-
-        </div>
-
-        <div class="heart">
-          ♥
-        </div>
+        <svg viewBox="0 0 24 24">
+          <path d="M20.8 8.8c0 5.2-8.8 10-8.8 10S3.2 14 3.2 8.8A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 8.8 2.8z"/>
+        </svg>
 
       </div>
 
-    </div>
+      <div class="nav-label">お気に入り</div>
+
+    </button>
 
 
-    <div class="card">
+    <!-- MY PAGE -->
 
-      <div class="favorite-row">
+    <button
+      class="nav-item"
+      data-screen="mypage"
+      onclick="navigate('mypage')"
+    >
 
-        <div class="favorite-image">
+      <div class="nav-icon">
 
-          <img
-            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=300&q=80"
-          >
-
-        </div>
-
-        <div class="favorite-info">
-
-          <strong>
-            CINEMA
-          </strong>
-
-          <small>
-            ★4.5　徒歩12分
-          </small>
-
-        </div>
-
-        <div class="heart">
-          ♥
-        </div>
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21c1-5 15-5 16 0"/>
+        </svg>
 
       </div>
 
-    </div>
+      <div class="nav-label">マイページ</div>
 
-  </div>
+    </button>
 
-</section>
+  </nav>
 
-
-<!-- =====================================================
-     MY PAGE
-===================================================== -->
-
-<section
-  id="mypage"
-  class="screen"
->
-
-  <div class="status">
-
-    <span>9:41</span>
-
-    <div class="status-right">
-      <span>▮▮▮</span>
-      <span>Wi-Fi</span>
-      <span>▰</span>
-    </div>
-
-  </div>
-
-
-  <div class="page">
-
-    <div class="page-title">
-      マイページ
-    </div>
-
-
-    <div class="card">
-
-      <div class="profile">
-
-        <div class="avatar">
-          ●
-        </div>
-
-        <div>
-
-          <div class="profile-name">
-            ひとり旅好き
-          </div>
-
-          <div class="profile-sub">
-            おひとりさま時間を楽しもう
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="stats">
-
-      <div>
-
-        <div class="stat-number">
-          12
-        </div>
-
-        <div class="stat-label">
-          行った場所
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <div class="stat-number">
-          28
-        </div>
-
-        <div class="stat-label">
-          お気に入り
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <div class="stat-number">
-          5
-        </div>
-
-        <div class="stat-label">
-          レビュー
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-      ♡　お気に入り　›
-    </div>
-
-    <div class="card">
-      ◷　行った場所・履歴　›
-    </div>
-
-    <div class="card">
-      ☆　レビュー・評価　›
-    </div>
-
-    <div class="card">
-      ⚙　アカウント設定　›
-    </div>
-
-    <div class="card">
-      ✦　このアプリについて　›
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     NAV
-===================================================== -->
-
-<nav class="bottom-nav">
-
-  <div
-    class="nav active"
-    data-page="home"
-  >
-    <div class="nav-icon">⌂</div>
-    <span>ホーム</span>
-  </div>
-
-
-  <div
-    class="nav"
-    data-page="map"
-  >
-    <div class="nav-icon">⌖</div>
-    <span>マップ</span>
-  </div>
-
-
-  <div
-    class="nav"
-    data-page="search"
-  >
-    <div class="nav-icon">◉</div>
-    <span>検索</span>
-  </div>
-
-
-  <div
-    class="nav"
-    data-page="favorites"
-  >
-    <div class="nav-icon">♡</div>
-    <span>お気に入り</span>
-  </div>
-
-
-  <div
-    class="nav"
-    data-page="mypage"
-  >
-    <div class="nav-icon">♙</div>
-    <span>マイページ</span>
-  </div>
-
-</nav>
-
-
-</div>
 </div>
 
 
-<!-- =======================================================
-     TOAST
-======================================================= -->
+<!-- TOAST -->
 
-<div
-  id="toast"
-  style="
-    position:fixed;
-    left:50%;
-    bottom:95px;
-    transform:translateX(-50%) translateY(20px);
-    z-index:999999;
-    padding:11px 18px;
-    border-radius:20px;
-    background:rgba(5,24,34,.95);
-    border:1px solid rgba(40,210,255,.25);
-    color:#c9f7ff;
-    font-size:10px;
-    opacity:0;
-    pointer-events:none;
-    transition:.35s;
-    backdrop-filter:blur(15px);
-  "
-></div>
+<div id="toast"></div>
 
 
 <script>
 
-/* =========================================================
-   OPENING ELEMENTS
-========================================================= */
+/* =====================================================
+   OPENING
+===================================================== */
 
-const opening =
-  document.getElementById("opening");
+window.addEventListener("load", () => {
 
-const app =
-  document.getElementById("app");
+  setTimeout(() => {
 
-const startButton =
-  document.getElementById("startButton");
+    document
+      .getElementById("opening")
+      .classList.add("hide");
 
-const startBurst =
-  document.getElementById("startBurst");
+  }, 2600);
 
-
-/* =========================================================
-   OPENING SEQUENCE
-========================================================= */
-
-/*
-  最初の白い世界から
-  SYSTEM画面へ切り替える。
-
-  自動でSTARTを押したりはしない。
-*/
-
-setTimeout(() => {
-
-  opening.classList.add("system-mode");
-
-}, 3900);
+});
 
 
-/* =========================================================
-   START
-========================================================= */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-let starting = false;
+function navigate(screen){
 
-startButton.addEventListener("click", () => {
+  document.querySelectorAll(".screen").forEach(el => {
+    el.classList.remove("active");
+  });
 
-  if(starting) return;
+  const target = document.getElementById(screen);
 
-  starting = true;
+  if(target){
+    target.classList.add("active");
+  }
 
-  startButton.disabled = true;
+  document.querySelectorAll(".nav-item").forEach(item => {
 
-  startButton.textContent =
-    "CONNECTING";
+    item.classList.remove("active");
 
-
-  /*
-    START BURST
-  */
-
-  startBurst.classList.add("active");
-
-
-  /*
-    CONNECTING MODE
-  */
-
-  opening.classList.add(
-    "connecting-mode"
-  );
-
-
-  /*
-    接続項目を順番に表示
-  */
-
-  const items =
-    document.querySelectorAll(
-      ".connect-item"
-    );
-
-
-  items.forEach((item,index) => {
-
-    setTimeout(() => {
-
+    if(item.dataset.screen === screen){
       item.classList.add("active");
-
-    }, index * 430);
-
-
-    setTimeout(() => {
-
-      item.classList.add("done");
-
-    }, index * 430 + 320);
+    }
 
   });
 
+  window.scrollTo({
+    top:0,
+    behavior:"instant"
+  });
 
-  /*
-    CONNECTING完了
-  */
-
-  setTimeout(() => {
-
-    opening.classList.add(
-      "fade-out"
-    );
-
-    app.classList.add(
-      "show"
-    );
-
-  }, 2450);
+}
 
 
-  /*
-    完全削除
-  */
+/* =====================================================
+   DETAIL
+===================================================== */
 
-  setTimeout(() => {
+function openDetail(name,type){
 
-    opening.remove();
+  document.getElementById("detailName").textContent = name;
 
-  }, 3650);
+  document.getElementById("detailType").textContent =
+    type.toUpperCase() + " / SOLO";
 
-});
+  navigate("detail");
 
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-const navs =
-  document.querySelectorAll(".nav");
-
-const screens =
-  document.querySelectorAll(".screen");
+}
 
 
-navs.forEach(nav => {
+/* =====================================================
+   CATEGORY
+===================================================== */
 
-  nav.addEventListener(
-    "click",
-    () => {
+document.querySelectorAll(".category-item").forEach(item => {
 
-      const page =
-        nav.dataset.page;
+  item.addEventListener("click", () => {
 
+    document
+      .querySelectorAll(".category-item")
+      .forEach(el => el.classList.remove("selected"));
 
-      screens.forEach(screen => {
+    item.classList.add("selected");
 
-        screen.classList.remove(
-          "active"
-        );
+    const category = item.dataset.category;
 
-      });
+    showToast(category + "を検索します");
 
-
-      const target =
-        document.getElementById(page);
-
-
-      if(target){
-
-        target.classList.add(
-          "active"
-        );
-
-      }
-
-
-      navs.forEach(item => {
-
-        item.classList.remove(
-          "active"
-        );
-
-      });
-
-
-      nav.classList.add(
-        "active"
-      );
-
-
-      window.scrollTo({
-        top:0,
-        behavior:"smooth"
-      });
-
-    }
-  );
+  });
 
 });
 
 
-/* =========================================================
+/* =====================================================
    HOME SEARCH
-========================================================= */
+===================================================== */
 
 const homeSearch =
-  document.getElementById(
-    "homeSearch"
-  );
+  document.getElementById("homeSearch");
 
+if(homeSearch){
 
-homeSearch.addEventListener(
-  "keydown",
-  event => {
+  homeSearch.addEventListener("keydown", e => {
 
-    if(event.key === "Enter"){
+    if(e.key === "Enter"){
 
-      document
-        .querySelector(
-          '[data-page="search"]'
-        )
-        .click();
+      const value = homeSearch.value.trim();
 
+      if(value){
 
-      document
-        .getElementById(
-          "searchInput"
-        )
-        .focus();
+        document.getElementById("searchInput").value =
+          value;
+
+        navigate("search");
+
+      }
 
     }
 
-  }
-);
+  });
+
+}
 
 
-/* =========================================================
+/* =====================================================
    SEARCH KEYWORDS
-========================================================= */
+===================================================== */
 
-document
-  .querySelectorAll(".keyword")
-  .forEach(keyword => {
+document.querySelectorAll(".keyword").forEach(keyword => {
 
-    keyword.addEventListener(
-      "click",
-      () => {
+  keyword.addEventListener("click", () => {
 
-        const input =
-          document.getElementById(
-            "searchInput"
-          );
+    document.getElementById("searchInput").value =
+      keyword.textContent;
 
-
-        input.value =
-          keyword.textContent.trim();
-
-
-        showToast(
-          "「" +
-          input.value +
-          "」を検索しました"
-        );
-
-      }
+    showToast(
+      keyword.textContent + "を検索"
     );
 
   });
 
+});
 
-/* =========================================================
+
+/* =====================================================
    TOAST
-========================================================= */
+===================================================== */
 
 let toastTimer;
 
 function showToast(message){
 
   const toast =
-    document.getElementById(
-      "toast"
-    );
+    document.getElementById("toast");
 
+  toast.textContent = message;
 
-  toast.textContent =
-    message;
+  toast.classList.add("show");
 
+  clearTimeout(toastTimer);
 
-  toast.style.opacity =
-    "1";
+  toastTimer = setTimeout(() => {
 
+    toast.classList.remove("show");
 
-  toast.style.transform =
-    "translateX(-50%) translateY(0)";
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(() => {
-
-      toast.style.opacity =
-        "0";
-
-
-      toast.style.transform =
-        "translateX(-50%) translateY(20px)";
-
-    },1800);
+  },1800);
 
 }
-
-
-/* =========================================================
-   CATEGORY CLICK
-========================================================= */
-
-document
-  .querySelectorAll(".category")
-  .forEach(category => {
-
-    category.addEventListener(
-      "click",
-      () => {
-
-        const text =
-          category.querySelector(
-            "span"
-          ).textContent;
-
-
-        document
-          .querySelector(
-            '[data-page="search"]'
-          )
-          .click();
-
-
-        const input =
-          document.getElementById(
-            "searchInput"
-          );
-
-
-        input.value =
-          text;
-
-      }
-    );
-
-  });
-
-
-/* =========================================================
-   LOCATION BUTTON
-========================================================= */
-
-document
-  .querySelector(".location")
-  .addEventListener(
-    "click",
-    () => {
-
-      showToast(
-        "現在地を取得しています…"
-      );
-
-    }
-  );
-
-
-/* =========================================================
-   FAVORITE HEART
-========================================================= */
-
-document
-  .querySelectorAll(".heart")
-  .forEach(heart => {
-
-    heart.addEventListener(
-      "click",
-      event => {
-
-        event.stopPropagation();
-
-
-        if(
-          heart.textContent === "♥"
-        ){
-
-          heart.textContent =
-            "♡";
-
-          heart.style.color =
-            "#718895";
-
-
-          showToast(
-            "お気に入りから削除しました"
-          );
-
-        }else{
-
-          heart.textContent =
-            "♥";
-
-          heart.style.color =
-            "#21d9ff";
-
-
-          showToast(
-            "お気に入りに追加しました"
-          );
-
-        }
-
-      }
-    );
-
-  });
-
 
 </script>
 
