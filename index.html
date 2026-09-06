@@ -1,170 +1,693 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>ohitorisamap - おひとりさまっぷ</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ohitorisamap</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
-
-:root {
-  --bg: #020b13;
-  --bg2: #061622;
-  --card: rgba(8, 27, 42, .82);
-  --card2: rgba(12, 38, 57, .72);
-  --line: rgba(74, 190, 235, .18);
-  --cyan: #20d5ff;
-  --cyan2: #65e5ff;
-  --text: #f4fbff;
-  --muted: #8197a7;
-  --yellow: #ffd75a;
-  --danger: #ff4f68;
-}
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 html,
 body {
-  margin: 0;
   width: 100%;
   min-height: 100%;
-  background: #000810;
-  color: var(--text);
-  font-family: "Noto Sans JP", sans-serif;
+  background: #000;
+  color: #fff;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans JP",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
 }
 
 body {
-  display: flex;
-  justify-content: center;
+  overflow-x: hidden;
 }
 
-/* ========================================
-   APP
-======================================== */
+button,
+input {
+  font-family: inherit;
+}
 
-.app {
+
+/* =========================================================
+   OPENING
+========================================================= */
+
+#opening {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #fff;
+  overflow: hidden;
+  transition: opacity 1.2s cubic-bezier(.77,0,.18,1);
+}
+
+#opening.blackout {
+  background: #000;
+}
+
+.opening-world {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255,255,255,1) 0%,
+      rgba(248,250,252,1) 45%,
+      rgba(231,238,243,1) 100%
+    );
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+#opening.blackout .opening-world {
+  opacity: 0;
+  transform: scale(1.08);
+}
+
+
+/* subtle grid */
+
+.opening-grid {
+  position: absolute;
+  inset: -30%;
+  opacity: .12;
+
+  background-image:
+    linear-gradient(rgba(0,160,220,.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,160,220,.2) 1px, transparent 1px);
+
+  background-size: 55px 55px;
+
+  transform:
+    perspective(600px)
+    rotateX(64deg)
+    translateY(15%);
+
+  animation: gridMove 5s linear infinite;
+}
+
+
+/* =========================================================
+   CONNECTION SVG
+========================================================= */
+
+.connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.connection {
+  stroke: #101010;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  opacity: 0;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+
+  animation:
+    drawLine .8s ease forwards;
+}
+
+.connection:nth-child(1) { animation-delay: .15s; }
+.connection:nth-child(2) { animation-delay: .25s; }
+.connection:nth-child(3) { animation-delay: .35s; }
+.connection:nth-child(4) { animation-delay: .45s; }
+.connection:nth-child(5) { animation-delay: .55s; }
+.connection:nth-child(6) { animation-delay: .65s; }
+
+
+/* =========================================================
+   NODES
+========================================================= */
+
+.node {
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 5;
+
+  opacity: 0;
+
+  box-shadow:
+    inset -15px -15px 30px rgba(0,0,0,.04),
+    0 10px 30px rgba(0,0,0,.03);
+
+  animation:
+    nodeIn .55s cubic-bezier(.16,1,.3,1) forwards,
+    nodeGather 2s cubic-bezier(.7,0,.15,1) 1.05s forwards;
+}
+
+.yellow {
+  left: 12%;
+  top: 30%;
+  background: #ffdb55;
+  animation-delay: .15s, 1.05s;
+}
+
+.red {
+  left: 47%;
+  top: 16%;
+  background: #ff3038;
+  animation-delay: .25s, 1.15s;
+}
+
+.green {
+  left: 84%;
+  top: 16%;
+  background: #b1ff68;
+  animation-delay: .35s, 1.25s;
+}
+
+.blue {
+  left: 83%;
+  top: 52%;
+  background: #1d0bb8;
+  animation-delay: .45s, 1.35s;
+}
+
+.cyan {
+  left: 69%;
+  top: 87%;
+  background: #55d8df;
+  animation-delay: .55s, 1.45s;
+}
+
+.pink {
+  left: 18%;
+  top: 87%;
+  background: #f55bc1;
+  animation-delay: .65s, 1.55s;
+}
+
+
+/* =========================================================
+   CENTRAL CORE
+========================================================= */
+
+.core {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 92px;
+  height: 92px;
+
+  transform:
+    translate(-50%,-50%)
+    scale(.2);
+
+  z-index: 20;
+
+  opacity: 0;
+
+  animation:
+    coreIn .8s .65s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.core-ball {
+  position: absolute;
+  inset: 15px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9b4cff,
+      #b54ad5 48%,
+      #ff785d
+    );
+
+  box-shadow:
+    0 0 20px rgba(139,80,255,.6),
+    0 0 50px rgba(255,90,110,.35);
+}
+
+.core-ring {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 100%;
+  height: 100%;
+
+  border:
+    1px solid rgba(0,180,255,.6);
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%,-50%)
+    scale(.5);
+
+  opacity: 0;
+
+  animation:
+    ring .9s 2.25s ease-out forwards;
+}
+
+.r2 {
+  animation-delay: 2.45s;
+}
+
+.r3 {
+  animation-delay: 2.65s;
+}
+
+
+/* =========================================================
+   ENERGY FLASH
+========================================================= */
+
+.flash {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #fff 0%,
+      rgba(255,255,255,.95) 8%,
+      rgba(120,230,255,.5) 18%,
+      transparent 55%
+    );
+
+  opacity: 0;
+
+  z-index: 100;
+
+  pointer-events: none;
+
+  animation:
+    flash .9s 3.55s ease-out forwards;
+}
+
+
+/* =========================================================
+   SYSTEM SCREEN
+========================================================= */
+
+.system {
+  position: absolute;
+  inset: 0;
+
+  z-index: 500;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #092333 0%,
+      #02090e 42%,
+      #000 100%
+    );
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: opacity 1s ease;
+}
+
+#opening.blackout .system {
+  opacity: 1;
+  visibility: visible;
+}
+
+.system::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      rgba(50,200,255,.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(50,200,255,.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 50px 50px;
+
+  mask-image:
+    radial-gradient(
+      circle,
+      black,
+      transparent 75%
+    );
+}
+
+
+/* =========================================================
+   SYSTEM TEXT
+========================================================= */
+
+.system-logo {
+  position: relative;
+
+  font-size: 25px;
+  font-weight: 300;
+
+  letter-spacing: 6px;
+
+  color: #e7fbff;
+
+  text-shadow:
+    0 0 8px rgba(50,220,255,.9),
+    0 0 30px rgba(50,220,255,.45);
+
+  opacity: 0;
+
+  animation:
+    systemText .8s 4.7s ease forwards;
+}
+
+.system-status {
+  margin-top: 12px;
+
+  font-size: 8px;
+
+  letter-spacing: 4px;
+
+  color: #4c91a6;
+
+  opacity: 0;
+
+  animation:
+    systemText .8s 4.9s ease forwards;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+
+  margin-top: 50px;
+
+  font-size: 10px;
+
+  letter-spacing: 5px;
+
+  color: #78b8ca;
+
+  opacity: 0;
+
+  animation:
+    systemText .8s 5.1s ease forwards;
+}
+
+.dots {
+  display: flex;
+  gap: 4px;
+  margin-left: 7px;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: #4edfff;
+
+  box-shadow: 0 0 8px #4edfff;
+
+  animation: dotPulse 1s infinite;
+}
+
+.dot:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: .4s;
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+.start-wrap {
+  position: relative;
+
+  margin-top: 50px;
+
+  text-align: center;
+
+  opacity: 0;
+
+  animation:
+    startIn .9s 6s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.start-button {
+  position: relative;
+
+  width: 200px;
+  height: 52px;
+
+  border:
+    1px solid rgba(71,220,255,.8);
+
+  border-radius: 2px;
+
+  color: #dffaff;
+
+  background:
+    rgba(15,80,105,.15);
+
+  letter-spacing: 8px;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 20px rgba(30,210,255,.08),
+    inset 0 0 20px rgba(30,210,255,.04);
+
+  transition: .3s;
+}
+
+.start-button:hover {
+  background: rgba(25,140,170,.25);
+
+  box-shadow:
+    0 0 35px rgba(30,210,255,.3),
+    inset 0 0 25px rgba(30,210,255,.1);
+
+  transform: scale(1.04);
+}
+
+.start-button::before,
+.start-button::after {
+  content: "";
+
+  position: absolute;
+
+  width: 18px;
+  height: 1px;
+
+  background: #62eaff;
+}
+
+.start-button::before {
+  left: -1px;
+  top: -1px;
+}
+
+.start-button::after {
+  right: -1px;
+  bottom: -1px;
+}
+
+.touch {
+  margin-top: 11px;
+
+  color: #416b79;
+
+  font-size: 7px;
+
+  letter-spacing: 3px;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(0,190,255,.16),
+      transparent 30%
+    ),
+    #020a10;
+
+  opacity: 0;
+
+  transform: scale(1.02);
+
+  transition:
+    opacity 1.3s ease,
+    transform 1.3s ease;
+}
+
+#app.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.phone {
+  position: relative;
+
   width: 100%;
   max-width: 430px;
+
   min-height: 100vh;
-  position: relative;
+
+  margin: auto;
+
   overflow: hidden;
+
   background:
-    radial-gradient(circle at 50% -10%, rgba(0, 181, 255, .18), transparent 35%),
-    linear-gradient(180deg, #03101a 0%, #020911 100%);
+    linear-gradient(
+      180deg,
+      #03121d,
+      #020910
+    );
 }
 
-/* ========================================
-   HEADER
-======================================== */
 
-.statusbar {
-  height: 28px;
+/* =========================================================
+   STATUS BAR
+========================================================= */
+
+.status {
+  height: 30px;
+
   padding: 8px 18px 0;
+
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
   font-size: 11px;
-  color: white;
+
   position: relative;
-  z-index: 20;
+  z-index: 50;
 }
 
-.status-icons {
+.status-right {
   display: flex;
   gap: 7px;
-  align-items: center;
+  font-size: 9px;
 }
 
-/* ========================================
+
+/* =========================================================
    SCREENS
-======================================== */
+========================================================= */
 
 .screen {
   display: none;
-  min-height: calc(100vh - 76px);
-  padding-bottom: 90px;
+
+  min-height: calc(100vh - 30px);
+
+  padding-bottom: 100px;
 }
 
 .screen.active {
   display: block;
 }
 
-/* ========================================
-   COMMON
-======================================== */
 
-.section {
-  padding: 0 18px;
-  margin-top: 23px;
-}
-
-.section-title {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.section-title span {
-  color: var(--cyan);
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.glass {
-  background: linear-gradient(
-    145deg,
-    rgba(15, 46, 65, .88),
-    rgba(4, 20, 31, .82)
-  );
-  border: 1px solid var(--line);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    0 10px 35px rgba(0,0,0,.25);
-  backdrop-filter: blur(18px);
-}
-
-/* ========================================
+/* =========================================================
    HOME HERO
-======================================== */
+========================================================= */
 
 .hero {
-  margin: 0 10px;
-  height: 245px;
-  border-radius: 22px;
-  overflow: hidden;
   position: relative;
+
+  height: 280px;
+
+  margin: 0 10px;
+
+  border-radius: 23px;
+
+  overflow: hidden;
+
   background:
     linear-gradient(
       180deg,
-      rgba(0,10,18,.05),
-      rgba(0,8,14,.88)
+      rgba(0,0,0,.05),
+      rgba(0,7,14,.88)
     ),
-    url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=80")
-    center/cover;
-  box-shadow: 0 15px 45px rgba(0,0,0,.45);
+    url(
+      "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=85"
+    )
+    center / cover;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.4);
 }
 
 .hero::after {
   content: "";
+
   position: absolute;
   inset: 0;
+
   background:
-    radial-gradient(
-      circle at 65% 35%,
-      rgba(48,204,255,.14),
-      transparent 30%
+    linear-gradient(
+      180deg,
+      transparent 30%,
+      rgba(0,8,14,.95)
     );
 }
 
 .hero-content {
   position: absolute;
+
+  inset: 35px 18px 20px;
+
   z-index: 2;
-  inset: 40px 18px 20px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -172,17 +695,24 @@ body {
 
 .logo {
   text-align: center;
-  font-size: 25px;
-  font-weight: 400;
-  letter-spacing: .5px;
+
+  font-size: 26px;
+
+  font-weight: 300;
+
+  letter-spacing: 1px;
 }
 
-.logo small {
+.logo-small {
   display: block;
+
+  margin-top: 3px;
+
   font-size: 8px;
-  letter-spacing: 3px;
-  margin-top: -2px;
-  opacity: .8;
+
+  color: #d0e1e7;
+
+  letter-spacing: 4px;
 }
 
 .hero-copy {
@@ -190,115 +720,160 @@ body {
 }
 
 .hero-copy p {
-  margin: 4px 0;
   font-size: 11px;
-  color: rgba(255,255,255,.85);
+
+  color: rgba(255,255,255,.75);
+
+  margin-bottom: 6px;
 }
 
 .hero-copy strong {
-  font-size: 13px;
+  font-size: 14px;
+
+  letter-spacing: 2px;
 }
 
-/* ========================================
+
+/* =========================================================
    SEARCH
-======================================== */
+========================================================= */
 
 .search {
   height: 43px;
-  border-radius: 23px;
-  border: 1px solid rgba(132,213,244,.27);
-  background: rgba(1,14,23,.75);
+
   display: flex;
   align-items: center;
+
   padding: 0 14px;
-  gap: 9px;
-  color: var(--muted);
-  font-size: 11px;
+
+  gap: 8px;
+
+  border-radius: 22px;
+
+  border:
+    1px solid rgba(130,210,240,.28);
+
+  background:
+    rgba(1,13,21,.72);
+
+  backdrop-filter: blur(15px);
+
+  color: #7e98a6;
 }
 
 .search input {
   flex: 1;
-  border: 0;
+
   outline: none;
+  border: none;
+
   background: transparent;
+
   color: white;
-  font-family: inherit;
-  font-size: 12px;
+
+  font-size: 11px;
 }
 
 .search input::placeholder {
-  color: #78909f;
+  color: #718997;
 }
 
-/* ========================================
-   CATEGORY
-======================================== */
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.section {
+  margin-top: 22px;
+  padding: 0 18px;
+}
 
 .categories {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+
+  grid-template-columns:
+    repeat(5,1fr);
+
+  gap: 7px;
 }
 
 .category {
-  height: 72px;
-  border-radius: 17px;
-  background:
-    linear-gradient(145deg, rgba(20,48,65,.9), rgba(4,20,30,.9));
-  border: 1px solid rgba(83,195,235,.15);
+  height: 70px;
+
   display: flex;
   flex-direction: column;
+
   justify-content: center;
   align-items: center;
+
   gap: 5px;
-  cursor: pointer;
-  transition: .2s;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18,50,67,.95),
+      rgba(4,20,30,.9)
+    );
+
+  border:
+    1px solid rgba(65,190,235,.15);
 }
 
-.category:hover {
-  transform: translateY(-2px);
-  border-color: rgba(32,213,255,.5);
-}
-
-.category .icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: var(--cyan);
-  font-size: 16px;
+.category-icon {
+  font-size: 18px;
+  color: #27d8ff;
 }
 
 .category span {
-  font-size: 9px;
+  font-size: 8px;
 }
 
-/* ========================================
-   CURRENT LOCATION
-======================================== */
 
-.location-card {
-  min-height: 64px;
-  border-radius: 16px;
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location {
+  min-height: 68px;
+
   display: flex;
   align-items: center;
-  padding: 10px 13px;
+
   gap: 12px;
-  cursor: pointer;
+
+  padding: 10px 13px;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15,48,65,.9),
+      rgba(4,21,31,.9)
+    );
+
+  border:
+    1px solid rgba(65,190,235,.18);
 }
 
 .location-icon {
-  width: 39px;
-  height: 39px;
-  flex-shrink: 0;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+
   display: grid;
   place-items: center;
-  border: 1px solid rgba(32,213,255,.4);
-  background: rgba(32,213,255,.08);
-  color: var(--cyan);
-  box-shadow: 0 0 18px rgba(32,213,255,.16);
+
+  border-radius: 50%;
+
+  color: #20d7ff;
+
+  border:
+    1px solid rgba(32,215,255,.4);
+
+  background:
+    rgba(32,215,255,.08);
 }
 
 .location-text {
@@ -307,488 +882,348 @@ body {
 
 .location-text small {
   display: block;
-  font-size: 9px;
-  color: var(--muted);
+
+  color: #78909e;
+
+  font-size: 8px;
+
+  margin-bottom: 4px;
 }
 
 .location-text strong {
   font-size: 11px;
 }
 
-/* ========================================
-   RECOMMEND CARDS
-======================================== */
 
-.recommend-scroll {
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
   display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 13px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.section-title .more {
+  color: #20d7ff;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   PLACE CARDS
+========================================================= */
+
+.place-scroll {
+  display: flex;
+
   gap: 10px;
+
   overflow-x: auto;
+
   scrollbar-width: none;
 }
 
-.recommend-scroll::-webkit-scrollbar {
+.place-scroll::-webkit-scrollbar {
   display: none;
 }
 
-.place-card {
-  min-width: 126px;
-  width: 126px;
-  cursor: pointer;
+.place {
+  min-width: 130px;
+
+  width: 130px;
 }
 
 .place-image {
-  height: 104px;
-  border-radius: 12px;
+  height: 105px;
+
   overflow: hidden;
-  position: relative;
+
+  border-radius: 13px;
 }
 
 .place-image img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
 }
 
-.place-info {
-  padding: 7px 2px;
-}
+.place-name {
+  margin-top: 7px;
 
-.place-info .tag {
-  color: var(--cyan);
-  font-size: 8px;
-}
-
-.place-info strong {
-  display: block;
   font-size: 10px;
-  margin: 3px 0;
+
+  font-weight: 600;
+}
+
+.place-tag {
+  color: #22d8ff;
+
+  font-size: 8px;
+
+  margin-top: 3px;
 }
 
 .place-meta {
-  color: var(--muted);
+  color: #718895;
+
   font-size: 8px;
+
+  margin-top: 3px;
 }
 
-.rating {
-  color: var(--yellow);
+.star {
+  color: #ffd55a;
 }
 
-/* ========================================
-   BOTTOM NAV
-======================================== */
 
-.bottom-nav {
-  position: fixed;
-  z-index: 100;
-  bottom: 0;
-  width: 100%;
-  max-width: 430px;
-  height: 72px;
-  padding: 8px 9px calc(8px + env(safe-area-inset-bottom));
-  background: rgba(2, 12, 20, .94);
-  border-top: 1px solid rgba(70,180,220,.13);
-  backdrop-filter: blur(20px);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  color: #647c8b;
-  font-size: 9px;
-  cursor: pointer;
-}
-
-.nav-icon {
-  font-size: 19px;
-}
-
-.nav-item.active {
-  color: var(--cyan);
-}
-
-.nav-item.active .nav-icon {
-  filter: drop-shadow(0 0 8px rgba(32,213,255,.7));
-}
-
-/* ========================================
+/* =========================================================
    MAP
-======================================== */
+========================================================= */
 
 .map-screen {
-  min-height: calc(100vh - 28px);
-  padding-bottom: 0;
   position: relative;
-}
 
-.map {
-  position: absolute;
-  inset: 28px 0 0;
+  height: calc(100vh - 30px);
+
+  min-height: 700px;
+
+  overflow: hidden;
+
   background:
-    linear-gradient(rgba(2,16,26,.6), rgba(1,11,19,.72)),
-    url("https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1000&q=80")
-    center/cover;
-  filter: saturate(.65);
-}
-
-.map::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(35deg, transparent 46%, rgba(37,102,128,.25) 47%, transparent 48%),
-    linear-gradient(125deg, transparent 49%, rgba(37,102,128,.25) 50%, transparent 51%);
-  background-size: 110px 110px;
-  opacity: .8;
-}
-
-.map-header {
-  position: absolute;
-  z-index: 10;
-  top: 42px;
-  left: 16px;
-  right: 16px;
+    linear-gradient(
+      rgba(1,15,24,.62),
+      rgba(1,10,16,.88)
+    ),
+    url(
+      "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=85"
+    )
+    center / cover;
 }
 
 .map-title {
-  font-size: 15px;
-  font-weight: 700;
+  position: absolute;
+
+  top: 20px;
+  left: 18px;
+
+  font-size: 20px;
+
+  font-weight: 600;
 }
 
 .map-sub {
-  font-size: 9px;
-  color: var(--muted);
-}
+  font-size: 8px;
 
-.map-filters {
-  display: flex;
-  gap: 7px;
-  margin-top: 12px;
-  overflow-x: auto;
-}
+  color: #78909e;
 
-.map-filter {
-  white-space: nowrap;
-  padding: 7px 13px;
-  border-radius: 16px;
-  background: rgba(2,16,26,.76);
-  border: 1px solid rgba(77,181,220,.2);
-  font-size: 9px;
-}
-
-.map-filter.active {
-  color: #001018;
-  background: var(--cyan);
+  margin-top: 4px;
 }
 
 .pin {
   position: absolute;
-  z-index: 5;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+
+  width: 35px;
+  height: 35px;
+
   display: grid;
   place-items: center;
-  background: rgba(4,32,47,.92);
-  border: 1px solid rgba(75,218,255,.7);
-  color: white;
-  box-shadow:
-    0 0 0 6px rgba(32,213,255,.07),
-    0 0 22px rgba(32,213,255,.4);
-}
 
-.pin.selected {
-  width: 43px;
-  height: 43px;
-  background: var(--cyan);
-  color: #00202b;
-  box-shadow:
-    0 0 0 9px rgba(32,213,255,.08),
-    0 0 30px rgba(32,213,255,.75);
-}
-
-.user-location {
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  transform: translate(-50%,-50%);
-  width: 15px;
-  height: 15px;
-  background: var(--cyan);
-  border: 3px solid white;
   border-radius: 50%;
-  box-shadow: 0 0 0 12px rgba(32,213,255,.12);
+
+  color: white;
+
+  background:
+    rgba(9,62,83,.9);
+
+  border:
+    1px solid rgba(60,215,255,.5);
+
+  box-shadow:
+    0 0 20px rgba(20,200,255,.2);
+
+  font-size: 15px;
+}
+
+.pin.p1 { left: 18%; top: 35%; }
+.pin.p2 { left: 67%; top: 28%; }
+.pin.p3 { left: 28%; top: 58%; }
+.pin.p4 { left: 72%; top: 59%; }
+.pin.p5 { left: 45%; top: 43%; }
+
+.current {
+  position: absolute;
+
+  left: 50%;
+  top: 45%;
+
+  width: 17px;
+  height: 17px;
+
+  border-radius: 50%;
+
+  background: #23d9ff;
+
+  border: 3px solid white;
+
+  box-shadow:
+    0 0 0 12px rgba(35,217,255,.12),
+    0 0 35px #23d9ff;
 }
 
 .map-card {
   position: absolute;
-  z-index: 15;
-  bottom: 88px;
-  left: 15px;
-  right: 15px;
-  padding: 9px;
-  border-radius: 18px;
-  background: rgba(4,22,33,.95);
-  border: 1px solid rgba(70,193,235,.25);
-  display: flex;
-  gap: 10px;
+
+  left: 14px;
+  right: 14px;
+  bottom: 85px;
+
+  padding: 17px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(3,19,29,.92);
+
+  border:
+    1px solid rgba(60,190,230,.18);
+
+  backdrop-filter: blur(18px);
 }
 
-.map-card img {
-  width: 86px;
-  height: 94px;
-  object-fit: cover;
-  border-radius: 12px;
-}
+.map-card-tag {
+  color: #21d8ff;
 
-.map-card-content {
-  flex: 1;
-}
-
-.map-card-content h3 {
-  font-size: 13px;
-  margin: 2px 0 5px;
-}
-
-.map-card-content p {
-  margin: 3px 0;
   font-size: 8px;
-  color: var(--muted);
 }
 
-.map-button {
-  margin-top: 8px;
+.map-card h3 {
+  margin-top: 7px;
+
+  font-size: 16px;
+}
+
+.map-card-meta {
+  margin-top: 7px;
+
+  color: #718995;
+
+  font-size: 9px;
+}
+
+.detail-button {
   width: 100%;
-  height: 30px;
-  border: 0;
-  border-radius: 16px;
-  background: var(--cyan);
-  color: #00151d;
-  font-size: 10px;
+
+  height: 38px;
+
+  margin-top: 13px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #19ccef,
+      #25ddff
+    );
+
+  color: #001018;
+
   font-weight: 700;
+
+  font-size: 10px;
 }
 
-/* ========================================
-   SEARCH SCREEN
-======================================== */
 
-.page-header {
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* =========================================================
+   GENERIC PAGES
+========================================================= */
+
+.page {
+  padding: 22px 18px 100px;
 }
 
-.page-header h2 {
-  font-size: 17px;
-  margin: 0;
+.page-title {
+  font-size: 21px;
+
+  margin-bottom: 20px;
 }
 
-.back {
-  font-size: 20px;
-  cursor: pointer;
-}
+.card {
+  padding: 17px;
 
-.keyword-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
+  margin-bottom: 10px;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15,46,63,.9),
+      rgba(4,20,30,.9)
+    );
+
+  border:
+    1px solid rgba(70,190,230,.16);
 }
 
 .keyword {
-  padding: 8px 12px;
-  background: rgba(15,41,56,.8);
-  border: 1px solid rgba(70,170,210,.12);
-  border-radius: 15px;
+  display: inline-block;
+
+  padding: 9px 13px;
+
+  margin: 3px;
+
+  border-radius: 20px;
+
+  color: #cde1e7;
+
   font-size: 9px;
-  cursor: pointer;
+
+  background: #0a2635;
+
+  border:
+    1px solid rgba(60,190,230,.14);
 }
 
-.search-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
 
-.search-menu-item {
-  min-height: 59px;
-  border-radius: 14px;
-  padding: 10px 12px;
+/* =========================================================
+   FAVORITES
+========================================================= */
+
+.favorite-row {
   display: flex;
+
   align-items: center;
+
   gap: 12px;
-  cursor: pointer;
 }
 
-.search-menu-icon {
-  width: 37px;
-  height: 37px;
+.favorite-image {
+  width: 65px;
+  height: 65px;
+
   border-radius: 12px;
-  display: grid;
-  place-items: center;
-  background: rgba(20,60,78,.75);
-  color: var(--cyan);
-  font-size: 17px;
-}
 
-.search-menu-text {
-  flex: 1;
-}
-
-.search-menu-text strong {
-  display: block;
-  font-size: 11px;
-}
-
-.search-menu-text small {
-  color: var(--muted);
-  font-size: 8px;
-}
-
-.arrow {
-  color: var(--cyan);
-}
-
-/* ========================================
-   DETAIL
-======================================== */
-
-.detail {
-  padding-bottom: 100px;
-}
-
-.detail-hero {
-  height: 265px;
-  position: relative;
   overflow: hidden;
 }
 
-.detail-hero img {
+.favorite-image img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
-}
-
-.detail-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    transparent 40%,
-    rgba(2,10,16,.96) 100%
-  );
-}
-
-.detail-top {
-  position: absolute;
-  z-index: 2;
-  top: 12px;
-  left: 15px;
-  right: 15px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.circle-button {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(0,10,17,.6);
-  border: 1px solid rgba(255,255,255,.15);
-}
-
-.detail-title {
-  position: absolute;
-  z-index: 3;
-  bottom: 15px;
-  left: 18px;
-}
-
-.detail-title h1 {
-  margin: 0 0 5px;
-  font-size: 21px;
-}
-
-.detail-title p {
-  margin: 0;
-  font-size: 10px;
-  color: #b3c5ce;
-}
-
-.detail-body {
-  padding: 0 18px;
-}
-
-.rating-big {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(100,180,210,.12);
-}
-
-.rating-big strong {
-  font-size: 18px;
-  color: var(--yellow);
-}
-
-.detail-row {
-  display: flex;
-  gap: 12px;
-  padding: 11px 0;
-  border-bottom: 1px solid rgba(100,180,210,.09);
-  font-size: 10px;
-}
-
-.detail-row .label {
-  width: 70px;
-  color: var(--muted);
-}
-
-.detail-description {
-  color: #9db0bb;
-  font-size: 10px;
-  line-height: 1.9;
-  margin-top: 17px;
-}
-
-.primary-button {
-  width: 100%;
-  height: 45px;
-  border: 0;
-  border-radius: 23px;
-  background: linear-gradient(90deg, #19caff, #48dcff);
-  color: #00151d;
-  font-weight: 700;
-  font-family: inherit;
-  margin-top: 18px;
-  box-shadow: 0 7px 24px rgba(32,213,255,.18);
-  cursor: pointer;
-}
-
-/* ========================================
-   FAVORITES
-======================================== */
-
-.favorite-item {
-  margin: 0 18px 10px;
-  padding: 9px;
-  min-height: 84px;
-  border-radius: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-.favorite-item img {
-  width: 72px;
-  height: 66px;
-  object-fit: cover;
-  border-radius: 10px;
 }
 
 .favorite-info {
@@ -796,1005 +1231,1734 @@ body {
 }
 
 .favorite-info strong {
-  display: block;
   font-size: 11px;
-  margin-bottom: 4px;
 }
 
 .favorite-info small {
   display: block;
+
+  color: #718895;
+
+  margin-top: 5px;
+
   font-size: 8px;
-  color: var(--muted);
-  margin: 3px 0;
 }
 
 .heart {
-  color: var(--cyan);
-  font-size: 17px;
+  color: #21d9ff;
+
+  font-size: 18px;
 }
 
-/* ========================================
-   MY PAGE
-======================================== */
+
+/* =========================================================
+   PROFILE
+========================================================= */
 
 .profile {
-  margin: 15px 18px;
-  padding: 17px;
-  border-radius: 18px;
   display: flex;
+
   align-items: center;
-  gap: 12px;
+
+  gap: 13px;
 }
 
 .avatar {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
+
   border-radius: 50%;
-  background: linear-gradient(135deg,#d9e9ed,#698695);
+
   display: grid;
   place-items: center;
-  color: #16303c;
-  font-size: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dbeef4,
+      #62818e
+    );
+
+  color: #16313c;
 }
 
-.profile-info {
-  flex: 1;
-}
-
-.profile-info strong {
-  display: block;
+.profile-name {
   font-size: 13px;
+
+  font-weight: 700;
 }
 
-.profile-info small {
-  color: var(--muted);
+.profile-sub {
+  margin-top: 4px;
+
+  color: #718895;
+
   font-size: 8px;
-}
-
-.profile-edit {
-  color: var(--cyan);
-  font-size: 11px;
 }
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
-  margin: 0 18px;
-  padding: 14px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
 
-.stat {
+  grid-template-columns:
+    repeat(3,1fr);
+
+  margin: 25px 0;
+
   text-align: center;
-  border-right: 1px solid var(--line);
 }
 
-.stat:last-child {
-  border: 0;
+.stat-number {
+  font-size: 20px;
 }
 
-.stat strong {
-  display: block;
-  font-size: 18px;
-}
+.stat-label {
+  margin-top: 4px;
 
-.stat small {
-  color: var(--muted);
+  color: #718895;
+
   font-size: 8px;
 }
 
-.my-menu {
-  margin: 18px;
-  border-radius: 17px;
-  overflow: hidden;
-}
 
-.my-menu-item {
-  min-height: 50px;
-  padding: 0 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid rgba(80,180,210,.1);
-  font-size: 10px;
-}
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
 
-.my-menu-item:last-child {
-  border: 0;
-}
-
-.my-menu-item .mi {
-  width: 25px;
-  color: var(--cyan);
-}
-
-.my-menu-item .arrow {
-  margin-left: auto;
-}
-
-.my-menu-item.logout {
-  color: var(--danger);
-}
-
-.my-menu-item.logout .mi {
-  color: var(--danger);
-}
-
-/* ========================================
-   TOAST
-======================================== */
-
-.toast {
+.bottom-nav {
   position: fixed;
-  z-index: 300;
+
   left: 50%;
-  bottom: 90px;
-  transform: translate(-50%, 20px);
-  opacity: 0;
+  bottom: 0;
+
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 430px;
+
+  height: 73px;
+
+  z-index: 5000;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(5,1fr);
+
+  padding:
+    7px 7px
+    calc(7px + env(safe-area-inset-bottom));
+
+  background:
+    rgba(2,13,21,.94);
+
+  border-top:
+    1px solid rgba(70,180,220,.13);
+
+  backdrop-filter: blur(22px);
+}
+
+.nav {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 4px;
+
+  color: #5f7886;
+
+  font-size: 8px;
+
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.nav-icon {
+  font-size: 19px;
+}
+
+.nav.active {
+  color: #25d9ff;
+
+  text-shadow:
+    0 0 12px rgba(35,220,255,.6);
+}
+
+
+/* =========================================================
+   START TRANSITION
+========================================================= */
+
+.start-burst {
+  position: fixed;
+
+  left: 50%;
+  top: 50%;
+
+  width: 20px;
+  height: 20px;
+
+  transform: translate(-50%,-50%) scale(0);
+
+  border-radius: 50%;
+
+  z-index: 999999;
+
+  background: white;
+
+  box-shadow:
+    0 0 40px #49ddff,
+    0 0 100px #49ddff,
+    0 0 200px rgba(49,210,255,.8);
+
   pointer-events: none;
-  padding: 11px 17px;
-  border-radius: 22px;
-  background: rgba(10,35,49,.96);
-  border: 1px solid rgba(55,205,245,.35);
-  font-size: 10px;
-  transition: .3s;
-  white-space: nowrap;
 }
 
-.toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0);
+.start-burst.active {
+  animation:
+    burst 1.5s cubic-bezier(.7,0,.1,1) forwards;
 }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
 
-@media (min-width: 600px) {
-  body {
-    padding: 20px 0;
-    background:
-      radial-gradient(circle at center, #09202d, #00050a 65%);
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes drawLine {
+  from {
+    opacity: 0;
+    stroke-dashoffset: 100;
   }
 
-  .app {
+  to {
+    opacity: .9;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes nodeIn {
+  from {
+    opacity: 0;
+    transform:
+      translate(-50%,-50%)
+      scale(.15);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+}
+
+@keyframes nodeGather {
+  0% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(50vw - var(--x)),
+        calc(50vh - var(--y))
+      )
+      scale(.6);
+  }
+
+  100% {
+    left: 50%;
+    top: 50%;
+
+    opacity: 0;
+
+    transform:
+      translate(-50%,-50%)
+      scale(.15);
+  }
+}
+
+@keyframes coreIn {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(-50%,-50%)
+      scale(.1);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+  }
+}
+
+@keyframes ring {
+  0% {
+    opacity: .8;
+
+    transform:
+      translate(-50%,-50%)
+      scale(.4);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%,-50%)
+      scale(2.5);
+  }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes gridMove {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 55px;
+  }
+}
+
+@keyframes systemText {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dotPulse {
+  0%,100% {
+    opacity: .2;
+    transform: scale(.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes startIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes burst {
+  0% {
+    opacity: 1;
+
+    transform:
+      translate(-50%,-50%)
+      scale(0);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%,-50%)
+      scale(150);
+  }
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 600px) {
+
+  body {
+    display: flex;
+    justify-content: center;
+
+    padding: 20px 0;
+
+    background:
+      radial-gradient(
+        circle,
+        #09212d,
+        #000 75%
+      );
+  }
+
+  #app {
     min-height: 850px;
-    height: calc(100vh - 40px);
+  }
+
+  .phone {
+    min-height: 850px;
+
     max-height: 900px;
+
     border-radius: 30px;
+
     box-shadow:
-      0 0 0 1px rgba(100,220,255,.1),
-      0 30px 100px rgba(0,0,0,.6);
+      0 0 0 1px rgba(100,220,255,.08),
+      0 30px 100px rgba(0,0,0,.7);
   }
 
   .bottom-nav {
     bottom: 20px;
-    border-radius: 0 0 30px 30px;
+
+    border-radius:
+      0 0 30px 30px;
   }
 }
 </style>
 </head>
 
+
 <body>
 
-<div class="app">
 
-  <!-- =========================
-       HOME
-  ========================== -->
-  <section id="home" class="screen active">
+<!-- =======================================================
+     OPENING
+======================================================= -->
 
-    <div class="statusbar">
-      <span>9:41</span>
-      <div class="status-icons">
-        <span>▮▮▮</span>
-        <span>Wi-Fi</span>
-        <span>▰</span>
-      </div>
+<div id="opening">
+
+  <div class="opening-world"></div>
+
+  <div class="opening-grid"></div>
+
+
+  <!-- 接続線 -->
+
+  <svg
+    class="connections"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+  >
+
+    <line
+      class="connection"
+      x1="12"
+      y1="30"
+      x2="50"
+      y2="50"
+    />
+
+    <line
+      class="connection"
+      x1="47"
+      y1="16"
+      x2="50"
+      y2="50"
+    />
+
+    <line
+      class="connection"
+      x1="84"
+      y1="16"
+      x2="50"
+      y2="50"
+    />
+
+    <line
+      class="connection"
+      x1="83"
+      y1="52"
+      x2="50"
+      y2="50"
+    />
+
+    <line
+      class="connection"
+      x1="69"
+      y1="87"
+      x2="50"
+      y2="50"
+    />
+
+    <line
+      class="connection"
+      x1="18"
+      y1="87"
+      x2="50"
+      y2="50"
+    />
+
+  </svg>
+
+
+  <!-- 玉 -->
+
+  <div
+    class="node yellow"
+    style="--x:12vw;--y:30vh"
+  ></div>
+
+  <div
+    class="node red"
+    style="--x:47vw;--y:16vh"
+  ></div>
+
+  <div
+    class="node green"
+    style="--x:84vw;--y:16vh"
+  ></div>
+
+  <div
+    class="node blue"
+    style="--x:83vw;--y:52vh"
+  ></div>
+
+  <div
+    class="node cyan"
+    style="--x:69vw;--y:87vh"
+  ></div>
+
+  <div
+    class="node pink"
+    style="--x:18vw;--y:87vh"
+  ></div>
+
+
+  <!-- 中央コア -->
+
+  <div class="core">
+
+    <div class="core-ring r1"></div>
+    <div class="core-ring r2"></div>
+    <div class="core-ring r3"></div>
+
+    <div class="core-ball"></div>
+
+  </div>
+
+
+  <!-- 発光 -->
+
+  <div class="flash"></div>
+
+
+  <!-- ===================================================
+       BLACKOUT / SYSTEM
+  ==================================================== -->
+
+  <div class="system">
+
+    <div class="system-logo">
+      OHITORISAMAP
     </div>
 
-    <div class="hero">
-
-      <div class="hero-content">
-
-        <div>
-          <div class="logo">
-            ohitorisamap
-            <small>おひとりさまっぷ</small>
-          </div>
-        </div>
-
-        <div class="hero-copy">
-          <p>ひとりの時間を、</p>
-          <strong>もっと自由に。</strong>
-        </div>
-
-        <div class="search">
-          <span>⌕</span>
-          <input
-            id="homeSearch"
-            type="text"
-            placeholder="行きたい場所・ジャンル・キーワード"
-          />
-          <span>›</span>
-        </div>
-
-      </div>
+    <div class="system-status">
+      SYSTEM INITIALIZING
     </div>
 
-    <div class="section">
-      <div class="categories">
 
-        <div class="category" onclick="showToast('食事を検索します')">
-          <div class="icon">🍴</div>
-          <span>食事</span>
-        </div>
+    <div class="loading">
 
-        <div class="category" onclick="showToast('カフェを検索します')">
-          <div class="icon">☕</div>
-          <span>カフェ</span>
-        </div>
+      <span id="loadingText">
+        LOADING
+      </span>
 
-        <div class="category" onclick="showToast('映画を検索します')">
-          <div class="icon">▣</div>
-          <span>映画</span>
-        </div>
+      <span class="dots">
 
-        <div class="category" onclick="showToast('温泉を検索します')">
-          <div class="icon">♨</div>
-          <span>温泉</span>
-        </div>
+        <i class="dot"></i>
+        <i class="dot"></i>
+        <i class="dot"></i>
 
-        <div class="category" onclick="showToast('ドライブを検索します')">
-          <div class="icon">🚗</div>
-          <span>ドライブ</span>
-        </div>
+      </span>
 
-      </div>
     </div>
 
-    <div class="section">
 
-      <div
-        class="location-card glass"
-        onclick="showScreen('map')"
+    <div class="start-wrap">
+
+      <button
+        class="start-button"
+        id="startButton"
       >
-        <div class="location-icon">◎</div>
+        START
+      </button>
 
-        <div class="location-text">
-          <small>現在地から探す</small>
-          <strong>あなたの近くのお店を表示</strong>
-        </div>
-
-        <div class="arrow">›</div>
+      <div class="touch">
+        TOUCH TO BEGIN
       </div>
 
     </div>
 
-    <div class="section">
+  </div>
 
-      <div class="section-title">
-        <span style="color:white">あなたにおすすめ</span>
-        <span onclick="showScreen('search')">もっと見る ›</span>
-      </div>
+</div>
 
-      <div class="recommend-scroll">
 
-        <div class="place-card" onclick="showDetail()">
-          <div class="place-image">
-            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80">
-          </div>
-          <div class="place-info">
-            <span class="tag">焼き鳥</span>
-            <strong>焼鳥 たかし</strong>
-            <div class="place-meta">徒歩5分　<span class="rating">★4.6</span></div>
-          </div>
-        </div>
+<!-- =======================================================
+     START BURST
+======================================================= -->
 
-        <div class="place-card" onclick="showDetail()">
-          <div class="place-image">
-            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=500&q=80">
-          </div>
-          <div class="place-info">
-            <span class="tag">カフェ</span>
-            <strong>Blue Coffee</strong>
-            <div class="place-meta">徒歩8分　<span class="rating">★4.8</span></div>
-          </div>
-        </div>
+<div
+  id="startBurst"
+  class="start-burst"
+></div>
 
-        <div class="place-card" onclick="showDetail()">
-          <div class="place-image">
-            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=500&q=80">
-          </div>
-          <div class="place-info">
-            <span class="tag">映画</span>
-            <strong>シネマ〇〇</strong>
-            <div class="place-meta">徒歩12分　<span class="rating">★4.5</span></div>
-          </div>
-        </div>
 
-      </div>
+<!-- =======================================================
+     APP
+======================================================= -->
+
+<div id="app">
+
+<div class="phone">
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section
+  id="home"
+  class="screen active"
+>
+
+  <div class="status">
+
+    <span>9:41</span>
+
+    <div class="status-right">
+      <span>▮▮▮</span>
+      <span>Wi-Fi</span>
+      <span>▰</span>
     </div>
 
-  </section>
+  </div>
 
 
-  <!-- =========================
-       MAP
-  ========================== -->
-  <section id="map" class="screen map-screen">
+  <div class="hero">
 
-    <div class="statusbar">
-      <span>9:41</span>
-      <div class="status-icons">
-        <span>▮▮▮</span>
-        <span>Wi-Fi</span>
-        <span>▰</span>
-      </div>
-    </div>
+    <div class="hero-content">
 
-    <div class="map">
+      <div>
 
-      <div class="map-header">
+        <div class="logo">
+          ohitorisamap
 
-        <div class="map-title">マップ</div>
-        <div class="map-sub">現在地周辺のおすすめスポット</div>
-
-        <div class="map-filters">
-          <div class="map-filter active">すべて</div>
-          <div class="map-filter">🍴 食事</div>
-          <div class="map-filter">☕ カフェ</div>
-          <div class="map-filter">▣ 映画</div>
-          <div class="map-filter">♨ 温泉</div>
+          <span class="logo-small">
+            おひとりさまっぷ
+          </span>
         </div>
 
       </div>
 
-      <div class="pin" style="left:16%;top:34%">🍴</div>
-      <div class="pin" style="left:28%;top:52%">☕</div>
-      <div class="pin selected" style="left:47%;top:39%">🍴</div>
-      <div class="pin" style="left:65%;top:28%">♨</div>
-      <div class="pin" style="left:73%;top:53%">▣</div>
-      <div class="pin" style="left:39%;top:64%">🍴</div>
-      <div class="pin" style="left:81%;top:38%">☕</div>
-      <div class="pin" style="left:22%;top:67%">♨</div>
 
-      <div class="user-location"></div>
+      <div class="hero-copy">
 
-      <div class="map-card">
+        <p>
+          ひとりの時間を、
+        </p>
 
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80">
-
-        <div class="map-card-content">
-          <div style="font-size:8px;color:#20d5ff">
-            居酒屋　ひとりでも入りやすい
-          </div>
-
-          <h3>居酒屋 たかし</h3>
-
-          <div>
-            <span class="rating">★ 4.5</span>
-            <span style="font-size:8px;color:#899ca8">（122件）</span>
-          </div>
-
-          <p>徒歩3分　　¥1,000〜3,000</p>
-          <p>カウンターあり　ひとり歓迎</p>
-
-          <button
-            class="map-button"
-            onclick="showDetail()"
-          >
-            詳しく見る
-          </button>
-        </div>
+        <strong>
+          もっと自由に。
+        </strong>
 
       </div>
 
-    </div>
-  </section>
-
-
-  <!-- =========================
-       SEARCH
-  ========================== -->
-  <section id="search" class="screen">
-
-    <div class="statusbar">
-      <span>9:41</span>
-      <div class="status-icons">
-        <span>▮▮▮</span>
-        <span>Wi-Fi</span>
-        <span>▰</span>
-      </div>
-    </div>
-
-    <div class="page-header">
-      <span class="back" onclick="showScreen('home')">‹</span>
-      <h2>検索</h2>
-    </div>
-
-    <div class="section" style="margin-top:8px">
 
       <div class="search">
+
         <span>⌕</span>
+
         <input
-          id="searchInput"
-          type="text"
-          placeholder="お店名・ジャンル・エリアで検索"
-        />
-        <span>⌗</span>
+          id="homeSearch"
+          placeholder="行きたい場所・ジャンル・キーワード"
+        >
+
+        <span>›</span>
+
       </div>
 
     </div>
 
-    <div class="section">
+  </div>
+
+
+  <!-- categories -->
+
+  <div class="section">
+
+    <div class="categories">
+
+      <div class="category">
+        <div class="category-icon">🍴</div>
+        <span>食事</span>
+      </div>
+
+      <div class="category">
+        <div class="category-icon">☕</div>
+        <span>カフェ</span>
+      </div>
+
+      <div class="category">
+        <div class="category-icon">▣</div>
+        <span>映画</span>
+      </div>
+
+      <div class="category">
+        <div class="category-icon">♨</div>
+        <span>温泉</span>
+      </div>
+
+      <div class="category">
+        <div class="category-icon">🚗</div>
+        <span>ドライブ</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- location -->
+
+  <div class="section">
+
+    <div class="location">
+
+      <div class="location-icon">
+        ◎
+      </div>
+
+      <div class="location-text">
+
+        <small>
+          現在地から探す
+        </small>
+
+        <strong>
+          あなたの近くのお店を表示
+        </strong>
+
+      </div>
+
+      <span>›</span>
+
+    </div>
+
+  </div>
+
+
+  <!-- recommendations -->
+
+  <div class="section">
+
+    <div class="section-title">
+
+      <span>
+        あなたにおすすめ
+      </span>
+
+      <span class="more">
+        もっと見る ›
+      </span>
+
+    </div>
+
+
+    <div class="place-scroll">
+
+
+      <div class="place">
+
+        <div class="place-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80"
+          >
+
+        </div>
+
+        <div class="place-tag">
+          焼き鳥
+        </div>
+
+        <div class="place-name">
+          居酒屋 たかし
+        </div>
+
+        <div class="place-meta">
+          徒歩5分　
+          <span class="star">★4.6</span>
+        </div>
+
+      </div>
+
+
+      <div class="place">
+
+        <div class="place-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80"
+          >
+
+        </div>
+
+        <div class="place-tag">
+          カフェ
+        </div>
+
+        <div class="place-name">
+          Blue Coffee
+        </div>
+
+        <div class="place-meta">
+          徒歩8分　
+          <span class="star">★4.8</span>
+        </div>
+
+      </div>
+
+
+      <div class="place">
+
+        <div class="place-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80"
+          >
+
+        </div>
+
+        <div class="place-tag">
+          映画
+        </div>
+
+        <div class="place-name">
+          CINEMA
+        </div>
+
+        <div class="place-meta">
+          徒歩12分　
+          <span class="star">★4.5</span>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAP
+===================================================== -->
+
+<section
+  id="map"
+  class="screen"
+>
+
+  <div class="status">
+
+    <span>9:41</span>
+
+    <div class="status-right">
+      <span>▮▮▮</span>
+      <span>Wi-Fi</span>
+      <span>▰</span>
+    </div>
+
+  </div>
+
+
+  <div class="map-screen">
+
+    <div class="map-title">
+
+      マップ
+
+      <div class="map-sub">
+        現在地周辺のおすすめスポット
+      </div>
+
+    </div>
+
+
+    <div class="pin p1">☕</div>
+    <div class="pin p2">♨</div>
+    <div class="pin p3">🍴</div>
+    <div class="pin p4">▣</div>
+    <div class="pin p5">🍴</div>
+
+    <div class="current"></div>
+
+
+    <div class="map-card">
+
+      <div class="map-card-tag">
+        居酒屋・ひとりでも入りやすい
+      </div>
+
+      <h3>
+        居酒屋 たかし
+      </h3>
+
+      <div class="star">
+        ★ 4.5
+      </div>
+
+      <div class="map-card-meta">
+        徒歩3分　　¥1,000〜3,000
+      </div>
+
+      <button
+        class="detail-button"
+        onclick="showToast('店舗詳細を表示')"
+      >
+        詳しく見る
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
+<section
+  id="search"
+  class="screen"
+>
+
+  <div class="status">
+
+    <span>9:41</span>
+
+    <div class="status-right">
+      <span>▮▮▮</span>
+      <span>Wi-Fi</span>
+      <span>▰</span>
+    </div>
+
+  </div>
+
+
+  <div class="page">
+
+    <div class="page-title">
+      検索
+    </div>
+
+
+    <div class="search">
+
+      <span>⌕</span>
+
+      <input
+        id="searchInput"
+        placeholder="お店名・ジャンル・エリアで検索"
+      >
+
+    </div>
+
+
+    <div style="margin-top:28px">
 
       <div class="section-title">
         人気のキーワード
       </div>
 
-      <div class="keyword-list">
 
-        <div class="keyword">ラーメン</div>
-        <div class="keyword">カフェ</div>
-        <div class="keyword">夜ごはん</div>
-        <div class="keyword">居酒屋</div>
-        <div class="keyword">温泉</div>
-        <div class="keyword">映画</div>
-        <div class="keyword">ひとり焼肉</div>
-        <div class="keyword">散歩</div>
+      <div>
 
-      </div>
-
-    </div>
-
-    <div class="section">
-
-      <div class="section-title">
-        ジャンルから探す
-      </div>
-
-      <div class="search-menu">
-
-        <div class="search-menu-item glass" onclick="showToast('食事を検索')">
-          <div class="search-menu-icon">🍴</div>
-          <div class="search-menu-text">
-            <strong>食事</strong>
-            <small>ひとりでも入りやすいお店</small>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="search-menu-item glass">
-          <div class="search-menu-icon">☕</div>
-          <div class="search-menu-text">
-            <strong>カフェ</strong>
-            <small>ゆっくりできるカフェ</small>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="search-menu-item glass">
-          <div class="search-menu-icon">▣</div>
-          <div class="search-menu-text">
-            <strong>映画</strong>
-            <small>ひとりで楽しめる映画館</small>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="search-menu-item glass">
-          <div class="search-menu-icon">♨</div>
-          <div class="search-menu-text">
-            <strong>温泉</strong>
-            <small>日帰り・ひとり温泉</small>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="search-menu-item glass">
-          <div class="search-menu-icon">🚗</div>
-          <div class="search-menu-text">
-            <strong>ドライブ</strong>
-            <small>絶景・おすすめルート</small>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================
-       DETAIL
-  ========================== -->
-  <section id="detail" class="screen detail">
-
-    <div class="statusbar">
-      <span>9:41</span>
-      <div class="status-icons">
-        <span>▮▮▮</span>
-        <span>Wi-Fi</span>
-        <span>▰</span>
-      </div>
-    </div>
-
-    <div class="detail-hero">
-
-      <img
-        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
-      >
-
-      <div class="detail-overlay"></div>
-
-      <div class="detail-top">
-        <div class="circle-button" onclick="showScreen('home')">‹</div>
-
-        <div style="display:flex;gap:8px">
-          <div class="circle-button">↗</div>
-          <div
-            class="circle-button"
-            onclick="toggleFavorite('detailHeart')"
-          >
-            <span id="detailHeart">♡</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-title">
-        <h1>居酒屋 たかし</h1>
-        <p>ひとりでも入りやすい　・　カウンターあり</p>
-      </div>
-
-    </div>
-
-    <div class="detail-body">
-
-      <div class="rating-big">
-        <strong>★ 4.5</strong>
-        <span style="font-size:9px;color:#8197a7">
-          口コミ 122件
+        <span class="keyword">
+          ラーメン
         </span>
-      </div>
 
-      <div class="detail-row">
-        <span class="label">営業時間</span>
-        <span>17:00 - 24:00</span>
-      </div>
+        <span class="keyword">
+          カフェ
+        </span>
 
-      <div class="detail-row">
-        <span class="label">定休日</span>
-        <span>月曜日</span>
-      </div>
+        <span class="keyword">
+          夜ごはん
+        </span>
 
-      <div class="detail-row">
-        <span class="label">予算</span>
-        <span>¥3,000〜¥4,000</span>
-      </div>
+        <span class="keyword">
+          居酒屋
+        </span>
 
-      <div class="detail-row">
-        <span class="label">住所</span>
-        <span>東京都渋谷区〇〇 1-2-3</span>
-      </div>
+        <span class="keyword">
+          温泉
+        </span>
 
-      <div class="detail-row">
-        <span class="label">アクセス</span>
-        <span>渋谷駅 徒歩3分</span>
-      </div>
+        <span class="keyword">
+          映画
+        </span>
 
-      <p class="detail-description">
-        カウンター席があり、ひとりでも気軽に入れる居酒屋。
-        焼き鳥を中心に、地元の人にも人気のお店です。
-        仕事帰りのひとりごはんにもおすすめ。
-      </p>
+        <span class="keyword">
+          ドライブ
+        </span>
 
-      <button
-        class="primary-button"
-        onclick="showScreen('map')"
-      >
-        ◎　地図で見る
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================
-       FAVORITES
-  ========================== -->
-  <section id="favorites" class="screen">
-
-    <div class="statusbar">
-      <span>9:41</span>
-      <div class="status-icons">
-        <span>▮▮▮</span>
-        <span>Wi-Fi</span>
-        <span>▰</span>
-      </div>
-    </div>
-
-    <div class="page-header">
-      <h2>お気に入り</h2>
-    </div>
-
-    <div class="section" style="margin-top:5px">
-
-      <div class="section-title">
-        <span style="color:white">スポット</span>
-        <span>リスト</span>
       </div>
 
     </div>
 
-    <div id="favoriteList">
 
-      <div class="favorite-item glass" onclick="showDetail()">
-        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80">
+    <div style="margin-top:25px">
 
-        <div class="favorite-info">
-          <strong>居酒屋 たかし</strong>
-          <small><span class="rating">★4.5</span>　徒歩3分</small>
-          <small>居酒屋　ひとりごはん</small>
+      <div class="card">
+        🍴　食事　›
+      </div>
+
+      <div class="card">
+        ☕　カフェ　›
+      </div>
+
+      <div class="card">
+        ▣　映画　›
+      </div>
+
+      <div class="card">
+        ♨　温泉　›
+      </div>
+
+      <div class="card">
+        🚗　ドライブ　›
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     FAVORITES
+===================================================== -->
+
+<section
+  id="favorites"
+  class="screen"
+>
+
+  <div class="status">
+
+    <span>9:41</span>
+
+    <div class="status-right">
+      <span>▮▮▮</span>
+      <span>Wi-Fi</span>
+      <span>▰</span>
+    </div>
+
+  </div>
+
+
+  <div class="page">
+
+    <div class="page-title">
+      お気に入り
+    </div>
+
+
+    <div class="card">
+
+      <div class="favorite-row">
+
+        <div class="favorite-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=300&q=80"
+          >
+
         </div>
 
-        <div class="heart">♥</div>
-      </div>
-
-      <div class="favorite-item glass">
-        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80">
-
         <div class="favorite-info">
-          <strong>Blue Coffee</strong>
-          <small><span class="rating">★4.8</span>　徒歩8分</small>
-          <small>カフェ</small>
+
+          <strong>
+            居酒屋 たかし
+          </strong>
+
+          <small>
+            ★4.5　徒歩3分
+          </small>
+
         </div>
 
-        <div class="heart">♥</div>
-      </div>
-
-      <div class="favorite-item glass">
-        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80">
-
-        <div class="favorite-info">
-          <strong>シネマ〇〇</strong>
-          <small><span class="rating">★4.5</span>　徒歩12分</small>
-          <small>映画</small>
+        <div class="heart">
+          ♥
         </div>
 
-        <div class="heart">♥</div>
       </div>
 
-      <div class="favorite-item glass">
-        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=400&q=80">
+    </div>
 
-        <div class="favorite-info">
-          <strong>湯の湯</strong>
-          <small><span class="rating">★4.6</span>　車15分</small>
-          <small>温泉</small>
+
+    <div class="card">
+
+      <div class="favorite-row">
+
+        <div class="favorite-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=300&q=80"
+          >
+
         </div>
 
-        <div class="heart">♥</div>
+        <div class="favorite-info">
+
+          <strong>
+            Blue Coffee
+          </strong>
+
+          <small>
+            ★4.8　徒歩8分
+          </small>
+
+        </div>
+
+        <div class="heart">
+          ♥
+        </div>
+
       </div>
 
     </div>
 
-  </section>
 
+    <div class="card">
 
-  <!-- =========================
-       MY PAGE
-  ========================== -->
-  <section id="mypage" class="screen">
+      <div class="favorite-row">
 
-    <div class="statusbar">
-      <span>9:41</span>
-      <div class="status-icons">
-        <span>▮▮▮</span>
-        <span>Wi-Fi</span>
-        <span>▰</span>
+        <div class="favorite-image">
+
+          <img
+            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=300&q=80"
+          >
+
+        </div>
+
+        <div class="favorite-info">
+
+          <strong>
+            CINEMA
+          </strong>
+
+          <small>
+            ★4.5　徒歩12分
+          </small>
+
+        </div>
+
+        <div class="heart">
+          ♥
+        </div>
+
       </div>
+
     </div>
 
-    <div class="page-header">
-      <h2>マイページ</h2>
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     MY PAGE
+===================================================== -->
+
+<section
+  id="mypage"
+  class="screen"
+>
+
+  <div class="status">
+
+    <span>9:41</span>
+
+    <div class="status-right">
+      <span>▮▮▮</span>
+      <span>Wi-Fi</span>
+      <span>▰</span>
     </div>
 
-    <div class="profile glass">
+  </div>
 
-      <div class="avatar">●</div>
 
-      <div class="profile-info">
-        <strong>ひとり旅好き</strong>
-        <small>おひとりさま時間を楽しもう</small>
+  <div class="page">
+
+    <div class="page-title">
+      マイページ
+    </div>
+
+
+    <div class="card">
+
+      <div class="profile">
+
+        <div class="avatar">
+          ●
+        </div>
+
+        <div>
+
+          <div class="profile-name">
+            ひとり旅好き
+          </div>
+
+          <div class="profile-sub">
+            おひとりさま時間を楽しもう
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="profile-edit">編集</div>
-
     </div>
+
 
     <div class="stats">
 
-      <div class="stat">
-        <strong>12</strong>
-        <small>行った場所</small>
+      <div>
+
+        <div class="stat-number">
+          12
+        </div>
+
+        <div class="stat-label">
+          行った場所
+        </div>
+
       </div>
 
-      <div class="stat">
-        <strong>28</strong>
-        <small>お気に入り</small>
+
+      <div>
+
+        <div class="stat-number">
+          28
+        </div>
+
+        <div class="stat-label">
+          お気に入り
+        </div>
+
       </div>
 
-      <div class="stat">
-        <strong>5</strong>
-        <small>レビュー</small>
-      </div>
 
-    </div>
+      <div>
 
-    <div class="my-menu glass">
+        <div class="stat-number">
+          5
+        </div>
 
-      <div class="my-menu-item">
-        <span class="mi">♡</span>
-        <span>お気に入り</span>
-        <span class="arrow">›</span>
-      </div>
+        <div class="stat-label">
+          レビュー
+        </div>
 
-      <div class="my-menu-item">
-        <span class="mi">◷</span>
-        <span>行った場所・履歴</span>
-        <span class="arrow">›</span>
-      </div>
-
-      <div class="my-menu-item">
-        <span class="mi">☆</span>
-        <span>レビュー・評価</span>
-        <span class="arrow">›</span>
-      </div>
-
-      <div class="my-menu-item">
-        <span class="mi">♧</span>
-        <span>通知設定</span>
-        <span class="arrow">›</span>
-      </div>
-
-      <div class="my-menu-item">
-        <span class="mi">⚙</span>
-        <span>アカウント設定</span>
-        <span class="arrow">›</span>
-      </div>
-
-      <div class="my-menu-item">
-        <span class="mi">?</span>
-        <span>ヘルプ・お問い合わせ</span>
-        <span class="arrow">›</span>
-      </div>
-
-      <div class="my-menu-item logout">
-        <span class="mi">↪</span>
-        <span>ログアウト</span>
       </div>
 
     </div>
 
-  </section>
 
-
-  <!-- =========================
-       BOTTOM NAV
-  ========================== -->
-
-  <nav class="bottom-nav">
-
-    <div class="nav-item active" data-screen="home">
-      <div class="nav-icon">⌂</div>
-      <span>ホーム</span>
+    <div class="card">
+      ♡　お気に入り　›
     </div>
 
-    <div class="nav-item" data-screen="map">
-      <div class="nav-icon">⌖</div>
-      <span>マップ</span>
+    <div class="card">
+      ◷　行った場所・履歴　›
     </div>
 
-    <div class="nav-item" data-screen="search">
-      <div class="nav-icon">◉</div>
-      <span>検索</span>
+    <div class="card">
+      ☆　レビュー・評価　›
     </div>
 
-    <div class="nav-item" data-screen="favorites">
-      <div class="nav-icon">♡</div>
-      <span>お気に入り</span>
+    <div class="card">
+      ⚙　アカウント設定　›
     </div>
 
-    <div class="nav-item" data-screen="mypage">
-      <div class="nav-icon">♙</div>
-      <span>マイページ</span>
+    <div class="card">
+      ✦　このアプリについて　›
     </div>
 
-  </nav>
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     NAV
+===================================================== -->
+
+<nav class="bottom-nav">
+
+  <div
+    class="nav active"
+    data-page="home"
+  >
+    <div class="nav-icon">⌂</div>
+    <span>ホーム</span>
+  </div>
+
+  <div
+    class="nav"
+    data-page="map"
+  >
+    <div class="nav-icon">⌖</div>
+    <span>マップ</span>
+  </div>
+
+  <div
+    class="nav"
+    data-page="search"
+  >
+    <div class="nav-icon">◉</div>
+    <span>検索</span>
+  </div>
+
+  <div
+    class="nav"
+    data-page="favorites"
+  >
+    <div class="nav-icon">♡</div>
+    <span>お気に入り</span>
+  </div>
+
+  <div
+    class="nav"
+    data-page="mypage"
+  >
+    <div class="nav-icon">♙</div>
+    <span>マイページ</span>
+  </div>
+
+</nav>
+
 
 </div>
+</div>
 
-<div id="toast" class="toast"></div>
+
+<!-- =======================================================
+     TOAST
+======================================================= -->
+
+<div
+  id="toast"
+  style="
+    position:fixed;
+    left:50%;
+    bottom:95px;
+    transform:translateX(-50%) translateY(20px);
+    z-index:999999;
+    padding:11px 18px;
+    border-radius:20px;
+    background:rgba(5,24,34,.95);
+    border:1px solid rgba(40,210,255,.25);
+    color:#c9f7ff;
+    font-size:10px;
+    opacity:0;
+    pointer-events:none;
+    transition:.35s;
+    backdrop-filter:blur(15px);
+  "
+></div>
 
 
 <script>
+/* =========================================================
+   OPENING CONTROL
+========================================================= */
 
-/* ========================================
-   SCREEN NAVIGATION
-======================================== */
+const opening =
+  document.getElementById("opening");
 
-const screens = [
-  "home",
-  "map",
-  "search",
-  "detail",
-  "favorites",
-  "mypage"
-];
+const app =
+  document.getElementById("app");
 
-function showScreen(name) {
+const startButton =
+  document.getElementById("startButton");
 
-  screens.forEach(id => {
-    const screen = document.getElementById(id);
+const startBurst =
+  document.getElementById("startBurst");
 
-    if (screen) {
-      screen.classList.toggle("active", id === name);
+const loadingText =
+  document.getElementById("loadingText");
+
+
+/*
+  3.9秒後にブラックアウト
+*/
+
+setTimeout(() => {
+
+  opening.classList.add("blackout");
+
+}, 3900);
+
+
+/*
+  Loading → System Ready
+*/
+
+setTimeout(() => {
+
+  loadingText.textContent =
+    "SYSTEM READY";
+
+}, 6100);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+startButton.addEventListener("click", () => {
+
+  startButton.disabled = true;
+
+  startButton.textContent =
+    "CONNECTING";
+
+
+  /*
+    起動バースト
+  */
+
+  startBurst.classList.add("active");
+
+
+  /*
+    システム画面を暗くする
+  */
+
+  opening.style.background =
+    "#000";
+
+
+  setTimeout(() => {
+
+    opening.style.opacity = "0";
+
+    app.classList.add("show");
+
+  }, 700);
+
+
+  setTimeout(() => {
+
+    opening.remove();
+
+  }, 1900);
+
+});
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const navs =
+  document.querySelectorAll(".nav");
+
+const screens =
+  document.querySelectorAll(".screen");
+
+
+navs.forEach(nav => {
+
+  nav.addEventListener("click", () => {
+
+    const page =
+      nav.dataset.page;
+
+
+    /*
+      画面切り替え
+    */
+
+    screens.forEach(screen => {
+
+      screen.classList.remove("active");
+
+    });
+
+
+    const target =
+      document.getElementById(page);
+
+    if (target) {
+
+      target.classList.add("active");
+
     }
+
+
+    /*
+      ナビ状態
+    */
+
+    navs.forEach(item => {
+
+      item.classList.remove("active");
+
+    });
+
+    nav.classList.add("active");
+
+
+    /*
+      上まで戻る
+    */
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
   });
 
-  document.querySelectorAll(".nav-item").forEach(item => {
-    item.classList.toggle(
-      "active",
-      item.dataset.screen === name
-    );
-  });
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
+});
 
 
-/* ========================================
-   DETAIL
-======================================== */
+/* =========================================================
+   HOME SEARCH
+========================================================= */
 
-function showDetail() {
-  showScreen("detail");
-}
+const homeSearch =
+  document.getElementById("homeSearch");
 
 
-/* ========================================
-   FAVORITE
-======================================== */
+homeSearch.addEventListener(
+  "keydown",
+  event => {
 
-function toggleFavorite(id) {
+    if (event.key === "Enter") {
 
-  const heart = document.getElementById(id);
+      document
+        .querySelector('[data-page="search"]')
+        .click();
 
-  if (heart.textContent === "♡") {
-    heart.textContent = "♥";
-    heart.style.color = "#20d5ff";
-    showToast("お気に入りに追加しました");
-  } else {
-    heart.textContent = "♡";
-    heart.style.color = "";
-    showToast("お気に入りから削除しました");
+      document
+        .getElementById("searchInput")
+        .focus();
+
+    }
+
   }
-}
+);
 
 
-/* ========================================
+/* =========================================================
+   SEARCH KEYWORDS
+========================================================= */
+
+document
+  .querySelectorAll(".keyword")
+  .forEach(keyword => {
+
+    keyword.addEventListener(
+      "click",
+      () => {
+
+        const input =
+          document.getElementById(
+            "searchInput"
+          );
+
+        input.value =
+          keyword.textContent.trim();
+
+        showToast(
+          "「" +
+          input.value +
+          "」を検索しました"
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
    TOAST
-======================================== */
+========================================================= */
 
 let toastTimer;
 
 function showToast(message) {
 
-  const toast = document.getElementById("toast");
+  const toast =
+    document.getElementById("toast");
 
-  toast.textContent = message;
-  toast.classList.add("show");
+  toast.textContent =
+    message;
+
+  toast.style.opacity =
+    "1";
+
+  toast.style.transform =
+    "translateX(-50%) translateY(0)";
+
 
   clearTimeout(toastTimer);
 
-  toastTimer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 1800);
+  toastTimer =
+    setTimeout(() => {
+
+      toast.style.opacity =
+        "0";
+
+      toast.style.transform =
+        "translateX(-50%) translateY(20px)";
+
+    }, 1800);
+
 }
 
 
-/* ========================================
-   NAV
-======================================== */
+/* =========================================================
+   CATEGORY CLICK
+========================================================= */
 
-document.querySelectorAll(".nav-item").forEach(item => {
+document
+  .querySelectorAll(".category")
+  .forEach(category => {
 
-  item.addEventListener("click", () => {
+    category.addEventListener(
+      "click",
+      () => {
 
-    showScreen(item.dataset.screen);
+        const text =
+          category.querySelector(
+            "span"
+          ).textContent;
 
-  });
+        document
+          .querySelector(
+            '[data-page="search"]'
+          )
+          .click();
 
-});
+        const input =
+          document.getElementById(
+            "searchInput"
+          );
 
+        input.value = text;
 
-/* ========================================
-   SEARCH
-======================================== */
-
-const homeSearch = document.getElementById("homeSearch");
-const searchInput = document.getElementById("searchInput");
-
-homeSearch.addEventListener("keydown", event => {
-
-  if (event.key === "Enter") {
-
-    searchInput.value = homeSearch.value;
-
-    showScreen("search");
-
-  }
-
-});
-
-
-searchInput.addEventListener("keydown", event => {
-
-  if (event.key === "Enter") {
-
-    showToast(
-      `"${searchInput.value}" を検索しました`
-    );
-
-  }
-
-});
-
-
-/* ========================================
-   KEYWORDS
-======================================== */
-
-document.querySelectorAll(".keyword").forEach(keyword => {
-
-  keyword.addEventListener("click", () => {
-
-    searchInput.value = keyword.textContent;
-
-    showToast(
-      `"${keyword.textContent}" を検索`
+      }
     );
 
   });
 
-});
+
+/* =========================================================
+   LOCATION BUTTON
+========================================================= */
+
+document
+  .querySelector(".location")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "現在地を取得しています…"
+      );
+
+    }
+  );
 
 
-/* ========================================
-   MAP FILTER
-======================================== */
+/* =========================================================
+   FAVORITE HEART
+========================================================= */
 
-document.querySelectorAll(".map-filter").forEach(filter => {
+document
+  .querySelectorAll(".heart")
+  .forEach(heart => {
 
-  filter.addEventListener("click", () => {
+    heart.addEventListener(
+      "click",
+      event => {
 
-    document.querySelectorAll(".map-filter")
-      .forEach(x => x.classList.remove("active"));
+        event.stopPropagation();
 
-    filter.classList.add("active");
+        if (
+          heart.textContent === "♥"
+        ) {
+
+          heart.textContent =
+            "♡";
+
+          heart.style.color =
+            "#718895";
+
+          showToast(
+            "お気に入りから削除しました"
+          );
+
+        } else {
+
+          heart.textContent =
+            "♥";
+
+          heart.style.color =
+            "#21d9ff";
+
+          showToast(
+            "お気に入りに追加しました"
+          );
+
+        }
+
+      }
+    );
 
   });
-
-});
-
 </script>
 
 </body>
