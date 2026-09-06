@@ -2,47 +2,34 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
 
 <title>ohitorisamap｜おひとりさまっぷ</title>
 
 <style>
-:root{
-  --bg:#02070b;
-  --bg2:#06121b;
-  --panel:rgba(7,22,32,.86);
-  --panel2:rgba(8,29,42,.72);
-  --line:rgba(67,214,255,.20);
-  --cyan:#20d8ff;
-  --cyan2:#8beeff;
-  --text:#eefaff;
-  --muted:#78909e;
-  --danger:#ff526b;
-  --yellow:#ffd75a;
-}
-
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
-  -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
-  width:100%;
-  min-height:100%;
-  background:#000;
-  color:var(--text);
+html{
+  scroll-behavior:smooth;
+}
+
+body{
   font-family:
     -apple-system,
     BlinkMacSystemFont,
     "Helvetica Neue",
-    "Noto Sans JP",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
     sans-serif;
-}
 
-body{
-  overflow-x:hidden;
+  background:#f5f6f8;
+  color:#222;
+  min-height:100vh;
 }
 
 button,
@@ -51,446 +38,143 @@ input{
 }
 
 button{
-  border:0;
-  color:inherit;
+  border:none;
   background:none;
+  cursor:pointer;
 }
-
-/* =====================================================
-   OPENING
-===================================================== */
-
-#opening{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  transition:opacity .9s ease, visibility .9s ease;
-}
-
-#opening.hide{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-.opening-core{
-  position:relative;
-  width:240px;
-  height:240px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.opening-ring{
-  position:absolute;
-  width:18px;
-  height:18px;
-  border:1px solid rgba(110,232,255,.85);
-  border-radius:50%;
-  opacity:0;
-  animation:linkRing 1.8s cubic-bezier(.2,.75,.2,1) forwards;
-}
-
-.opening-ring.r2{
-  animation-delay:.18s;
-}
-
-.opening-ring.r3{
-  animation-delay:.34s;
-}
-
-.opening-line{
-  position:absolute;
-  width:1px;
-  height:0;
-  background:linear-gradient(
-    to bottom,
-    transparent,
-    rgba(105,230,255,.9),
-    transparent
-  );
-  opacity:0;
-  animation:scanLine .7s ease-out .55s forwards;
-}
-
-.opening-line.horizontal{
-  width:0;
-  height:1px;
-  background:linear-gradient(
-    to right,
-    transparent,
-    rgba(105,230,255,.9),
-    transparent
-  );
-  animation:scanHorizontal .7s ease-out .65s forwards;
-}
-
-.opening-logo{
-  position:relative;
-  z-index:3;
-  text-align:center;
-  opacity:0;
-  animation:logoIn .8s ease .75s forwards;
-}
-
-.opening-logo .en{
-  font-size:18px;
-  letter-spacing:.34em;
-  font-weight:500;
-  margin-left:.34em;
-}
-
-.opening-logo .jp{
-  margin-top:9px;
-  font-size:10px;
-  color:#a4b8c2;
-  letter-spacing:.22em;
-  margin-left:.22em;
-}
-
-.opening-sweep{
-  position:absolute;
-  width:300px;
-  height:1px;
-  left:-30px;
-  top:50%;
-  background:linear-gradient(
-    to right,
-    transparent,
-    rgba(91,229,255,.75),
-    transparent
-  );
-  transform:translateX(-120%);
-  opacity:0;
-  animation:sweep .9s ease-in-out 1s forwards;
-}
-
-@keyframes linkRing{
-  0%{
-    width:18px;
-    height:18px;
-    opacity:0;
-  }
-  25%{
-    opacity:1;
-  }
-  100%{
-    width:210px;
-    height:210px;
-    opacity:0;
-  }
-}
-
-@keyframes scanLine{
-  0%{
-    height:0;
-    opacity:0;
-  }
-  30%{
-    opacity:.8;
-  }
-  100%{
-    height:230px;
-    opacity:0;
-  }
-}
-
-@keyframes scanHorizontal{
-  0%{
-    width:0;
-    opacity:0;
-  }
-  30%{
-    opacity:.8;
-  }
-  100%{
-    width:230px;
-    opacity:0;
-  }
-}
-
-@keyframes logoIn{
-  from{
-    opacity:0;
-    transform:scale(.94);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-}
-
-@keyframes sweep{
-  0%{
-    transform:translateX(-120%);
-    opacity:0;
-  }
-  25%{
-    opacity:1;
-  }
-  100%{
-    transform:translateX(120%);
-    opacity:0;
-  }
-}
-
-/* =====================================================
-   APP
-===================================================== */
 
 #app{
   width:100%;
   max-width:430px;
   min-height:100vh;
-  margin:0 auto;
+  margin:auto;
+  background:#fff;
   position:relative;
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      rgba(22,148,190,.13),
-      transparent 42%
-    ),
-    linear-gradient(
-      180deg,
-      #02070b 0%,
-      #041019 48%,
-      #02070b 100%
-    );
   overflow:hidden;
 }
 
-#app::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.18;
-  background-image:
-    linear-gradient(
-      rgba(70,205,240,.035) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(70,205,240,.035) 1px,
-      transparent 1px
-    );
-  background-size:40px 40px;
-  mask-image:linear-gradient(
-    to bottom,
-    black,
-    transparent 85%
-  );
-}
-
-.screen{
+.page{
   display:none;
   min-height:100vh;
   padding-bottom:100px;
-  position:relative;
 }
 
-.screen.active{
+.page.active{
   display:block;
 }
 
-/* =====================================================
-   TOP
-===================================================== */
+/* =========================
+   HEADER
+========================= */
 
-.top-header{
-  padding:27px 20px 10px;
-  position:relative;
-  z-index:2;
+.header{
+  padding:22px 20px 8px;
 }
 
 .brand{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:#222;
 }
 
-.brand-main{
-  font-size:19px;
-  font-weight:500;
-  letter-spacing:.17em;
-}
-
-.brand-sub{
-  font-size:8px;
-  letter-spacing:.25em;
-  color:var(--muted);
-  margin-top:5px;
-}
-
-.signal{
-  width:30px;
-  height:30px;
-  border:1px solid var(--line);
-  border-radius:50%;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.signal::before,
-.signal::after{
-  content:"";
-  position:absolute;
-  border:1px solid rgba(32,216,255,.35);
-  border-radius:50%;
-}
-
-.signal::before{
-  inset:6px;
-}
-
-.signal::after{
-  inset:11px;
-  background:var(--cyan);
-  box-shadow:0 0 12px rgba(32,216,255,.7);
-}
-
-/* =====================================================
-   HOME
-===================================================== */
-
-.home-content{
-  padding:5px 20px 0;
-}
-
-.hero-copy{
-  padding:28px 0 22px;
-}
-
-.hero-kicker{
-  font-size:8px;
-  color:var(--cyan2);
-  letter-spacing:.3em;
-  margin-bottom:13px;
-  opacity:.85;
-}
-
-.hero-title{
-  font-size:29px;
-  line-height:1.3;
-  font-weight:500;
-  letter-spacing:.04em;
-}
-
-.hero-title span{
+.brand span{
   display:block;
+  font-size:10px;
+  font-weight:500;
+  color:#999;
+  letter-spacing:.08em;
+  margin-top:3px;
 }
 
-.hero-description{
-  margin-top:12px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.8;
+/* =========================
+   HOME
+========================= */
+
+.hero{
+  padding:20px;
+}
+
+.hero h1{
+  font-size:27px;
+  line-height:1.4;
+  letter-spacing:-.04em;
+  font-weight:700;
+}
+
+.hero p{
+  margin-top:7px;
+  font-size:13px;
+  color:#888;
 }
 
 /* SEARCH */
 
 .search-box{
+  margin-top:20px;
   height:52px;
-  border:1px solid var(--line);
-  background:rgba(5,19,28,.72);
+  border-radius:15px;
+  background:#f3f4f6;
   display:flex;
   align-items:center;
   padding:0 16px;
-  position:relative;
-  overflow:hidden;
-  margin-bottom:28px;
-}
-
-.search-box::after{
-  content:"";
-  position:absolute;
-  width:70px;
-  height:1px;
-  background:var(--cyan);
-  opacity:.45;
-  top:0;
-  left:20px;
+  gap:10px;
 }
 
 .search-icon{
-  width:16px;
-  height:16px;
-  border:1px solid #79dff5;
+  width:18px;
+  height:18px;
+  border:2px solid #777;
   border-radius:50%;
   position:relative;
-  margin-right:13px;
-  flex-shrink:0;
+  flex:none;
 }
 
 .search-icon::after{
   content:"";
+  width:7px;
+  height:2px;
+  background:#777;
   position:absolute;
-  width:6px;
-  height:1px;
-  background:#79dff5;
   right:-5px;
   bottom:-2px;
   transform:rotate(45deg);
+  border-radius:2px;
 }
 
 .search-box input{
-  width:100%;
-  border:0;
+  border:none;
   outline:none;
-  color:var(--text);
-  background:transparent;
-  font-size:13px;
+  background:none;
+  width:100%;
+  font-size:14px;
+  color:#333;
 }
 
 .search-box input::placeholder{
-  color:#637b88;
+  color:#aaa;
 }
 
-/* =====================================================
+/* =========================
    CATEGORY
-===================================================== */
+========================= */
 
-.section-label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:15px;
+.section{
+  margin-top:8px;
 }
 
-.section-label span{
-  font-size:9px;
-  color:#9bb0ba;
-  letter-spacing:.25em;
+.section-title{
+  padding:0 20px;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:-.03em;
 }
-
-.section-label::after{
-  content:"";
-  height:1px;
-  flex:1;
-  background:linear-gradient(
-    to right,
-    var(--line),
-    transparent
-  );
-}
-
-/* horizontal category */
 
 .category-scroll{
   display:flex;
-  gap:20px;
+  gap:14px;
   overflow-x:auto;
-  padding:2px 4px 18px;
-  margin:0 -4px;
+  padding:18px 20px 5px;
   scrollbar-width:none;
   -webkit-overflow-scrolling:touch;
 }
@@ -499,856 +183,277 @@ button{
   display:none;
 }
 
-.category-item{
+.category{
   flex:0 0 66px;
   text-align:center;
-  cursor:pointer;
 }
 
 .category-circle{
   width:60px;
   height:60px;
+  margin:auto;
+
   border-radius:50%;
-  border:1px solid rgba(54,205,240,.35);
+  border:1px solid #ddd;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  margin:0 auto 9px;
-  position:relative;
-  background:
-    radial-gradient(
-      circle,
-      rgba(32,216,255,.08),
-      rgba(4,15,22,.8)
-    );
-  transition:.25s ease;
+
+  background:#fff;
+  transition:.2s;
 }
 
-.category-circle::before{
-  content:"";
-  position:absolute;
-  inset:5px;
-  border-radius:50%;
-  border:1px solid rgba(87,219,245,.09);
+.category:active .category-circle{
+  transform:scale(.94);
 }
 
-.category-circle::after{
-  content:"";
-  position:absolute;
-  width:4px;
-  height:4px;
-  border-radius:50%;
-  background:var(--cyan);
-  top:7px;
-  right:11px;
-  box-shadow:0 0 8px rgba(32,216,255,.8);
-}
-
-.category-item:active .category-circle,
-.category-item.selected .category-circle{
-  border-color:var(--cyan);
-  box-shadow:
-    0 0 10px rgba(32,216,255,.20),
-    inset 0 0 15px rgba(32,216,255,.08);
-  transform:scale(1.04);
-}
-
-.category-icon{
-  width:24px;
-  height:24px;
-  color:#a8efff;
-  position:relative;
-}
-
-.category-icon svg{
-  width:100%;
-  height:100%;
+.category svg{
+  width:25px;
+  height:25px;
+  stroke:#444;
+  stroke-width:1.7;
   fill:none;
-  stroke:currentColor;
-  stroke-width:1.4;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
 
 .category-name{
-  font-size:10px;
-  color:#c0d0d7;
+  margin-top:8px;
+  font-size:11px;
+  color:#444;
   white-space:nowrap;
 }
 
-.category-en{
-  font-size:7px;
-  color:#607984;
-  letter-spacing:.12em;
-  margin-top:3px;
+/* =========================
+   RECOMMEND
+========================= */
+
+.recommend-section{
+  margin-top:28px;
 }
 
-/* =====================================================
-   CURRENT MAP
-===================================================== */
-
-.current-map{
-  margin-top:15px;
+.horizontal-cards{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:15px 20px 4px;
+  scrollbar-width:none;
 }
 
-.map-card{
-  height:230px;
-  position:relative;
+.horizontal-cards::-webkit-scrollbar{
+  display:none;
+}
+
+.place-card{
+  flex:0 0 220px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:17px;
   overflow:hidden;
-  border:1px solid var(--line);
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(20,139,175,.13),
-      transparent 35%
-    ),
-    #031018;
+  box-shadow:0 5px 18px rgba(0,0,0,.05);
 }
 
-/* map grid */
-
-.map-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:
+.place-image{
+  height:130px;
+  background:
     linear-gradient(
-      rgba(70,210,240,.09) 1px,
-      transparent 1px
-    ),
+      135deg,
+      #ddd,
+      #f2f2f2
+    );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+  font-size:12px;
+}
+
+.place-info{
+  padding:13px;
+}
+
+.place-category{
+  font-size:10px;
+  color:#999;
+}
+
+.place-name{
+  margin-top:5px;
+  font-size:15px;
+  font-weight:700;
+}
+
+.place-meta{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:7px;
+  font-size:11px;
+  color:#888;
+}
+
+.rating{
+  color:#333;
+  font-weight:600;
+}
+
+/* =========================
+   MAP PREVIEW
+========================= */
+
+.map-section{
+  margin-top:30px;
+  padding-bottom:10px;
+}
+
+.map-preview{
+  margin:15px 20px 0;
+  height:220px;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+
+  background:
     linear-gradient(
       90deg,
-      rgba(70,210,240,.09) 1px,
-      transparent 1px
-    );
-  background-size:34px 34px;
-  transform:perspective(450px) rotateX(52deg) scale(1.4);
-  transform-origin:center bottom;
-  opacity:.42;
-}
-
-.map-card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
+      transparent 49%,
+      rgba(0,0,0,.06) 50%,
+      transparent 51%
+    ),
     linear-gradient(
-      120deg,
-      transparent 0%,
-      rgba(32,216,255,.06) 48%,
-      transparent 52%
-    );
+      transparent 49%,
+      rgba(0,0,0,.06) 50%,
+      transparent 51%
+    ),
+    #eef0ed;
+
+  background-size:70px 70px;
 }
 
-.map-road{
+/* roads */
+
+.road{
   position:absolute;
-  height:1px;
-  background:rgba(104,215,237,.16);
-  transform-origin:left center;
+  height:8px;
+  background:#fff;
+  box-shadow:0 0 0 1px rgba(0,0,0,.03);
+  transform:rotate(-25deg);
 }
 
-.road1{
+.road.r1{
   width:130%;
-  left:-10%;
-  top:43%;
-  transform:rotate(-17deg);
+  left:-15%;
+  top:50%;
 }
 
-.road2{
-  width:120%;
-  left:-5%;
-  top:66%;
-  transform:rotate(22deg);
-}
-
-.road3{
+.road.r2{
   width:100%;
-  left:20%;
+  left:10%;
   top:25%;
-  transform:rotate(67deg);
+  transform:rotate(28deg);
 }
 
-.road4{
-  width:80%;
-  left:-5%;
-  top:80%;
-  transform:rotate(-48deg);
-}
-
-.map-label{
-  position:absolute;
-  font-size:7px;
-  color:rgba(140,206,221,.43);
-  letter-spacing:.14em;
-}
-
-.map-label.l1{
-  left:14px;
-  top:18px;
-}
-
-.map-label.l2{
-  right:15px;
-  top:55px;
-}
-
-.map-label.l3{
-  left:18px;
-  bottom:18px;
-}
-
-.map-label.l4{
-  right:18px;
-  bottom:35px;
+.road.r3{
+  width:90%;
+  left:20%;
+  top:76%;
+  transform:rotate(-10deg);
 }
 
 /* radar */
 
 .radar{
   position:absolute;
+  width:110px;
+  height:110px;
   left:50%;
   top:50%;
-  width:104px;
-  height:104px;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  border:1px solid rgba(54,220,255,.38);
-  box-shadow:
-    0 0 25px rgba(32,216,255,.10),
-    inset 0 0 20px rgba(32,216,255,.04);
 }
 
-.radar::before,
-.radar::after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(54,220,255,.18);
-}
-
-.radar::before{
-  inset:17px;
-}
-
-.radar::after{
-  inset:34px;
-}
-
-.radar-cross{
+.radar-ring{
   position:absolute;
   inset:0;
+  border:1px solid rgba(40,130,110,.35);
+  border-radius:50%;
 }
 
-.radar-cross::before{
-  content:"";
-  position:absolute;
-  width:1px;
-  height:100%;
-  background:rgba(60,221,255,.18);
-  left:50%;
+.radar-ring.r2{
+  inset:20px;
 }
 
-.radar-cross::after{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:1px;
-  background:rgba(60,221,255,.18);
-  top:50%;
+.radar-ring.r3{
+  inset:40px;
 }
 
 .radar-sweep{
   position:absolute;
-  width:50%;
-  height:1px;
-  top:50%;
-  left:50%;
-  transform-origin:left center;
-  background:linear-gradient(
-    to right,
-    rgba(95,235,255,.9),
-    transparent
-  );
-  animation:radarSweep 3.2s linear infinite;
+  inset:0;
+  border-radius:50%;
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(50,160,130,.25),
+      transparent 45deg
+    );
+  animation:radarRotate 3.5s linear infinite;
 }
 
-@keyframes radarSweep{
-  from{
-    transform:rotate(0deg);
-  }
+@keyframes radarRotate{
   to{
     transform:rotate(360deg);
   }
 }
 
-.current-location{
+.location-dot{
   position:absolute;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#287f68;
   left:50%;
   top:50%;
-  width:10px;
-  height:10px;
   transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:#dffbff;
-  border:2px solid var(--cyan);
-  box-shadow:
-    0 0 5px #fff,
-    0 0 16px rgba(32,216,255,.9);
-  z-index:3;
+  border:3px solid #fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
 }
 
-.location-pulse{
+.map-label{
   position:absolute;
-  left:50%;
-  top:50%;
-  width:10px;
-  height:10px;
-  transform:translate(-50%,-50%);
-  border:1px solid var(--cyan);
-  border-radius:50%;
-  animation:pulse 2s ease-out infinite;
-}
-
-@keyframes pulse{
-  0%{
-    width:10px;
-    height:10px;
-    opacity:.9;
-  }
-  100%{
-    width:70px;
-    height:70px;
-    opacity:0;
-  }
-}
-
-.map-info{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  z-index:4;
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-}
-
-.map-status{
-  font-size:7px;
-  color:#80d9eb;
-  letter-spacing:.2em;
-}
-
-.map-action{
-  font-size:9px;
-  letter-spacing:.1em;
-  color:#d9f9ff;
-  padding:7px 10px;
-  border:1px solid rgba(80,220,245,.25);
-  background:rgba(2,11,16,.7);
-}
-
-/* =====================================================
-   RECOMMEND
-===================================================== */
-
-.recommend{
-  margin-top:28px;
-}
-
-.recommend-scroll{
-  display:flex;
-  gap:12px;
-  overflow-x:auto;
-  scrollbar-width:none;
-  padding-bottom:12px;
-}
-
-.recommend-scroll::-webkit-scrollbar{
-  display:none;
-}
-
-.place-card{
-  flex:0 0 210px;
-  min-height:125px;
-  border:1px solid var(--line);
-  background:linear-gradient(
-    145deg,
-    rgba(9,29,42,.9),
-    rgba(4,14,21,.92)
-  );
-  padding:15px;
-  position:relative;
-  overflow:hidden;
-}
-
-.place-card::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:45px;
-  height:1px;
-  background:var(--cyan);
-}
-
-.place-type{
-  font-size:7px;
-  color:var(--cyan2);
-  letter-spacing:.2em;
-}
-
-.place-name{
-  margin-top:10px;
-  font-size:15px;
-}
-
-.place-meta{
-  margin-top:8px;
-  color:var(--muted);
-  font-size:9px;
-}
-
-.place-rating{
-  position:absolute;
-  right:13px;
-  top:13px;
-  color:var(--yellow);
-  font-size:9px;
-}
-
-/* =====================================================
-   OTHER SCREENS
-===================================================== */
-
-.page-inner{
-  padding:15px 20px;
-}
-
-.page-title{
-  padding:20px 0 25px;
-}
-
-.page-title .small{
-  color:var(--cyan2);
-  font-size:8px;
-  letter-spacing:.25em;
-  margin-bottom:9px;
-}
-
-.page-title h1{
-  font-size:26px;
-  font-weight:500;
-}
-
-.page-title p{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:8px;
-}
-
-/* MAP SCREEN */
-
-.full-map{
-  height:calc(100vh - 160px);
-  min-height:500px;
-  margin:0 12px;
-  border:1px solid var(--line);
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(17,129,164,.18),
-      transparent 35%
-    ),
-    #031018;
-}
-
-.full-map::before{
-  content:"";
-  position:absolute;
-  inset:-20%;
-  background-image:
-    linear-gradient(
-      rgba(70,210,240,.10) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(70,210,240,.10) 1px,
-      transparent 1px
-    );
-  background-size:35px 35px;
-  transform:rotate(8deg);
-}
-
-.full-map .radar{
-  width:150px;
-  height:150px;
-}
-
-.map-pin{
-  position:absolute;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--cyan);
-  box-shadow:0 0 13px rgba(32,216,255,.9);
-}
-
-.pin1{
-  left:24%;
-  top:31%;
-}
-
-.pin2{
-  left:72%;
-  top:27%;
-}
-
-.pin3{
-  left:68%;
-  top:62%;
-}
-
-.pin4{
-  left:31%;
-  top:70%;
-}
-
-.map-bottom{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  padding:15px;
-  background:rgba(3,13,19,.91);
-  border:1px solid var(--line);
-  backdrop-filter:blur(12px);
-}
-
-.map-bottom-top{
-  display:flex;
-  justify-content:space-between;
-}
-
-.map-bottom-name{
-  font-size:15px;
-}
-
-.map-bottom-type{
-  font-size:8px;
-  color:var(--cyan2);
-  letter-spacing:.15em;
-}
-
-.map-bottom-detail{
-  margin-top:7px;
-  color:var(--muted);
-  font-size:9px;
-}
-
-/* SEARCH SCREEN */
-
-.search-large{
-  height:55px;
-  border:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  padding:0 16px;
-  background:rgba(6,20,29,.8);
-}
-
-.search-large input{
-  flex:1;
-  background:none;
-  border:0;
-  outline:0;
-  color:#fff;
-  font-size:13px;
-}
-
-.keyword-title{
-  margin-top:30px;
-  margin-bottom:14px;
-  font-size:9px;
-  color:var(--muted);
-  letter-spacing:.2em;
-}
-
-.keyword-list{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-
-.keyword{
-  border:1px solid var(--line);
-  padding:8px 12px;
-  font-size:10px;
-  color:#b5cbd4;
-  background:rgba(7,23,33,.55);
-}
-
-.genre-list{
-  margin-top:30px;
-}
-
-.genre-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:17px 3px;
-  border-bottom:1px solid rgba(74,190,235,.10);
-}
-
-.genre-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.genre-mini{
-  width:30px;
-  height:30px;
-  border:1px solid var(--line);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--cyan2);
-}
-
-.genre-row span{
-  font-size:11px;
-}
-
-.genre-arrow{
-  color:#597581;
-}
-
-/* FAVORITES */
-
-.favorite-card{
-  padding:17px;
-  border:1px solid var(--line);
-  margin-bottom:12px;
-  background:linear-gradient(
-    145deg,
-    rgba(8,28,40,.82),
-    rgba(3,13,19,.9)
-  );
-  position:relative;
-}
-
-.favorite-type{
-  font-size:7px;
-  color:var(--cyan2);
-  letter-spacing:.2em;
-}
-
-.favorite-name{
-  margin-top:9px;
-  font-size:15px;
-}
-
-.favorite-info{
-  margin-top:7px;
-  color:var(--muted);
-  font-size:9px;
-}
-
-.favorite-star{
-  position:absolute;
-  right:15px;
   top:15px;
-  color:var(--yellow);
-}
-
-/* MY PAGE */
-
-.profile{
-  border:1px solid var(--line);
-  padding:22px;
-  background:
-    radial-gradient(
-      circle at 90% 10%,
-      rgba(32,216,255,.08),
-      transparent 35%
-    ),
-    rgba(6,22,32,.8);
-}
-
-.profile-top{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.avatar{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  border:1px solid rgba(50,220,255,.5);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--cyan);
-  box-shadow:0 0 18px rgba(32,216,255,.08);
-}
-
-.profile-name{
-  font-size:16px;
-}
-
-.profile-sub{
-  margin-top:5px;
-  color:var(--muted);
-  font-size:9px;
-}
-
-.stats{
-  display:flex;
-  margin-top:25px;
-  border-top:1px solid var(--line);
-  padding-top:18px;
-}
-
-.stat{
-  flex:1;
-  text-align:center;
-}
-
-.stat:not(:last-child){
-  border-right:1px solid var(--line);
-}
-
-.stat-number{
-  font-size:19px;
-}
-
-.stat-label{
-  font-size:7px;
-  color:var(--muted);
-  margin-top:4px;
-  letter-spacing:.12em;
-}
-
-.settings{
-  margin-top:28px;
-}
-
-.setting{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 4px;
-  border-bottom:1px solid rgba(74,190,235,.10);
+  left:15px;
+  padding:7px 11px;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(8px);
+  border-radius:10px;
   font-size:11px;
+  color:#555;
 }
 
-.setting span:last-child{
-  color:#55717d;
-}
-
-/* DETAIL */
-
-.detail-hero{
-  height:190px;
-  margin:0 12px;
-  border:1px solid var(--line);
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(27,167,208,.16),
-      transparent 45%
-    ),
-    linear-gradient(
-      145deg,
-      #071b27,
-      #02090e
-    );
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-}
-
-.detail-hero::after{
-  content:"";
-  position:absolute;
-  width:100px;
-  height:100px;
-  border:1px solid rgba(32,216,255,.24);
-  border-radius:50%;
-  box-shadow:
-    0 0 30px rgba(32,216,255,.08);
-}
-
-.detail-center{
-  position:relative;
-  z-index:2;
-  text-align:center;
-}
-
-.detail-center .type{
-  font-size:8px;
-  color:var(--cyan2);
-  letter-spacing:.25em;
-}
-
-.detail-center h1{
-  margin-top:10px;
-  font-size:22px;
-  font-weight:500;
-}
-
-.detail-content{
-  padding:25px 20px;
-}
-
-.detail-rating{
-  color:var(--yellow);
-  font-size:12px;
-}
-
-.detail-description{
-  margin-top:15px;
-  color:#8da4ae;
-  font-size:11px;
-  line-height:1.9;
-}
-
-.detail-action{
-  margin-top:22px;
-  height:48px;
-  width:100%;
-  border:1px solid rgba(32,216,255,.4);
-  background:rgba(32,216,255,.05);
-  color:var(--cyan2);
-  font-size:10px;
-  letter-spacing:.16em;
-}
-
-/* =====================================================
+/* =========================
    BOTTOM NAV
-===================================================== */
+========================= */
 
 .bottom-nav{
   position:fixed;
-  z-index:100;
+  z-index:1000;
+
   bottom:0;
   left:50%;
   transform:translateX(-50%);
+
   width:min(430px,100%);
-  height:76px;
-  border-top:1px solid rgba(75,200,235,.18);
-  background:rgba(2,9,14,.94);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+  height:78px;
+
+  background:rgba(255,255,255,.96);
+  border-top:1px solid #eee;
+
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+
   padding-bottom:env(safe-area-inset-bottom);
 }
 
@@ -1357,1223 +462,1230 @@ button{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:6px;
-  color:#506974;
-  position:relative;
-  cursor:pointer;
-}
+  gap:4px;
 
-.nav-item.active{
-  color:var(--cyan2);
+  color:#999;
+  font-size:9px;
 }
 
 .nav-icon{
-  width:20px;
-  height:20px;
-  position:relative;
+  width:21px;
+  height:21px;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
 .nav-icon svg{
-  width:100%;
-  height:100%;
-  fill:none;
+  width:21px;
+  height:21px;
   stroke:currentColor;
-  stroke-width:1.3;
+  fill:none;
+  stroke-width:1.7;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
 
-/* central MAP */
-
-.nav-item.map-nav{
-  margin-top:-18px;
+.nav-item.active{
+  color:#222;
 }
 
-.nav-item.map-nav .nav-icon{
-  width:48px;
-  height:48px;
-  border:1px solid rgba(32,216,255,.55);
+/* =========================
+   CENTER MAP BUTTON
+========================= */
+
+.map-nav{
+  position:relative;
+}
+
+.map-nav .nav-icon{
+  width:50px;
+  height:50px;
+  margin-top:-20px;
+
   border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      rgba(32,216,255,.14),
-      rgba(2,10,15,.96)
-    );
+  background:#fff;
+
+  border:1px solid #ddd;
+
   box-shadow:
-    0 0 15px rgba(32,216,255,.16),
-    inset 0 0 14px rgba(32,216,255,.07);
+    0 5px 18px rgba(0,0,0,.10);
+
+  position:relative;
+  overflow:hidden;
 }
 
-.nav-item.map-nav .nav-icon::before,
-.nav-item.map-nav .nav-icon::after{
+/* radar inside MAP */
+
+.map-nav .nav-icon::before,
+.map-nav .nav-icon::after{
   content:"";
   position:absolute;
   border-radius:50%;
-  border:1px solid rgba(32,216,255,.20);
+  border:1px solid rgba(40,127,104,.28);
 }
 
-.nav-item.map-nav .nav-icon::before{
-  inset:7px;
+.map-nav .nav-icon::before{
+  width:34px;
+  height:34px;
 }
 
-.nav-item.map-nav .nav-icon::after{
-  inset:15px;
-}
-
-.nav-item.map-nav .nav-icon svg{
+.map-nav .nav-icon::after{
   width:20px;
   height:20px;
+}
+
+.map-nav .nav-icon svg{
+  width:14px;
+  height:14px;
+  position:relative;
   z-index:2;
-  filter:drop-shadow(0 0 5px rgba(32,216,255,.7));
+  color:#287f68;
 }
 
-.nav-item.map-nav .nav-label{
-  margin-top:1px;
-}
-
-.nav-item.active::after{
-  content:"";
+.map-nav .nav-icon .mini-sweep{
   position:absolute;
-  bottom:7px;
-  width:18px;
-  height:1px;
-  background:var(--cyan);
-  box-shadow:0 0 8px rgba(32,216,255,.8);
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(40,127,104,.22),
+      transparent 60deg
+    );
+  animation:radarRotate 3s linear infinite;
 }
 
-.nav-item.map-nav.active::after{
-  bottom:4px;
+/* =========================
+   MAP PAGE
+========================= */
+
+.map-page-header{
+  padding:20px;
 }
 
-/* =====================================================
-   TOAST
-===================================================== */
+.map-page-header h2{
+  font-size:24px;
+}
 
-#toast{
-  position:fixed;
-  z-index:9998;
+.map-full{
+  margin:10px 14px 0;
+  height:calc(100vh - 180px);
+  min-height:520px;
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent 49%,
+      rgba(0,0,0,.07) 50%,
+      transparent 51%
+    ),
+    linear-gradient(
+      transparent 49%,
+      rgba(0,0,0,.07) 50%,
+      transparent 51%
+    ),
+    #eef0ed;
+
+  background-size:75px 75px;
+}
+
+.map-full .radar{
+  width:180px;
+  height:180px;
+}
+
+.pin{
+  position:absolute;
+  width:30px;
+  height:30px;
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+  background:#222;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+.pin::after{
+  content:"";
+  width:9px;
+  height:9px;
+  background:#fff;
+  border-radius:50%;
+  position:absolute;
   left:50%;
-  bottom:92px;
-  transform:translate(-50%,20px);
+  top:50%;
+  transform:translate(-50%,-50%);
+}
+
+.pin.p1{
+  left:24%;
+  top:28%;
+}
+
+.pin.p2{
+  right:20%;
+  top:43%;
+}
+
+.pin.p3{
+  left:65%;
+  bottom:22%;
+}
+
+/* =========================
+   SEARCH PAGE
+========================= */
+
+.search-page{
+  padding:20px;
+}
+
+.search-page h2{
+  font-size:24px;
+}
+
+.big-search{
+  margin-top:20px;
+  height:54px;
+  border-radius:15px;
+  background:#f3f4f6;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+  gap:10px;
+}
+
+.big-search input{
+  width:100%;
+  border:none;
+  outline:none;
+  background:none;
+}
+
+.search-heading{
+  margin-top:30px;
+  font-size:15px;
+  font-weight:700;
+}
+
+.keyword-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:13px;
+}
+
+.keyword{
+  padding:9px 13px;
+  border-radius:30px;
+  background:#f4f4f4;
+  font-size:11px;
+  color:#666;
+}
+
+/* =========================
+   FAVORITES
+========================= */
+
+.simple-page{
+  padding:20px;
+}
+
+.simple-page h2{
+  font-size:24px;
+}
+
+.favorite-card{
+  margin-top:15px;
+  padding:15px;
+  border:1px solid #eee;
+  border-radius:16px;
+  display:flex;
+  gap:13px;
+}
+
+.favorite-image{
+  width:70px;
+  height:70px;
+  border-radius:12px;
+  background:#eee;
+  flex:none;
+}
+
+.favorite-card h3{
+  font-size:14px;
+}
+
+.favorite-card p{
+  margin-top:5px;
+  font-size:11px;
+  color:#999;
+}
+
+/* =========================
+   MY PAGE
+========================= */
+
+.profile{
+  margin-top:25px;
+  padding:20px;
+  border-radius:20px;
+  background:#f6f6f6;
+  text-align:center;
+}
+
+.avatar{
+  width:70px;
+  height:70px;
+  margin:auto;
+  border-radius:50%;
+  background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#888;
+  font-size:25px;
+}
+
+.profile h3{
+  margin-top:10px;
+  font-size:16px;
+}
+
+.profile p{
+  margin-top:4px;
+  color:#999;
+  font-size:11px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  margin-top:20px;
+  background:#fff;
+  border-radius:14px;
+  padding:15px 0;
+}
+
+.stat{
+  text-align:center;
+  border-right:1px solid #eee;
+}
+
+.stat:last-child{
+  border:none;
+}
+
+.stat strong{
+  display:block;
+  font-size:18px;
+}
+
+.stat span{
+  font-size:10px;
+  color:#999;
+}
+
+.settings{
+  margin-top:20px;
+}
+
+.setting{
+  padding:17px 4px;
+  border-bottom:1px solid #eee;
+  font-size:13px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.setting span{
+  color:#aaa;
+}
+
+/* =========================
+   DETAIL
+========================= */
+
+.detail{
+  padding-bottom:100px;
+}
+
+.detail-image{
+  height:270px;
+  background:#e8e8e8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#aaa;
+}
+
+.detail-content{
+  padding:22px 20px;
+}
+
+.back-button{
+  position:absolute;
+  top:18px;
+  left:18px;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:rgba(255,255,255,.9);
+  z-index:2;
+}
+
+.detail h1{
+  font-size:24px;
+}
+
+.detail-rating{
+  margin-top:8px;
+  font-size:13px;
+}
+
+.detail-description{
+  margin-top:18px;
+  font-size:13px;
+  color:#777;
+  line-height:1.8;
+}
+
+.detail-button{
+  width:100%;
+  height:50px;
+  margin-top:22px;
+  border-radius:14px;
+  background:#222;
+  color:#fff;
+  font-size:13px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  z-index:2000;
+
+  left:50%;
+  bottom:95px;
+  transform:translateX(-50%) translateY(20px);
+
+  background:#222;
+  color:#fff;
+
+  padding:11px 16px;
+  border-radius:30px;
+
+  font-size:11px;
+
   opacity:0;
   pointer-events:none;
-  padding:11px 16px;
-  min-width:190px;
-  text-align:center;
-  border:1px solid rgba(32,216,255,.25);
-  background:rgba(3,13,19,.94);
-  color:#bdeefa;
-  font-size:10px;
-  letter-spacing:.08em;
-  transition:.3s ease;
-  backdrop-filter:blur(10px);
+
+  transition:.25s;
 }
 
-#toast.show{
+.toast.show{
   opacity:1;
-  transform:translate(-50%,0);
+  transform:translateX(-50%) translateY(0);
 }
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+/* =========================
+   MOBILE
+========================= */
 
-@media(max-width:360px){
+@media(max-width:430px){
 
-  .hero-title{
+  .hero h1{
     font-size:25px;
   }
 
-  .category-scroll{
-    gap:15px;
+  .map-preview{
+    height:210px;
   }
 
-  .category-item{
-    flex-basis:62px;
-  }
-
-  .category-circle{
-    width:56px;
-    height:56px;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
-     OPENING
-===================================================== -->
+<div id="app">
 
-<div id="opening">
+<!-- =========================
+     HOME
+========================= -->
 
-  <div class="opening-core">
+<section id="home" class="page active">
 
-    <div class="opening-ring"></div>
-    <div class="opening-ring r2"></div>
-    <div class="opening-ring r3"></div>
+  <header class="header">
+    <div class="brand">
+      ohitorisamap
+      <span>おひとりさまっぷ</span>
+    </div>
+  </header>
 
-    <div class="opening-line"></div>
-    <div class="opening-line horizontal"></div>
+  <div class="hero">
 
-    <div class="opening-sweep"></div>
+    <h1>
+      ひとりの時間を、<br>
+      もっと自由に。
+    </h1>
 
-    <div class="opening-logo">
-      <div class="en">ohitorisamap</div>
-      <div class="jp">おひとりさまっぷ</div>
+    <p>
+      ひとりで行きたい場所を見つけよう。
+    </p>
+
+    <div class="search-box"
+         onclick="goPage('search')">
+
+      <div class="search-icon"></div>
+
+      <input
+        type="text"
+        placeholder="どこに行こう？"
+        readonly
+      >
+
     </div>
 
   </div>
 
-</div>
 
+  <!-- CATEGORY -->
 
-<!-- =====================================================
-     APP
-===================================================== -->
+  <section class="section">
 
-<div id="app">
+    <h2 class="section-title">
+      何する？
+    </h2>
 
-  <!-- ================= HOME ================= -->
+    <div class="category-scroll">
 
-  <section class="screen active" id="home">
-
-    <header class="top-header">
-
-      <div class="brand">
-
-        <div>
-          <div class="brand-main">ohitorisamap</div>
-          <div class="brand-sub">おひとりさまっぷ</div>
+      <button class="category" onclick="categoryClick('食事')">
+        <div class="category-circle">
+          <svg viewBox="0 0 24 24">
+            <path d="M7 3v7"/>
+            <path d="M5 3v4"/>
+            <path d="M9 3v4"/>
+            <path d="M7 10v11"/>
+            <path d="M15 3v18"/>
+            <path d="M15 3c3 2 3 5 0 7"/>
+          </svg>
         </div>
+        <div class="category-name">食事</div>
+      </button>
 
-        <div class="signal"></div>
-
-      </div>
-
-    </header>
-
-    <main class="home-content">
-
-      <div class="hero-copy">
-
-        <div class="hero-kicker">
-          PERSONAL DISCOVERY SYSTEM
+      <button class="category" onclick="categoryClick('カフェ')">
+        <div class="category-circle">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 9h14v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/>
+            <path d="M18 11h1a3 3 0 0 1 0 6h-2"/>
+            <path d="M7 5c0-1 1-1 1-2"/>
+            <path d="M11 5c0-1 1-1 1-2"/>
+          </svg>
         </div>
+        <div class="category-name">カフェ</div>
+      </button>
 
-        <h1 class="hero-title">
-          ひとりの時間を、
-          <span>もっと自由に。</span>
-        </h1>
-
-        <p class="hero-description">
-          今の気分から、ひとりで行きたい場所を探そう。
-        </p>
-
-      </div>
-
-
-      <!-- SEARCH -->
-
-      <div class="search-box">
-
-        <div class="search-icon"></div>
-
-        <input
-          id="homeSearch"
-          type="text"
-          placeholder="どこへ行こう？"
-        >
-
-      </div>
-
-
-      <!-- CATEGORY -->
-
-      <div class="section-label">
-        <span>CATEGORY</span>
-      </div>
-
-      <div class="category-scroll" id="categoryScroll">
-
-        <!-- 食事 -->
-
-        <div class="category-item selected" data-category="食事">
-
-          <div class="category-circle">
-
-            <div class="category-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M6 3v8"/>
-                <path d="M9 3v8"/>
-                <path d="M6 7h3"/>
-                <path d="M7.5 11v10"/>
-                <path d="M16 3v18"/>
-                <path d="M16 3c3 2 3 6 0 8"/>
-              </svg>
-            </div>
-
-          </div>
-
-          <div class="category-name">食事</div>
-          <div class="category-en">FOOD</div>
-
+      <button class="category" onclick="categoryClick('映画')">
+        <div class="category-circle">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="M3 9h18"/>
+            <path d="M8 5v4"/>
+            <path d="M16 5v4"/>
+          </svg>
         </div>
+        <div class="category-name">映画</div>
+      </button>
 
-
-        <!-- カフェ -->
-
-        <div class="category-item" data-category="カフェ">
-
-          <div class="category-circle">
-
-            <div class="category-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M5 8h12v7a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/>
-                <path d="M17 10h2a3 3 0 0 1 0 6h-2"/>
-                <path d="M8 4c0 1 1 1 1 2"/>
-                <path d="M12 4c0 1 1 1 1 2"/>
-              </svg>
-            </div>
-
-          </div>
-
-          <div class="category-name">カフェ</div>
-          <div class="category-en">CAFE</div>
-
+      <button class="category" onclick="categoryClick('温泉')">
+        <div class="category-circle">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 19c0-3 2-5 6-5s6 2 6 5"/>
+            <path d="M8 10c0-2 1-3 1-4"/>
+            <path d="M13 10c0-2 1-3 1-4"/>
+            <path d="M18 10c0-2 1-3 1-4"/>
+          </svg>
         </div>
+        <div class="category-name">温泉</div>
+      </button>
 
-
-        <!-- 映画 -->
-
-        <div class="category-item" data-category="映画">
-
-          <div class="category-circle">
-
-            <div class="category-icon">
-              <svg viewBox="0 0 24 24">
-                <rect x="3" y="5" width="18" height="14" rx="2"/>
-                <path d="M8 5v14"/>
-                <path d="M16 5v14"/>
-                <path d="M3 9h5"/>
-                <path d="M16 9h5"/>
-                <path d="M3 15h5"/>
-                <path d="M16 15h5"/>
-              </svg>
-            </div>
-
-          </div>
-
-          <div class="category-name">映画</div>
-          <div class="category-en">CINEMA</div>
-
+      <button class="category" onclick="categoryClick('ドライブ')">
+        <div class="category-circle">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 16l2-7h10l2 7"/>
+            <path d="M4 16h16v3H4z"/>
+            <circle cx="7" cy="19" r="1"/>
+            <circle cx="17" cy="19" r="1"/>
+            <path d="M8 12h8"/>
+          </svg>
         </div>
+        <div class="category-name">ドライブ</div>
+      </button>
 
-
-        <!-- 温泉 -->
-
-        <div class="category-item" data-category="温泉">
-
-          <div class="category-circle">
-
-            <div class="category-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M4 20c4-5 12-5 16 0"/>
-                <path d="M7 16c1-2 1-4 0-6"/>
-                <path d="M12 16c1-2 1-4 0-6"/>
-                <path d="M17 16c1-2 1-4 0-6"/>
-              </svg>
-            </div>
-
-          </div>
-
-          <div class="category-name">温泉</div>
-          <div class="category-en">ONSEN</div>
-
-        </div>
-
-
-        <!-- ドライブ -->
-
-        <div class="category-item" data-category="ドライブ">
-
-          <div class="category-circle">
-
-            <div class="category-icon">
-              <svg viewBox="0 0 24 24">
-                <path d="M5 16l2-6h10l2 6"/>
-                <path d="M4 16h16v4H4z"/>
-                <circle cx="7" cy="20" r="1"/>
-                <circle cx="17" cy="20" r="1"/>
-                <path d="M8 10l1-3h6l1 3"/>
-              </svg>
-            </div>
-
-          </div>
-
-          <div class="category-name">ドライブ</div>
-          <div class="category-en">DRIVE</div>
-
-        </div>
-
-      </div>
-
-
-      <!-- MAP -->
-
-      <div class="current-map">
-
-        <div class="section-label">
-          <span>AREA SCAN</span>
-        </div>
-
-        <div class="map-card">
-
-          <div class="map-road road1"></div>
-          <div class="map-road road2"></div>
-          <div class="map-road road3"></div>
-          <div class="map-road road4"></div>
-
-          <div class="map-label l1">AREA 01</div>
-          <div class="map-label l2">SECTOR B</div>
-          <div class="map-label l3">LOCAL AREA</div>
-          <div class="map-label l4">SCAN READY</div>
-
-          <div class="radar">
-
-            <div class="radar-cross"></div>
-            <div class="radar-sweep"></div>
-
-          </div>
-
-          <div class="location-pulse"></div>
-          <div class="current-location"></div>
-
-          <div class="map-info">
-
-            <div class="map-status">
-              LOCATION SCAN / ONLINE
-            </div>
-
-            <button
-              class="map-action"
-              onclick="navigate('map')"
-            >
-              MAPを開く →
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- RECOMMEND -->
-
-      <div class="recommend">
-
-        <div class="section-label">
-          <span>RECOMMENDED</span>
-        </div>
-
-        <div class="recommend-scroll">
-
-          <div
-            class="place-card"
-            onclick="openDetail('居酒屋 たかし','食事')"
-          >
-            <div class="place-type">FOOD / SOLO</div>
-            <div class="place-name">居酒屋 たかし</div>
-            <div class="place-meta">ひとりでも入りやすい · 4.6km</div>
-            <div class="place-rating">★ 4.6</div>
-          </div>
-
-          <div
-            class="place-card"
-            onclick="openDetail('Blue Coffee','カフェ')"
-          >
-            <div class="place-type">CAFE / QUIET</div>
-            <div class="place-name">Blue Coffee</div>
-            <div class="place-meta">静かに過ごせる · 2.1km</div>
-            <div class="place-rating">★ 4.4</div>
-          </div>
-
-          <div
-            class="place-card"
-            onclick="openDetail('CINEMA','映画')"
-          >
-            <div class="place-type">CINEMA / SOLO</div>
-            <div class="place-name">CINEMA</div>
-            <div class="place-meta">ひとり映画におすすめ</div>
-            <div class="place-rating">★ 4.7</div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </main>
+    </div>
 
   </section>
 
 
-  <!-- ================= MAP ================= -->
+  <!-- RECOMMEND -->
 
-  <section class="screen" id="map">
+  <section class="recommend-section">
 
-    <header class="top-header">
+    <h2 class="section-title">
+      おすすめ
+    </h2>
 
-      <div class="brand">
+    <div class="horizontal-cards">
 
-        <div>
-          <div class="brand-main">MAP</div>
-          <div class="brand-sub">AREA NAVIGATION</div>
+      <button class="place-card"
+              onclick="openDetail('ひとり居酒屋 たかし')">
+
+        <div class="place-image">
+          PHOTO
         </div>
 
-        <div class="signal"></div>
+        <div class="place-info">
 
+          <div class="place-category">
+            居酒屋
+          </div>
+
+          <div class="place-name">
+            ひとり居酒屋 たかし
+          </div>
+
+          <div class="place-meta">
+            <span class="rating">★ 4.5</span>
+            <span>ひとり利用◎</span>
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <button class="place-card"
+              onclick="openDetail('Blue Coffee')">
+
+        <div class="place-image">
+          PHOTO
+        </div>
+
+        <div class="place-info">
+
+          <div class="place-category">
+            カフェ
+          </div>
+
+          <div class="place-name">
+            Blue Coffee
+          </div>
+
+          <div class="place-meta">
+            <span class="rating">★ 4.3</span>
+            <span>静か</span>
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <button class="place-card"
+              onclick="openDetail('CINEMA')">
+
+        <div class="place-image">
+          PHOTO
+        </div>
+
+        <div class="place-info">
+
+          <div class="place-category">
+            映画
+          </div>
+
+          <div class="place-name">
+            CINEMA
+          </div>
+
+          <div class="place-meta">
+            <span class="rating">★ 4.6</span>
+            <span>ひとり◎</span>
+          </div>
+
+        </div>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- MAP -->
+
+  <section class="map-section">
+
+    <h2 class="section-title">
+      マップ
+    </h2>
+
+    <button
+      class="map-preview"
+      onclick="goPage('map')"
+    >
+
+      <div class="road r1"></div>
+      <div class="road r2"></div>
+      <div class="road r3"></div>
+
+      <div class="map-label">
+        現在地周辺
       </div>
-
-    </header>
-
-    <div class="full-map">
-
-      <div class="map-road road1"></div>
-      <div class="map-road road2"></div>
-      <div class="map-road road3"></div>
-      <div class="map-road road4"></div>
-
-      <div class="map-pin pin1"></div>
-      <div class="map-pin pin2"></div>
-      <div class="map-pin pin3"></div>
-      <div class="map-pin pin4"></div>
 
       <div class="radar">
 
-        <div class="radar-cross"></div>
+        <div class="radar-ring"></div>
+        <div class="radar-ring r2"></div>
+        <div class="radar-ring r3"></div>
+
         <div class="radar-sweep"></div>
 
       </div>
 
-      <div class="location-pulse"></div>
-      <div class="current-location"></div>
+      <div class="location-dot"></div>
 
-      <div class="map-bottom">
-
-        <div class="map-bottom-top">
-
-          <div>
-            <div class="map-bottom-type">NEARBY</div>
-            <div class="map-bottom-name">居酒屋 たかし</div>
-          </div>
-
-          <div class="place-rating">★ 4.6</div>
-
-        </div>
-
-        <div class="map-bottom-detail">
-          ひとりでも入りやすい · 徒歩8分
-        </div>
-
-      </div>
-
-    </div>
+    </button>
 
   </section>
 
-
-  <!-- ================= SEARCH ================= -->
-
-  <section class="screen" id="search">
-
-    <header class="top-header">
-
-      <div class="brand">
-
-        <div>
-          <div class="brand-main">SEARCH</div>
-          <div class="brand-sub">DISCOVERY SYSTEM</div>
-        </div>
-
-      </div>
-
-    </header>
-
-    <div class="page-inner">
-
-      <div class="search-large">
-
-        <div class="search-icon"></div>
-
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="場所・ジャンルを検索"
-        >
-
-      </div>
+</section>
 
 
-      <div class="keyword-title">
-        POPULAR
-      </div>
+<!-- =========================
+     MAP
+========================= -->
 
-      <div class="keyword-list">
+<section id="map" class="page">
 
-        <button class="keyword">ひとり焼肉</button>
-        <button class="keyword">ひとりカフェ</button>
-        <button class="keyword">映画</button>
-        <button class="keyword">温泉</button>
-        <button class="keyword">ドライブ</button>
-        <button class="keyword">夜ごはん</button>
+  <div class="map-page-header">
+    <h2>マップ</h2>
+  </div>
 
-      </div>
+  <div class="map-full">
 
+    <div class="road r1"></div>
+    <div class="road r2"></div>
+    <div class="road r3"></div>
 
-      <div class="genre-list">
+    <div class="pin p1"></div>
+    <div class="pin p2"></div>
+    <div class="pin p3"></div>
 
-        <div class="section-label">
-          <span>GENRE</span>
-        </div>
+    <div class="radar">
 
-        <div
-          class="genre-row"
-          onclick="showToast('食事を検索します')"
-        >
-          <div class="genre-left">
-            <div class="genre-mini">食</div>
-            <span>食事</span>
-          </div>
-          <div class="genre-arrow">›</div>
-        </div>
+      <div class="radar-ring"></div>
+      <div class="radar-ring r2"></div>
+      <div class="radar-ring r3"></div>
 
-        <div
-          class="genre-row"
-          onclick="showToast('カフェを検索します')"
-        >
-          <div class="genre-left">
-            <div class="genre-mini">珈</div>
-            <span>カフェ</span>
-          </div>
-          <div class="genre-arrow">›</div>
-        </div>
-
-        <div
-          class="genre-row"
-          onclick="showToast('映画を検索します')"
-        >
-          <div class="genre-left">
-            <div class="genre-mini">映</div>
-            <span>映画</span>
-          </div>
-          <div class="genre-arrow">›</div>
-        </div>
-
-        <div
-          class="genre-row"
-          onclick="showToast('温泉を検索します')"
-        >
-          <div class="genre-left">
-            <div class="genre-mini">湯</div>
-            <span>温泉</span>
-          </div>
-          <div class="genre-arrow">›</div>
-        </div>
-
-        <div
-          class="genre-row"
-          onclick="showToast('ドライブスポットを検索します')"
-        >
-          <div class="genre-left">
-            <div class="genre-mini">車</div>
-            <span>ドライブ</span>
-          </div>
-          <div class="genre-arrow">›</div>
-        </div>
-
-      </div>
+      <div class="radar-sweep"></div>
 
     </div>
 
-  </section>
+    <div class="location-dot"></div>
+
+  </div>
+
+</section>
 
 
-  <!-- ================= FAVORITES ================= -->
+<!-- =========================
+     SEARCH
+========================= -->
 
-  <section class="screen" id="favorites">
+<section id="search" class="page">
 
-    <header class="top-header">
+  <div class="search-page">
 
-      <div class="brand">
+    <h2>検索</h2>
 
-        <div>
-          <div class="brand-main">FAVORITES</div>
-          <div class="brand-sub">SAVED PLACES</div>
-        </div>
+    <div class="big-search">
 
-      </div>
+      <div class="search-icon"></div>
 
-    </header>
-
-    <div class="page-inner">
-
-      <div class="page-title">
-
-        <div class="small">YOUR COLLECTION</div>
-
-        <h1>お気に入り</h1>
-
-        <p>
-          また行きたい場所をここに保存。
-        </p>
-
-      </div>
-
-
-      <div
-        class="favorite-card"
-        onclick="openDetail('居酒屋 たかし','食事')"
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="場所・お店・ジャンルを検索"
       >
 
-        <div class="favorite-type">FOOD / SOLO</div>
-
-        <div class="favorite-name">
-          居酒屋 たかし
-        </div>
-
-        <div class="favorite-info">
-          ひとりでも入りやすい · ★ 4.6
-        </div>
-
-        <div class="favorite-star">★</div>
-
-      </div>
+    </div>
 
 
-      <div
-        class="favorite-card"
-        onclick="openDetail('Blue Coffee','カフェ')"
-      >
+    <div class="search-heading">
+      人気の検索
+    </div>
 
-        <div class="favorite-type">CAFE / QUIET</div>
+    <div class="keyword-list">
 
-        <div class="favorite-name">
-          Blue Coffee
-        </div>
+      <button class="keyword"
+              onclick="setSearch('ひとり焼肉')">
+        ひとり焼肉
+      </button>
 
-        <div class="favorite-info">
-          静かに過ごせる · ★ 4.4
-        </div>
+      <button class="keyword"
+              onclick="setSearch('静かなカフェ')">
+        静かなカフェ
+      </button>
 
-        <div class="favorite-star">★</div>
+      <button class="keyword"
+              onclick="setSearch('映画')">
+        映画
+      </button>
 
-      </div>
+      <button class="keyword"
+              onclick="setSearch('温泉')">
+        温泉
+      </button>
 
-
-      <div
-        class="favorite-card"
-        onclick="openDetail('CINEMA','映画')"
-      >
-
-        <div class="favorite-type">CINEMA / SOLO</div>
-
-        <div class="favorite-name">
-          CINEMA
-        </div>
-
-        <div class="favorite-info">
-          ひとり映画におすすめ · ★ 4.7
-        </div>
-
-        <div class="favorite-star">★</div>
-
-      </div>
+      <button class="keyword"
+              onclick="setSearch('ドライブ')">
+        ドライブ
+      </button>
 
     </div>
 
-  </section>
 
+    <div class="search-heading">
+      ジャンル
+    </div>
 
-  <!-- ================= MY PAGE ================= -->
+    <div class="keyword-list">
 
-  <section class="screen" id="mypage">
-
-    <header class="top-header">
-
-      <div class="brand">
-
-        <div>
-          <div class="brand-main">MY PAGE</div>
-          <div class="brand-sub">PERSONAL SYSTEM</div>
-        </div>
-
-      </div>
-
-    </header>
-
-    <div class="page-inner">
-
-      <div class="profile">
-
-        <div class="profile-top">
-
-          <div class="avatar">
-
-            <svg
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.2"
-            >
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 21c1-5 15-5 16 0"/>
-            </svg>
-
-          </div>
-
-          <div>
-
-            <div class="profile-name">
-              ひとり旅好き
-            </div>
-
-            <div class="profile-sub">
-              MEMBER / ONLINE
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="stats">
-
-          <div class="stat">
-            <div class="stat-number">12</div>
-            <div class="stat-label">VISITED</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-number">8</div>
-            <div class="stat-label">FAVORITES</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-number">4</div>
-            <div class="stat-label">REVIEWS</div>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="settings">
-
-        <div class="section-label">
-          <span>SETTING</span>
-        </div>
-
-        <div class="setting">
-          <span>プロフィール</span>
-          <span>›</span>
-        </div>
-
-        <div class="setting">
-          <span>行った場所</span>
-          <span>›</span>
-        </div>
-
-        <div class="setting">
-          <span>レビュー</span>
-          <span>›</span>
-        </div>
-
-        <div class="setting">
-          <span>通知設定</span>
-          <span>›</span>
-        </div>
-
-        <div class="setting">
-          <span>アカウント設定</span>
-          <span>›</span>
-        </div>
-
-      </div>
+      <button class="keyword">食事</button>
+      <button class="keyword">カフェ</button>
+      <button class="keyword">映画</button>
+      <button class="keyword">温泉</button>
+      <button class="keyword">ドライブ</button>
+      <button class="keyword">買い物</button>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- ================= DETAIL ================= -->
+<!-- =========================
+     FAVORITES
+========================= -->
 
-  <section class="screen" id="detail">
+<section id="favorites" class="page">
 
-    <header class="top-header">
+  <div class="simple-page">
 
-      <div class="brand">
+    <h2>お気に入り</h2>
 
-        <button onclick="navigate('home')">
-          ←
-        </button>
+    <div class="favorite-card">
 
-        <div style="margin-left:auto;">
-          <div class="brand-main">DETAIL</div>
-          <div class="brand-sub">PLACE INFORMATION</div>
-        </div>
+      <div class="favorite-image"></div>
 
-      </div>
-
-    </header>
-
-
-    <div class="detail-hero">
-
-      <div class="detail-center">
-
-        <div class="type" id="detailType">
-          FOOD / SOLO
-        </div>
-
-        <h1 id="detailName">
-          居酒屋 たかし
-        </h1>
-
+      <div>
+        <h3>Blue Coffee</h3>
+        <p>カフェ　★4.3</p>
+        <p>静かに過ごせるお店</p>
       </div>
 
     </div>
 
 
-    <div class="detail-content">
+    <div class="favorite-card">
 
-      <div class="detail-rating">
-        ★ 4.6
+      <div class="favorite-image"></div>
+
+      <div>
+        <h3>ひとり居酒屋 たかし</h3>
+        <p>居酒屋　★4.5</p>
+        <p>ひとり利用しやすい</p>
       </div>
 
-      <p class="detail-description">
-        ひとりでも入りやすく、落ち着いて過ごせるお店。
-        おひとりさまっぷユーザーからも人気のスポットです。
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     MY PAGE
+========================= -->
+
+<section id="mypage" class="page">
+
+  <div class="simple-page">
+
+    <h2>マイページ</h2>
+
+    <div class="profile">
+
+      <div class="avatar">
+        ●
+      </div>
+
+      <h3>ひとり旅好き</h3>
+
+      <p>
+        自分だけのお気に入りを見つけよう
       </p>
 
-      <button
-        class="detail-action"
-        onclick="showToast('お気に入りに追加しました')"
-      >
-        ☆ FAVORITE
-      </button>
+      <div class="stats">
 
-      <button
-        class="detail-action"
-        onclick="navigate('map')"
-      >
-        ◎ MAPで見る
-      </button>
+        <div class="stat">
+          <strong>12</strong>
+          <span>お気に入り</span>
+        </div>
+
+        <div class="stat">
+          <strong>8</strong>
+          <span>訪問</span>
+        </div>
+
+        <div class="stat">
+          <strong>4</strong>
+          <span>口コミ</span>
+        </div>
+
+      </div>
 
     </div>
 
-  </section>
 
+    <div class="settings">
 
-  <!-- =================================================
-       FIXED NAV
-  ================================================= -->
-
-  <nav class="bottom-nav">
-
-    <!-- HOME -->
-
-    <button
-      class="nav-item active"
-      data-screen="home"
-      onclick="navigate('home')"
-    >
-
-      <div class="nav-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M3 11l9-8 9 8"/>
-          <path d="M5 10v10h14V10"/>
-          <path d="M9 20v-6h6v6"/>
-        </svg>
+      <div class="setting">
+        アカウント
+        <span>›</span>
       </div>
 
-      <div class="nav-label">ホーム</div>
-
-    </button>
-
-
-    <!-- MAP -->
-
-    <button
-      class="nav-item map-nav"
-      data-screen="map"
-      onclick="navigate('map')"
-    >
-
-      <div class="nav-icon">
-
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="2"/>
-          <path d="M12 3v3"/>
-          <path d="M12 18v3"/>
-          <path d="M3 12h3"/>
-          <path d="M18 12h3"/>
-        </svg>
-
+      <div class="setting">
+        訪問履歴
+        <span>›</span>
       </div>
 
-      <div class="nav-label">MAP</div>
-
-    </button>
-
-
-    <!-- SEARCH -->
-
-    <button
-      class="nav-item"
-      data-screen="search"
-      onclick="navigate('search')"
-    >
-
-      <div class="nav-icon">
-
-        <svg viewBox="0 0 24 24">
-          <circle cx="10.5" cy="10.5" r="6.5"/>
-          <path d="M16 16l5 5"/>
-        </svg>
-
+      <div class="setting">
+        通知設定
+        <span>›</span>
       </div>
 
-      <div class="nav-label">検索</div>
-
-    </button>
-
-
-    <!-- FAVORITES -->
-
-    <button
-      class="nav-item"
-      data-screen="favorites"
-      onclick="navigate('favorites')"
-    >
-
-      <div class="nav-icon">
-
-        <svg viewBox="0 0 24 24">
-          <path d="M20.8 8.8c0 5.2-8.8 10-8.8 10S3.2 14 3.2 8.8A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 8.8 2.8z"/>
-        </svg>
-
+      <div class="setting">
+        設定
+        <span>›</span>
       </div>
 
-      <div class="nav-label">お気に入り</div>
+    </div>
 
-    </button>
+  </div>
+
+</section>
 
 
-    <!-- MY PAGE -->
+<!-- =========================
+     DETAIL
+========================= -->
+
+<section id="detail" class="page detail">
+
+  <button
+    class="back-button"
+    onclick="goPage('home')"
+  >
+    ←
+  </button>
+
+  <div class="detail-image">
+    PHOTO
+  </div>
+
+  <div class="detail-content">
+
+    <h1 id="detailName">
+      店舗名
+    </h1>
+
+    <div class="detail-rating">
+      ★ 4.5　ひとり利用◎
+    </div>
+
+    <div class="detail-description">
+      ひとりでも入りやすく、
+      ゆっくり自分の時間を過ごせる場所です。
+      おひとりさまっぷでは、
+      ひとり利用のしやすさを重視して紹介しています。
+    </div>
 
     <button
-      class="nav-item"
-      data-screen="mypage"
-      onclick="navigate('mypage')"
+      class="detail-button"
+      onclick="showToast('お気に入りに追加しました')"
     >
-
-      <div class="nav-icon">
-
-        <svg viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M4 21c1-5 15-5 16 0"/>
-        </svg>
-
-      </div>
-
-      <div class="nav-label">マイページ</div>
-
+      ♡ お気に入りに追加
     </button>
 
-  </nav>
+  </div>
+
+</section>
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-item active"
+    data-page="home"
+    onclick="goPage('home')"
+  >
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 11l9-7 9 7"/>
+        <path d="M5 10v10h14V10"/>
+      </svg>
+    </div>
+    <span>ホーム</span>
+  </button>
+
+
+  <button
+    class="nav-item"
+    data-page="search"
+    onclick="goPage('search')"
+  >
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="10.5" cy="10.5" r="6"/>
+        <path d="M15 15l5 5"/>
+      </svg>
+    </div>
+    <span>検索</span>
+  </button>
+
+
+  <!-- CENTER MAP -->
+
+  <button
+    class="nav-item map-nav"
+    data-page="map"
+    onclick="goPage('map')"
+  >
+
+    <div class="nav-icon">
+
+      <div class="mini-sweep"></div>
+
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 2v3"/>
+        <path d="M12 19v3"/>
+        <path d="M2 12h3"/>
+        <path d="M19 12h3"/>
+      </svg>
+
+    </div>
+
+    <span>MAP</span>
+
+  </button>
+
+
+  <button
+    class="nav-item"
+    data-page="favorites"
+    onclick="goPage('favorites')"
+  >
+
+    <div class="nav-icon">
+
+      <svg viewBox="0 0 24 24">
+        <path d="M20 8.5c0 5-8 10-8 10s-8-5-8-10A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 8 2.5z"/>
+      </svg>
+
+    </div>
+
+    <span>お気に入り</span>
+
+  </button>
+
+
+  <button
+    class="nav-item"
+    data-page="mypage"
+    onclick="goPage('mypage')"
+  >
+
+    <div class="nav-icon">
+
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 21c0-4 3-7 8-7s8 3 8 7"/>
+      </svg>
+
+    </div>
+
+    <span>マイページ</span>
+
+  </button>
+
+</nav>
+
+
+<div id="toast" class="toast">
+  完了しました
+</div>
 
 </div>
 
 
-<!-- TOAST -->
-
-<div id="toast"></div>
-
-
 <script>
 
-/* =====================================================
-   OPENING
-===================================================== */
+/* =========================
+   PAGE NAVIGATION
+========================= */
 
-window.addEventListener("load", () => {
+function goPage(page){
 
-  setTimeout(() => {
+  document.querySelectorAll('.page')
+    .forEach(p=>{
+      p.classList.remove('active');
+    });
 
-    document
-      .getElementById("opening")
-      .classList.add("hide");
-
-  }, 2600);
-
-});
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function navigate(screen){
-
-  document.querySelectorAll(".screen").forEach(el => {
-    el.classList.remove("active");
-  });
-
-  const target = document.getElementById(screen);
+  const target=document.getElementById(page);
 
   if(target){
-    target.classList.add("active");
+    target.classList.add('active');
   }
 
-  document.querySelectorAll(".nav-item").forEach(item => {
+  document.querySelectorAll('.nav-item')
+    .forEach(item=>{
+      item.classList.remove('active');
 
-    item.classList.remove("active");
-
-    if(item.dataset.screen === screen){
-      item.classList.add("active");
-    }
-
-  });
+      if(item.dataset.page===page){
+        item.classList.add('active');
+      }
+    });
 
   window.scrollTo({
     top:0,
-    behavior:"instant"
+    behavior:'instant'
   });
-
 }
 
 
-/* =====================================================
-   DETAIL
-===================================================== */
-
-function openDetail(name,type){
-
-  document.getElementById("detailName").textContent = name;
-
-  document.getElementById("detailType").textContent =
-    type.toUpperCase() + " / SOLO";
-
-  navigate("detail");
-
-}
-
-
-/* =====================================================
+/* =========================
    CATEGORY
-===================================================== */
+========================= */
 
-document.querySelectorAll(".category-item").forEach(item => {
+function categoryClick(category){
 
-  item.addEventListener("click", () => {
+  showToast(category + 'を探しています');
 
-    document
-      .querySelectorAll(".category-item")
-      .forEach(el => el.classList.remove("selected"));
+  setTimeout(()=>{
+    goPage('search');
 
-    item.classList.add("selected");
+    const input=document.getElementById('searchInput');
 
-    const category = item.dataset.category;
-
-    showToast(category + "を検索します");
-
-  });
-
-});
-
-
-/* =====================================================
-   HOME SEARCH
-===================================================== */
-
-const homeSearch =
-  document.getElementById("homeSearch");
-
-if(homeSearch){
-
-  homeSearch.addEventListener("keydown", e => {
-
-    if(e.key === "Enter"){
-
-      const value = homeSearch.value.trim();
-
-      if(value){
-
-        document.getElementById("searchInput").value =
-          value;
-
-        navigate("search");
-
-      }
-
+    if(input){
+      input.value=category;
     }
 
-  });
+  },300);
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function setSearch(text){
+
+  const input=document.getElementById('searchInput');
+
+  if(input){
+    input.value=text;
+    input.focus();
+  }
 
 }
 
 
-/* =====================================================
-   SEARCH KEYWORDS
-===================================================== */
+/* =========================
+   DETAIL
+========================= */
 
-document.querySelectorAll(".keyword").forEach(keyword => {
+function openDetail(name){
 
-  keyword.addEventListener("click", () => {
+  document.getElementById('detailName')
+    .textContent=name;
 
-    document.getElementById("searchInput").value =
-      keyword.textContent;
+  goPage('detail');
 
-    showToast(
-      keyword.textContent + "を検索"
-    );
-
-  });
-
-});
+}
 
 
-/* =====================================================
+/* =========================
    TOAST
-===================================================== */
+========================= */
 
 let toastTimer;
 
 function showToast(message){
 
-  const toast =
-    document.getElementById("toast");
+  const toast=document.getElementById('toast');
 
-  toast.textContent = message;
+  toast.textContent=message;
 
-  toast.classList.add("show");
+  toast.classList.add('show');
 
   clearTimeout(toastTimer);
 
-  toastTimer = setTimeout(() => {
-
-    toast.classList.remove("show");
-
+  toastTimer=setTimeout(()=>{
+    toast.classList.remove('show');
   },1800);
+
+}
+
+
+/* =========================
+   SEARCH ENTER
+========================= */
+
+const searchInput=
+  document.getElementById('searchInput');
+
+if(searchInput){
+
+  searchInput.addEventListener(
+    'keydown',
+    function(e){
+
+      if(e.key==='Enter'){
+
+        showToast(
+          '「'+this.value+'」を検索'
+        );
+
+      }
+
+    }
+  );
 
 }
 
