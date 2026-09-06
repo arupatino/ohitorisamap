@@ -1,677 +1,976 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ohitorisamap｜おひとりさまっぷ</title>
-
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>ohitorisamap - おひとりさまっぷ</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #020b13;
+  --bg2: #061622;
+  --card: rgba(8, 27, 42, .82);
+  --card2: rgba(12, 38, 57, .72);
+  --line: rgba(74, 190, 235, .18);
+  --cyan: #20d5ff;
+  --cyan2: #65e5ff;
+  --text: #f4fbff;
+  --muted: #8197a7;
+  --yellow: #ffd75a;
+  --danger: #ff4f68;
 }
 
-:root{
-  --bg:#03070a;
-  --panel:#081117;
-  --panel2:#0c171e;
-  --line:rgba(109,227,255,.18);
-  --blue:#6de3ff;
-  --blue2:#21bde5;
-  --white:#eefcff;
-  --gray:#7f9aa5;
-  --danger:#ff5577;
+* {
+  box-sizing: border-box;
 }
 
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",
-  "Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
-  background:var(--bg);
-  color:var(--white);
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #000810;
+  color: var(--text);
+  font-family: "Noto Sans JP", sans-serif;
 }
 
-body{
-  position:relative;
+body {
+  display: flex;
+  justify-content: center;
 }
 
-/* GRID */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
+/* ========================================
+   APP
+======================================== */
+
+.app {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
   background:
-    linear-gradient(rgba(109,227,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(109,227,255,.035) 1px,transparent 1px);
-  background-size:35px 35px;
-  z-index:100;
+    radial-gradient(circle at 50% -10%, rgba(0, 181, 255, .18), transparent 35%),
+    linear-gradient(180deg, #03101a 0%, #020911 100%);
 }
 
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:radial-gradient(circle at center,
-  transparent 30%,
-  rgba(0,0,0,.55) 100%);
-  z-index:101;
+/* ========================================
+   HEADER
+======================================== */
+
+.statusbar {
+  height: 28px;
+  padding: 8px 18px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: white;
+  position: relative;
+  z-index: 20;
 }
 
-/* BOOT */
-#boot{
-  position:fixed;
-  inset:0;
-  background:#020507;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  transition:opacity .8s ease,visibility .8s;
+.status-icons {
+  display: flex;
+  gap: 7px;
+  align-items: center;
 }
 
-.boot-box{
-  width:85%;
-  max-width:480px;
+/* ========================================
+   SCREENS
+======================================== */
+
+.screen {
+  display: none;
+  min-height: calc(100vh - 76px);
+  padding-bottom: 90px;
 }
 
-.boot-title{
-  color:var(--blue);
-  font-size:28px;
-  letter-spacing:5px;
-  margin-bottom:8px;
+.screen.active {
+  display: block;
 }
 
-.boot-sub{
-  color:#6f8992;
-  font-size:11px;
-  letter-spacing:3px;
-  margin-bottom:28px;
+/* ========================================
+   COMMON
+======================================== */
+
+.section {
+  padding: 0 18px;
+  margin-top: 23px;
 }
 
-.boot-line{
-  height:1px;
-  background:linear-gradient(90deg,
-  transparent,var(--blue),transparent);
-  margin-bottom:18px;
-  animation:pulse 1.2s infinite;
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.boot-text{
-  color:#9bdbea;
-  font-family:monospace;
-  font-size:12px;
-  line-height:2;
+.section-title span {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 500;
 }
 
-.progress{
-  height:2px;
-  background:#11252c;
-  margin-top:18px;
-  overflow:hidden;
-}
-
-.progress span{
-  display:block;
-  width:0;
-  height:100%;
-  background:var(--blue);
-  animation:load 2.4s forwards;
-}
-
-@keyframes load{
-  to{width:100%}
-}
-
-@keyframes pulse{
-  50%{opacity:.35}
-}
-
-/* APP */
-#app{
-  width:100%;
-  height:100%;
-  display:flex;
-  opacity:0;
-  transition:opacity .8s;
-}
-
-#app.active{
-  opacity:1;
-}
-
-/* SIDE */
-.sidebar{
-  width:230px;
-  height:100%;
-  background:rgba(4,10,14,.92);
-  border-right:1px solid var(--line);
-  position:relative;
-  z-index:200;
-  padding:26px 18px;
-  backdrop-filter:blur(18px);
-}
-
-.logo{
-  padding:8px 10px 28px;
-  border-bottom:1px solid var(--line);
-  margin-bottom:25px;
-}
-
-.logo-main{
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:2px;
-}
-
-.logo-main span{
-  color:var(--blue);
-}
-
-.logo-sub{
-  font-size:9px;
-  color:var(--gray);
-  letter-spacing:3px;
-  margin-top:5px;
-}
-
-.status{
-  font-size:9px;
-  color:#70e9b2;
-  letter-spacing:2px;
-  margin-bottom:22px;
-}
-
-.status::before{
-  content:"";
-  display:inline-block;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#70e9b2;
-  box-shadow:0 0 10px #70e9b2;
-  margin-right:8px;
-}
-
-.nav-title{
-  font-size:8px;
-  color:#56717b;
-  letter-spacing:2px;
-  margin:18px 10px 8px;
-}
-
-.nav{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-}
-
-.nav button{
-  width:100%;
-  border:1px solid transparent;
-  background:transparent;
-  color:#8ba4ad;
-  text-align:left;
-  padding:12px 12px;
-  border-radius:5px;
-  cursor:pointer;
-  transition:.25s;
-  font-size:12px;
-}
-
-.nav button:hover,
-.nav button.active{
-  background:rgba(109,227,255,.07);
-  border-color:var(--line);
-  color:var(--blue);
-}
-
-.nav button span{
-  margin-right:10px;
-}
-
-/* MAIN */
-.main{
-  flex:1;
-  min-width:0;
-  height:100%;
-  position:relative;
-}
-
-/* HEADER */
-.header{
-  height:70px;
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  z-index:500;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  background:linear-gradient(
-    180deg,
-    rgba(3,7,10,.95),
-    rgba(3,7,10,.55),
-    transparent
+.glass {
+  background: linear-gradient(
+    145deg,
+    rgba(15, 46, 65, .88),
+    rgba(4, 20, 31, .82)
   );
-  pointer-events:none;
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 10px 35px rgba(0,0,0,.25);
+  backdrop-filter: blur(18px);
 }
 
-.header>*{
-  pointer-events:auto;
+/* ========================================
+   HOME HERO
+======================================== */
+
+.hero {
+  margin: 0 10px;
+  height: 245px;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,10,18,.05),
+      rgba(0,8,14,.88)
+    ),
+    url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=80")
+    center/cover;
+  box-shadow: 0 15px 45px rgba(0,0,0,.45);
 }
 
-.page-title{
-  font-size:12px;
-  letter-spacing:3px;
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 65% 35%,
+      rgba(48,204,255,.14),
+      transparent 30%
+    );
 }
 
-.page-title small{
-  display:block;
-  color:var(--blue);
-  font-size:8px;
-  letter-spacing:2px;
-  margin-top:5px;
+.hero-content {
+  position: absolute;
+  z-index: 2;
+  inset: 40px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.user{
-  width:35px;
-  height:35px;
-  border:1px solid var(--line);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--blue);
+.logo {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: .5px;
 }
 
-/* MAP */
-#map{
-  width:100%;
-  height:100%;
-  background:#071014;
+.logo small {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 3px;
+  margin-top: -2px;
+  opacity: .8;
 }
 
-.leaflet-container{
-  background:#071014;
+.hero-copy {
+  text-align: center;
 }
 
-.leaflet-control-zoom{
-  display:none;
+.hero-copy p {
+  margin: 4px 0;
+  font-size: 11px;
+  color: rgba(255,255,255,.85);
 }
 
-.leaflet-control-attribution{
-  background:rgba(0,0,0,.55)!important;
-  color:#56717b!important;
-  font-size:8px;
+.hero-copy strong {
+  font-size: 13px;
 }
 
-/* SEARCH */
-.search-area{
-  position:absolute;
-  top:80px;
-  left:25px;
-  right:25px;
-  z-index:500;
-  display:flex;
-  gap:8px;
+/* ========================================
+   SEARCH
+======================================== */
+
+.search {
+  height: 43px;
+  border-radius: 23px;
+  border: 1px solid rgba(132,213,244,.27);
+  background: rgba(1,14,23,.75);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 11px;
 }
 
-.search{
-  flex:1;
-  max-width:520px;
-  height:48px;
-  background:rgba(5,13,18,.88);
-  border:1px solid var(--line);
-  border-radius:5px;
-  display:flex;
-  align-items:center;
-  padding:0 15px;
-  backdrop-filter:blur(12px);
-  box-shadow:0 10px 40px rgba(0,0,0,.3);
+.search input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-family: inherit;
+  font-size: 12px;
 }
 
-.search-icon{
-  color:var(--blue);
-  margin-right:10px;
+.search input::placeholder {
+  color: #78909f;
 }
 
-.search input{
-  width:100%;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:white;
-  font-size:13px;
+/* ========================================
+   CATEGORY
+======================================== */
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
 }
 
-.search input::placeholder{
-  color:#607b85;
+.category {
+  height: 72px;
+  border-radius: 17px;
+  background:
+    linear-gradient(145deg, rgba(20,48,65,.9), rgba(4,20,30,.9));
+  border: 1px solid rgba(83,195,235,.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: .2s;
 }
 
-.locate{
-  width:48px;
-  height:48px;
-  border:1px solid var(--line);
-  background:rgba(5,13,18,.88);
-  color:var(--blue);
-  border-radius:5px;
-  cursor:pointer;
+.category:hover {
+  transform: translateY(-2px);
+  border-color: rgba(32,213,255,.5);
 }
 
-/* HOME PANEL */
-.home-panel{
-  position:absolute;
-  z-index:450;
-  left:25px;
-  bottom:25px;
-  width:420px;
-  max-width:calc(100% - 50px);
-  background:rgba(4,11,15,.91);
-  border:1px solid var(--line);
-  border-radius:7px;
-  padding:20px;
-  backdrop-filter:blur(18px);
-  box-shadow:0 20px 60px rgba(0,0,0,.45);
+.category .icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--cyan);
+  font-size: 16px;
 }
 
-.panel-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:17px;
+.category span {
+  font-size: 9px;
 }
 
-.panel-title{
-  font-size:14px;
-  letter-spacing:1px;
+/* ========================================
+   CURRENT LOCATION
+======================================== */
+
+.location-card {
+  min-height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px 13px;
+  gap: 12px;
+  cursor: pointer;
 }
 
-.panel-code{
-  font-size:8px;
-  color:var(--blue);
-  letter-spacing:2px;
+.location-icon {
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(32,213,255,.4);
+  background: rgba(32,213,255,.08);
+  color: var(--cyan);
+  box-shadow: 0 0 18px rgba(32,213,255,.16);
 }
 
-.categories{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:7px;
+.location-text {
+  flex: 1;
 }
 
-.category{
-  height:65px;
-  background:rgba(109,227,255,.035);
-  border:1px solid rgba(109,227,255,.12);
-  border-radius:5px;
-  color:#a9c2c9;
-  cursor:pointer;
-  transition:.25s;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  font-size:9px;
+.location-text small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
 }
 
-.category:hover{
-  border-color:var(--blue);
-  color:var(--blue);
-  background:rgba(109,227,255,.08);
-  transform:translateY(-2px);
+.location-text strong {
+  font-size: 11px;
 }
 
-.category .icon{
-  font-size:18px;
-  filter:grayscale(1);
+/* ========================================
+   RECOMMEND CARDS
+======================================== */
+
+.recommend-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-/* PLACE CARD */
-.place-card{
-  position:absolute;
-  top:145px;
-  right:25px;
-  width:280px;
-  z-index:450;
-  background:rgba(4,11,15,.91);
-  border:1px solid var(--line);
-  border-radius:6px;
-  padding:17px;
-  backdrop-filter:blur(18px);
-  display:none;
+.recommend-scroll::-webkit-scrollbar {
+  display: none;
 }
 
-.place-card.show{
-  display:block;
-  animation:slideIn .3s ease;
+.place-card {
+  min-width: 126px;
+  width: 126px;
+  cursor: pointer;
 }
 
-@keyframes slideIn{
-  from{
-    opacity:0;
-    transform:translateX(15px);
+.place-image {
+  height: 104px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.place-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.place-info {
+  padding: 7px 2px;
+}
+
+.place-info .tag {
+  color: var(--cyan);
+  font-size: 8px;
+}
+
+.place-info strong {
+  display: block;
+  font-size: 10px;
+  margin: 3px 0;
+}
+
+.place-meta {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.rating {
+  color: var(--yellow);
+}
+
+/* ========================================
+   BOTTOM NAV
+======================================== */
+
+.bottom-nav {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  width: 100%;
+  max-width: 430px;
+  height: 72px;
+  padding: 8px 9px calc(8px + env(safe-area-inset-bottom));
+  background: rgba(2, 12, 20, .94);
+  border-top: 1px solid rgba(70,180,220,.13);
+  backdrop-filter: blur(20px);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #647c8b;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.nav-icon {
+  font-size: 19px;
+}
+
+.nav-item.active {
+  color: var(--cyan);
+}
+
+.nav-item.active .nav-icon {
+  filter: drop-shadow(0 0 8px rgba(32,213,255,.7));
+}
+
+/* ========================================
+   MAP
+======================================== */
+
+.map-screen {
+  min-height: calc(100vh - 28px);
+  padding-bottom: 0;
+  position: relative;
+}
+
+.map {
+  position: absolute;
+  inset: 28px 0 0;
+  background:
+    linear-gradient(rgba(2,16,26,.6), rgba(1,11,19,.72)),
+    url("https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1000&q=80")
+    center/cover;
+  filter: saturate(.65);
+}
+
+.map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(35deg, transparent 46%, rgba(37,102,128,.25) 47%, transparent 48%),
+    linear-gradient(125deg, transparent 49%, rgba(37,102,128,.25) 50%, transparent 51%);
+  background-size: 110px 110px;
+  opacity: .8;
+}
+
+.map-header {
+  position: absolute;
+  z-index: 10;
+  top: 42px;
+  left: 16px;
+  right: 16px;
+}
+
+.map-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.map-sub {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.map-filters {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.map-filter {
+  white-space: nowrap;
+  padding: 7px 13px;
+  border-radius: 16px;
+  background: rgba(2,16,26,.76);
+  border: 1px solid rgba(77,181,220,.2);
+  font-size: 9px;
+}
+
+.map-filter.active {
+  color: #001018;
+  background: var(--cyan);
+}
+
+.pin {
+  position: absolute;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(4,32,47,.92);
+  border: 1px solid rgba(75,218,255,.7);
+  color: white;
+  box-shadow:
+    0 0 0 6px rgba(32,213,255,.07),
+    0 0 22px rgba(32,213,255,.4);
+}
+
+.pin.selected {
+  width: 43px;
+  height: 43px;
+  background: var(--cyan);
+  color: #00202b;
+  box-shadow:
+    0 0 0 9px rgba(32,213,255,.08),
+    0 0 30px rgba(32,213,255,.75);
+}
+
+.user-location {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%,-50%);
+  width: 15px;
+  height: 15px;
+  background: var(--cyan);
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 12px rgba(32,213,255,.12);
+}
+
+.map-card {
+  position: absolute;
+  z-index: 15;
+  bottom: 88px;
+  left: 15px;
+  right: 15px;
+  padding: 9px;
+  border-radius: 18px;
+  background: rgba(4,22,33,.95);
+  border: 1px solid rgba(70,193,235,.25);
+  display: flex;
+  gap: 10px;
+}
+
+.map-card img {
+  width: 86px;
+  height: 94px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.map-card-content {
+  flex: 1;
+}
+
+.map-card-content h3 {
+  font-size: 13px;
+  margin: 2px 0 5px;
+}
+
+.map-card-content p {
+  margin: 3px 0;
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.map-button {
+  margin-top: 8px;
+  width: 100%;
+  height: 30px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--cyan);
+  color: #00151d;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ========================================
+   SEARCH SCREEN
+======================================== */
+
+.page-header {
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-header h2 {
+  font-size: 17px;
+  margin: 0;
+}
+
+.back {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.keyword-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.keyword {
+  padding: 8px 12px;
+  background: rgba(15,41,56,.8);
+  border: 1px solid rgba(70,170,210,.12);
+  border-radius: 15px;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.search-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.search-menu-item {
+  min-height: 59px;
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.search-menu-icon {
+  width: 37px;
+  height: 37px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(20,60,78,.75);
+  color: var(--cyan);
+  font-size: 17px;
+}
+
+.search-menu-text {
+  flex: 1;
+}
+
+.search-menu-text strong {
+  display: block;
+  font-size: 11px;
+}
+
+.search-menu-text small {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.arrow {
+  color: var(--cyan);
+}
+
+/* ========================================
+   DETAIL
+======================================== */
+
+.detail {
+  padding-bottom: 100px;
+}
+
+.detail-hero {
+  height: 265px;
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    transparent 40%,
+    rgba(2,10,16,.96) 100%
+  );
+}
+
+.detail-top {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.circle-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(0,10,17,.6);
+  border: 1px solid rgba(255,255,255,.15);
+}
+
+.detail-title {
+  position: absolute;
+  z-index: 3;
+  bottom: 15px;
+  left: 18px;
+}
+
+.detail-title h1 {
+  margin: 0 0 5px;
+  font-size: 21px;
+}
+
+.detail-title p {
+  margin: 0;
+  font-size: 10px;
+  color: #b3c5ce;
+}
+
+.detail-body {
+  padding: 0 18px;
+}
+
+.rating-big {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(100,180,210,.12);
+}
+
+.rating-big strong {
+  font-size: 18px;
+  color: var(--yellow);
+}
+
+.detail-row {
+  display: flex;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(100,180,210,.09);
+  font-size: 10px;
+}
+
+.detail-row .label {
+  width: 70px;
+  color: var(--muted);
+}
+
+.detail-description {
+  color: #9db0bb;
+  font-size: 10px;
+  line-height: 1.9;
+  margin-top: 17px;
+}
+
+.primary-button {
+  width: 100%;
+  height: 45px;
+  border: 0;
+  border-radius: 23px;
+  background: linear-gradient(90deg, #19caff, #48dcff);
+  color: #00151d;
+  font-weight: 700;
+  font-family: inherit;
+  margin-top: 18px;
+  box-shadow: 0 7px 24px rgba(32,213,255,.18);
+  cursor: pointer;
+}
+
+/* ========================================
+   FAVORITES
+======================================== */
+
+.favorite-item {
+  margin: 0 18px 10px;
+  padding: 9px;
+  min-height: 84px;
+  border-radius: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.favorite-item img {
+  width: 72px;
+  height: 66px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.favorite-info {
+  flex: 1;
+}
+
+.favorite-info strong {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.favorite-info small {
+  display: block;
+  font-size: 8px;
+  color: var(--muted);
+  margin: 3px 0;
+}
+
+.heart {
+  color: var(--cyan);
+  font-size: 17px;
+}
+
+/* ========================================
+   MY PAGE
+======================================== */
+
+.profile {
+  margin: 15px 18px;
+  padding: 17px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#d9e9ed,#698695);
+  display: grid;
+  place-items: center;
+  color: #16303c;
+  font-size: 22px;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info strong {
+  display: block;
+  font-size: 13px;
+}
+
+.profile-info small {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.profile-edit {
+  color: var(--cyan);
+  font-size: 11px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  margin: 0 18px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.stat {
+  text-align: center;
+  border-right: 1px solid var(--line);
+}
+
+.stat:last-child {
+  border: 0;
+}
+
+.stat strong {
+  display: block;
+  font-size: 18px;
+}
+
+.stat small {
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.my-menu {
+  margin: 18px;
+  border-radius: 17px;
+  overflow: hidden;
+}
+
+.my-menu-item {
+  min-height: 50px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(80,180,210,.1);
+  font-size: 10px;
+}
+
+.my-menu-item:last-child {
+  border: 0;
+}
+
+.my-menu-item .mi {
+  width: 25px;
+  color: var(--cyan);
+}
+
+.my-menu-item .arrow {
+  margin-left: auto;
+}
+
+.my-menu-item.logout {
+  color: var(--danger);
+}
+
+.my-menu-item.logout .mi {
+  color: var(--danger);
+}
+
+/* ========================================
+   TOAST
+======================================== */
+
+.toast {
+  position: fixed;
+  z-index: 300;
+  left: 50%;
+  bottom: 90px;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 11px 17px;
+  border-radius: 22px;
+  background: rgba(10,35,49,.96);
+  border: 1px solid rgba(55,205,245,.35);
+  font-size: 10px;
+  transition: .3s;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (min-width: 600px) {
+  body {
+    padding: 20px 0;
+    background:
+      radial-gradient(circle at center, #09202d, #00050a 65%);
   }
-  to{
-    opacity:1;
-    transform:translateX(0);
-  }
-}
 
-.place-tag{
-  font-size:8px;
-  color:var(--blue);
-  letter-spacing:2px;
-}
-
-.place-name{
-  font-size:17px;
-  margin:7px 0;
-}
-
-.place-info{
-  color:#78939d;
-  font-size:10px;
-  line-height:1.8;
-}
-
-.rating{
-  margin-top:10px;
-  color:#d7f9ff;
-  font-size:11px;
-}
-
-.close-card{
-  position:absolute;
-  right:12px;
-  top:10px;
-  border:0;
-  background:transparent;
-  color:#607b85;
-  cursor:pointer;
-}
-
-/* MOBILE NAV */
-.mobile-nav{
-  display:none;
-}
-
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  backdrop-filter:blur(8px);
-  z-index:9000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:100%;
-  max-width:500px;
-  background:#071117;
-  border:1px solid var(--line);
-  border-radius:8px;
-  padding:25px;
-  box-shadow:0 30px 100px #000;
-}
-
-.modal-title{
-  font-size:18px;
-  margin-bottom:5px;
-}
-
-.modal-sub{
-  color:#607b85;
-  font-size:10px;
-  margin-bottom:20px;
-}
-
-.form{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.form input,
-.form textarea,
-.form select{
-  width:100%;
-  background:#03090d;
-  border:1px solid var(--line);
-  color:white;
-  padding:13px;
-  border-radius:4px;
-  outline:none;
-}
-
-.form textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-.form button{
-  padding:13px;
-  border:1px solid var(--blue);
-  color:var(--blue);
-  background:rgba(109,227,255,.05);
-  border-radius:4px;
-  cursor:pointer;
-}
-
-/* MOBILE */
-@media(max-width:800px){
-
-  .sidebar{
-    display:none;
+  .app {
+    min-height: 850px;
+    height: calc(100vh - 40px);
+    max-height: 900px;
+    border-radius: 30px;
+    box-shadow:
+      0 0 0 1px rgba(100,220,255,.1),
+      0 30px 100px rgba(0,0,0,.6);
   }
 
-  .main{
-    width:100%;
-  }
-
-  .header{
-    height:62px;
-    padding:0 16px;
-  }
-
-  .search-area{
-    top:68px;
-    left:15px;
-    right:15px;
-  }
-
-  .search{
-    height:45px;
-  }
-
-  .locate{
-    width:45px;
-    height:45px;
-  }
-
-  .home-panel{
-    left:12px;
-    right:12px;
-    bottom:70px;
-    width:auto;
-    max-width:none;
-    padding:15px;
-  }
-
-  .panel-title{
-    font-size:13px;
-  }
-
-  .categories{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .category{
-    height:60px;
-    font-size:8px;
-  }
-
-  .category .icon{
-    font-size:16px;
-  }
-
-  .place-card{
-    top:auto;
-    bottom:245px;
-    left:12px;
-    right:12px;
-    width:auto;
-  }
-
-  .mobile-nav{
-    display:flex;
-    position:absolute;
-    z-index:600;
-    bottom:0;
-    left:0;
-    right:0;
-    height:62px;
-    background:rgba(3,8,11,.96);
-    border-top:1px solid var(--line);
-    justify-content:space-around;
-    align-items:center;
-    backdrop-filter:blur(15px);
-  }
-
-  .mobile-nav button{
-    background:none;
-    border:0;
-    color:#66818a;
-    font-size:9px;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    align-items:center;
-  }
-
-  .mobile-nav button.active{
-    color:var(--blue);
-  }
-
-  .mobile-nav .mi{
-    font-size:18px;
+  .bottom-nav {
+    bottom: 20px;
+    border-radius: 0 0 30px 30px;
   }
 }
 </style>
@@ -679,639 +978,822 @@ body::after{
 
 <body>
 
-<!-- BOOT -->
-<div id="boot">
-  <div class="boot-box">
-    <div class="boot-title">ohitorisamap</div>
-    <div class="boot-sub">PERSONAL SOLO DISCOVERY SYSTEM</div>
-    <div class="boot-line"></div>
-    <div class="boot-text" id="bootText">
-      INITIALIZING SYSTEM...
-    </div>
-    <div class="progress">
-      <span></span>
-    </div>
-  </div>
-</div>
+<div class="app">
 
-<!-- APP -->
-<div id="app">
+  <!-- =========================
+       HOME
+  ========================== -->
+  <section id="home" class="screen active">
 
-  <!-- SIDE -->
-  <aside class="sidebar">
-
-    <div class="logo">
-      <div class="logo-main">
-        ohitori<span>samap</span>
-      </div>
-      <div class="logo-sub">
-        おひとりさまっぷ
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="status-icons">
+        <span>▮▮▮</span>
+        <span>Wi-Fi</span>
+        <span>▰</span>
       </div>
     </div>
 
-    <div class="status">
-      SYSTEM ONLINE
+    <div class="hero">
+
+      <div class="hero-content">
+
+        <div>
+          <div class="logo">
+            ohitorisamap
+            <small>おひとりさまっぷ</small>
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <p>ひとりの時間を、</p>
+          <strong>もっと自由に。</strong>
+        </div>
+
+        <div class="search">
+          <span>⌕</span>
+          <input
+            id="homeSearch"
+            type="text"
+            placeholder="行きたい場所・ジャンル・キーワード"
+          />
+          <span>›</span>
+        </div>
+
+      </div>
     </div>
 
-    <div class="nav-title">MAIN SYSTEM</div>
+    <div class="section">
+      <div class="categories">
 
-    <div class="nav">
-      <button class="active" onclick="goHome()">
-        <span>⌂</span>ホーム
-      </button>
+        <div class="category" onclick="showToast('食事を検索します')">
+          <div class="icon">🍴</div>
+          <span>食事</span>
+        </div>
 
-      <button onclick="showSearch()">
-        <span>⌕</span>場所を探す
-      </button>
+        <div class="category" onclick="showToast('カフェを検索します')">
+          <div class="icon">☕</div>
+          <span>カフェ</span>
+        </div>
 
-      <button onclick="showHistory()">
-        <span>◷</span>行った場所
-      </button>
+        <div class="category" onclick="showToast('映画を検索します')">
+          <div class="icon">▣</div>
+          <span>映画</span>
+        </div>
 
-      <button onclick="showFavorites()">
-        <span>◇</span>お気に入り
-      </button>
+        <div class="category" onclick="showToast('温泉を検索します')">
+          <div class="icon">♨</div>
+          <span>温泉</span>
+        </div>
+
+        <div class="category" onclick="showToast('ドライブを検索します')">
+          <div class="icon">🚗</div>
+          <span>ドライブ</span>
+        </div>
+
+      </div>
     </div>
 
-    <div class="nav-title">PERSONAL</div>
+    <div class="section">
 
-    <div class="nav">
-      <button onclick="openModal()">
-        <span>＋</span>場所を記録
-      </button>
+      <div
+        class="location-card glass"
+        onclick="showScreen('map')"
+      >
+        <div class="location-icon">◎</div>
 
-      <button onclick="alert('プロフィール機能は準備中です')">
-        <span>○</span>プロフィール
-      </button>
-    </div>
+        <div class="location-text">
+          <small>現在地から探す</small>
+          <strong>あなたの近くのお店を表示</strong>
+        </div>
 
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-
-    <header class="header">
-
-      <div class="page-title">
-        おひとりさまっぷ
-        <small>SOLO DISCOVERY NETWORK</small>
+        <div class="arrow">›</div>
       </div>
 
-      <div class="user">○</div>
+    </div>
 
-    </header>
+    <div class="section">
 
-    <!-- SEARCH -->
-    <div class="search-area">
+      <div class="section-title">
+        <span style="color:white">あなたにおすすめ</span>
+        <span onclick="showScreen('search')">もっと見る ›</span>
+      </div>
+
+      <div class="recommend-scroll">
+
+        <div class="place-card" onclick="showDetail()">
+          <div class="place-image">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80">
+          </div>
+          <div class="place-info">
+            <span class="tag">焼き鳥</span>
+            <strong>焼鳥 たかし</strong>
+            <div class="place-meta">徒歩5分　<span class="rating">★4.6</span></div>
+          </div>
+        </div>
+
+        <div class="place-card" onclick="showDetail()">
+          <div class="place-image">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=500&q=80">
+          </div>
+          <div class="place-info">
+            <span class="tag">カフェ</span>
+            <strong>Blue Coffee</strong>
+            <div class="place-meta">徒歩8分　<span class="rating">★4.8</span></div>
+          </div>
+        </div>
+
+        <div class="place-card" onclick="showDetail()">
+          <div class="place-image">
+            <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=500&q=80">
+          </div>
+          <div class="place-info">
+            <span class="tag">映画</span>
+            <strong>シネマ〇〇</strong>
+            <div class="place-meta">徒歩12分　<span class="rating">★4.5</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MAP
+  ========================== -->
+  <section id="map" class="screen map-screen">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="status-icons">
+        <span>▮▮▮</span>
+        <span>Wi-Fi</span>
+        <span>▰</span>
+      </div>
+    </div>
+
+    <div class="map">
+
+      <div class="map-header">
+
+        <div class="map-title">マップ</div>
+        <div class="map-sub">現在地周辺のおすすめスポット</div>
+
+        <div class="map-filters">
+          <div class="map-filter active">すべて</div>
+          <div class="map-filter">🍴 食事</div>
+          <div class="map-filter">☕ カフェ</div>
+          <div class="map-filter">▣ 映画</div>
+          <div class="map-filter">♨ 温泉</div>
+        </div>
+
+      </div>
+
+      <div class="pin" style="left:16%;top:34%">🍴</div>
+      <div class="pin" style="left:28%;top:52%">☕</div>
+      <div class="pin selected" style="left:47%;top:39%">🍴</div>
+      <div class="pin" style="left:65%;top:28%">♨</div>
+      <div class="pin" style="left:73%;top:53%">▣</div>
+      <div class="pin" style="left:39%;top:64%">🍴</div>
+      <div class="pin" style="left:81%;top:38%">☕</div>
+      <div class="pin" style="left:22%;top:67%">♨</div>
+
+      <div class="user-location"></div>
+
+      <div class="map-card">
+
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80">
+
+        <div class="map-card-content">
+          <div style="font-size:8px;color:#20d5ff">
+            居酒屋　ひとりでも入りやすい
+          </div>
+
+          <h3>居酒屋 たかし</h3>
+
+          <div>
+            <span class="rating">★ 4.5</span>
+            <span style="font-size:8px;color:#899ca8">（122件）</span>
+          </div>
+
+          <p>徒歩3分　　¥1,000〜3,000</p>
+          <p>カウンターあり　ひとり歓迎</p>
+
+          <button
+            class="map-button"
+            onclick="showDetail()"
+          >
+            詳しく見る
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       SEARCH
+  ========================== -->
+  <section id="search" class="screen">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="status-icons">
+        <span>▮▮▮</span>
+        <span>Wi-Fi</span>
+        <span>▰</span>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <span class="back" onclick="showScreen('home')">‹</span>
+      <h2>検索</h2>
+    </div>
+
+    <div class="section" style="margin-top:8px">
 
       <div class="search">
-        <span class="search-icon">⌕</span>
+        <span>⌕</span>
         <input
           id="searchInput"
           type="text"
-          placeholder="ひとりで行ける場所を検索..."
-          onkeydown="searchPlace(event)"
-        >
+          placeholder="お店名・ジャンル・エリアで検索"
+        />
+        <span>⌗</span>
       </div>
-
-      <button class="locate" onclick="locateUser()">
-        ◎
-      </button>
 
     </div>
 
-    <!-- MAP -->
-    <div id="map"></div>
+    <div class="section">
 
-    <!-- HOME PANEL -->
-    <section class="home-panel">
+      <div class="section-title">
+        人気のキーワード
+      </div>
 
-      <div class="panel-head">
-        <div class="panel-title">
-          今日は、ひとりでどこ行く？
+      <div class="keyword-list">
+
+        <div class="keyword">ラーメン</div>
+        <div class="keyword">カフェ</div>
+        <div class="keyword">夜ごはん</div>
+        <div class="keyword">居酒屋</div>
+        <div class="keyword">温泉</div>
+        <div class="keyword">映画</div>
+        <div class="keyword">ひとり焼肉</div>
+        <div class="keyword">散歩</div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        ジャンルから探す
+      </div>
+
+      <div class="search-menu">
+
+        <div class="search-menu-item glass" onclick="showToast('食事を検索')">
+          <div class="search-menu-icon">🍴</div>
+          <div class="search-menu-text">
+            <strong>食事</strong>
+            <small>ひとりでも入りやすいお店</small>
+          </div>
+          <div class="arrow">›</div>
         </div>
 
-        <div class="panel-code">
-          SELECT MODE
+        <div class="search-menu-item glass">
+          <div class="search-menu-icon">☕</div>
+          <div class="search-menu-text">
+            <strong>カフェ</strong>
+            <small>ゆっくりできるカフェ</small>
+          </div>
+          <div class="arrow">›</div>
+        </div>
+
+        <div class="search-menu-item glass">
+          <div class="search-menu-icon">▣</div>
+          <div class="search-menu-text">
+            <strong>映画</strong>
+            <small>ひとりで楽しめる映画館</small>
+          </div>
+          <div class="arrow">›</div>
+        </div>
+
+        <div class="search-menu-item glass">
+          <div class="search-menu-icon">♨</div>
+          <div class="search-menu-text">
+            <strong>温泉</strong>
+            <small>日帰り・ひとり温泉</small>
+          </div>
+          <div class="arrow">›</div>
+        </div>
+
+        <div class="search-menu-item glass">
+          <div class="search-menu-icon">🚗</div>
+          <div class="search-menu-text">
+            <strong>ドライブ</strong>
+            <small>絶景・おすすめルート</small>
+          </div>
+          <div class="arrow">›</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       DETAIL
+  ========================== -->
+  <section id="detail" class="screen detail">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="status-icons">
+        <span>▮▮▮</span>
+        <span>Wi-Fi</span>
+        <span>▰</span>
+      </div>
+    </div>
+
+    <div class="detail-hero">
+
+      <img
+        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
+      >
+
+      <div class="detail-overlay"></div>
+
+      <div class="detail-top">
+        <div class="circle-button" onclick="showScreen('home')">‹</div>
+
+        <div style="display:flex;gap:8px">
+          <div class="circle-button">↗</div>
+          <div
+            class="circle-button"
+            onclick="toggleFavorite('detailHeart')"
+          >
+            <span id="detailHeart">♡</span>
+          </div>
         </div>
       </div>
 
-      <div class="categories">
-
-        <button class="category" onclick="categorySearch('ひとり飯')">
-          <div class="icon">🍜</div>
-          <div>ひとり飯</div>
-        </button>
-
-        <button class="category" onclick="categorySearch('カフェ')">
-          <div class="icon">☕</div>
-          <div>カフェ</div>
-        </button>
-
-        <button class="category" onclick="categorySearch('映画')">
-          <div class="icon">🎬</div>
-          <div>映画</div>
-        </button>
-
-        <button class="category" onclick="categorySearch('温泉')">
-          <div class="icon">♨</div>
-          <div>温泉</div>
-        </button>
-
-        <button class="category" onclick="categorySearch('買い物')">
-          <div class="icon">◇</div>
-          <div>買い物</div>
-        </button>
-
-        <button class="category" onclick="categorySearch('遊び')">
-          <div class="icon">✦</div>
-          <div>遊ぶ</div>
-        </button>
-
-        <button class="category" onclick="categorySearch('夜')">
-          <div class="icon">☾</div>
-          <div>夜スポット</div>
-        </button>
-
-        <button class="category" onclick="categorySearch('穴場')">
-          <div class="icon">⌖</div>
-          <div>穴場</div>
-        </button>
-
-      </div>
-
-    </section>
-
-    <!-- PLACE CARD -->
-    <div class="place-card" id="placeCard">
-
-      <button class="close-card" onclick="closeCard()">×</button>
-
-      <div class="place-tag">LOCATION SELECTED</div>
-
-      <div class="place-name" id="placeName">
-        場所の名前
-      </div>
-
-      <div class="place-info" id="placeInfo">
-        詳細情報
-      </div>
-
-      <div class="rating">
-        ★★★★★ <span id="ratingText">4.5</span>
+      <div class="detail-title">
+        <h1>居酒屋 たかし</h1>
+        <p>ひとりでも入りやすい　・　カウンターあり</p>
       </div>
 
     </div>
 
-    <!-- MOBILE NAV -->
-    <nav class="mobile-nav">
+    <div class="detail-body">
 
-      <button class="active" onclick="goHome()">
-        <span class="mi">⌂</span>
-        ホーム
-      </button>
+      <div class="rating-big">
+        <strong>★ 4.5</strong>
+        <span style="font-size:9px;color:#8197a7">
+          口コミ 122件
+        </span>
+      </div>
 
-      <button onclick="showSearch()">
-        <span class="mi">⌕</span>
-        探す
-      </button>
+      <div class="detail-row">
+        <span class="label">営業時間</span>
+        <span>17:00 - 24:00</span>
+      </div>
 
-      <button onclick="showHistory()">
-        <span class="mi">◷</span>
-        記録
-      </button>
+      <div class="detail-row">
+        <span class="label">定休日</span>
+        <span>月曜日</span>
+      </div>
 
-      <button onclick="showFavorites()">
-        <span class="mi">◇</span>
-        お気に入り
-      </button>
+      <div class="detail-row">
+        <span class="label">予算</span>
+        <span>¥3,000〜¥4,000</span>
+      </div>
 
-    </nav>
+      <div class="detail-row">
+        <span class="label">住所</span>
+        <span>東京都渋谷区〇〇 1-2-3</span>
+      </div>
 
-  </main>
-</div>
+      <div class="detail-row">
+        <span class="label">アクセス</span>
+        <span>渋谷駅 徒歩3分</span>
+      </div>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-title">
-      PLACE RECORD
-    </div>
-
-    <div class="modal-sub">
-      自分だけの「おひとりさま記録」を追加
-    </div>
-
-    <div class="form">
-
-      <input id="recordName"
-             placeholder="場所の名前">
-
-      <select id="recordCategory">
-        <option>ひとり飯</option>
-        <option>カフェ</option>
-        <option>映画</option>
-        <option>温泉</option>
-        <option>買い物</option>
-        <option>遊び</option>
-        <option>その他</option>
-      </select>
-
-      <textarea id="recordMemo"
-                placeholder="感想・メモ"></textarea>
-
-      <button onclick="saveRecord()">
-        RECORD SAVE
-      </button>
+      <p class="detail-description">
+        カウンター席があり、ひとりでも気軽に入れる居酒屋。
+        焼き鳥を中心に、地元の人にも人気のお店です。
+        仕事帰りのひとりごはんにもおすすめ。
+      </p>
 
       <button
-        style="border-color:#34515a;color:#78939d"
-        onclick="closeModal()">
-        CANCEL
+        class="primary-button"
+        onclick="showScreen('map')"
+      >
+        ◎　地図で見る
       </button>
 
     </div>
 
-  </div>
+  </section>
+
+
+  <!-- =========================
+       FAVORITES
+  ========================== -->
+  <section id="favorites" class="screen">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="status-icons">
+        <span>▮▮▮</span>
+        <span>Wi-Fi</span>
+        <span>▰</span>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <h2>お気に入り</h2>
+    </div>
+
+    <div class="section" style="margin-top:5px">
+
+      <div class="section-title">
+        <span style="color:white">スポット</span>
+        <span>リスト</span>
+      </div>
+
+    </div>
+
+    <div id="favoriteList">
+
+      <div class="favorite-item glass" onclick="showDetail()">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80">
+
+        <div class="favorite-info">
+          <strong>居酒屋 たかし</strong>
+          <small><span class="rating">★4.5</span>　徒歩3分</small>
+          <small>居酒屋　ひとりごはん</small>
+        </div>
+
+        <div class="heart">♥</div>
+      </div>
+
+      <div class="favorite-item glass">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80">
+
+        <div class="favorite-info">
+          <strong>Blue Coffee</strong>
+          <small><span class="rating">★4.8</span>　徒歩8分</small>
+          <small>カフェ</small>
+        </div>
+
+        <div class="heart">♥</div>
+      </div>
+
+      <div class="favorite-item glass">
+        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&q=80">
+
+        <div class="favorite-info">
+          <strong>シネマ〇〇</strong>
+          <small><span class="rating">★4.5</span>　徒歩12分</small>
+          <small>映画</small>
+        </div>
+
+        <div class="heart">♥</div>
+      </div>
+
+      <div class="favorite-item glass">
+        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=400&q=80">
+
+        <div class="favorite-info">
+          <strong>湯の湯</strong>
+          <small><span class="rating">★4.6</span>　車15分</small>
+          <small>温泉</small>
+        </div>
+
+        <div class="heart">♥</div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MY PAGE
+  ========================== -->
+  <section id="mypage" class="screen">
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <div class="status-icons">
+        <span>▮▮▮</span>
+        <span>Wi-Fi</span>
+        <span>▰</span>
+      </div>
+    </div>
+
+    <div class="page-header">
+      <h2>マイページ</h2>
+    </div>
+
+    <div class="profile glass">
+
+      <div class="avatar">●</div>
+
+      <div class="profile-info">
+        <strong>ひとり旅好き</strong>
+        <small>おひとりさま時間を楽しもう</small>
+      </div>
+
+      <div class="profile-edit">編集</div>
+
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong>12</strong>
+        <small>行った場所</small>
+      </div>
+
+      <div class="stat">
+        <strong>28</strong>
+        <small>お気に入り</small>
+      </div>
+
+      <div class="stat">
+        <strong>5</strong>
+        <small>レビュー</small>
+      </div>
+
+    </div>
+
+    <div class="my-menu glass">
+
+      <div class="my-menu-item">
+        <span class="mi">♡</span>
+        <span>お気に入り</span>
+        <span class="arrow">›</span>
+      </div>
+
+      <div class="my-menu-item">
+        <span class="mi">◷</span>
+        <span>行った場所・履歴</span>
+        <span class="arrow">›</span>
+      </div>
+
+      <div class="my-menu-item">
+        <span class="mi">☆</span>
+        <span>レビュー・評価</span>
+        <span class="arrow">›</span>
+      </div>
+
+      <div class="my-menu-item">
+        <span class="mi">♧</span>
+        <span>通知設定</span>
+        <span class="arrow">›</span>
+      </div>
+
+      <div class="my-menu-item">
+        <span class="mi">⚙</span>
+        <span>アカウント設定</span>
+        <span class="arrow">›</span>
+      </div>
+
+      <div class="my-menu-item">
+        <span class="mi">?</span>
+        <span>ヘルプ・お問い合わせ</span>
+        <span class="arrow">›</span>
+      </div>
+
+      <div class="my-menu-item logout">
+        <span class="mi">↪</span>
+        <span>ログアウト</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       BOTTOM NAV
+  ========================== -->
+
+  <nav class="bottom-nav">
+
+    <div class="nav-item active" data-screen="home">
+      <div class="nav-icon">⌂</div>
+      <span>ホーム</span>
+    </div>
+
+    <div class="nav-item" data-screen="map">
+      <div class="nav-icon">⌖</div>
+      <span>マップ</span>
+    </div>
+
+    <div class="nav-item" data-screen="search">
+      <div class="nav-icon">◉</div>
+      <span>検索</span>
+    </div>
+
+    <div class="nav-item" data-screen="favorites">
+      <div class="nav-icon">♡</div>
+      <span>お気に入り</span>
+    </div>
+
+    <div class="nav-item" data-screen="mypage">
+      <div class="nav-icon">♙</div>
+      <span>マイページ</span>
+    </div>
+
+  </nav>
+
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<div id="toast" class="toast"></div>
+
 
 <script>
 
-/* =========================
-   BOOT
-========================= */
+/* ========================================
+   SCREEN NAVIGATION
+======================================== */
 
-const bootMessages = [
-  "INITIALIZING SYSTEM...",
-  "CONNECTING TO SOLO NETWORK...",
-  "LOADING LOCATION DATABASE...",
-  "CALIBRATING MAP SYSTEM...",
-  "SYSTEM ONLINE."
+const screens = [
+  "home",
+  "map",
+  "search",
+  "detail",
+  "favorites",
+  "mypage"
 ];
 
-let bootIndex = 0;
+function showScreen(name) {
 
-const bootText = document.getElementById("bootText");
+  screens.forEach(id => {
+    const screen = document.getElementById(id);
 
-const bootTimer = setInterval(() => {
-
-  bootIndex++;
-
-  if(bootIndex < bootMessages.length){
-    bootText.textContent = bootMessages[bootIndex];
-  }
-
-},450);
-
-setTimeout(() => {
-
-  clearInterval(bootTimer);
-
-  document.getElementById("boot").style.opacity = "0";
-  document.getElementById("boot").style.visibility = "hidden";
-
-  document.getElementById("app").classList.add("active");
-
-},2600);
-
-
-/* =========================
-   MAP
-========================= */
-
-const map = L.map("map", {
-  zoomControl:false
-}).setView([33.5597,133.5311],13);
-
-/* OpenStreetMap */
-L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  {
-    maxZoom:19,
-    attribution:"© OpenStreetMap contributors"
-  }
-).addTo(map);
-
-
-/* =========================
-   MARKERS
-========================= */
-
-const locations = [
-
-  {
-    name:"Solo Cafe",
-    lat:33.561,
-    lng:133.532,
-    category:"カフェ",
-    info:"ひとりでゆっくり過ごせるカフェ",
-    rating:"4.6"
-  },
-
-  {
-    name:"SOLO RAMEN",
-    lat:33.555,
-    lng:133.535,
-    category:"ひとり飯",
-    info:"カウンター席中心のラーメン店",
-    rating:"4.4"
-  },
-
-  {
-    name:"Cinema",
-    lat:33.565,
-    lng:133.528,
-    category:"映画",
-    info:"一人映画にもおすすめ",
-    rating:"4.5"
-  },
-
-  {
-    name:"Hidden Spot",
-    lat:33.552,
-    lng:133.525,
-    category:"穴場",
-    info:"静かに過ごせる隠れスポット",
-    rating:"4.7"
-  }
-
-];
-
-locations.forEach(place => {
-
-  const marker = L.circleMarker(
-    [place.lat,place.lng],
-    {
-      radius:7,
-      color:"#6de3ff",
-      fillColor:"#6de3ff",
-      fillOpacity:.7,
-      weight:1
+    if (screen) {
+      screen.classList.toggle("active", id === name);
     }
-  ).addTo(map);
+  });
 
-  marker.bindTooltip(
-    place.name,
-    {
-      direction:"top",
-      offset:[0,-7]
-    }
-  );
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.classList.toggle(
+      "active",
+      item.dataset.screen === name
+    );
+  });
 
-  marker.on("click",() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
 
-    document.getElementById("placeName")
-      .textContent = place.name;
 
-    document.getElementById("placeInfo")
-      .textContent =
-      `${place.category}｜${place.info}`;
+/* ========================================
+   DETAIL
+======================================== */
 
-    document.getElementById("ratingText")
-      .textContent = place.rating;
+function showDetail() {
+  showScreen("detail");
+}
 
-    document.getElementById("placeCard")
-      .classList.add("show");
+
+/* ========================================
+   FAVORITE
+======================================== */
+
+function toggleFavorite(id) {
+
+  const heart = document.getElementById(id);
+
+  if (heart.textContent === "♡") {
+    heart.textContent = "♥";
+    heart.style.color = "#20d5ff";
+    showToast("お気に入りに追加しました");
+  } else {
+    heart.textContent = "♡";
+    heart.style.color = "";
+    showToast("お気に入りから削除しました");
+  }
+}
+
+
+/* ========================================
+   TOAST
+======================================== */
+
+let toastTimer;
+
+function showToast(message) {
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 1800);
+}
+
+
+/* ========================================
+   NAV
+======================================== */
+
+document.querySelectorAll(".nav-item").forEach(item => {
+
+  item.addEventListener("click", () => {
+
+    showScreen(item.dataset.screen);
 
   });
 
 });
 
 
-/* =========================
-   FUNCTIONS
-========================= */
+/* ========================================
+   SEARCH
+======================================== */
 
-function closeCard(){
+const homeSearch = document.getElementById("homeSearch");
+const searchInput = document.getElementById("searchInput");
 
-  document
-    .getElementById("placeCard")
-    .classList.remove("show");
+homeSearch.addEventListener("keydown", event => {
 
-}
+  if (event.key === "Enter") {
+
+    searchInput.value = homeSearch.value;
+
+    showScreen("search");
+
+  }
+
+});
 
 
-/* CATEGORY */
+searchInput.addEventListener("keydown", event => {
 
-function categorySearch(category){
+  if (event.key === "Enter") {
 
-  document.getElementById("searchInput")
-    .value = category;
-
-  const results =
-    locations.filter(x => x.category === category);
-
-  if(results.length){
-
-    map.setView(
-      [results[0].lat,results[0].lng],
-      15
-    );
-
-  }else{
-
-    alert(
-      `${category}の登録スポットを検索しています。`
+    showToast(
+      `"${searchInput.value}" を検索しました`
     );
 
   }
 
-}
+});
 
 
-/* SEARCH */
+/* ========================================
+   KEYWORDS
+======================================== */
 
-function searchPlace(event){
+document.querySelectorAll(".keyword").forEach(keyword => {
 
-  if(event.key !== "Enter") return;
+  keyword.addEventListener("click", () => {
 
-  const keyword =
-    event.target.value.trim();
+    searchInput.value = keyword.textContent;
 
-  if(!keyword) return;
-
-  const result =
-    locations.find(x =>
-      x.name.includes(keyword) ||
-      x.category.includes(keyword)
+    showToast(
+      `"${keyword.textContent}" を検索`
     );
-
-  if(result){
-
-    map.setView(
-      [result.lat,result.lng],
-      16
-    );
-
-  }else{
-
-    alert(
-      `「${keyword}」を検索しました。\n\n実際のサービスでは、ここから周辺の店舗・スポットを取得します。`
-    );
-
-  }
-
-}
-
-
-/* LOCATION */
-
-function locateUser(){
-
-  if(!navigator.geolocation){
-
-    alert("位置情報に対応していません。");
-    return;
-
-  }
-
-  navigator.geolocation.getCurrentPosition(
-
-    position => {
-
-      const lat =
-        position.coords.latitude;
-
-      const lng =
-        position.coords.longitude;
-
-      map.setView(
-        [lat,lng],
-        15
-      );
-
-      L.circleMarker(
-        [lat,lng],
-        {
-          radius:8,
-          color:"#70e9b2",
-          fillColor:"#70e9b2",
-          fillOpacity:.8,
-          weight:2
-        }
-      )
-      .addTo(map)
-      .bindTooltip("現在地");
-
-    },
-
-    () => {
-
-      alert(
-        "現在地を取得できませんでした。"
-      );
-
-    }
-
-  );
-
-}
-
-
-/* NAV */
-
-function goHome(){
-
-  map.setView(
-    [33.5597,133.5311],
-    13
-  );
-
-}
-
-function showSearch(){
-
-  document
-    .getElementById("searchInput")
-    .focus();
-
-}
-
-function showHistory(){
-
-  alert(
-    "行った場所\n\nまだ記録はありません。"
-  );
-
-}
-
-function showFavorites(){
-
-  alert(
-    "お気に入り\n\nお気に入り登録した場所がここに表示されます。"
-  );
-
-}
-
-
-/* MODAL */
-
-function openModal(){
-
-  document
-    .getElementById("modal")
-    .classList.add("show");
-
-}
-
-function closeModal(){
-
-  document
-    .getElementById("modal")
-    .classList.remove("show");
-
-}
-
-function saveRecord(){
-
-  const name =
-    document.getElementById("recordName").value;
-
-  const category =
-    document.getElementById("recordCategory").value;
-
-  const memo =
-    document.getElementById("recordMemo").value;
-
-  if(!name){
-
-    alert("場所の名前を入力してください。");
-    return;
-
-  }
-
-  const records =
-    JSON.parse(
-      localStorage.getItem("ohitorisamap_records")
-      || "[]"
-    );
-
-  records.push({
-
-    name:name,
-    category:category,
-    memo:memo,
-    date:new Date().toLocaleDateString("ja-JP")
 
   });
 
-  localStorage.setItem(
-    "ohitorisamap_records",
-    JSON.stringify(records)
-  );
+});
 
-  alert("PLACE RECORD SAVED.");
 
-  document.getElementById("recordName").value="";
-  document.getElementById("recordMemo").value="";
+/* ========================================
+   MAP FILTER
+======================================== */
 
-  closeModal();
+document.querySelectorAll(".map-filter").forEach(filter => {
 
-}
+  filter.addEventListener("click", () => {
+
+    document.querySelectorAll(".map-filter")
+      .forEach(x => x.classList.remove("active"));
+
+    filter.classList.add("active");
+
+  });
+
+});
 
 </script>
 
